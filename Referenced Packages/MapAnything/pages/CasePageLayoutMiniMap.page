@@ -1,0 +1,9 @@
+<apex:page standardController="Case" showHeader="false" standardStylesheets="false">
+    <style>
+        html, body {
+            height:100%;
+            width:100%;
+        }
+    </style>
+    <c:MapAnythingMiniMap RecordId="{!$CurrentPage.parameters.Id}" />
+</apex:page>

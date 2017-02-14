@@ -1,0 +1,130 @@
+<script type="text/javascript">
+  /* (c) 2009-2013 Rally Software Development Corp. All rights reserved. */
+  if (!rally) {
+    rally = {};
+  }
+
+  /* get artifacts based on artifact refs and paginate until we get all of the results */
+  rally.getArtifacts = function () {
+    this.rallyRecords = {};
+
+    this.fetch = function (oids) {
+      var operation = "GetArtifacts";
+      var artifactQry = "";
+      var recordSet = "";
+      var mappedRecords = "";
+
+      var chunksize = 20;
+      var chunked_oids = [];
+      var chunks = Math.floor(oids.length / chunksize) + 1;
+      for (var i=0; i <= chunks; i++) {
+        var start = i * chunksize;
+        var endpoint = ((i+1) * chunksize);
+        var oid_chunk = oids.slice(start, endpoint);
+        chunked_oids.push(oid_chunk);
+      }
+
+      /* build the query from an array of oids */
+      buildQry = function (oids) {
+        var queryStr = "";
+        var newStr = "";
+
+        if (oids.length > 1) {
+          queryStr = "(";
+        }
+        for (var i = 0; i < oids.length; i++) {
+          if (i > 1) {
+            newStr = "(" + queryStr + ")";
+            queryStr = newStr;
+          }
+          if (i != 0) {
+            queryStr += " or ";
+          }
+          queryStr += '(ObjectID = ' + oids[i] + ')';
+        }
+        if (oids.length > 1) {
+          queryStr += ")";
+        }
+        /* newStr = "query=" + queryStr.replace(/ /g,"+"); */
+        newStr = encodeURIComponent(queryStr);
+        queryStr = newStr;
+        return(queryStr);
+      };
+
+      checkResponseErrors = function (jsResponse) {
+        var data = "";
+        if (jsResponse.QueryResult.Errors.length > 0) {
+          data = jsResponse.QueryResult.Errors[0];
+        }
+        return data;
+      };
+
+      successResponse = function (response) {
+        var jsResponse = YAHOO.lang.JSON.parse(response);
+        var docStr = checkResponseErrors(jsResponse);
+
+        if (docStr.length > 0) {
+          alert("Error retrieving Artifact data: " + docStr.toString());
+          return;
+        }
+        recordSet = jsResponse.QueryResult.Results;
+      };
+
+      failureResponse = function (response, request) {
+        rally.genericFailureHandler(response, request);
+
+      };
+
+      mapRallyInfo = function (rallyInfo, allRecords) {
+        for (var i = 0, len = rallyInfo.length; i < len; i++) {
+          allRecords[rallyInfo[i].ObjectID] = rallyInfo[i];
+        }
+        return(allRecords);
+      };
+
+      //optimize. If we have no oids, then don't bother
+      if (oids.length == 0) {
+        return(this.rallyRecords);
+      }
+      rally.getWorkspaceOid(rally.workspace);  //populate the workspace info
+
+      for (var i=0; i<chunked_oids.length; i++) {
+        var theseoids = chunked_oids[i];
+        artifactQry = buildQry(theseoids);
+        sforce.connection.remoteFunction({
+            url: rally.webserviceUrl + '/artifact.js' + '?fetch=true&workspace=' + rally.workspaceRef + '&pagesize=200&_method=GET&query=' + artifactQry,
+            mimeType: "text/plain",
+            method: 'POST',
+            requestHeaders: rally.requestHeader,
+            requestData: null,
+            async: false,
+            onSuccess: successResponse,
+            onFailure: failureResponse }
+        );
+        this.rallyRecords = mapRallyInfo(recordSet, this.rallyRecords);
+      }
+
+      return(this.rallyRecords);
+    };
+
+    /* the intent here is to collect all of the rally artifact refs from a given list of cases
+     * (obviously rally_artifact_ref must be part of the query).
+     */
+    this.getRallyRefs = function (caseIterator) {
+      var refHash = {};
+      var refArr = [];
+      caseIterator.index = 0;
+      while (caseIterator.hasNext()) {
+        var record = caseIterator.next();
+        var ref = record["RALLYSM__Rally_Artifact_Ref__c"];
+        var oid = rally.getArtifactOid(ref);
+        refHash[oid] = 0;
+      }
+      for (var i in refHash) {
+        refArr.push(i);
+      }
+      return(refArr);
+    };
+
+  }
+</script>

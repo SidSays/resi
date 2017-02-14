@@ -1,0 +1,28 @@
+<apex:page showHeader="false" sidebar="false" controller="AcceptTermsAndConditionsController">
+<apex:form style="margin-left:10px;margin-right:10px;" >
+<apex:image value="{!$Resource.Xfinity}" style="height:10%;width:10%;" /><br/><br/>
+<span style="font-weight:bold;font-family:arial;font-size: 10.5pt;">Comcast Residental Direct Sales</span>
+
+    <apex:pageMessages />
+    <apex:outputText escape="false" value="{!termsAndConditionsText}" />
+    <br/><br/>
+    <table>
+    <tr>
+    <td>
+        First Name:</td><td> <apex:inputText value="{!firstName}"/></td>
+        </tr>
+        <tr><td>
+        Last Name:</td><td> <apex:inputText value="{!lastName}"/></td>
+        </tr>
+        <tr>
+        <td>
+    Email:</td><td> <apex:inputText value="{!email}"/></td></tr>
+    </table>
+    <br/><br/>
+    <span style="font-family:arial;font-size: 10.5pt;">After accepting the Terms &amp; Conditions, the Chatter team will create a new Chatter account for you; please look for an email from Salesforce with your username and link to set your password and login.</span>
+    <br/><br/>
+    <apex:inputCheckbox value="{!acceptTandC}" label="Accept Terms and Conditions" /> I Accept the Terms and Conditions
+    <br/><br/>
+    <apex:commandButton action="{!emailTermsAndCondtionsSignupInfoForUser}" value="I Accept The Terms & Conditions" /> 
+    </apex:form>
+</apex:page>

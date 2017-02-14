@@ -1,0 +1,54 @@
+<!-- 
+/**********************************************************
+* Page Name: MDU_ViewContract
+* Author: Anurag Gautam, Accenture
+* Date: 02-March-2015 
+* Requirement # Request Id : 
+* Description: This module will call the View Contract service based on the ECM COntract ID passed
+* Last Modified by:
+***********************************************************/
+--> 
+<apex:page controller="MDU_ViewContractPageCtrl" >
+    <script type="text/javascript">
+        function viewContract(opptyPropId) {
+            
+            MDU_ViewContractPageCtrl.viewContract(opptyPropId, function(result, event){
+                if(event.status) {
+                    if(result.indexOf('ERROR') == -1 && result.indexOf('Error') == -1){
+                        var div = document.createElement('div');
+                        div.innerHTML = result;
+                        var urlOpen = div.firstChild.nodeValue;
+                        window.location.replace(urlOpen);                        
+                    }else{
+                        alert(result);
+                        window.close();
+                    } 
+                }
+                else{
+                    alert('Contract cannot be viewed. Please contact your system administrator.');
+                    window.close();
+                }
+                
+            });
+        }
+        
+        function callViewDelete(){
+            var opptyPropId = getQueryVariable("id");
+            viewContract(opptyPropId);         
+            
+        }
+        
+        function getQueryVariable(variable){
+               var query = window.location.search.substring(1);
+               var vars = query.split("&");
+               for (var i=0;i<vars.length;i++) {
+                       var pair = vars[i].split("=");
+                       if(pair[0] == variable){return pair[1];}
+               }
+               return(false);
+        }
+        
+    </script>
+    <script>callViewDelete();</script>
+  
+</apex:page>

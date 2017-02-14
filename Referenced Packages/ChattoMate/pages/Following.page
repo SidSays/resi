@@ -1,0 +1,227 @@
+<apex:page showHeader="true" sidebar="true" controller="SPKAMF.Following" tabStyle="ChatterMate__tab" title="ChattoMate Follows Management">
+
+    <apex:form >
+        <apex:pageBlock title="Super Secret Admin Controls" rendered="{!IsAdmin}" id="title">
+            <apex:pageBlockButtons location="bottom">
+                <apex:actionStatus id="busy">
+                    <apex:facet name="start">
+                        <apex:commandButton action="{!ViewAsUser}" value="Wait up..." disabled="true"/>
+                    </apex:facet>
+                    <apex:facet name="stop">
+                        <apex:commandButton action="{!ViewAsUser}" value="View As Selected User" status="busy" rerender="summary, following, title"/>
+                    </apex:facet>
+                </apex:actionStatus>
+                <apex:actionStatus id="busy2">
+                    <apex:facet name="start">
+                        <apex:commandButton action="{!ViewAsSelf}" value="On it..." disabled="true"/>
+                    </apex:facet>
+                    <apex:facet name="stop">
+                        <apex:commandButton action="{!ViewAsSelf}" value="View As Myself" status="busy2" rerender="summary, following, title"/>
+                    </apex:facet>
+                </apex:actionStatus>
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel for="user" value="View as user"/>
+                    <apex:inputField value="{!inputObj.SPKAMF__User__c}"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+
+        <apex:pageBlock title="Summary" rendered="{!selectedObjectType == 'All'}" id="summary">
+            <apex:pageBlockButtons location="top">
+                <apex:commandButton action="{!BackToList}" value="Recipe List" immediate="true"/>
+            </apex:pageBlockButtons>
+
+            <apex:pageBlockSection columns="3">
+                <apex:pageBlockTable value="{!Groups}" var="g">
+                    <apex:column >
+                        <apex:facet name="header">Object</apex:facet>
+                        <apex:outputText value="{!g.objectLabel}"/>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">Count</apex:facet>
+                        <a href="#{!g.objectType}"><apex:outputText value="{!IF(g.subscriptions.size > 1, TEXT(g.subscriptions.size) & ' records', '1 record')}"/></a>
+                    </apex:column>
+                    <apex:column >
+                        <apex:facet name="header">% of Limit ({!ChatterFollowLimit})</apex:facet>
+                        <apex:outputText value="{!(FLOOR((g.subscriptions.size / ChatterFollowLimit) * 1000)) / 10}"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+
+                <apex:chart data="{!Groups}" height="200" width="100%">
+                    <apex:legend position="left"/>
+                    <apex:pieSeries labelField="objectLabel" dataField="count" donut="40" colorSet="#996633,#B27F4C,#CC9966,#E5B27F,#D29F6C,#EBB885,#9F6C39,#B88552,#A5723F,#BF8C59,#D8A572,#F2BF8C,#DFAC79,#F8C592,#AC7946,#C5925F">
+                        <apex:chartLabel display="middle" orientation="vertical" font="bold 18px Helvetica"/>
+                    </apex:pieSeries>
+                </apex:chart>
+
+                <apex:chart data="{!totalGuage}" height="200" width="100%">
+                    <apex:pieSeries labelField="name" dataField="count" donut="40" colorSet="#996633,#CC9966,#B27F4C">
+                        <apex:chartLabel display="middle" orientation="vertical" font="bold 18px Helvetica"/>
+                    </apex:pieSeries>
+                </apex:chart>
+            </apex:pageBlockSection>
+
+            <p>
+                <a href="#chattergroups">
+                    <apex:outputText value="You belong to {!GroupMemberships.Size} Chatter Groups" rendered="{!GroupMemberships.Size > 1}"/>
+                    <apex:outputText value="You belong to 1 Chatter Group" rendered="{!GroupMemberships.Size = 1}"/>
+                </a>
+                <apex:outputText value="You don't belong to any Chatter Groups." rendered="{!GroupMemberships.Size = 0}"/>
+            </p>
+        </apex:pageBlock>
+
+        <apex:pageBlock title="{!IF(currentUser, 'Records You Follow', 'Records ' + userName + ' follows')}" id="following">
+            <apex:panelGrid >
+                <apex:actionStatus id="filterStatus">
+                    <apex:facet name="start">
+                        <apex:outputPanel >
+                            <apex:outputLabel value="Object filter: "/>
+                            <apex:selectList size="1" value="{!selectedObjectType}" disabled="true">
+                                <apex:selectOptions value="{!ObjectFilters}"/>
+                            </apex:selectList>
+                        </apex:outputPanel>
+                    </apex:facet>
+                    <apex:facet name="stop">
+                        <apex:outputPanel >
+                            <apex:outputLabel value="Object filter: "/>
+                            <apex:selectList size="1" value="{!selectedObjectType}">
+                                <apex:selectOptions value="{!ObjectFilters}"/>
+                                <apex:actionSupport action="{!ApplyFilter}" event="onchange" rerender="following" status="filterStatus"/>
+                            </apex:selectList>
+                        </apex:outputPanel>
+                    </apex:facet>
+                </apex:actionStatus>
+            </apex:panelGrid>
+
+            <apex:outputPanel id="following">
+                <apex:pageBlockSection title="{!selectedObjectLabel} {!IF(CurrentObjectFeedEnabled, '', '(Chatter Feed Not Enabled)')}" collapsible="false" rendered="{!selectedObjectType != 'All'}" columns="1">
+                    <apex:pageBlockTable value="{!Subscriptions}" var="s" >
+                        <apex:column width="20%">
+                            <apex:facet name="header">Action</apex:facet>
+                            <chatter:follow entityId="{!s.es.ParentId}"/>
+                            <apex:commandLink action="{!DeleteSubscription}" rendered="{!NOT(CurrentObjectFeedEnabled)}" value="Unfollow" rerender="following">
+                                <apex:param value="{!s.es.Id}" name="subscriptionId"/>
+                                <apex:param value="1" name="refreshList"/>
+                            </apex:commandLink>
+                            <apex:outputPanel rendered="{!$User.Id != userId}">
+                                <apex:commandLink action="{!DeleteSubscription}" rendered="{!NOT(s.unsubscribed)}" value="Unsubscribe User" rerender="following">
+                                    <apex:param value="{!s.es.Id}" name="subscriptionId"/>
+                                </apex:commandLink>
+                                <apex:commandLink action="{!RecreateSubscription}" rendered="{!s.unsubscribed}" value="Resubscribe User" rerender="following">
+                                    <apex:param value="{!s.recordId}" name="parentId"/>
+                                </apex:commandLink>
+                            </apex:outputPanel>
+                        </apex:column>
+                        <apex:column width="30%">
+                            <apex:facet name="header">Record Name</apex:facet>
+                            <apex:outputLink value="/{!s.es.ParentId}" target="blank"><apex:outputText value="{!s.es.Parent.Name}"/></apex:outputLink>
+                        </apex:column>
+                        <apex:column width="20%">
+                            <apex:facet name="header">Object</apex:facet>
+                            <apex:outputText value="{!s.objectType}"/>
+                        </apex:column>
+                        <apex:column width="20%">
+                            <apex:facet name="header">Last Post</apex:facet>
+                            <apex:outputText value="{0,date,medium}" rendered="{!NOT(ISNULL(s.latestPost))}">
+                                <apex:param value="{!s.latestPost}"/>
+                            </apex:outputText>
+                            <apex:outputText value="No posts since {0,date,medium}" rendered="{!ISNULL(s.latestPost) && hitLimit}">
+                                <apeX:param value="{!earliestPost}"/>
+                            </apex:outputText>
+                            <apex:outputText value="None" rendered="{!ISNULL(s.latestPost) && NOT(hitLimit)}"/>
+                        </apex:column>
+                        <apex:column width="10%">
+                            <apex:outputText value="{0,date,medium}">
+                                <apex:param value="{!s.es.CreatedDate}"/>
+                            </apex:outputText>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+
+                <apex:outputPanel rendered="{!selectedObjectType == 'All'}">
+                    <apex:repeat value="{!Groups}" var="g">
+                        <a name="{!g.objectType}"></a>
+                        <apex:pageBlockSection title="{!g.objectLabel} {!IF(g.FeedEnabled, '', '(Chatter Feed Not Enabled)')}" columns="1" collapsible="false">
+                            <apex:pageBlockTable value="{!g.subscriptions}" var="s" rendered="{!g.RenderThis}">
+                                <apex:column width="20%">
+                                    <apex:facet name="header">Action</apex:facet>
+                                    <chatter:follow entityId="{!s.es.ParentId}" rendered="{!$User.Id == userId}"/>
+                                    <apex:commandLink action="{!DeleteSubscription}" rendered="{!NOT(g.FeedEnabled)}" value="Unfollow" rerender="following">
+                                        <apex:param value="{!s.es.Id}" name="subscriptionId"/>
+                                        <apex:param value="1" name="refreshList"/>
+                                    </apex:commandLink>
+                                    <apex:outputPanel rendered="{!$User.Id != userId}">
+                                        <apex:commandLink action="{!DeleteSubscription}" rendered="{!NOT(s.unsubscribed)}" value="Unsubscribe User" rerender="following">
+                                            <apex:param value="{!s.es.Id}" name="subscriptionId"/>
+                                        </apex:commandLink>
+                                        <apex:commandLink action="{!RecreateSubscription}" rendered="{!s.unsubscribed}" value="Resubscribe User" rerender="following">
+                                            <apex:param value="{!s.recordId}" name="parentId"/>
+                                        </apex:commandLink>
+                                    </apex:outputPanel>
+                                </apex:column>
+                                <apex:column width="30%">
+                                    <apex:facet name="header">Record Name</apex:facet>
+                                    <apex:outputLink value="/{!s.es.ParentId}" target="blank"><apex:outputText value="{!s.es.Parent.Name}"/></apex:outputLink>
+                                </apex:column>
+                                <apex:column width="20%">
+                                    <apex:facet name="header">Object</apex:facet>
+                                    <apex:outputText value="{!s.objectType}"/>
+                                </apex:column>
+                                <apex:column width="15%">
+                                    <apex:facet name="header">Last Post</apex:facet>
+                                    <apex:outputText value="{0,date,medium}" rendered="{!NOT(ISNULL(s.latestPost))}">
+                                        <apex:param value="{!s.latestPost}"/>
+                                    </apex:outputText>
+                                    <apex:outputText value="No posts since {0,date,medium}" rendered="{!ISNULL(s.latestPost) && hitLimit}">
+                                        <apex:param value="{!earliestPost}"/>
+                                    </apex:outputText>
+                                    <apex:outputText value="None" rendered="{!ISNULL(s.latestPost) && NOT(hitLimit)}"/>
+                                </apex:column>
+                                <apex:column width="15%">
+                                    <apex:facet name="header">Subscribed</apex:facet>
+                                    <apex:outputText value="{0,date,medium}">
+                                        <apex:param value="{!s.es.CreatedDate}"/>
+                                    </apex:outputText>
+                                </apex:column>
+                            </apex:pageBlockTable>
+                        </apex:pageBlockSection>
+                    </apex:repeat>
+                </apex:outputPanel>
+            </apex:outputPanel>
+        </apex:pageBlock>
+
+        <a name="chattergroups"></a>
+        <apex:pageBlock title="Groups You Belong To" rendered="{!GroupMemberships.Size > 0}" id="groupList">
+            <apex:actionFunction action="{!DeleteGroupMembership}" name="doDeleteMembership" rerender="groupList">
+                <apex:param name="delId" value=""/>
+            </apex:actionFunction>
+            <apex:pageBlockTable value="{!GroupMemberships}" var="gm">
+                <apex:column width="10%">
+                    <apex:facet name="header">Action</apex:facet>
+                    <apex:variable var="groupname" value="{!gm.CollaborationGroup.Name}"/>
+                    <apex:outputPanel rendered="{!gm.CollaborationRole == 'Standard'}">
+                        <a onclick="if(confirm('You are about to leave {!groupname}')) doDeleteMembership('{!gm.Id}');" style="cursor: pointer;">
+                            Leave Group
+                        </a>
+                    </apex:outputPanel>
+                </apex:column>
+                <apex:column width="30%">
+                    <apex:facet name="header">Group Name</apex:facet>
+                    <apex:commandLink action="/{!gm.CollaborationGroup.Id}" target="_blank">
+                        <apex:outputField value="{!gm.CollaborationGroup.Name}"/>
+                    </apex:commandLink>
+                </apex:column>
+                <apex:column width="30%">
+                    <apex:facet name="header">Role</apex:facet>
+                    <apex:outputField value="{!gm.CollaborationRole}"/>
+                </apex:column>
+                <apex:column width="30%">
+                    <apex:facet name="header">Notification Frequency</apex:facet>
+                    <apex:outputField value="{!gm.NotificationFrequency}"/>
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

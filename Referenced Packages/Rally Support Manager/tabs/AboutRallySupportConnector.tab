@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Rally Support Manager About Page provides links to online help, training, and customer support.</description>
+    <frameHeight>600</frameHeight>
+    <hasSidebar>true</hasSidebar>
+    <label>About Rally Support Manager</label>
+    <mobileReady>false</mobileReady>
+    <motif>Custom90: Scales</motif>
+    <url>https://help.rallydev.com/rally-support-manager-salesforcecom</url>
+    <urlEncodingKey>UTF-8</urlEncodingKey>
+</CustomTab>

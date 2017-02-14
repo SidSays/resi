@@ -1,0 +1,48 @@
+<apex:page tabStyle="MDU_Property__c" controller="UnassignpropertiestoCARsExtension">
+    <script> 
+        function show_alert()
+        {
+          var r = confirm("Click OK to confirm the unassignment of CAR");
+           if (r == true) {
+            return true;
+                } else { 
+                   return false;
+                    }
+                }
+        </script>
+     <apex:sectionHeader title="Unassign CAR from Property" help="https://help.salesforce.com/htviewhelpdoc?err=1&id=admin_transfer.htm&siteLang=en_US"/>
+      This Screen allows you to unassign CAR to multiple properties
+      <apex:form id="frm">        
+      <apex:pageMessages />
+          <apex:pageBlock id="pBToBeUnassignedToCARs" mode="maindetail">
+            
+          <apex:outputPanel id="oPProperties">
+          <apex:variable value="{!0}" var="rowNum" />   
+               
+          <apex:pageBlockSection title="Properties to be Unassigned to selected CAR"  collapsible="false" columns="1" id="pBSToBeUnassignedToCARs">  
+              <apex:pageBlockTable value="{!propertiesO}" var="p" >
+                 <apex:column headerValue="Action">
+                    <apex:commandLink value="Remove"  action="{!removeRowFromPropertyList}" rendered="{!rowNum >= 0}" rerender="frm"  immediate="true" >
+                         <apex:param value="{!rowNum}" name="rowToRemove" assignTo="{!rowToRemove}"/>
+                    </apex:commandLink>
+                         <apex:variable var="rowNum" value="{!rowNum + 1}"/>
+                 </apex:column>
+                 
+                 <apex:column headerValue="Property Name">
+                    <apex:outputLink target="_blank" value="/{!p.Id}" >{!p.Name}</apex:outputLink>
+                 </apex:column>
+                 
+                 <apex:column headerValue="Assigned To" value="{!p.Assigned_CAR__c}"/>
+                 
+                 <apex:column headerValue="Address" value="{!p.Property_Name_Address__c}"/>
+                </apex:pageBlockTable>
+          </apex:pageBlockSection>
+        </apex:outputPanel>
+         <apex:pageBlockButtons location="Bottom">
+              <apex:commandButton title="Unassign" value="Unassign" action="{!unassignCar}" onclick="if(show_alert() == false){return false;}" />
+            <apex:commandButton title="Cancel" value="Cancel" action="{!cancelAssignment}"   />
+            </apex:pageBlockButtons>
+            
+   </apex:pageBlock>
+  </apex:form>
+</apex:page>

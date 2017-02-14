@@ -1,0 +1,41 @@
+<!-- 
+/**********************************************************
+* Page Name: ViewExcludedAddresses
+* Author: Amitkumar Bangad, Accenture
+* Date: 19-March-2013
+* Requirement # Request Id : 210
+* Description: To View Excluded Addresses from a plan
+* Last Modified by:
+***********************************************************/
+-->
+<apex:page standardController="Plan__c" showHeader="true" sidebar="true" id="addPage" extensions="ExcludedAddressesController"  readonly="true">
+  <apex:form id="myForm">
+      <apex:pagemessages ></apex:pagemessages>
+       <apex:outputLabel rendered="{!showFlag}">
+           <a href="/apex/ViewAllTurfAddresses?id={!Plan__c.Id}" target="_blank" style="font-weight:bold;font-size:11px;">View All </a>
+            <!--
+             &nbsp; | &nbsp;
+            <a href="/apex/ViewTurfAddresses?id={!Plan__c.Id}" target="_blank" style="font-weight:bold;font-size:11px;')}">View on Map </a><br/>
+             -->
+            </apex:outputLabel>
+            <apex:pageBlock rendered="{!showFlag}">
+                <apex:pageBlockTable value="{!pageAddressesList}" var="units" rendered="{!showFlag}" rows="5">
+                <apex:column headerValue="Street" id="add" style="{!IF(units.Excluded__c && NOT(ISNULL(Plan__c.Exclusion__c)),'background-color:salmon','background-color:none')}">
+                    <apex:outputPanel rendered="{!NOT(units.Excluded__c)}">
+                        <a href = "/{!units.Id}" target="_blank"> {!units.Name}</a>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!units.Excluded__c}">
+                        <apex:outputField value="{!units.Name}"/>
+                    </apex:outputPanel>
+                </apex:column>
+                <apex:column value="{!units.City__c}" style="{!IF(units.Excluded__c && NOT(ISNULL(Plan__c.Exclusion__c)),'background-color:salmon','background-color:none')}"/>
+                  <apex:column value="{!units.State__c}" style="{!IF(units.Excluded__c && NOT(ISNULL(Plan__c.Exclusion__c)),'background-color:salmon','background-color:none')}"/>
+                  <apex:column value="{!units.PostalCode__c}" style="{!IF(units.Excluded__c && NOT(ISNULL(Plan__c.Exclusion__c)),'background-color:salmon','background-color:none')}"/>
+                  <apex:column value="{!units.Last_Knock_Date__c}" style="{!IF(units.Excluded__c && NOT(ISNULL(Plan__c.Exclusion__c)),'background-color:salmon','background-color:none')}"/>
+                  <apex:column value="{!units.Status__c}" style="{!IF(units.Excluded__c && NOT(ISNULL(Plan__c.Exclusion__c)),'background-color:salmon','background-color:none')}"/>
+                  <apex:column value="{!units.Dwelling_Type__c}" style="{!IF(units.Excluded__c && NOT(ISNULL(Plan__c.Exclusion__c)),'background-color:salmon','background-color:none')}"/>
+                </apex:pageBlockTable>
+                <br/>
+            </apex:pageBlock>
+   </apex:form>
+</apex:page>

@@ -1,0 +1,26 @@
+<!-- 
+/**********************************************************
+* Page Name: ErrorPage
+* Author: Vivek Patel, Accenture
+* Date: 22-March-2013 
+* Description: This page is displayed if you tries to edit a plan on which he does not have edit access.
+* Last Modified by: Vivek Patel, Accenture
+***********************************************************/
+-->
+
+<apex:page >
+	<br />
+	<apex:outputText value="Insufficient Privileges"
+		style="font-weight:bold;font-size:130%" />
+	<br />
+	<br />
+	<apex:outputText >
+You do not have the level of access necessary to perform the operation you requested. Please contact the owner of the record or your administrator if access is necessary. 
+</apex:outputText>
+	<br />
+	<br />
+	<apex:outputText >
+Click browser back button to return to the previous page.
+</apex:outputText>
+
+</apex:page>

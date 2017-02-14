@@ -1,0 +1,10 @@
+Dear {!Contact.FirstName}, 
+
+A feature request that you made has been implemented. The intent of case you submitted and called "{!Case.Subject}" was  included in our release on {!Release_Announcement__c.Target_Date__c}
+
+We look to customer input to help us improve our products and we thank you for your contribution.   We would appreciate any additional feedback on this case or our products.
+
+Regards, 
+
+{!Case.OwnerFullName} 
+Customer Support

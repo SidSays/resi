@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <content>RecipeMaker</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <content>RecipeMaker</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <content>RecipeMaker</content>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Visualforce</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <description>A collection of rules to determine records to follow/unfollow on Chatter.</description>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableDivisions>false</enableDivisions>
+    <enableFeeds>true</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ReadWrite</externalSharingModel>
+    <fields>
+        <fullName>Active__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>Determines whether this recipe is active or not.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Recipes with at least one step can be activated. Inactive recipes will do nothing.</inlineHelpText>
+        <label>Active</label>
+        <trackFeedHistory>true</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Auto_Subscribe_Profiles__c</fullName>
+        <deprecated>false</deprecated>
+        <description>List of profiles for which new users are automatically subscribed to this recipe.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>When new users are created with a chosen profile, they will be automatically subscribed to this recipe.</inlineHelpText>
+        <label>Auto Subscribe Profiles</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Auto_Subscribe_Roles__c</fullName>
+        <deprecated>false</deprecated>
+        <description>List of roles for which new users are automatically subscribed to this recipe.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>When new users are created with a chosen role (or changed to a chosen role), they will be automatically subscribed to this recipe. Max 13 roles.</inlineHelpText>
+        <label>Auto Subscribe Roles</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Enable_Date_Check__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Indicates that notification based recipes should only match records modified in the last day. Only turn this off if the recipe includes a specific date based-check, otherwise ChattoMate may fail. Please refer to the documentation for more information.</inlineHelpText>
+        <label>Enable Date Check</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Object_API_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The name of the object this recipe works with.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The API name of the object this recipe is based on.</inlineHelpText>
+        <label>Object API Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Priority__c</fullName>
+        <defaultValue>0</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Higher priority recipes will be evaluated after lower priority recipes, meaning that they will override the changes made by those recipes.</inlineHelpText>
+        <label>Priority</label>
+        <precision>18</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Steps__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The number of steps this recipe has.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The number of steps in this recipe.</inlineHelpText>
+        <label>Steps</label>
+        <summaryForeignKey>Recipe_Step__c.Recipe__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Subscriptions__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The number of valid subscriptions.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The number of valid subscriptions.</inlineHelpText>
+        <label>Subscriptions</label>
+        <summaryFilterItems>
+            <field>Recipe_Subscription__c.Is_Valid__c</field>
+            <operation>equals</operation>
+            <value>TRUE</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Recipe_Subscription__c.Recipe__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackTrending>false</trackTrending>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>Follow means subscribers to this recipe will automatically follow records via Chatter that match its criteria. Unfollow means subscribers will stop following records on Chatter when the criteria are met.</inlineHelpText>
+        <label>Mode</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Follow</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Unfollow</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Notify</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <label>Recipe</label>
+    <nameField>
+        <label>Recipe Name</label>
+        <trackFeedHistory>false</trackFeedHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Recipes</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+</CustomObject>

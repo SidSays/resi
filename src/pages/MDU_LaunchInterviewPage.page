@@ -1,0 +1,117 @@
+<!--************************************************************************************************************************************************************
+Name: MDU_LaunchInterviewPage 
+Description: This page is used to Display the buttons.
+Author: Accenture
+Date PRJ/DFCT/ENHC# Summary of Changes 
+--------------- ------------------ ------------------------------
+16 Feb 2015 Comcast  
+************************************************************************************************************************************************************-->
+<apex:page sidebar="false" showHeader="false" standardController="Opportunity" extensions="MDU_LaunchInterviewPageCtrl">
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" />
+    <style >
+        .mainErrorSection{
+            height: 90px;
+            width: 923px;
+            overflow: auto;
+            float: left;
+            position: relative;
+            margin-left: 151px;
+        }
+        
+        .mainSection{
+            height: 175px;
+            width: 720px;
+            float: left;
+            position: relative;
+            margin-left: 151px;
+        }
+        
+        .loadingBackground {
+            /* Background color */
+            background-color:black;
+            opacity: 0.10;
+            filter: alpha(opacity = 10);  
+            /* Dimensions */
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 999;
+            position: absolute;
+        }
+        .loadingPanel {
+            /* Dimensions */
+            left: 48%;
+            top: 48%;
+            height: 50px;
+            z-index: 999;
+            position: absolute;
+        }
+
+    </style>
+    
+    <script type="text/javaScript">
+    
+        function reloadOnLaunch(empURL, isValid){
+            if(isValid=="true"){
+                //window.top.location.href = "/{!$CurrentPage.parameters.id}";
+                window.childWin = window.open(empURL, "_blank", "Launch Interview");
+                window.childWin.focus();
+                window.intervalId = window.setInterval('window.checkIfChildWindowIsClosed()', 1000);
+ 
+                //add check function to window
+                window.checkIfChildWindowIsClosed = function(){
+                     if(window.childWin.closed){
+                        window.clearInterval(window.intervalId);
+                        window.parent.location.href = "/{!$CurrentPage.parameters.id}";
+                    }
+                }                  
+            }           
+        }
+        
+        function reloadOnDelete(isValid){
+            if(isValid=="true"){
+                alert('Interview Deleted Successfully!');
+                window.top.location.href = "/{!$CurrentPage.parameters.id}";
+                //window.open(document.referrer,"_top","");  
+            }           
+        }
+        
+    </script>
+    
+    <apex:form >
+        <apex:actionStatus startText="In Progress..." id="fetchStatus">
+            <!-- Displaying loading status-->
+            <apex:facet name="start">
+                <div>
+                    <div class="loadingBackground" />
+                    <div class="loadingPanel">
+                       <img src=" /img/loading32.gif"/>
+                    </div>                  
+                </div>
+            </apex:facet>
+        </apex:actionStatus>
+        
+        <div >
+            <div >
+                <center>
+                    <apex:commandButton disabled="{!isDisableLaunchBtn}" action="{!launchInterviewProcessCustom}" value="Launch Interview" title="Launch Interview" reRender="errorPanel,errorPanel1" status="fetchStatus" oncomplete="reloadOnLaunch('{!URL}','{!isValid}');"/>
+                    <apex:commandButton disabled="{!isDisableResumeBtn}" action="{!resumeInterviewProcess}" value="Resume Interview" title="Resume Interview" reRender="errorPanel,errorPanel1" status="fetchStatus" oncomplete="reloadOnLaunch('{!URL}','{!isValid}');"/>
+                    <apex:commandButton disabled="{!isDisableDeleteBtn}" action="{!deleteInterview}" value="Delete Interview" title="Delete Interview" reRender="errorPanel,errorPanel1,deletePanel" status="fetchStatus" oncomplete="reloadOnDelete('{!isValid}');"/>
+                </center>
+            </div>
+            <apex:outputPanel id="errorPanel1" >
+                <apex:outputPanel rendered="{!isError}">
+                    <div style="mainSection">
+                        <center><apex:outputText style="color:red;font-size:16px;font-weight: bold;" value="Please see the below error messages" /> </center> <br/>
+                        <div class="mainErrorSection">                              
+                            <apex:repeat value="{!errorMessageList}" var="string" id="theRepeat">
+                               <br/><apex:outputText value="{!string}" style="color:red;font-size:13px; line-height: 15px;" id="theValue"/>
+                            </apex:repeat>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+            </apex:outputPanel>
+        </div>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,23 @@
+<apex:page controller="SPKAMF.ChattoMateNotifications" action="{!Init}" showHeader="true" sidebar="true" tabstyle="ChatterMate__tab">
+	<apex:form >
+		<apex:pageBlock title="Recent Notifications">
+			<apex:pageMessages />
+	        <apex:pageBlockButtons location="top">
+	            <apex:commandButton action="{!BackToList}" value="Recipe List"/>
+	        </apex:pageBlockButtons>
+			<apex:pageBlockTable value="{!ssc.records}" var="n" rendered="{!NOT(ISNULL(ssc)) && NOT(ISNULL(ssc.records)) && ssc.records.size > 0}">
+				<apex:column value="{!n['CreatedDate']}"/>
+				<apex:column headerValue="Record">
+					<apex:outputLink value="/{!n['Record__c']}">
+						<apex:outputText value="{!niceNames[LEFT(n['Record__c'], 3)]}: {!n['Record__c']}" rendered="{!niceNames[LEFT(n['Record__c'], 3)] != '::HASNAME::'}"/>
+
+						<apex:outputText value="{!recordNames[n['Record__c']]}" rendered="{!niceNames[LEFT(n['Record__c'], 3)] == '::HASNAME::'}"/>
+					</apex:outputLink>
+				</apex:column>
+				<apex:column headerValue="Recipe">
+				 	<a target="blank" href="/{!n['Recipe__c']}"><apex:outputText value="{!n['Recipe__r.Name']}"/></a>
+				 </apex:column>
+			</apex:pageBlockTable>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

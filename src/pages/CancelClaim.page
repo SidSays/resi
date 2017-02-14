@@ -1,0 +1,48 @@
+<!-- 
+/**********************************************************
+* Page Name: CancelClaim
+* Author: Amitkumar Bangad, Accenture
+* Date: 04-December-2012 
+* Requirement # Request Id : 
+* Description: To cancel a claim from Case Detail page (operation performed by Affiliate/Business Admin)
+* Last Modified by:
+***********************************************************/
+-->
+<apex:page standardController="Case" extensions="CancelClaimController">
+    <apex:form >
+    <apex:sectionHeader rendered="{!isInvalidClaim}" title="{!$Label.Claim_Cancellation}"  subTitle="{!$Label.Affiliate_Case_Management}" description="{!$Label.Verify_Claim}"/>
+    <apex:outputPanel id="hiddenblock">
+    <apex:pagemessages />
+    </apex:outputPanel>
+    <apex:pageBlock rendered="{!NOT(isInvalidClaim)}">
+        <h1>{!$Label.Closed_Claim}</h1>
+        <apex:pageBlockButtons location="bottom">
+            <apex:CommandButton value="{!$Label.Back_to_Claim}" onclick="window.parent.location.href='/{!claimToCancel.Id}'"/>
+        </apex:pageBlockButtons>
+    </apex:pageBlock>
+    <apex:pageBlock rendered="{!isInvalidClaim}">
+        <apex:pageBlockTable value="{!claimToCancel}" var="c">
+            <apex:column value="{!c.CaseNumber}" headerValue="{!$ObjectType.Case.fields.CaseNumber.label}" id="number"/>
+            <apex:column value="{!c.Case_Name__c}" headerValue="{!$ObjectType.Case.fields.Case_Name__c.label}" id="name"/>
+            <apex:column value="{!c.Status}" headerValue="{!$ObjectType.Case.fields.Status.label}" id="opp"/>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+    <apex:pageBlock rendered="{!isInvalidClaim}">
+        {!$Label.Provide_Cancellation_Reason}
+        <br/>
+        <br/>
+        <apex:pageBlockTable value="{!claimToCancel}" var="cas" id="caseTable">
+            <apex:column headerValue="{!$Label.Claim_Cancellation_Reason}">
+                <div class = "requiredInput">
+                <div class = "requiredBlock"></div>
+                <apex:inputTextArea value="{!reason}" rows="4" cols="60"/>
+                </div>
+            </apex:column>
+        </apex:pageBlockTable>
+        <apex:pageBlockButtons location="bottom">
+            <apex:CommandButton value="{!$Label.Cancel_Case}" action="{!CancelClaim}"/>
+            <apex:CommandButton value="{!$Label.Exit_Without_Cancelling}" action="{!Exit}" />
+        </apex:pageBlockButtons>
+    </apex:pageBlock>
+    </apex:form>
+</apex:page>

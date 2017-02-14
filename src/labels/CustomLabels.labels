@@ -1,0 +1,4690 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>ASM_Profile_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ASM Profile Name</shortDescription>
+        <value>Area Sales Manager</value>
+    </labels>
+    <labels>
+        <fullName>AccountRecordType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label to Select Record Type Id for Account</shortDescription>
+        <value>Default;Store;Archived;Xfinity Record Type</value>
+    </labels>
+    <labels>
+        <fullName>Account_Type</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Account Type</shortDescription>
+        <value>Store</value>
+    </labels>
+    <labels>
+        <fullName>Active</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Active</shortDescription>
+        <value>Active</value>
+    </labels>
+    <labels>
+        <fullName>ActivityDeleteErrorMsg1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ActivityDeleteErrorMsg1</shortDescription>
+        <value>Activities &amp; Knocks cannot be deleted</value>
+    </labels>
+    <labels>
+        <fullName>ActivityDeleteErrorMsg2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ActivityDeleteErrorMsg2</shortDescription>
+        <value>Activites which are not completed cannot be deleted</value>
+    </labels>
+    <labels>
+        <fullName>Activity_Delete</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Activity_Delete</shortDescription>
+        <value>Activity record can not be deleted.</value>
+    </labels>
+    <labels>
+        <fullName>AddressId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AddressId</shortDescription>
+        <value>a0E</value>
+    </labels>
+    <labels>
+        <fullName>Address_Chunk_Size</fullName>
+        <categories>Direct Sales</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Address Chunk Size</shortDescription>
+        <value>500</value>
+    </labels>
+    <labels>
+        <fullName>Address_Disposition_Location</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Address Disposition Location</shortDescription>
+        <value>Daily address + disposition locations for</value>
+    </labels>
+    <labels>
+        <fullName>Addrs_Dwell_Type_BBM</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Addrs_Dwell_Type_BBM</shortDescription>
+        <value>Bulk Billed Master</value>
+    </labels>
+    <labels>
+        <fullName>Addrs_Dwell_Type_BBMDU</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Addrs_Dwell_Type_BBMDU</shortDescription>
+        <value>Bulk Billed MDU</value>
+    </labels>
+    <labels>
+        <fullName>Addrs_Dwell_Type_MDU</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Addrs_Dwell_Type_MDU</shortDescription>
+        <value>Multiple Dwelling Unit</value>
+    </labels>
+    <labels>
+        <fullName>Addrs_Dwell_Type_MDUAbbr</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Addrs_Dwell_Type_MDU Abbreviated</shortDescription>
+        <value>MDU</value>
+    </labels>
+    <labels>
+        <fullName>Addrs_Dwell_Type_NBB</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Addrs_Dwell_Type_NBB</shortDescription>
+        <value>Non Bulk Billed</value>
+    </labels>
+    <labels>
+        <fullName>Addrs_Dwell_Type_NBBMDU</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Addrs_Dwell_Type_NBBMDU</shortDescription>
+        <value>Non Bulk Billed MDU</value>
+    </labels>
+    <labels>
+        <fullName>Addrs_Dwell_Type_Other</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Addrs_Dwell_Type_Other</shortDescription>
+        <value>OTHER</value>
+    </labels>
+    <labels>
+        <fullName>Addrs_Dwell_Type_SF</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Addrs_Dwell_Type_SF</shortDescription>
+        <value>Single Family</value>
+    </labels>
+    <labels>
+        <fullName>Addrs_Dwell_Type_SFU</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Addrs_Dwell_Type_SFU</shortDescription>
+        <value>Single Family Unit</value>
+    </labels>
+    <labels>
+        <fullName>Addrs_Dwell_Type_SFUAbbr</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Addrs_Dwell_Type_SFU Abbreviated</shortDescription>
+        <value>SFU</value>
+    </labels>
+    <labels>
+        <fullName>Affiliate_Case_Management</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Affiliate Case Management</shortDescription>
+        <value>Affiliate Case Management</value>
+    </labels>
+    <labels>
+        <fullName>Affiliate_Escalation_Report</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Affiliate Escalation Report</shortDescription>
+        <value>/00OG0000006FQPy</value>
+    </labels>
+    <labels>
+        <fullName>Affiliate_User_Profile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Affiliate User Profile</shortDescription>
+        <value>Affiliate User</value>
+    </labels>
+    <labels>
+        <fullName>AlertMsgForBulkAssignment</fullName>
+        <categories>DirectSales</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AlertMsgForBulkAssignment</shortDescription>
+        <value>Select any User For Bulk Assignment</value>
+    </labels>
+    <labels>
+        <fullName>AllCarGroupId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AllCarGroupId</shortDescription>
+        <value>All CAR</value>
+    </labels>
+    <labels>
+        <fullName>Asset_Equipment</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Asset Equipment</shortDescription>
+        <value>Equipment</value>
+    </labels>
+    <labels>
+        <fullName>Asset_Inactive</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Asset Inactive</shortDescription>
+        <value>Inactive</value>
+    </labels>
+    <labels>
+        <fullName>Asset_Installed</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Asset Active</shortDescription>
+        <value>Active</value>
+    </labels>
+    <labels>
+        <fullName>Asset_Service</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Asset Service</shortDescription>
+        <value>Service</value>
+    </labels>
+    <labels>
+        <fullName>AssignedPlanDeleteError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AssignedPlanDeleteError</shortDescription>
+        <value>Assigned Plan can not be deleted.</value>
+    </labels>
+    <labels>
+        <fullName>BUILD_SSO_URL_WIZARD_ENDPOINT</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BUILD_SSO_URL_WIZARD_ENDPOINT</shortDescription>
+        <value>https://comcasttraining.emptoris.com/webservices/services/SingleSignonServices</value>
+    </labels>
+    <labels>
+        <fullName>Back_to_Claim</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Back to Claim</shortDescription>
+        <value>Back to Claim</value>
+    </labels>
+    <labels>
+        <fullName>BiweeklyGoalsBatchHourOfDay</fullName>
+        <categories>Work.com</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BiweeklyGoalsBatchHourOfDay</shortDescription>
+        <value>9</value>
+    </labels>
+    <labels>
+        <fullName>BulkAddressAssignLimit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BulkAddressAssignLimit</shortDescription>
+        <value>10</value>
+    </labels>
+    <labels>
+        <fullName>BulkAssignmentProgressErrMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BulkAssignmentProgressErrMsg</shortDescription>
+        <value>An Bulk assignment is already in progress. Please try after sometime.</value>
+    </labels>
+    <labels>
+        <fullName>BusinessAdminProfileName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BusinessAdminProfileName</shortDescription>
+        <value>Business Administrator</value>
+    </labels>
+    <labels>
+        <fullName>CARActivity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CARActivity</shortDescription>
+        <value>CAR Activity</value>
+    </labels>
+    <labels>
+        <fullName>CARManagerProfileId</fullName>
+        <categories>Property Lab</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CARManagerProfileId</shortDescription>
+        <value>00e16000000GgtvAAC</value>
+    </labels>
+    <labels>
+        <fullName>CARProfileId</fullName>
+        <categories>Property Lab</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CARProfileId</shortDescription>
+        <value>00e16000000GgtuAAC</value>
+    </labels>
+    <labels>
+        <fullName>CAR_Event</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CAR Event</shortDescription>
+        <value>CAR Event</value>
+    </labels>
+    <labels>
+        <fullName>CAR_Manager_Huddle_Observation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CAR Manager Huddle Observation</shortDescription>
+        <value>CAR Manager Huddle Observation</value>
+    </labels>
+    <labels>
+        <fullName>CAR_PropertyEdit_Err</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CAR_PropertyEdit_Err</shortDescription>
+        <value>You do not have access to edit detail record. Please click on cancel button.</value>
+    </labels>
+    <labels>
+        <fullName>CAR_Super_Coach_1_1_Observation</fullName>
+        <categories>Observation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CAR Super Coach 1-1 Observation</shortDescription>
+        <value>Super CAR Coach 1_1</value>
+    </labels>
+    <labels>
+        <fullName>CREATE_INDIVIDUAL_ENDPOINT</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CREATE_INDIVIDUAL_ENDPOINT</shortDescription>
+        <value>https://comcasttraining.emptoris.com/webservices/services/IndividualServices</value>
+    </labels>
+    <labels>
+        <fullName>CREATE_INTERVIEW_ENDPOINT</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CREATE_INTERVIEW_ENDPOINT</shortDescription>
+        <value>https://comcasttraining.emptoris.com/webservices/services/InterviewInstanceServices</value>
+    </labels>
+    <labels>
+        <fullName>Cancel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Cancel</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>Cancel_Case</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Cancel Case</shortDescription>
+        <value>Cancel Case</value>
+    </labels>
+    <labels>
+        <fullName>CarMgrMonthlyGoalCreationBatchQuery</fullName>
+        <categories>Car Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CarMgrMonthlyGoalCreationBatchQuery</shortDescription>
+        <value>Select Id, Name, ManagerId, Profile.Name from User where IsActive = True AND Profile.Name IN: profileNameSet and UserPermissionsWorkDotComUserFeature = true AND Id = &apos;00516000007BlOz&apos;</value>
+    </labels>
+    <labels>
+        <fullName>CarMgrMonthlyGoalCreationBatchSize</fullName>
+        <categories>Car Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CarMgrMonthlyGoalCreationBatchSize</shortDescription>
+        <value>1</value>
+    </labels>
+    <labels>
+        <fullName>CaseListview</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Address for Cases Listview</shortDescription>
+        <value>/500</value>
+    </labels>
+    <labels>
+        <fullName>CaseRecordType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Label to Select Record Type Id for Case</shortDescription>
+        <value>Closed Claim;Defect Management;Open Accepted Claim;Open Assigned Claim;Post-Order Escalation;Pre-Order Escalation;SalesSpace Chatter;SalesSpace Coach Huddle/Forum;SalesSpace Communities;SalesSpace Direct Sales;SalesSpace Indirect (Retail);SalesSpace NSO;SalesSpace Order Lab/Sales Portal;SalesSpace Property Lab</value>
+    </labels>
+    <labels>
+        <fullName>Case_Name_Required</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Name Required</shortDescription>
+        <value>Case name is a required field.</value>
+    </labels>
+    <labels>
+        <fullName>ChatterAdminPageControllerMsg1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ChatterAdminPageControllerMsg1</shortDescription>
+        <value>No Group found, Please modify your text to search.</value>
+    </labels>
+    <labels>
+        <fullName>ChatterAdminPageControllerMsg10</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ChatterAdminPageControllerMsg10</shortDescription>
+        <value>Selected user(s) removed successfully.</value>
+    </labels>
+    <labels>
+        <fullName>ChatterAdminPageControllerMsg11</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ChatterAdminPageControllerMsg11</shortDescription>
+        <value>Select at least one user to remove.</value>
+    </labels>
+    <labels>
+        <fullName>ChatterAdminPageControllerMsg2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ChatterAdminPageControllerMsg2</shortDescription>
+        <value>Please enter at least 4 characters to search.</value>
+    </labels>
+    <labels>
+        <fullName>ChatterAdminPageControllerMsg3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ChatterAdminPageControllerMsg3</shortDescription>
+        <value>Please enter text to search</value>
+    </labels>
+    <labels>
+        <fullName>ChatterAdminPageControllerMsg4</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ChatterAdminPageControllerMsg4</shortDescription>
+        <value>User is already present in the selected Group.</value>
+    </labels>
+    <labels>
+        <fullName>ChatterAdminPageControllerMsg5</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ChatterAdminPageControllerMsg5</shortDescription>
+        <value>Both Group and User are required to add User into a Group.</value>
+    </labels>
+    <labels>
+        <fullName>ChatterAdminPageControllerMsg6</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ChatterAdminPageControllerMsg6</shortDescription>
+        <value>Selected user added successfully.</value>
+    </labels>
+    <labels>
+        <fullName>ChatterAdminPageControllerMsg7</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ChatterAdminPageControllerMsg7</shortDescription>
+        <value>Operation failed. Please contact your system Administrator.</value>
+    </labels>
+    <labels>
+        <fullName>ChatterAdminPageControllerMsg8</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ChatterAdminPageControllerMsg8</shortDescription>
+        <value>No User in the Group.</value>
+    </labels>
+    <labels>
+        <fullName>ChatterAdminPageControllerMsg9</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ChatterAdminPageControllerMsg9</shortDescription>
+        <value>Group Owner cannot be removed from Group.</value>
+    </labels>
+    <labels>
+        <fullName>ChatterProfilePictureUpdateBatchQuery</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ChatterProfilePictureUpdateBatchQuery</shortDescription>
+        <value>Select Id,profile.name,CreatedDate,Name,ProfileId,Region__c,FullPhotoUrl from User where IsActive = True AND CreatedDate &lt; LAST_N_DAYS:60 AND CreatedDate &gt;= 2016-06-30T00:00:00.000+0000 AND FullPhotoUrl like &apos;%/profilephoto/005/F%&apos; AND SmallPhotoUrl like &apos;%/profilephoto/005/T%&apos;</value>
+    </labels>
+    <labels>
+        <fullName>ChatterProfilePictureUpdateEmail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ChatterProfilePictureUpdateEmail</shortDescription>
+        <value>arthur_shkolnik@cable.comcast.com</value>
+    </labels>
+    <labels>
+        <fullName>Chatter_Comment_Accept_Terms</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Chatter Comment Accept Terms</shortDescription>
+        <value>You may not comment until you have accepted the Chatter Terms and Conditions. To do so, please click the Chatter tab and follow the prompt.</value>
+    </labels>
+    <labels>
+        <fullName>Chatter_Post_Accept_Terms</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Chatter Post Accept Terms</shortDescription>
+        <value>You may not post until you have accepted the Chatter Terms and Conditions. To do so, please click the Chatter tab and follow the prompt.</value>
+    </labels>
+    <labels>
+        <fullName>ClaimEligibilityBatchLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ClaimEligibilityBatchLabel</shortDescription>
+        <value>Select Id, Affiliate_Account__c, isClaimEligible__c, OrderCompletedDate__c, Affiliate_Account__r.ClaimEligibilityDuration__c, Affiliate_Account__r.ClaimWaitDuration__c From Order__c WHERE OrderCompletedDate__c!=null AND Affiliate_Account__r.ClaimWaitDuration__c != null AND Affiliate_Account__r.ClaimEligibilityDuration__c != null AND Affiliate_Account__c != null AND OrderCompletedDate__c = LAST_N_DAYS:90</value>
+    </labels>
+    <labels>
+        <fullName>ClaimEligibilityBatchSizeLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ClaimEligibilityBatchSizeLabel</shortDescription>
+        <value>200</value>
+    </labels>
+    <labels>
+        <fullName>Claim_Amount</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Claim Amount</shortDescription>
+        <value>Claim Amount</value>
+    </labels>
+    <labels>
+        <fullName>Claim_Amount_Greater_than_0</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Claim Amount Greater than 0</shortDescription>
+        <value>The claim amount should be greater than zero.</value>
+    </labels>
+    <labels>
+        <fullName>Claim_Cancellation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Claim Cancellation</shortDescription>
+        <value>Claim Cancellation</value>
+    </labels>
+    <labels>
+        <fullName>Claim_Cancellation_Reason</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Claim Cancellation Reason</shortDescription>
+        <value>Claim Cancellation Reason</value>
+    </labels>
+    <labels>
+        <fullName>Claim_Cancellation_Reason_Required</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Claim Cancellation Reason Required</shortDescription>
+        <value>Claim Cancellation Reason is required.</value>
+    </labels>
+    <labels>
+        <fullName>Claim_Cancelled_Status</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Claim Cancelled Status</shortDescription>
+        <value>Cancelled</value>
+    </labels>
+    <labels>
+        <fullName>Claim_Cannot_Be_Submitted</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Claim Cannot Be Submitted</shortDescription>
+        <value>The claim cannot be submitted for the order(s) selected due to one of the following reasons:</value>
+    </labels>
+    <labels>
+        <fullName>Claim_Cannot_Be_Submitted1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Claim Cannot Be Submitted1</shortDescription>
+        <value>1. Claim has already been processed.</value>
+    </labels>
+    <labels>
+        <fullName>Claim_Cannot_Be_Submitted2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Claim Cannot Be Submitted2</shortDescription>
+        <value>2. Order is cancelled or incomplete.</value>
+    </labels>
+    <labels>
+        <fullName>Claim_Cannot_Be_Submitted3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Claim Cannot Be Submitted3</shortDescription>
+        <value>3. Order is not yet eligible for inclusion with a claim for commission.</value>
+    </labels>
+    <labels>
+        <fullName>Claim_Explanation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Claim Explanation</shortDescription>
+        <value>Claim Explanation</value>
+    </labels>
+    <labels>
+        <fullName>Claim_Explanation_Required</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Claim Explanation Required</shortDescription>
+        <value>Claim explanation is a required field.</value>
+    </labels>
+    <labels>
+        <fullName>Claim_Investigation_Queue</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Claim Investigation Queue</shortDescription>
+        <value>Claim Investigation Queue</value>
+    </labels>
+    <labels>
+        <fullName>Claim_Submitted</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Claim Submitted</shortDescription>
+        <value>*The Claim will be submitted on order(s) below:</value>
+    </labels>
+    <labels>
+        <fullName>ClearLastInstallDate</fullName>
+        <categories>Direct</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ClearLastInstallDate</shortDescription>
+        <value>Active</value>
+    </labels>
+    <labels>
+        <fullName>Closed_Claim</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Closed Claim</shortDescription>
+        <value>This Claim has already been cancelled/closed.</value>
+    </labels>
+    <labels>
+        <fullName>Coaching</fullName>
+        <categories>metric name, ASM&amp;SDM goal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>1:1 Coaching</shortDescription>
+        <value>1:1 Coaching</value>
+    </labels>
+    <labels>
+        <fullName>Coaching_Record_Validation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Coaching Record Validation</shortDescription>
+        <value>&apos;You do not have permission to create 1:1 coaching activity&apos;</value>
+    </labels>
+    <labels>
+        <fullName>ComcastNotesText</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ComcastNotesText</shortDescription>
+        <value>Comcast received this escalation. We are researching this issue. An update will be provided within two business days.</value>
+    </labels>
+    <labels>
+        <fullName>Comcast_Foundation_Date</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Comcast Foundation Date</shortDescription>
+        <value>1963</value>
+    </labels>
+    <labels>
+        <fullName>CommunitiesForecastUpdateBatchScheduleQuery</fullName>
+        <categories>Query string parameter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CommunitiesForecastUpdateBatchScheduleQuery</shortDescription>
+        <value>Select id,name,profile.Name from User where profile.Name = &apos;XC Account Executive&apos; and IsActive = True and UserPermissionsWorkDotComUserFeature = true</value>
+    </labels>
+    <labels>
+        <fullName>CommunitiesForecastUpdateBatchSize</fullName>
+        <categories>Quota Management</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CommunitiesForecastUpdateBatchSize</shortDescription>
+        <value>1</value>
+    </labels>
+    <labels>
+        <fullName>CommunitiesGoalRecordType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Xfinity Communities</shortDescription>
+        <value>Xfinity Communities</value>
+    </labels>
+    <labels>
+        <fullName>Communities_ProfileId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Communities ProfileId</shortDescription>
+        <value>XC Manager;XC Account Executive</value>
+    </labels>
+    <labels>
+        <fullName>ConfirmMsgForBulkAssignment</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ConfirmMsgForBulkAssignment</shortDescription>
+        <value>Do you want to Bulk assign ?</value>
+    </labels>
+    <labels>
+        <fullName>Contact_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Name</shortDescription>
+        <value>Contact Name</value>
+    </labels>
+    <labels>
+        <fullName>Contact_Name_Required</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contact Name Required</shortDescription>
+        <value>The Contact Name is a required field.</value>
+    </labels>
+    <labels>
+        <fullName>ContractType_IndustryTypeCheck</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ContractType_IndustryTypeCheck</shortDescription>
+        <value>Interview cannot be launched for Healthcare or Education or Hospitality Properties with Retail Contract Type.</value>
+    </labels>
+    <labels>
+        <fullName>Contract_ConSubStatus_AutoRenewed</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract ConSubStatus AutoRenewed</shortDescription>
+        <value>AutoRenewed</value>
+    </labels>
+    <labels>
+        <fullName>Contract_ConTermUnit_Months</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract ConTermUnit Months</shortDescription>
+        <value>Months</value>
+    </labels>
+    <labels>
+        <fullName>Contract_ConTermUnit_Years</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract ConTermUnit Years</shortDescription>
+        <value>Years</value>
+    </labels>
+    <labels>
+        <fullName>Contract_ContractStatus_Archieved</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract ContractStatus Archieved</shortDescription>
+        <value>Archived</value>
+    </labels>
+    <labels>
+        <fullName>Contract_DataBillingType_Bulk</fullName>
+        <categories>mdu</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract DataBillingType Bulk</shortDescription>
+        <value>Bulk</value>
+    </labels>
+    <labels>
+        <fullName>Contract_DataBillingType_Retail</fullName>
+        <categories>mdu</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract DataBillingType Retail</shortDescription>
+        <value>Retail</value>
+    </labels>
+    <labels>
+        <fullName>Contract_Data_No</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract Data No</shortDescription>
+        <value>No</value>
+    </labels>
+    <labels>
+        <fullName>Contract_Delete_Error</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract Delete Error</shortDescription>
+        <value>ERROR: Contract already deleted OR Contract Id does not exist on Opportunity Property.</value>
+    </labels>
+    <labels>
+        <fullName>Contract_Delete_User_Error</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract_Delete_User_Error</shortDescription>
+        <value>ERROR: Contract cannot be deleted, User not present as Primary Contact in Emptoris.</value>
+    </labels>
+    <labels>
+        <fullName>Contract_MarketingRight_Exclusive</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract MarketingRight Exclusive</shortDescription>
+        <value>Exclusive</value>
+    </labels>
+    <labels>
+        <fullName>Contract_MarketingRight_NonExclusive</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract MarketingRight NonExclusive</shortDescription>
+        <value>Non-Exclusive</value>
+    </labels>
+    <labels>
+        <fullName>Contract_RenewalTermUnit_Days</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract RenewalTermUnit Days</shortDescription>
+        <value>Days</value>
+    </labels>
+    <labels>
+        <fullName>Contract_RenewalTermUnit_Months</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract RenewalTermUnit Months</shortDescription>
+        <value>Months</value>
+    </labels>
+    <labels>
+        <fullName>Contract_RenewalTermUnit_Years</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract RenewalTermUnit Years</shortDescription>
+        <value>Years</value>
+    </labels>
+    <labels>
+        <fullName>Contract_RiskStatus_Expired</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract RiskStatus Expired</shortDescription>
+        <value>Expired</value>
+    </labels>
+    <labels>
+        <fullName>Contract_SubStatus_AutoRenewed</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract SubStatus AutoRenewed</shortDescription>
+        <value>AutoRenewed</value>
+    </labels>
+    <labels>
+        <fullName>Contract_VideoBillingType_Bulk</fullName>
+        <categories>mdu</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract VideoBillingType Bulk</shortDescription>
+        <value>Bulk</value>
+    </labels>
+    <labels>
+        <fullName>Contract_VideoBillingType_Retail</fullName>
+        <categories>mdu</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract VideoBillingType Retail</shortDescription>
+        <value>Retail</value>
+    </labels>
+    <labels>
+        <fullName>Contract_Video_No</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract Video No</shortDescription>
+        <value>No</value>
+    </labels>
+    <labels>
+        <fullName>Contract_VoiceBillingType_Bulk</fullName>
+        <categories>mdu</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract VoiceBillingType Bulk</shortDescription>
+        <value>Bulk</value>
+    </labels>
+    <labels>
+        <fullName>Contract_VoiceBillingType_Retail</fullName>
+        <categories>mdu</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract VoiceBillingType Retail</shortDescription>
+        <value>Retail</value>
+    </labels>
+    <labels>
+        <fullName>Contract_Voice_No</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contract Voice No</shortDescription>
+        <value>No</value>
+    </labels>
+    <labels>
+        <fullName>ContractorDSSProfileId</fullName>
+        <categories>Direct Sales</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ContractorDSSProfileId</shortDescription>
+        <value>00eG0000000GeZBIA0</value>
+    </labels>
+    <labels>
+        <fullName>ContractorRoleName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ContractorRoleName</shortDescription>
+        <value>Contractor</value>
+    </labels>
+    <labels>
+        <fullName>Contractor_Direct_Sales_Representative</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contractor Sales Professional</shortDescription>
+        <value>Contractor Sales Professional</value>
+    </labels>
+    <labels>
+        <fullName>Contractor_Direct_Sales_Supervisor</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Contractor Direct Sales Supervisor</shortDescription>
+        <value>Contractor Sales Leader</value>
+    </labels>
+    <labels>
+        <fullName>CreateGoalsBatchQueryStringLabel</fullName>
+        <categories>Query string parameter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CreateGoalsBatchQueryStringLabel</shortDescription>
+        <value>Select Id, Name, profile.name, Region__c, Sales_Rep_Type__c, Level__c,Comcast_Division__c,  ManagerId,  Manager.ManagerId, Manager.Manager.ManagerId from User where IsActive = True AND profile.name IN: profileName and UserPermissionsWorkDotComUserFeature = true AND Region__c IN (&apos;Florida Region&apos;,&apos;Greater Chicago Market&apos;,&apos;Heartland Region&apos;,&apos;Greater Boston Market&apos;)</value>
+    </labels>
+    <labels>
+        <fullName>CreateGoalsBatchQueryStringLabelWest</fullName>
+        <categories>Query string parameter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CreateGoalsBatchQueryStringLabelWest</shortDescription>
+        <value>Select Id, Name, profile.name, Region__c, Sales_Rep_Type__c, Level__c,Comcast_Division__c,  ManagerId,  Manager.ManagerId, Manager.Manager.ManagerId from User where IsActive = True AND profile.name IN: profileName and UserPermissionsWorkDotComUserFeature = true AND Region__c IN (&apos;Portland/Salem Market&apos;,&apos;California Market&apos;,&apos;Houston Market&apos;,&apos;Seattle Market&apos;,&apos;Twin Cities Market&apos;,&apos;Mountain West Region&apos;)</value>
+    </labels>
+    <labels>
+        <fullName>CreateGoalsBatchSize</fullName>
+        <categories>Direct Sales Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CreateGoalsBatchSize</shortDescription>
+        <value>1</value>
+    </labels>
+    <labels>
+        <fullName>CreateGoalsBatchSizeWest</fullName>
+        <categories>Direct Sales Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CreateGoalsBatchSizeWest</shortDescription>
+        <value>1</value>
+    </labels>
+    <labels>
+        <fullName>CreatePortfolioAEQuotaBatchQueryStringLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CreatePortfolioAEQuotaBatchQueryStringLabel</shortDescription>
+        <value>Select Id, Name, ManagerId,Profile.name,Manager.Profile.Name,Comcast_Division__c,ProfileId,Sales_Rep_Type__c,UserPermissionsWorkDotComUserFeature from User where  IsActive = True AND  Sales_Rep_Type__c =:portRepType  and UserPermissionsWorkDotComUserFeature = true AND ID IN(&apos;005q0000001CvKH&apos;,&apos;005q00000023LTd&apos;)</value>
+    </labels>
+    <labels>
+        <fullName>CreateSdmAsmActivityGoalStringLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CreateSdmAsmActivityGoalStringLabel</shortDescription>
+        <value>Select id,Name,profile.name from user where Isactive=TRUE AND profile.name IN: profileName and UserPermissionsWorkDotComUserFeature = true AND Region__c IN (&apos;Florida Region&apos;,&apos;Greater Chicago Market&apos;,&apos;Portland/Salem Market&apos;,&apos;California Market&apos;,&apos;Houston Market&apos;,&apos;Seattle Market&apos;,&apos;Twin Cities Market&apos;,&apos;Mile High Region&apos;,&apos;Salt Lake City Market&apos;,&apos;Heartland Region&apos;,&apos;Greater Boston Market&apos;)</value>
+    </labels>
+    <labels>
+        <fullName>DELETE_CONTRACT_ENDPOINT</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DELETE_CONTRACT_ENDPOINT</shortDescription>
+        <value>https://comcasttraining.emptoris.com/webservices/services/ContractServices</value>
+    </labels>
+    <labels>
+        <fullName>DSExecutive_Profile_NAme</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DSExecutive Profile Name</shortDescription>
+        <value>XFINITY Sales Executive</value>
+    </labels>
+    <labels>
+        <fullName>DSMProfileIdLabel</fullName>
+        <categories>Work dot com</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DSMProfileIdLabel</shortDescription>
+        <value>00eG0000000FqAKIA0</value>
+    </labels>
+    <labels>
+        <fullName>DSR</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DSR</shortDescription>
+        <value>DSR</value>
+    </labels>
+    <labels>
+        <fullName>DSRProfileName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DSRProfileName</shortDescription>
+        <value>XFINITY Sales Professional</value>
+    </labels>
+    <labels>
+        <fullName>DSRRoleName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DSRRoleName</shortDescription>
+        <value>DSR</value>
+    </labels>
+    <labels>
+        <fullName>DSRType_All</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DSRType_All</shortDescription>
+        <value>All</value>
+    </labels>
+    <labels>
+        <fullName>DSRType_Con</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DSRType_Con</shortDescription>
+        <value>Contractor</value>
+    </labels>
+    <labels>
+        <fullName>DSRType_MDU</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DSRType_MDU</shortDescription>
+        <value>Multiple Dwelling Unit (MDU)</value>
+    </labels>
+    <labels>
+        <fullName>DSRType_SFU</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DSRType_SFU</shortDescription>
+        <value>Single Family Unit (SFU)</value>
+    </labels>
+    <labels>
+        <fullName>DSRType_USR</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DSRType_USR</shortDescription>
+        <value>Upgrade</value>
+    </labels>
+    <labels>
+        <fullName>DSRType_Winback</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DSRType_Winback</shortDescription>
+        <value>Winback</value>
+    </labels>
+    <labels>
+        <fullName>DSRType_XH</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DSRType_XH</shortDescription>
+        <value>Xfinity Home</value>
+    </labels>
+    <labels>
+        <fullName>DSR_RM_Stats</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DSR_RM_Stats</shortDescription>
+        <value>Stats :</value>
+    </labels>
+    <labels>
+        <fullName>DSSProfileIdLabel</fullName>
+        <categories>work.com</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DSSProfileIdLabel</shortDescription>
+        <value>00eG0000000FqAM</value>
+    </labels>
+    <labels>
+        <fullName>DS_FederationID</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DS_FederationID</shortDescription>
+        <value>Federation ID cannot be left blank for Direct Sales Users</value>
+    </labels>
+    <labels>
+        <fullName>DS_Manager</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DS Manager</shortDescription>
+        <value>Area Sales Manager</value>
+    </labels>
+    <labels>
+        <fullName>DS_Supervisor</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DS Supervisor</shortDescription>
+        <value>Sales Development Manager</value>
+    </labels>
+    <labels>
+        <fullName>Daily_Location</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Daily Location</shortDescription>
+        <value>Daily Location History for</value>
+    </labels>
+    <labels>
+        <fullName>Deactivation_Reason</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Deactivation Reason</shortDescription>
+        <value>45 days of inactivity</value>
+    </labels>
+    <labels>
+        <fullName>Deactivation_Reason_Manual</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Deactivation Reason Manual</shortDescription>
+        <value>Manually done by</value>
+    </labels>
+    <labels>
+        <fullName>Default_Claim_Record_Type</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Default Claim Record Type</shortDescription>
+        <value>Open Assigned Claim</value>
+    </labels>
+    <labels>
+        <fullName>DeletePropertyBatchLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DeletePropertyBatchLabel</shortDescription>
+        <value>SELECT Id,name,Delete_Property__c,RecordType.Name from MDU_Property__c where Delete_Property__c= true</value>
+    </labels>
+    <labels>
+        <fullName>DeletePropertyBatchSize</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DeletePropertyBatchSize</shortDescription>
+        <value>200</value>
+    </labels>
+    <labels>
+        <fullName>DirectSaleReprProfId</fullName>
+        <categories>Direct Sales</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DirectSaleReprProfId</shortDescription>
+        <value>00eG0000000FqAL</value>
+    </labels>
+    <labels>
+        <fullName>DirectSalesDirectorProfile</fullName>
+        <categories>Direct Sales</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DirectSalesDirectorProfile</shortDescription>
+        <value>Direct Sales Director</value>
+    </labels>
+    <labels>
+        <fullName>DirectorProfileIdLabel</fullName>
+        <categories>Direct Sales</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DirectorProfileIdLabel</shortDescription>
+        <value>00e1600000105bUAAQ</value>
+    </labels>
+    <labels>
+        <fullName>DispositionTypeAddress</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DispositionTypeAddress</shortDescription>
+        <value>Non-Marketable Address</value>
+    </labels>
+    <labels>
+        <fullName>DispositionTypeClose</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DispositionTypeClose</shortDescription>
+        <value>Close</value>
+    </labels>
+    <labels>
+        <fullName>DispositionTypeContact</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DispositionTypeContact</shortDescription>
+        <value>Contact</value>
+    </labels>
+    <labels>
+        <fullName>DispositionTypeDiscover</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DispositionTypeDiscover</shortDescription>
+        <value>Discover</value>
+    </labels>
+    <labels>
+        <fullName>DispositionTypeDoorHanger</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DispositionTypeDoorHanger</shortDescription>
+        <value>Door Hanger</value>
+    </labels>
+    <labels>
+        <fullName>DispositionTypeEngage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DispositionTypeEngage</shortDescription>
+        <value>Engage</value>
+    </labels>
+    <labels>
+        <fullName>DispositionTypeNoAnswer</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DispositionTypeNoAnswer</shortDescription>
+        <value>No Answer</value>
+    </labels>
+    <labels>
+        <fullName>DispositionTypeNoKnock</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DispositionTypeNoKnock</shortDescription>
+        <value>No Knock</value>
+    </labels>
+    <labels>
+        <fullName>DispositionTypePosition</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DispositionTypePosition</shortDescription>
+        <value>Position</value>
+    </labels>
+    <labels>
+        <fullName>DispositionTypeStart</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DispositionTypeStart</shortDescription>
+        <value>Start</value>
+    </labels>
+    <labels>
+        <fullName>DivisionGlobal</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DivisionGlobal</shortDescription>
+        <value>Global</value>
+    </labels>
+    <labels>
+        <fullName>DivisionRoleName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DivisionRoleName</shortDescription>
+        <value>Division</value>
+    </labels>
+    <labels>
+        <fullName>DraftTurfPlanDeleteError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>DraftTurfPlanDeleteError</shortDescription>
+        <value>Draft Turf Plan can not be deleted.</value>
+    </labels>
+    <labels>
+        <fullName>EditAddressTriggerController</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EditAddressTriggerController</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>EditLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EditLabel</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>Eligible_Orders_View</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Eligible Orders View</shortDescription>
+        <value>/a0B?fcf=00BJ0000000MO2g</value>
+    </labels>
+    <labels>
+        <fullName>EnterZipOrNode</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EnterZipOrNode</shortDescription>
+        <value>Please enter Zip Code or Node.</value>
+    </labels>
+    <labels>
+        <fullName>EnvironmentName</fullName>
+        <categories>Direct Sales</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>EnvironmentName</shortDescription>
+        <value>PROD</value>
+    </labels>
+    <labels>
+        <fullName>ErrMsgForChangeMgrOfAE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ErrMsgForChangeMgrOfAE</shortDescription>
+        <value>Manager assigned to user does not has any Goals defined</value>
+    </labels>
+    <labels>
+        <fullName>ErrMsgForClosedWonNotPublished</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ErrMsgForClosedWonNotPublished</shortDescription>
+        <value>You can not update opportunity as quota record is not published</value>
+    </labels>
+    <labels>
+        <fullName>ErrMsgForDelOfEvent</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ErrMsgForDelOfEvent</shortDescription>
+        <value>Only Owner can delete an Event</value>
+    </labels>
+    <labels>
+        <fullName>ErrMsgForDelOfTask</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ErrMsgForDelOfTask</shortDescription>
+        <value>Only Owner can delete a Task</value>
+    </labels>
+    <labels>
+        <fullName>ErrMsgOnBulkPlanDeletion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ErrMsgOnBulkPlanDeletion</shortDescription>
+        <value>Bulk Plans cannot be deleted.</value>
+    </labels>
+    <labels>
+        <fullName>Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Error</shortDescription>
+        <value>Error</value>
+    </labels>
+    <labels>
+        <fullName>ErrorMsgForBulkAssignment</fullName>
+        <categories>Direct Sales</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ErrorMsgForBulkAssignment</shortDescription>
+        <value>Select any User For Bulk Assignment</value>
+    </labels>
+    <labels>
+        <fullName>ErrorString</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ErrorString</shortDescription>
+        <value>Error :</value>
+    </labels>
+    <labels>
+        <fullName>Escalation_Dispute</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Escalation Dispute</shortDescription>
+        <value>Escalation Dispute</value>
+    </labels>
+    <labels>
+        <fullName>Event_Delete</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Event Delete</shortDescription>
+        <value>Events cannot be deleted</value>
+    </labels>
+    <labels>
+        <fullName>Event_Status_Completed</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Event Status Completed</shortDescription>
+        <value>Completed</value>
+    </labels>
+    <labels>
+        <fullName>Exclude_User_from_deactivation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Exclude User from deactivation</shortDescription>
+        <value>Exclude_User_from_deactivation</value>
+    </labels>
+    <labels>
+        <fullName>Exclusion_Expired</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Exclusion Expired</shortDescription>
+        <value>Expired</value>
+    </labels>
+    <labels>
+        <fullName>Exit_Without_Cancelling</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Exit Without Cancelling</shortDescription>
+        <value>Exit Without Cancelling</value>
+    </labels>
+    <labels>
+        <fullName>ExpireAddressesBatchSize</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ExpireAddressesBatchSize</shortDescription>
+        <value>1</value>
+    </labels>
+    <labels>
+        <fullName>Failed_Deactivate_User</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Failed Deactivate User</shortDescription>
+        <value>Failed</value>
+    </labels>
+    <labels>
+        <fullName>Feed_Comment_Restriction_Error</fullName>
+        <categories>Chatter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Feed Comment Restriction Error</shortDescription>
+        <value>Your administrator has disabled feed comment deletions or modifications.</value>
+    </labels>
+    <labels>
+        <fullName>Feed_Post_Restriction_Error</fullName>
+        <categories>Chatter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Feed Post Restriction Error</shortDescription>
+        <value>Your administrator has disabled feed post deletions or modifications.</value>
+    </labels>
+    <labels>
+        <fullName>First_Page</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>First_Page</shortDescription>
+        <value>First Page</value>
+    </labels>
+    <labels>
+        <fullName>Former</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Former</shortDescription>
+        <value>Former</value>
+    </labels>
+    <labels>
+        <fullName>GETCONTRACTUSER_ENDPOINT</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GETCONTRACTUSER_ENDPOINT</shortDescription>
+        <value>https://comcasttraining.emptoris.com/webservices/services/UserServices</value>
+    </labels>
+    <labels>
+        <fullName>GETCONTRACT_DETAILS_ENDPOINT</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GETCONTRACT_DETAILS_ENDPOINT</shortDescription>
+        <value>https://comcasttraining.emptoris.com/webservices/services/ContractServices</value>
+    </labels>
+    <labels>
+        <fullName>GET_CONTRACT_URL_ENDPOINT</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GET_CONTRACT_URL_ENDPOINT</shortDescription>
+        <value>https://comcasttraining.emptoris.com/webservices/services/SingleSignonServices</value>
+    </labels>
+    <labels>
+        <fullName>GET_INTERVIEWINSTANCE_ENDPOINT</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GET_INTERVIEWINSTANCE_ENDPOINT</shortDescription>
+        <value>https://comcasttraining.emptoris.com/webservices/services/InterviewInstanceServices</value>
+    </labels>
+    <labels>
+        <fullName>GetPDFTimeOut</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GetPDFTimeOut</shortDescription>
+        <value>45000</value>
+    </labels>
+    <labels>
+        <fullName>Global_Division</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Global Division</shortDescription>
+        <value>Global</value>
+    </labels>
+    <labels>
+        <fullName>GoalDirectSalesRecordType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GoalDirectSalesRecordType</shortDescription>
+        <value>Direct Sales</value>
+    </labels>
+    <labels>
+        <fullName>GoalEditAccess</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GoalEditAccess</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>GoalReadAccess</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GoalReadAccess</shortDescription>
+        <value>Read</value>
+    </labels>
+    <labels>
+        <fullName>GoalStatus</fullName>
+        <categories>Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>GoalStatus</shortDescription>
+        <value>Published</value>
+    </labels>
+    <labels>
+        <fullName>Goal_Goal_Template_Recordtype</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Goal Goal Template Recordtype</shortDescription>
+        <value>Goal Template</value>
+    </labels>
+    <labels>
+        <fullName>Goal_Template_Type_Communities</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Goal Template Type Communities</shortDescription>
+        <value>Communities</value>
+    </labels>
+    <labels>
+        <fullName>Goal_XC_AE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Goal XC AE</shortDescription>
+        <value>XC Account Executive</value>
+    </labels>
+    <labels>
+        <fullName>Goal_XC_Manager</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Goal XC Manager</shortDescription>
+        <value>XC Manager</value>
+    </labels>
+    <labels>
+        <fullName>Goal_Xfinity_CAR</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Goal Xfinity CAR</shortDescription>
+        <value>Xfinity CAR</value>
+    </labels>
+    <labels>
+        <fullName>Goal_Xfinity_Communities_Recordtype</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Goal Xfinity Communities Recordtype</shortDescription>
+        <value>Xfinity Communities</value>
+    </labels>
+    <labels>
+        <fullName>HOST_URL</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HOST_URL</shortDescription>
+        <value>comcasttraining.emptoris.com</value>
+    </labels>
+    <labels>
+        <fullName>HardStopForDSRErrorMsg1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HardStopForDSRErrorMsg1</shortDescription>
+        <value>Only</value>
+    </labels>
+    <labels>
+        <fullName>HardStopForDSRErrorMsg2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HardStopForDSRErrorMsg2</shortDescription>
+        <value>Turf plan records can be assigned to [user]</value>
+    </labels>
+    <labels>
+        <fullName>Incomplete_Event_Delete</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Incomplete Event Delete</shortDescription>
+        <value>Non-Completed Events cannot be deleted</value>
+    </labels>
+    <labels>
+        <fullName>IncrementalSubsAddedValidationMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IncrementalSubsAddedValidationMsg</shortDescription>
+        <value>&apos;Incremental Subs Added&apos; can only be changed for Property Industry Type=Education and IPTV selected.</value>
+    </labels>
+    <labels>
+        <fullName>Indirect_Observation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Indirect Observation</shortDescription>
+        <value>Indirect Observation</value>
+    </labels>
+    <labels>
+        <fullName>Instance</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Instance</shortDescription>
+        <value>onecomcast.my</value>
+    </labels>
+    <labels>
+        <fullName>Integration_User_Profile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Integration User Profile</shortDescription>
+        <value>Integration User</value>
+    </labels>
+    <labels>
+        <fullName>InterviewAlreadyLaunchedError</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>InterviewAlreadyLaunchedError</shortDescription>
+        <value>ERROR: Interview is already Launched. Please complete the Interview steps OR refresh the page and resume the interview!</value>
+    </labels>
+    <labels>
+        <fullName>Invalid_Orders</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid Orders</shortDescription>
+        <value>are not valid for the selected Affiliate user.</value>
+    </labels>
+    <labels>
+        <fullName>Invalid_Orders_Message1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid Orders Message1</shortDescription>
+        <value>Orders (</value>
+    </labels>
+    <labels>
+        <fullName>Invalid_Orders_Message2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Invalid Orders Message2</shortDescription>
+        <value>) are not valid for the selected Affiliate user.</value>
+    </labels>
+    <labels>
+        <fullName>JOB_StatusNew</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>JOB_StatusNew</shortDescription>
+        <value>New</value>
+    </labels>
+    <labels>
+        <fullName>Knock</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Knock</shortDescription>
+        <value>Knock</value>
+    </labels>
+    <labels>
+        <fullName>KnockDashboardRefreshIntervalInMinutes</fullName>
+        <categories>DSM App</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>KnockDashboardRefreshIntervalInMinutes</shortDescription>
+        <value>2</value>
+    </labels>
+    <labels>
+        <fullName>KnockHistoryRecordsForLastNDays</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>KnockHistoryRecordsForLastNDays</shortDescription>
+        <value>30</value>
+    </labels>
+    <labels>
+        <fullName>KnockSalesType_Winback</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>KnockSalesType_Winback</shortDescription>
+        <value>Winback</value>
+    </labels>
+    <labels>
+        <fullName>LAUNCH_EMPTORIS_URL_ENDPOINT</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LAUNCH_EMPTORIS_URL_ENDPOINT</shortDescription>
+        <value>https://comcasttraining.emptoris.com/webservices/services/SingleSignonServices</value>
+    </labels>
+    <labels>
+        <fullName>LastTwoMonths</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LastTwoMonths</shortDescription>
+        <value>2</value>
+    </labels>
+    <labels>
+        <fullName>Last_Location</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Last Location</shortDescription>
+        <value>Last reported location for</value>
+    </labels>
+    <labels>
+        <fullName>Last_Page</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Last_Page</shortDescription>
+        <value>Last Page</value>
+    </labels>
+    <labels>
+        <fullName>Last_reported_location_today</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Last reported location today</shortDescription>
+        <value>Last reported location today</value>
+    </labels>
+    <labels>
+        <fullName>Launch_Emptoris_Error</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Launch Emptoris Error</shortDescription>
+        <value>Error while processing your request. Please contact your system administrator!</value>
+    </labels>
+    <labels>
+        <fullName>Launch_Interview_HTTP_ERROR</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Launch Interview HTTP ERROR</shortDescription>
+        <value>Your request cannot be processed. Please contact your System Administrator</value>
+    </labels>
+    <labels>
+        <fullName>LeadPrefix</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>LeadPrefix</shortDescription>
+        <value>00Q</value>
+    </labels>
+    <labels>
+        <fullName>Lead_Source_Affiliate</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Lead Source Affiliate</shortDescription>
+        <value>Affiliate</value>
+    </labels>
+    <labels>
+        <fullName>Limit_Addresses_To_Turf</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Limit Addresses To Turf</shortDescription>
+        <value>You cannot add more than 1000 addresses to a plan.</value>
+    </labels>
+    <labels>
+        <fullName>Log_RoleString</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Log_RoleString</shortDescription>
+        <value>National Manager, Division Manager, System Administrator, Comcast_Residential</value>
+    </labels>
+    <labels>
+        <fullName>MAX_EXPORT_COLUMNS</fullName>
+        <categories>Wave,Export 2 Excel</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MAX_EXPORT_COLUMNS</shortDescription>
+        <value>25</value>
+    </labels>
+    <labels>
+        <fullName>Manager</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Manager</shortDescription>
+        <value>Manager</value>
+    </labels>
+    <labels>
+        <fullName>ManagerRoleName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ManagerRoleName</shortDescription>
+        <value>DS Manager</value>
+    </labels>
+    <labels>
+        <fullName>MetricCompletion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Metric Completion</shortDescription>
+        <value>Completion</value>
+    </labels>
+    <labels>
+        <fullName>MetricDailyBatchQueryNew1</fullName>
+        <categories>SalesSpace Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MetricDailyBatchQueryNew1</shortDescription>
+        <value>SELECT Id From User WHERE IsActive = True AND ProfileId =: DIRECT_SALES_REPR_PROFILE_ID AND  UserPermissionsWorkDotComUserFeature = true AND Region__c IN (&apos;Greater Chicago Market&apos;,&apos;Heartland Region&apos;)</value>
+    </labels>
+    <labels>
+        <fullName>MetricDailyBatchQueryNew2</fullName>
+        <categories>SalesSpace Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MetricDailyBatchQueryNew2</shortDescription>
+        <value>SELECT Id From User WHERE IsActive = True AND ProfileId =: DIRECT_SALES_REPR_PROFILE_ID AND  UserPermissionsWorkDotComUserFeature = true AND Region__c IN (&apos;Florida Region&apos;,&apos;Greater Boston Market&apos;)</value>
+    </labels>
+    <labels>
+        <fullName>MetricDailyBatchQueryNew3</fullName>
+        <categories>SalesSpace Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MetricDailyBatchQueryNew3</shortDescription>
+        <value>SELECT Id From User WHERE IsActive = True AND ProfileId =: DIRECT_SALES_REPR_PROFILE_ID AND  UserPermissionsWorkDotComUserFeature = true AND Region__c IN (&apos;Twin Cities Market&apos;,&apos;California Market&apos;,&apos;Portland/Salem Market&apos;,&apos;Seattle Market&apos;,&apos;Mountain West Region&apos;,&apos;Houston Market&apos;)</value>
+    </labels>
+    <labels>
+        <fullName>MetricDailyBatchQueryString2</fullName>
+        <categories>Direct Sales Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MetricDailyBatchQueryString2</shortDescription>
+        <value>SELECT Timestamp__c, Knocked_Date__c , Id, CreatedDate, Hour_of_Day__c, Off_Turf__c, Disposition__c, HSI_Sold__c, Video_Sold__c, Voice_Sold__c, XH_Sold__c, OwnerId, Owner.ProfileId FROM Task WHERE CreatedBy.Region__c IN (&apos;Florida Region&apos;,&apos;Mile High Region&apos;,&apos;Portland/Salem Market&apos;,&apos;Twin Cities Market&apos;) AND Owner.ProfileId =: DIRECT_SALES_REPR_PROFILE_ID AND RecordTypeId =: knockRecordTypeId AND CreatedDate &gt;= :BYWEEK_COMMISION_START_DATE AND CreatedDate &lt; :taskCommsionEndDate</value>
+    </labels>
+    <labels>
+        <fullName>MetricDailyBatchQueryString3</fullName>
+        <categories>Direct Sales Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MetricDailyBatchQueryString3</shortDescription>
+        <value>SELECT Timestamp__c, Knocked_Date__c , Id, CreatedDate, Hour_of_Day__c, Off_Turf__c, Disposition__c, HSI_Sold__c, Video_Sold__c, Voice_Sold__c, XH_Sold__c, OwnerId, Owner.ProfileId FROM Task WHERE CreatedBy.Region__c IN (&apos;Greater Boston Market&apos;,&apos;Houston Market&apos;,&apos;Salt Lake City Market&apos;,&apos;Seattle Market&apos;,&apos;California Market&apos;) AND Owner.ProfileId =: DIRECT_SALES_REPR_PROFILE_ID AND RecordTypeId =: knockRecordTypeId AND CreatedDate &gt;= :BYWEEK_COMMISION_START_DATE AND CreatedDate &lt; :taskCommsionEndDate</value>
+    </labels>
+    <labels>
+        <fullName>MetricDailyBatchQueryStringLabel</fullName>
+        <categories>Query string parameter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MetricDailyBatchQueryStringLabel</shortDescription>
+        <value>SELECT Timestamp__c, Knocked_Date__c , Id, CreatedDate, Hour_of_Day__c, Off_Turf__c, Disposition__c, HSI_Sold__c, Video_Sold__c, Voice_Sold__c, XH_Sold__c, OwnerId, Owner.ProfileId FROM Task WHERE CreatedBy.Region__c IN (&apos;Greater Chicago Market&apos;,&apos;Heartland Region&apos;) AND Owner.ProfileId =: DIRECT_SALES_REPR_PROFILE_ID AND RecordTypeId =: knockRecordTypeId AND CreatedDate &gt;= :BYWEEK_COMMISION_START_DATE AND CreatedDate &lt; :taskCommsionEndDate</value>
+    </labels>
+    <labels>
+        <fullName>MetricDailyNewBatchSize1</fullName>
+        <categories>SalesSpace Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MetricDailyNewBatchSize1</shortDescription>
+        <value>20</value>
+    </labels>
+    <labels>
+        <fullName>MetricDailyNewBatchSize2</fullName>
+        <categories>SalesSpace Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MetricDailyNewBatchSize2</shortDescription>
+        <value>20</value>
+    </labels>
+    <labels>
+        <fullName>MetricDailyNewBatchSize3</fullName>
+        <categories>SalesSpace Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MetricDailyNewBatchSize3</shortDescription>
+        <value>20</value>
+    </labels>
+    <labels>
+        <fullName>MetricDailyUpdateBatchSize</fullName>
+        <categories>Direct Sales Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MetricDailyUpdateBatchSize</shortDescription>
+        <value>200</value>
+    </labels>
+    <labels>
+        <fullName>MetricDailyUpdateBatchSize2</fullName>
+        <categories>Direct Sales Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MetricDailyUpdateBatchSize2</shortDescription>
+        <value>200</value>
+    </labels>
+    <labels>
+        <fullName>MetricDailyUpdateBatchSize3</fullName>
+        <categories>Direct Sales Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MetricDailyUpdateBatchSize3</shortDescription>
+        <value>200</value>
+    </labels>
+    <labels>
+        <fullName>MetricFieldValidationErrorMsg1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MetricFieldValidationErrorMsg1</shortDescription>
+        <value>You are not allowed to change this field</value>
+    </labels>
+    <labels>
+        <fullName>MetricFieldValidationErrorMsg2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MetricFieldValidationErrorMsg2</shortDescription>
+        <value>You cannot edit the metric field.</value>
+    </labels>
+    <labels>
+        <fullName>MetricProgress</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Metric Progress</shortDescription>
+        <value>Progress</value>
+    </labels>
+    <labels>
+        <fullName>Metric_Name_AveragePropertyVisitsperDay</fullName>
+        <categories>Car Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Metric_Name_AveragePropertyVisitsperDay</shortDescription>
+        <value>Average Property Visits per Day</value>
+    </labels>
+    <labels>
+        <fullName>Metric_Name_Events</fullName>
+        <categories>Car Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Metric_Name_Events</shortDescription>
+        <value>Sales Event</value>
+    </labels>
+    <labels>
+        <fullName>Metric_Name_ProfileCompletionPercent</fullName>
+        <categories>Car Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Metric_Name_ProfileCompletionPercent</shortDescription>
+        <value>Profile Completion Percent</value>
+    </labels>
+    <labels>
+        <fullName>Metric_Name_TotalPropertyVisitsperMonth</fullName>
+        <categories>Car Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Metric_Name_TotalPropertyVisitsperMonth</shortDescription>
+        <value>Total Property Visits per Month</value>
+    </labels>
+    <labels>
+        <fullName>MobileAPI</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MobileAPI</shortDescription>
+        <value>Mobile API</value>
+    </labels>
+    <labels>
+        <fullName>MonthlyGoalCreationBatchSize</fullName>
+        <categories>Car Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MonthlyGoalCreationBatchSize</shortDescription>
+        <value>1</value>
+    </labels>
+    <labels>
+        <fullName>Multiple_LOB_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Multiple LOB Error</shortDescription>
+        <value>More than one LOB retrieved in the response.</value>
+    </labels>
+    <labels>
+        <fullName>NO_ACCESS_TO_MODIFY_ACOOUNT</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NO_ACCESS_TO_MODIFY_ACOOUNT</shortDescription>
+        <value>You are not authorized to modify the Parent Account information. Please contact your system administrator.</value>
+    </labels>
+    <labels>
+        <fullName>NationalRoleName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NationalRoleName</shortDescription>
+        <value>National</value>
+    </labels>
+    <labels>
+        <fullName>Never</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Never</shortDescription>
+        <value>Never</value>
+    </labels>
+    <labels>
+        <fullName>NewBuild_Status_Active</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NewBuild Status Active</shortDescription>
+        <value>Active</value>
+    </labels>
+    <labels>
+        <fullName>NewBuild_Status_Complete</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NewBuild Status Complete</shortDescription>
+        <value>Complete</value>
+    </labels>
+    <labels>
+        <fullName>Next</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Next</shortDescription>
+        <value>Next</value>
+    </labels>
+    <labels>
+        <fullName>NoAddressInPlanErrorMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NoAddressInPlanErrorMsg</shortDescription>
+        <value>No Address is present in the plan.</value>
+    </labels>
+    <labels>
+        <fullName>NoAddressParameterError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NoAddressParameterError</shortDescription>
+        <value>No Address parameter present in the Request.</value>
+    </labels>
+    <labels>
+        <fullName>NoRecordsFound</fullName>
+        <categories>Mdu</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NoRecordsFound</shortDescription>
+        <value>No Records Found!</value>
+    </labels>
+    <labels>
+        <fullName>NoUnitsInComplexOffice</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>NoUnitsInComplexOffice</shortDescription>
+        <value>No Units are attached with this Complex Office.</value>
+    </labels>
+    <labels>
+        <fullName>No_Address_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Address Error</shortDescription>
+        <value>No Address is present in the plan.</value>
+    </labels>
+    <labels>
+        <fullName>No_CAR_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No CAR Error</shortDescription>
+        <value>A CAR must be selected.</value>
+    </labels>
+    <labels>
+        <fullName>No_Car_Activity_history</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Car Activity history</shortDescription>
+        <value>No CAR Activity history available for</value>
+    </labels>
+    <labels>
+        <fullName>No_DSR_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No DSR Error</shortDescription>
+        <value>A DSR must be selected.</value>
+    </labels>
+    <labels>
+        <fullName>No_Date_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Date Error</shortDescription>
+        <value>A date must be entered</value>
+    </labels>
+    <labels>
+        <fullName>No_Disposition_History</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Disposition History</shortDescription>
+        <value>No disposition history available for</value>
+    </labels>
+    <labels>
+        <fullName>No_Location_History</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No Location History</shortDescription>
+        <value>No location history available for</value>
+    </labels>
+    <labels>
+        <fullName>No_UserRole_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No_UserRole_Error</shortDescription>
+        <value>User Role not populated, please contact your Administrator</value>
+    </labels>
+    <labels>
+        <fullName>No_View_Selected</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>No View Selected</shortDescription>
+        <value>Please select a View Type.</value>
+    </labels>
+    <labels>
+        <fullName>Non_Affiliate_Contact</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Non Affiliate Contact</shortDescription>
+        <value>The selected Contact is not an Affiliate.</value>
+    </labels>
+    <labels>
+        <fullName>Number_of_days_for_CAR_activity_identification</fullName>
+        <categories>Property Lab</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Number of days for CAR activity identification</shortDescription>
+        <value>7</value>
+    </labels>
+    <labels>
+        <fullName>Observation_Rating_AchievedExpectations</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Observation_Rating_AchievedExpectations</shortDescription>
+        <value>Achieved Expectations</value>
+    </labels>
+    <labels>
+        <fullName>Observation_Rating_Exceptional</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Observation_Rating_Exceptional</shortDescription>
+        <value>Exceptional</value>
+    </labels>
+    <labels>
+        <fullName>Observation_Rating_HighlyEffective</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Observation_Rating_HighlyEffective</shortDescription>
+        <value>Highly Effective</value>
+    </labels>
+    <labels>
+        <fullName>Observation_Rating_NA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Observation_Rating_NA</shortDescription>
+        <value>N/A</value>
+    </labels>
+    <labels>
+        <fullName>Observation_Rating_NeedsImprovement</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Observation_Rating_NeedsImprovement</shortDescription>
+        <value>Needs Improvement</value>
+    </labels>
+    <labels>
+        <fullName>Observation_Rating_Unacceptable</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Observation_Rating_Unacceptable</shortDescription>
+        <value>Unacceptable</value>
+    </labels>
+    <labels>
+        <fullName>On</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>On</shortDescription>
+        <value>on</value>
+    </labels>
+    <labels>
+        <fullName>Opp_Prop_Trigger_ECM_Err</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opp Prop Trigger ECM Err</shortDescription>
+        <value>Cannot delete opportunity property which has ECM Contract ID field present on it</value>
+    </labels>
+    <labels>
+        <fullName>Opp_Prop_Trigger_Open_Opp_Err</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opp Prop Trigger Open Opp Err</shortDescription>
+        <value>Cannot add Property as it is associated with one or more Open Opportunity.</value>
+    </labels>
+    <labels>
+        <fullName>Opp_Prop_Trigger_Primary_Delete_Err</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opp Prop Trigger Primary Delete Err</shortDescription>
+        <value>Cannot delete opportunity property which has no other opportunity property on it.</value>
+    </labels>
+    <labels>
+        <fullName>Opp_Prop_Trigger_Primary_IndustryType_Err</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opp Prop Trigger Primary IndustryType Err</shortDescription>
+        <value>Industry Type of property to be added should be match to Industry type of primary property.</value>
+    </labels>
+    <labels>
+        <fullName>Opp_Prop_Trigger_Primary_PropType_Err</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opp Prop Trigger Primary PropType Err</shortDescription>
+        <value>Property Type on the new property should be same as that of Primary Property.</value>
+    </labels>
+    <labels>
+        <fullName>Opp_Prop_Trigger_Property_Types</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opp Prop Trigger Property Types</shortDescription>
+        <value>&apos;CONDOMINIUM&apos;;&apos;CONDOMINIUM-DETACHED&apos;;&apos;TOWN HOMES&apos;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OpportunityEditAccess</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>OpportunityPrefix</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OpportunityPrefix</shortDescription>
+        <value>006</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_AE_Change_Validation</fullName>
+        <categories>MDU,Communities</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity AE Change Validation</shortDescription>
+        <value>Contractor AE doesn&apos;t report in the region of logged in user</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_AE_Change_Validation1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity AE Change Validation1</shortDescription>
+        <value>There is no CRM mappings for this new AE</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Construction_Capex_Cost_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Construction_Capex_Cost Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Construction Capex Cost must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Data_Bulk_Current_Rate_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Data_Bulk_Current_Rate Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Data Bulk Current Rate must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Data_Bulk_Discount_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Data_Bulk_Discount Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Data Bulk Discount must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Data_Bulk_Proposed_Rate_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Data_Bulk_Proposed_Rate Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Data Bulk Proposed Rate must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Data_Estimated_Revenue_Share_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Data_Estimated_Revenue_Share Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Data Estimated Revenue Share Rate must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Data_Monthly_Revenue_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Data_Monthly_Revenue Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Data Monthly Revenue must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Data_Penetration_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Data_Penetration Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Data Penetration must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Data_Retail_Rate_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Data_Retail_Rate Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Data Retail Rate must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Data_Subs_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Data_Subs Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Data Subs must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Gross_Contract_Value_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Gross_Contract_Value Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Gross Contract Value must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_IRR_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page IRR Err</shortDescription>
+        <value>Opportunity Page: CAF Section-IRR must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_NPV_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page NPV Err</shortDescription>
+        <value>Opportunity Page: CAF Section-NPV must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Payback_Period_Months_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Payback_Period_Months Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Payback Period Months must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Per_Unit_Door_Fee_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Per_Unit_Door_Fee Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Per Unit Door Fee must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Total_Equipment_Cost_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Total_Equipment_Cost Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Total Equipment Cost must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Video_Bulk_Current_Rate_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Video_Bulk_Current_Rate Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Video Bulk Current Rate must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Video_Bulk_Discount_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Video_Bulk_Discount Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Video Bulk Discount must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Video_Bulk_Proposed_Rate_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Video_Bulk_Proposed_Rate Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Video Bulk Proposed Rate must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Video_Estimated_Revenue_Share_Rate_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Video_Estimated_Revenue_Share_Rate Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Video Estimated Revenue Share Rate must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Video_Monthly_Revenue_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Video_Monthly_Revenue Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Video Monthly Revenue must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Video_Penetration_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Video_Penetration Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Video Penetration must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Video_Retail_Rate_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Video_Retail_Rate Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Video Retail Rate must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Video_Subs_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Video_Subs Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Video Subs must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Voice_Bulk_Current_Rate_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Voice_Bulk_Current_Rate Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Voice Bulk Current Rate must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Voice_Bulk_Discount_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Voice_Bulk_Discount Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Voice Bulk Discount must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Voice_Bulk_Proposed_Rate_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Voice_Bulk_Proposed_Rate Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Voice Bulk Proposed Rate must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Voice_Estimated_Revenue_Share_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Voice_Estimated_Revenue_Share Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Voice Estimated Revenue Share Rate must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Voice_Monthly_Revenue_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Voice_Monthly_Revenue Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Voice Monthly Revenue must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Voice_Penetration_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Voice_Penetration Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Voice Penetration must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Voice_Retail_Rate_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Voice_Retail_Rate Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Voice Retail Rate must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Page_Voice_Subs_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Page Voice_Subs Err</shortDescription>
+        <value>Opportunity Page: CAF Section-Voice Subs must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Profile_Validation_On_Stage</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Profile Validation On Stage</shortDescription>
+        <value>XC Account Executive,  XC AE Contractors, XC Sales Support, XC Manager</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Record_Type_XC</fullName>
+        <categories>sid</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XC Opportunity Record Type</shortDescription>
+        <value>Xfinity Opportunity Record Type</value>
+    </labels>
+    <labels>
+        <fullName>Opportunity_Stage_Validation_Message</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Stage Validation Message</shortDescription>
+        <value>Opportunity Stage cannot proceed to Contact Made without a Primary Property</value>
+    </labels>
+    <labels>
+        <fullName>OptyOwnerChange</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Owner Change Page</shortDescription>
+        <value>Change Opportunity Owner</value>
+    </labels>
+    <labels>
+        <fullName>OptyOwnerChangeBackButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Owner Change Page Back button</shortDescription>
+        <value>Back</value>
+    </labels>
+    <labels>
+        <fullName>OptyOwnerChangeHeader</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Owner Change Page Header</shortDescription>
+        <value>This screen allows you to transfer an opportunity from one user to another. When you transfer ownership of an opportunity, the new user will own:</value>
+    </labels>
+    <labels>
+        <fullName>OptyOwnerChangeHeaderList1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Owner Change Page Header List Item1</shortDescription>
+        <value>all notes that were recorded for this opportunity owned by current owner</value>
+    </labels>
+    <labels>
+        <fullName>OptyOwnerChangeHeaderList2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Owner Change Page Header List Item2</shortDescription>
+        <value>all activities (tasks and events) that were recorded for this opportunity owned by current owner</value>
+    </labels>
+    <labels>
+        <fullName>OptyOwnerChangeNote</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Owner Change Page Note</shortDescription>
+        <value>Note that completed activities will not be transferred.</value>
+    </labels>
+    <labels>
+        <fullName>OptyOwnerChangeNotification</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Owner Change Send Notification</shortDescription>
+        <value>Send Notification Email</value>
+    </labels>
+    <labels>
+        <fullName>OptyOwnerChangePageBlock</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Owner Change Page Block</shortDescription>
+        <value>Select New Owner</value>
+    </labels>
+    <labels>
+        <fullName>OptyOwnerChangeSaveButton</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Owner Change Page Save button</shortDescription>
+        <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>OptyOwnerChangeWarning</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Opportunity Owner Change Page warning</shortDescription>
+        <value>*Atleast 1 Opportunity must be selected.</value>
+    </labels>
+    <labels>
+        <fullName>OrderListview</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Address for Orders Listview</shortDescription>
+        <value>/a0B</value>
+    </labels>
+    <labels>
+        <fullName>Order_Already_Has_Claim</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Order Already Has Claim</shortDescription>
+        <value>Order already has a claim on it.</value>
+    </labels>
+    <labels>
+        <fullName>Order_Detail_Report</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Order Detail Report</shortDescription>
+        <value>/00OG0000004H4ES</value>
+    </labels>
+    <labels>
+        <fullName>Order_Not_Eligible_For_Claim</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Order Not Eligible For Claim</shortDescription>
+        <value>Order is not eligible for a Claim.</value>
+    </labels>
+    <labels>
+        <fullName>Order_Status_Activated</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Order Status Activated</shortDescription>
+        <value>Activated</value>
+    </labels>
+    <labels>
+        <fullName>Order_Summary_Report</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Order Summary Report</shortDescription>
+        <value>/00OG0000004H4ET</value>
+    </labels>
+    <labels>
+        <fullName>PL_CARDirectorMonthlyGoalCreationBatch</fullName>
+        <categories>Query string parameter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PL_CARDirectoryMonthlyGoalCreationBatch</shortDescription>
+        <value>SELECT Id, Name, Profile.Name FROM User WHERE Id IN :CARDirectorOrSrManagersIds AND UserPermissionsWorkDotComUserFeature = true</value>
+    </labels>
+    <labels>
+        <fullName>PL_CARDirectoryMonthlyGoalCreationBatch</fullName>
+        <categories>Query string parameter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PL_CARDirectoryMonthlyGoalCreationBatch</shortDescription>
+        <value>SELECT Id, Name, Profile.Name FROM User WHERE Id IN :CARDirectorOrSrManagersIds AND UserPermissionsWorkDotComUserFeature = true</value>
+    </labels>
+    <labels>
+        <fullName>PL_MonthlyGoalBatchMetricStatus</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PL_MonthlyGoalBatchMetricStatus</shortDescription>
+        <value>NotStarted</value>
+    </labels>
+    <labels>
+        <fullName>PL_MonthlyGoalCreationBatchCusSetData</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PL_MonthlyGoalCreationBatchCusSetData</shortDescription>
+        <value>Property Lab CAR</value>
+    </labels>
+    <labels>
+        <fullName>PL_MonthlyGoalCreationBatchGolTempType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PL_MonthlyGoalCreationBatchGolTempType</shortDescription>
+        <value>Property Lab</value>
+    </labels>
+    <labels>
+        <fullName>PL_MonthlyGoalCreationBatchProfile</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PL_MonthlyGoalCreationBatchProfile</shortDescription>
+        <value>Xfinity CAR;</value>
+    </labels>
+    <labels>
+        <fullName>PL_MonthlyGoalCreationBatchProfileCAR</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PL_MonthlyGoalCreationBatchProfileCAR</shortDescription>
+        <value>Xfinity CAR</value>
+    </labels>
+    <labels>
+        <fullName>PL_MonthlyGoalCreationBatchScheduleQuery</fullName>
+        <categories>Query string parameter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PL_MonthlyGoalCreationBatchScheduleQuery</shortDescription>
+        <value>Select Id, Name, ManagerId,Profile.name,Region__c from User where IsActive = True AND Profile.Name IN: profileNameSet and UserPermissionsWorkDotComUserFeature = true</value>
+    </labels>
+    <labels>
+        <fullName>PL_MonthlyGoalGolStatus</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PL_MonthlyGoalGolStatus</shortDescription>
+        <value>Published</value>
+    </labels>
+    <labels>
+        <fullName>PROP_BulkStatus_NotServiced</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP_BulkStatus_NotServiced</shortDescription>
+        <value>Not Serviced</value>
+    </labels>
+    <labels>
+        <fullName>PROP_ContractStatus_Expired</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP ContractStatus Expired</shortDescription>
+        <value>Expired</value>
+    </labels>
+    <labels>
+        <fullName>PROP_DataBillingType_Bulk</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP DataBillingType Bulk</shortDescription>
+        <value>Bulk</value>
+    </labels>
+    <labels>
+        <fullName>PROP_DataBillingType_Retail</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP DataBillingType Retail</shortDescription>
+        <value>Retail</value>
+    </labels>
+    <labels>
+        <fullName>PROP_DataContractStatus_NoContract</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP DataContractStatus NoContract</shortDescription>
+        <value>No Contract</value>
+    </labels>
+    <labels>
+        <fullName>PROP_DataServiced_Yes</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP DataServiced Yes</shortDescription>
+        <value>Yes</value>
+    </labels>
+    <labels>
+        <fullName>PROP_IndustryTypeMultiFamiliy</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP IndustryTypeMultiFamiliy</shortDescription>
+        <value>Multi Family</value>
+    </labels>
+    <labels>
+        <fullName>PROP_IndustryTypeSingle_Family</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP IndustryTypeSingle Family</shortDescription>
+        <value>Single Family</value>
+    </labels>
+    <labels>
+        <fullName>PROP_PropertyBulkStatusBulk</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP PropertyBulkStatusBulk</shortDescription>
+        <value>Bulk</value>
+    </labels>
+    <labels>
+        <fullName>PROP_PropertyBulkStatusRetail</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP PropertyBulkStatusRetail</shortDescription>
+        <value>Retail</value>
+    </labels>
+    <labels>
+        <fullName>PROP_PropertyTypeApartment</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP PropertyTypeApartment</shortDescription>
+        <value>Apartment</value>
+    </labels>
+    <labels>
+        <fullName>PROP_PropertyTypeAssistedLivling</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP PropertyTypeAssistedLivling</shortDescription>
+        <value>Assisted Living</value>
+    </labels>
+    <labels>
+        <fullName>PROP_PropertyTypePublicHousing</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP PropertyTypePublicHousing</shortDescription>
+        <value>Public Housing</value>
+    </labels>
+    <labels>
+        <fullName>PROP_PropertyTypeRetirementHome</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP PropertyTypeRetirementHome</shortDescription>
+        <value>Retirement Home</value>
+    </labels>
+    <labels>
+        <fullName>PROP_PropertyTypeSeniorApartments</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP_PropertyTypeSeniorApartments</shortDescription>
+        <value>Senior Apartments</value>
+    </labels>
+    <labels>
+        <fullName>PROP_PropertyTypeUnknown</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP PropertyTypeUnknown</shortDescription>
+        <value>Unknown</value>
+    </labels>
+    <labels>
+        <fullName>PROP_RiskStatus_Above24</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP RiskStatus Above24</shortDescription>
+        <value>&gt;24</value>
+    </labels>
+    <labels>
+        <fullName>PROP_RiskStatus_AutoRenewed</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP RiskStatus AutoRenewed</shortDescription>
+        <value>Auto-Renewed</value>
+    </labels>
+    <labels>
+        <fullName>PROP_RiskStatus_Franchise</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP RiskStatus Franchise</shortDescription>
+        <value>LOF</value>
+    </labels>
+    <labels>
+        <fullName>PROP_RiskStatus_NoContract</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP RiskStatus NoContract</shortDescription>
+        <value>No Contract</value>
+    </labels>
+    <labels>
+        <fullName>PROP_RiskStatus_WithIn0To6</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP RiskStatus WithIn0To6</shortDescription>
+        <value>&gt;0&lt;=6</value>
+    </labels>
+    <labels>
+        <fullName>PROP_RiskStatus_WithIn12To24</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP RiskStatus WithIn12To24</shortDescription>
+        <value>&gt;12&lt;=24</value>
+    </labels>
+    <labels>
+        <fullName>PROP_RiskStatus_WithIn6To12</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP RiskStatus WithIn6To12</shortDescription>
+        <value>&gt;6&lt;=12</value>
+    </labels>
+    <labels>
+        <fullName>PROP_SegmentationH</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP SegmentationH</shortDescription>
+        <value>H</value>
+    </labels>
+    <labels>
+        <fullName>PROP_Segmentation_A</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP Segmentation A</shortDescription>
+        <value>A</value>
+    </labels>
+    <labels>
+        <fullName>PROP_Segmentation_B</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP Segmentation B</shortDescription>
+        <value>B</value>
+    </labels>
+    <labels>
+        <fullName>PROP_Segmentation_C</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP Segmentation C</shortDescription>
+        <value>C</value>
+    </labels>
+    <labels>
+        <fullName>PROP_Segmentation_D</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP Segmentation D</shortDescription>
+        <value>D</value>
+    </labels>
+    <labels>
+        <fullName>PROP_Segmentation_E</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP Segmentation E</shortDescription>
+        <value>E</value>
+    </labels>
+    <labels>
+        <fullName>PROP_Segmentation_F</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP Segmentation F</shortDescription>
+        <value>F</value>
+    </labels>
+    <labels>
+        <fullName>PROP_Segmentation_G</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP Segmentation G</shortDescription>
+        <value>G</value>
+    </labels>
+    <labels>
+        <fullName>PROP_Segmentation_I</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP Segmentation I</shortDescription>
+        <value>I</value>
+    </labels>
+    <labels>
+        <fullName>PROP_VideoBillingType_Bulk</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP VideoBillingType Bulk</shortDescription>
+        <value>Bulk</value>
+    </labels>
+    <labels>
+        <fullName>PROP_VideoBillingType_Retail</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP VideoBillingType Retail</shortDescription>
+        <value>Retail</value>
+    </labels>
+    <labels>
+        <fullName>PROP_VideoServiced_Yes</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP VideoServiced Yes</shortDescription>
+        <value>Yes</value>
+    </labels>
+    <labels>
+        <fullName>PROP_VoiceBillingType_Bulk</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP VoiceBillingType Bulk</shortDescription>
+        <value>Bulk</value>
+    </labels>
+    <labels>
+        <fullName>PROP_VoiceBillingType_Retail</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP VoiceBillingType Retail</shortDescription>
+        <value>Retail</value>
+    </labels>
+    <labels>
+        <fullName>PROP_VoiceServiced_Yes</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PROP VoiceServiced Yes</shortDescription>
+        <value>Yes</value>
+    </labels>
+    <labels>
+        <fullName>PaginationFirstPage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PaginationFirstPage</shortDescription>
+        <value>Already at the first page.</value>
+    </labels>
+    <labels>
+        <fullName>PaginationLastPage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PaginationLastPage</shortDescription>
+        <value>Already at the last page.</value>
+    </labels>
+    <labels>
+        <fullName>ParentAccountAssignErr</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ParentAccountAssignErr</shortDescription>
+        <value>Parent Account can only be assigned from Parent Account Selection list!</value>
+    </labels>
+    <labels>
+        <fullName>ParentAccountDoesNotExists</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ParentAccountDoesNotExists</shortDescription>
+        <value>Parent Account does not exist in system. Please request creation of parent account for association!</value>
+    </labels>
+    <labels>
+        <fullName>Permission_Set_With_Modify_All_Data</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Permission Set With Modify All Data</shortDescription>
+        <value>Chatter Admin</value>
+    </labels>
+    <labels>
+        <fullName>PlanDeleteError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PlanDeleteError</shortDescription>
+        <value>You are not authorized to delete an Assigned Plan.</value>
+    </labels>
+    <labels>
+        <fullName>PlanEditExtnNone</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PlanEditExtnNone</shortDescription>
+        <value>--None--</value>
+    </labels>
+    <labels>
+        <fullName>PlanEditPageURL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PlanEditPageURL</shortDescription>
+        <value>/apex/PlanEdit</value>
+    </labels>
+    <labels>
+        <fullName>PlanStatusAssigned</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PlanStatusAssigned</shortDescription>
+        <value>Assigned</value>
+    </labels>
+    <labels>
+        <fullName>PlanStatusDraft</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PlanStatusDraft</shortDescription>
+        <value>Draft</value>
+    </labels>
+    <labels>
+        <fullName>PlanStatusExpired</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PlanStatusExpired</shortDescription>
+        <value>Expired</value>
+    </labels>
+    <labels>
+        <fullName>PlanTabURL</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PlanTabURL</shortDescription>
+        <value>/a0I/o</value>
+    </labels>
+    <labels>
+        <fullName>PlanTypeArea</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PlanTypeArea</shortDescription>
+        <value>Area</value>
+    </labels>
+    <labels>
+        <fullName>PlanTypeBulk</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PlanTypeBulk</shortDescription>
+        <value>Bulk</value>
+    </labels>
+    <labels>
+        <fullName>PlanTypeNational</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PlanTypeNational</shortDescription>
+        <value>National</value>
+    </labels>
+    <labels>
+        <fullName>PlanTypePlaylist</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PlanTypePlaylist</shortDescription>
+        <value>Playlist</value>
+    </labels>
+    <labels>
+        <fullName>PlanTypeRegion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PlanTypeRegion</shortDescription>
+        <value>Region</value>
+    </labels>
+    <labels>
+        <fullName>PlanTypeTurf</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PlanTypeTurf</shortDescription>
+        <value>Turf</value>
+    </labels>
+    <labels>
+        <fullName>PlaylistCreateError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PlaylistCreateError</shortDescription>
+        <value>You can not create Playlist out of given Turf.</value>
+    </labels>
+    <labels>
+        <fullName>Please_Wait</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Please Wait</shortDescription>
+        <value>Please wait!</value>
+    </labels>
+    <labels>
+        <fullName>Portfolio_Name_Require_Validation_Message</fullName>
+        <categories>Xffinity</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Portfolio Name Require Validation Message</shortDescription>
+        <value>Portfolio Name on Opportunity is required to assign more than one Property to an Opportunity.</value>
+    </labels>
+    <labels>
+        <fullName>Previous</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Previous</shortDescription>
+        <value>Previous</value>
+    </labels>
+    <labels>
+        <fullName>Primary_Contact_Trigger_Validation</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Primary Contact Trigger Validation</shortDescription>
+        <value>A contact record is already marked as Primary for this account. An account cannot have more than one primary contact.</value>
+    </labels>
+    <labels>
+        <fullName>Product_Code_Basic</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Product Code Basic</shortDescription>
+        <value>Basic</value>
+    </labels>
+    <labels>
+        <fullName>Product_Code_Digital</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Product Code Video</shortDescription>
+        <value>Video</value>
+    </labels>
+    <labels>
+        <fullName>Product_Code_HSI</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Product Code HSI</shortDescription>
+        <value>HSD</value>
+    </labels>
+    <labels>
+        <fullName>Product_Code_Verizon_Wireless</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Product Code Verizon Wireless</shortDescription>
+        <value>Verizon Wireless</value>
+    </labels>
+    <labels>
+        <fullName>Product_Code_Voice</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Product Code Voice</shortDescription>
+        <value>Voice</value>
+    </labels>
+    <labels>
+        <fullName>Product_Code_XH</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Product Code XH</shortDescription>
+        <value>XHS</value>
+    </labels>
+    <labels>
+        <fullName>Product_Code_XSS</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Product Code XSS</shortDescription>
+        <value>XSS</value>
+    </labels>
+    <labels>
+        <fullName>ProfileIdCreateGoalBatch</fullName>
+        <categories>Direct sales</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ProfileIdCreateGoalBatch</shortDescription>
+        <value>00eG0000000FqAK;00eG0000000FqAL;00eG0000000FqAM;00eG0000000FqAL;00eG0000000FqAM</value>
+    </labels>
+    <labels>
+        <fullName>Prop_Lookup_PropTypeInCCT</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Prop Lookup PropTypeInCCT</shortDescription>
+        <value>Condominium; Condominium-Detached; Town Homes</value>
+    </labels>
+    <labels>
+        <fullName>PropertyActiveBuildErr</fullName>
+        <categories>MDU_Property__c</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PropertyActiveBuildErr</shortDescription>
+        <value>Active New Build exists.</value>
+    </labels>
+    <labels>
+        <fullName>PropertyDeleteError</fullName>
+        <categories>MDU_Property__c</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PropertyDeleteError</shortDescription>
+        <value>Property cannot be deleted because-</value>
+    </labels>
+    <labels>
+        <fullName>PropertyDeleteReasonErr</fullName>
+        <categories>MDU_Property__c</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PropertyDeleteReasonErr</shortDescription>
+        <value>Delete Reason is not selected.</value>
+    </labels>
+    <labels>
+        <fullName>PropertyEventErrorMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PropertyEventErrorMessage</shortDescription>
+        <value>There are Property event items associated with this Property event; cannot be deleted</value>
+    </labels>
+    <labels>
+        <fullName>PropertyIndustryGovtErr</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PropertyIndustryGovtErr</shortDescription>
+        <value>Property - Industry Type is Government. Interview cannot be launched.</value>
+    </labels>
+    <labels>
+        <fullName>PropertyOpenOppErr</fullName>
+        <categories>MDU_Property__c</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PropertyOpenOppErr</shortDescription>
+        <value>Open Opportunity exists.</value>
+    </labels>
+    <labels>
+        <fullName>Property_Page_Contact_Email_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Property Page Contact_Email Err</shortDescription>
+        <value>Opportunity Page: Contact Section-Contact Email cannot be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Property_Page_Contact_First_Name_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Property Page Contact_First_Name Err</shortDescription>
+        <value>Opportunity Page: Contact Section-Contact First Name cannot be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Property_Page_Contact_Last_Name_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Property Page Contact_Last_Name Err</shortDescription>
+        <value>Opportunity Page: Contact Section-Contact Last Name cannot be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Property_Page_ContractTermUnit_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Property Page ContractTermUnit Err</shortDescription>
+        <value>Opportunity Page: Opportunity Contract Term Unit must be selected;</value>
+    </labels>
+    <labels>
+        <fullName>Property_Page_ContractTerm_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Property Page ContractTerm Err</shortDescription>
+        <value>Opportunity Page: Opportunity Contract Term must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Property_Page_Contract_Type_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Property Page Contract_Type Err</shortDescription>
+        <value>Opportunity Page: Opportunity Contract Type must not be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Property_Page_County_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Property Page County Err</shortDescription>
+        <value>Property Page: County must be selected on the Property Page;</value>
+    </labels>
+    <labels>
+        <fullName>Property_Page_Franchise_New_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Property Page Franchise_New Err</shortDescription>
+        <value>Property Page: Franchise must be selected on the Property Page;</value>
+    </labels>
+    <labels>
+        <fullName>Property_Page_Owner_Account_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Property Page Owner Account Err</shortDescription>
+        <value>Property Page: Owner Name cannot be blank for this Property;</value>
+    </labels>
+    <labels>
+        <fullName>Property_Page_PostalCode_Err</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Property Page PostalCode Err</shortDescription>
+        <value>Property Page: Zip Code cannot be blank;</value>
+    </labels>
+    <labels>
+        <fullName>Property_Visit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Property Visit</shortDescription>
+        <value>Property Visit</value>
+    </labels>
+    <labels>
+        <fullName>Property_Visit_Distance</fullName>
+        <categories>Property Lab</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>distance for which visit pin should not be visible on the map(Miles)</shortDescription>
+        <value>0.0155343</value>
+    </labels>
+    <labels>
+        <fullName>Provide_Cancellation_Reason</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Provide Cancellation Reason</shortDescription>
+        <value>*Please provide a cancellation reason description :</value>
+    </labels>
+    <labels>
+        <fullName>Provide_Claim_Explanation</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Provide Claim Explanation</shortDescription>
+        <value>*Please provide  explanation for your claim.</value>
+    </labels>
+    <labels>
+        <fullName>QM_AnnualBaselineBatchContractorCusSetData</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QM_AnnualBaselineBatchContractorCusSetData</shortDescription>
+        <value>Regional Baseline Quota for Contractor</value>
+    </labels>
+    <labels>
+        <fullName>QM_NAMsQuotaBatchLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QM_NAMsQuotaBatchLabel</shortDescription>
+        <value>Select Id, Name, ManagerId,Profile.name,Manager.Profile.Name, ProfileId,Region__c,Sales_Rep_Type__c,UserPermissionsWorkDotComUserFeature from User where  IsActive = True AND  Sales_Rep_Type__c =:sRTString  and UserPermissionsWorkDotComUserFeature = true</value>
+    </labels>
+    <labels>
+        <fullName>QM_NAMsQuotaBatchSize</fullName>
+        <categories>Quota Management</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QM_NAMsQuotaBatchSize</shortDescription>
+        <value>1</value>
+    </labels>
+    <labels>
+        <fullName>QM_NEDQuotaBatchLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QM_NEDQuotaBatchLabel</shortDescription>
+        <value>Select Id, Name, ManagerId,Profile.name,Manager.Profile.Name, ProfileId,Region__c,Sales_Rep_Type__c,UserPermissionsWorkDotComUserFeature from User where  IsActive = True AND  Sales_Rep_Type__c =:sRTString  and UserPermissionsWorkDotComUserFeature = true</value>
+    </labels>
+    <labels>
+        <fullName>QM_NEDQuotaBatchSize</fullName>
+        <categories>Quota Management</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QM_NEDQuotaBatchSize</shortDescription>
+        <value>1</value>
+    </labels>
+    <labels>
+        <fullName>QM_PortfolioAEQuotaBatchSize</fullName>
+        <categories>Quota Management</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QM_PortfolioAEQuotaBatchSize</shortDescription>
+        <value>1</value>
+    </labels>
+    <labels>
+        <fullName>QPRErrorMessageOnCreateSameFiscalQuarter</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPRErrorMessageOnCreateSameFiscalQuarter</shortDescription>
+        <value>Only create one QPR record per CAR per fiscal quarter</value>
+    </labels>
+    <labels>
+        <fullName>QPRErrorMessageOnDelete</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPRErrorMessageOnDelete</shortDescription>
+        <value>You cannot delete &apos;Completed&apos; Quarterly Portfolio Review record.</value>
+    </labels>
+    <labels>
+        <fullName>QPRErrorMessageOnDeleteForOther</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QPRErrorMessageOnDeleteForOther</shortDescription>
+        <value>Only Coach and PersonCoach can delete &apos;Quarterly Portfolio Review&apos; record.</value>
+    </labels>
+    <labels>
+        <fullName>QuotaAnnualBaselineBatchForContractorScheduleLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QuotaAnnualBaselineBatchForContractorScheduleLabel</shortDescription>
+        <value>SELECT Id, Name, AE_Contractor__c, AE_Contractor__r.UserPermissionsWorkDotComUserFeature,AE_Contractor__r.Profile.Name, AE_Contractor__r.Name, Reporting_Manager__c, Region__c, Region_Mapping_Key__c FROM Contractor_Region_Mapping__c WHERE AE_Contractor__r.Profile.name = &apos;XC AE Contractors&apos; AND AE_Contractor__r.UserPermissionsWorkDotComUserFeature = true AND AE_Contractor__r.isActive = true and id=&apos;a2d210000000BKS&apos;</value>
+    </labels>
+    <labels>
+        <fullName>QuotaAnnualBaselineBatchForContractorSize</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QuotaAnnualBaselineBatchForContractorSize</shortDescription>
+        <value>1</value>
+    </labels>
+    <labels>
+        <fullName>QuotaAnnualBaselineBatchScheduleLabel</fullName>
+        <categories>Query string parameter</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QuotaAnnualBaselineBatchScheduleLabel</shortDescription>
+        <value>Select Id, Name, ManagerId,Profile.name,Manager.Profile.Name, ProfileId,Region__c,Sales_Rep_Type__c,UserPermissionsWorkDotComUserFeature from User where IsActive = True AND Profile.Name IN: profileNameSet and UserPermissionsWorkDotComUserFeature = true and Sales_Rep_Type__c not In(&apos;NAM&apos;,&apos;NED&apos;,&apos;Division&apos;) and id in(&apos;00516000006iwL5&apos;)</value>
+    </labels>
+    <labels>
+        <fullName>QuotaAnnualBaselineBatchSize</fullName>
+        <categories>Quota Management</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>QuotaAnnualBaselineBatchSize</shortDescription>
+        <value>1</value>
+    </labels>
+    <labels>
+        <fullName>RGUMetricResetBatchQuery</fullName>
+        <categories>Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RGUMetricResetBatchQuery</shortDescription>
+        <value>SELECT Id, Status, DueDate, CurrentValue FROM Metric where Goal.RecordTypeId=: GOAL_DIRECTSALES_RECORD_ID and Goal.Name like &apos;%RGU%&apos; and DueDate =: COMMISION_END_DATE AND CurrentValue&gt;0</value>
+    </labels>
+    <labels>
+        <fullName>RGUMetricResetBatchQueryWest</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RGUMetricResetBatchQueryWest</shortDescription>
+        <value>SELECT Id, Status, DueDate, CurrentValue FROM Metric where Goal.RecordTypeId=: GOAL_DIRECTSALES_RECORD_ID and Goal.Name like &apos;%RGU%&apos; and DueDate =: COMMISION_END_DATE  AND CurrentValue&gt;0</value>
+    </labels>
+    <labels>
+        <fullName>RGUMetricResetBatchSize</fullName>
+        <categories>Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RGUMetricResetBatchSize</shortDescription>
+        <value>20</value>
+    </labels>
+    <labels>
+        <fullName>RGUMetricResetBatchSizeWest</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RGUMetricResetBatchSizeWest</shortDescription>
+        <value>20</value>
+    </labels>
+    <labels>
+        <fullName>RGUOrderBatchSize</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RGUOrderBatchSize</shortDescription>
+        <value>1</value>
+    </labels>
+    <labels>
+        <fullName>RM_Daily_Rec_Type</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RM_Daily_Rec_Type</shortDescription>
+        <value>Daily Data</value>
+    </labels>
+    <labels>
+        <fullName>RM_Month_Rec_Type</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RM_Month_Rec_Type</shortDescription>
+        <value>Monthly Data</value>
+    </labels>
+    <labels>
+        <fullName>RM_Week_Rec_Type</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RM_Week_Rec_Type</shortDescription>
+        <value>Weekly Data</value>
+    </labels>
+    <labels>
+        <fullName>RSA</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RSA</shortDescription>
+        <value>00eG0000000FqANIA0</value>
+    </labels>
+    <labels>
+        <fullName>RSAProfileIdLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RSAProfileIdLabel</shortDescription>
+        <value>00eG0000000FqAN</value>
+    </labels>
+    <labels>
+        <fullName>RSA_Profile_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RSA Profile Name</shortDescription>
+        <value>Regional System Admin (RSA)</value>
+    </labels>
+    <labels>
+        <fullName>RSAandDirectorProfileNames</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RSAandDirectorProfileNames</shortDescription>
+        <value>Direct Sales Director,Regional System Admin (RSA)</value>
+    </labels>
+    <labels>
+        <fullName>Raise_Claim</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Raise Claim</shortDescription>
+        <value>Raise a Claim</value>
+    </labels>
+    <labels>
+        <fullName>Record_Counts</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Record_Counts</shortDescription>
+        <value>Records</value>
+    </labels>
+    <labels>
+        <fullName>RegionAssignForContractorAE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RegionAssignForContractorAE</shortDescription>
+        <value>You are currently not assigned to the region on this Opportunity. Please contact your regional Admin</value>
+    </labels>
+    <labels>
+        <fullName>RegionRoleName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RegionRoleName</shortDescription>
+        <value>Regional</value>
+    </labels>
+    <labels>
+        <fullName>RegionalBaselineQuotaBatchLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RegionalBaselineQuotaBatchLabel</shortDescription>
+        <value>Select Id, Name, ManagerId,Profile.name,Manager.Profile.Name, ProfileId,Region__c,Sales_Rep_Type__c,UserPermissionsWorkDotComUserFeature from User where  IsActive = True AND  Sales_Rep_Type__c =:sRTString  and UserPermissionsWorkDotComUserFeature = true and id=&apos;00516000006iwL5&apos;</value>
+    </labels>
+    <labels>
+        <fullName>RegionalBaselineQuotaBatchSize</fullName>
+        <categories>Quota Management</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RegionalBaselineQuotaBatchSize</shortDescription>
+        <value>1</value>
+    </labels>
+    <labels>
+        <fullName>Report_Stats_Montly</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Report_Stats_Montly</shortDescription>
+        <value>Stats for the month</value>
+    </labels>
+    <labels>
+        <fullName>Report_Stats_Weekly</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Report_Stats_Weekly</shortDescription>
+        <value>Stats for the week</value>
+    </labels>
+    <labels>
+        <fullName>ReportingCaseErrorMsg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ReportingCaseErrorMsg</shortDescription>
+        <value>&apos;Reporting category&apos; case cannot be submitted from DSM</value>
+    </labels>
+    <labels>
+        <fullName>RetailSalesManagerProfileId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RetailSalesManagerProfileId</shortDescription>
+        <value>00eG0000000GfdZ</value>
+    </labels>
+    <labels>
+        <fullName>RetailSalesManagerProfileName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Retail Sales Manager ProfileName</shortDescription>
+        <value>Retail Sales Manager</value>
+    </labels>
+    <labels>
+        <fullName>Retail_Contact</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Retail Contact</shortDescription>
+        <value>Retail Contact</value>
+    </labels>
+    <labels>
+        <fullName>Retail_Sales_Manager_ProfileName</fullName>
+        <categories>Retail</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Retail_Sales_Manager_ProfileName</shortDescription>
+        <value>Retail Sales Manager</value>
+    </labels>
+    <labels>
+        <fullName>Retail_Sales_Rep_ProfileName</fullName>
+        <categories>Retail</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Retail_Sales_Rep_ProfileName</shortDescription>
+        <value>Retail Sales Rep</value>
+    </labels>
+    <labels>
+        <fullName>RetrieveAccountHistoryRESTServiceBilingAccountNumber</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RetrieveAccountHistoryRESTServiceBilingAccountNumber</shortDescription>
+        <value>bilingAccountNumber</value>
+    </labels>
+    <labels>
+        <fullName>RetrieveAccountHistoryRESTServiceBillingSystem</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RetrieveAccountHistoryRESTServiceBillingSystem</shortDescription>
+        <value>billingSystem</value>
+    </labels>
+    <labels>
+        <fullName>RetrieveAccountHistoryRESTServiceCSG</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RetrieveAccountHistoryRESTServiceCSG</shortDescription>
+        <value>CSG</value>
+    </labels>
+    <labels>
+        <fullName>RetrieveAccountHistoryRESTServiceDDP</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RetrieveAccountHistoryRESTServiceDDP</shortDescription>
+        <value>DDP</value>
+    </labels>
+    <labels>
+        <fullName>RetrieveAccountHistoryRESTServiceMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RetrieveAccountHistoryRESTServiceMessage</shortDescription>
+        <value>Unable to retrieve account history at this time</value>
+    </labels>
+    <labels>
+        <fullName>RetrieveAccountHistoryRESTServiceMessage2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RetrieveAccountHistoryRESTServiceMessage2</shortDescription>
+        <value>Account history not available for the selected customer.</value>
+    </labels>
+    <labels>
+        <fullName>RetrieveAccountHistoryRESTServicebillingHouseKey</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>RetrieveAccountHistoryRESTServicebillingHouseKey</shortDescription>
+        <value>billingHouseKey</value>
+    </labels>
+    <labels>
+        <fullName>SDM_Profile_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SDM Profile Name</shortDescription>
+        <value>Sales Development Manager</value>
+    </labels>
+    <labels>
+        <fullName>SEARCH_INDIVIDUAL_ENDPOINT</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SEARCH_INDIVIDUAL_ENDPOINT</shortDescription>
+        <value>https://comcasttraining.emptoris.com/webservices/services/IndividualServices</value>
+    </labels>
+    <labels>
+        <fullName>SEARCH_INTERVIEW_ENDPOINT</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SEARCH_INTERVIEW_ENDPOINT</shortDescription>
+        <value>https://comcasttraining.emptoris.com/webservices/services/InterviewInstanceServices</value>
+    </labels>
+    <labels>
+        <fullName>SFDC</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SFDC</shortDescription>
+        <value>SFDC</value>
+    </labels>
+    <labels>
+        <fullName>SHARED_SECRET</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>_SHARED_SECRET_</shortDescription>
+        <value>_SHARED_SECRET_</value>
+    </labels>
+    <labels>
+        <fullName>SalesEventActivityType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SalesEventActivityType</shortDescription>
+        <value>Sales Event</value>
+    </labels>
+    <labels>
+        <fullName>Sales_Rep_Type</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Sales_Rep_Type</shortDescription>
+        <value>NAM;NED;Region;Division</value>
+    </labels>
+    <labels>
+        <fullName>SdmAsmActivityGoalBatchSize</fullName>
+        <categories>Direct Sales Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SdmAsmActivityGoalBatchSize</shortDescription>
+        <value>1</value>
+    </labels>
+    <labels>
+        <fullName>Service_Change</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Service_Change</shortDescription>
+        <value>Service Change</value>
+    </labels>
+    <labels>
+        <fullName>Shared_Address_Pool</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Shared Address Pool</shortDescription>
+        <value>Shared Address Pool</value>
+    </labels>
+    <labels>
+        <fullName>SheduleVisitEndDateDiffrence</fullName>
+        <categories>Indirect Retail</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SheduleVisitEndDateDiffrence</shortDescription>
+        <value>1</value>
+    </labels>
+    <labels>
+        <fullName>StatusActive</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>StatusActive</shortDescription>
+        <value>Active</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseControllerDirectSales</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseControllerDirectSales</shortDescription>
+        <value>Direct Sales</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseControllerEmail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseControllerEmail</shortDescription>
+        <value>Email</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseControllerErrorMessage1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseControllerErrorMessage1</shortDescription>
+        <value>There is no user in Salesforce with this email address or username. Please enter your Comcast email address.</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseControllerErrorMessage10</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseControllerErrorMessage10</shortDescription>
+        <value>Last Name cannot be empty.</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseControllerErrorMessage11</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseControllerErrorMessage11</shortDescription>
+        <value>First Name cannot be empty.</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseControllerErrorMessage2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseControllerErrorMessage2</shortDescription>
+        <value>Description cannot be empty.</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseControllerErrorMessage3</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseControllerErrorMessage3</shortDescription>
+        <value>Ticket Category cannot be empty.</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseControllerErrorMessage4</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseControllerErrorMessage4</shortDescription>
+        <value>Product cannot be empty.</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseControllerErrorMessage5</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseControllerErrorMessage5</shortDescription>
+        <value>Channel cannot be empty.</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseControllerErrorMessage6</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseControllerErrorMessage6</shortDescription>
+        <value>Preferred Phone cannot be empty.</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseControllerErrorMessage7</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseControllerErrorMessage7</shortDescription>
+        <value>Comcast Email must be your Comcast email address.</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseControllerErrorMessage8</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseControllerErrorMessage8</shortDescription>
+        <value>Email cannot be empty.</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseControllerErrorMessage9</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseControllerErrorMessage9</shortDescription>
+        <value>Region cannot be empty.</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseControllerFirstName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseControllerFirstName</shortDescription>
+        <value>FirstName</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseControllerInfoMessage1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseControllerInfoMessage1</shortDescription>
+        <value>Attachments Successfully Added.</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseControllerInfoMessage2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseControllerInfoMessage2</shortDescription>
+        <value>Your Service Request has been Submitted Successfully. Thank You.</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseControllerLastName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseControllerLastName</shortDescription>
+        <value>LastName</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseControllerPhone</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseControllerPhone</shortDescription>
+        <value>Phone</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseControllerRegion</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseControllerRegion</shortDescription>
+        <value>Region</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseControllerSalesSpaceCoach</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseControllerSalesSpaceCoach</shortDescription>
+        <value>SalesSpace Coach</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseController_CaseId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseController_CaseId</shortDescription>
+        <value>CaseId</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseController_Chatter</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseController_Chatter</shortDescription>
+        <value>Chatter</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseController_EmailID</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseController_EmailID</shortDescription>
+        <value>anil.c.singh@accenture.com</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseController_RSA_TicketQ</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseController_RSA_TicketQ</shortDescription>
+        <value>RSA Ticket Queue</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseController_SRTicketRecordType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseController_SRTicketRecordType</shortDescription>
+        <value>SR/Ticket Management</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseController_SR_TicketQ</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseController_SR_TicketQ</shortDescription>
+        <value>SR/Ticket Management</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseController_onecomcast</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseController_onecomcast</shortDescription>
+        <value>onecomcast--</value>
+    </labels>
+    <labels>
+        <fullName>SubmitCaseControllercablecomcastcom</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SubmitCaseControllercablecomcastcom</shortDescription>
+        <value>@cable.comcast.com</value>
+    </labels>
+    <labels>
+        <fullName>Submit_Claim</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Submit Claim</shortDescription>
+        <value>Submit Claim</value>
+    </labels>
+    <labels>
+        <fullName>Submit_Claim_Requirements_Not_Met</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Submit Claim Requirements Not Met</shortDescription>
+        <value>Explanation and Claim Amount are required. Claim Amount must be greater than zero.</value>
+    </labels>
+    <labels>
+        <fullName>Success</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Success</shortDescription>
+        <value>Success</value>
+    </labels>
+    <labels>
+        <fullName>Success_Deactivate_users</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Success Deactivate users</shortDescription>
+        <value>Success</value>
+    </labels>
+    <labels>
+        <fullName>SuperAPI</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SuperAPI</shortDescription>
+        <value>Super API</value>
+    </labels>
+    <labels>
+        <fullName>SupervisorRoleName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SupervisorRoleName</shortDescription>
+        <value>DS Supervisor</value>
+    </labels>
+    <labels>
+        <fullName>SystemAdminProfileName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SystemAdminProfileName</shortDescription>
+        <value>System Administrator</value>
+    </labels>
+    <labels>
+        <fullName>Target_ASM_Team_Forums</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Target ASM Team Forums</shortDescription>
+        <value>2</value>
+    </labels>
+    <labels>
+        <fullName>Target_AveragePropertyVisitsperDay</fullName>
+        <categories>Car Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Target_AveragePropertyVisitsperDay</shortDescription>
+        <value>4</value>
+    </labels>
+    <labels>
+        <fullName>Target_Events</fullName>
+        <categories>Car Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Target_Events</shortDescription>
+        <value>2</value>
+    </labels>
+    <labels>
+        <fullName>Target_SDM_Coaching</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Target SDM Coaching</shortDescription>
+        <value>36</value>
+    </labels>
+    <labels>
+        <fullName>Target_SDM_Team_Huddles</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Target SDM Team Huddles</shortDescription>
+        <value>8</value>
+    </labels>
+    <labels>
+        <fullName>Target_TotalPropertyVisitsperMonth</fullName>
+        <categories>Car Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Target_TotalPropertyVisitsperMonth</shortDescription>
+        <value>80</value>
+    </labels>
+    <labels>
+        <fullName>TaskStatusCompleted</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TaskStatusCompleted</shortDescription>
+        <value>Completed</value>
+    </labels>
+    <labels>
+        <fullName>Task_Status_Completed</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Task Status Completed</shortDescription>
+        <value>Completed</value>
+    </labels>
+    <labels>
+        <fullName>Team_Forums</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Team Forums</shortDescription>
+        <value>Team Forums</value>
+    </labels>
+    <labels>
+        <fullName>Team_Huddles</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Team Huddles</shortDescription>
+        <value>Team Huddles</value>
+    </labels>
+    <labels>
+        <fullName>Title_for_Auto_Completed_Event_Visit</fullName>
+        <categories>Indirect</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Title for Auto Completed Event Visit</shortDescription>
+        <value>Automatically completed visit</value>
+    </labels>
+    <labels>
+        <fullName>TotalUnitsInComplexOffice</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TotalUnitsInComplexOffice</shortDescription>
+        <value>Total number of Units :</value>
+    </labels>
+    <labels>
+        <fullName>TurfAssignLimitLabel</fullName>
+        <categories>Direct sales</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Turf Assign Limit</shortDescription>
+        <value>1000</value>
+    </labels>
+    <labels>
+        <fullName>TurfAssigned</fullName>
+        <categories>Territory Management</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Successful Turf Assignment</shortDescription>
+        <value>Your turf has been successfully assigned!</value>
+    </labels>
+    <labels>
+        <fullName>USE_CHROME_ERROR_MESSAGE</fullName>
+        <categories>Wave,Export 2 Excel</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>USE_CHROME_ERROR_MESSAGE</shortDescription>
+        <value>Please use Google Chrome browser to access the &apos;Export to Excel&apos; feature.</value>
+    </labels>
+    <labels>
+        <fullName>UnAuthorizedActivity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>UnAuthorizedActivity</shortDescription>
+        <value>You cannot create activity as the related address is not assigned to you/your team.</value>
+    </labels>
+    <labels>
+        <fullName>UnAuthorizedCallLog</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>UnAuthorizedCallLog</shortDescription>
+        <value>You cannot create call log as the related address is not assigned to you/your team.</value>
+    </labels>
+    <labels>
+        <fullName>UnAuthorizedEvent</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>UnAuthorizedEvent</shortDescription>
+        <value>You cannot create event as the related address is not assigned to you/your team.</value>
+    </labels>
+    <labels>
+        <fullName>UnAuthorizedKnock</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>UnAuthorizedKnock</shortDescription>
+        <value>You cannot create knock as the related address is not assigned to you/your team</value>
+    </labels>
+    <labels>
+        <fullName>UnAuthorizedTask</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>UnAuthorizedTask</shortDescription>
+        <value>You cannot create task as the related address is not assigned to you/your team</value>
+    </labels>
+    <labels>
+        <fullName>Units_Contractors</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Units Contractors</shortDescription>
+        <value>100</value>
+    </labels>
+    <labels>
+        <fullName>UpdateMetricBatchLabel</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>UpdateMetricBatchLabel</shortDescription>
+        <value>SELECT id FROM metric WHERE goal.name LIKE &apos;%Activity%&apos; and (owner.profile.name = &apos;Area Sales Manager&apos; OR owner.profile.name = &apos;Sales Development Manager&apos;) AND goal.startdate =:ACTIVITY_GOAL_START_DATES AND goal.duedate=:ACTIVITY_GOAL_END_DATES AND ownerid.IsActive = true</value>
+    </labels>
+    <labels>
+        <fullName>UpdateMetricBatchSize</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>UpdateMetricBatchSize</shortDescription>
+        <value>200</value>
+    </labels>
+    <labels>
+        <fullName>Valid_Date_Error1</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Valid Date Error1</shortDescription>
+        <value>A valid date within the past</value>
+    </labels>
+    <labels>
+        <fullName>Valid_Date_Error2</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Valid_Date_Error2</shortDescription>
+        <value>days must be entered.</value>
+    </labels>
+    <labels>
+        <fullName>Verify_Claim</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Verify Claim</shortDescription>
+        <value>Please verify the claim before cancellation.</value>
+    </labels>
+    <labels>
+        <fullName>Verify_Orders</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Verify Orders</shortDescription>
+        <value>Please verify the Orders before submitting the Claim.</value>
+    </labels>
+    <labels>
+        <fullName>View_Knock</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>View Knock</shortDescription>
+        <value>View Knock</value>
+    </labels>
+    <labels>
+        <fullName>WalkAlongFeedbackDuration</fullName>
+        <categories>Walkalong</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>WalkAlongFeedbackDuration</shortDescription>
+        <value>90</value>
+    </labels>
+    <labels>
+        <fullName>Walkalongs</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Walkalongs</shortDescription>
+        <value>Walkalongs</value>
+    </labels>
+    <labels>
+        <fullName>XCAEContractors</fullName>
+        <categories>Xfinity Communities</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XCAEContractors</shortDescription>
+        <value>00e16000000GgtaAAC</value>
+    </labels>
+    <labels>
+        <fullName>XCAccountDeleteBatchSize</fullName>
+        <categories>Communities (MDU)</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XCAccountDeleteBatchSize</shortDescription>
+        <value>200</value>
+    </labels>
+    <labels>
+        <fullName>XCAccountExecutive</fullName>
+        <categories>Xfinity Communities</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XCAccountExecutive</shortDescription>
+        <value>00e16000000GgtbAAC</value>
+    </labels>
+    <labels>
+        <fullName>XCAnalyst</fullName>
+        <categories>Xfinity Communities</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XCAnalyst</shortDescription>
+        <value>00e16000000GgtcAAC</value>
+    </labels>
+    <labels>
+        <fullName>XCCabledUnits</fullName>
+        <categories>Xfinity Communities</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XCCabledUnits</shortDescription>
+        <value>00e16000000GgtdAAC</value>
+    </labels>
+    <labels>
+        <fullName>XCCallCenters</fullName>
+        <categories>Xfinity Communities</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XCCallCenters</shortDescription>
+        <value>00e16000000GgteAAC</value>
+    </labels>
+    <labels>
+        <fullName>XCCommunitiesProfileId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XCCommunitiesProfileId</shortDescription>
+        <value>00e16000000GgtbAAC;00e16000000GgtgAAC;00e16000000GgthAAC</value>
+    </labels>
+    <labels>
+        <fullName>XCContractAutoRenewBatchSize</fullName>
+        <categories>Communities (MDU)</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XCContractAutoRenewBatchSize</shortDescription>
+        <value>200</value>
+    </labels>
+    <labels>
+        <fullName>XCIntegrationProfile</fullName>
+        <categories>Xfinity Communities</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XCIntegrationProfile</shortDescription>
+        <value>00e16000000Gge6AAC</value>
+    </labels>
+    <labels>
+        <fullName>XCManager</fullName>
+        <categories>Xfinity Communities</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XCManager</shortDescription>
+        <value>00e16000000GgtgAAC</value>
+    </labels>
+    <labels>
+        <fullName>XCPortfolioAE</fullName>
+        <categories>Xfinity Communities</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XCPortfolioAE</shortDescription>
+        <value>00e16000000GgthAAC</value>
+    </labels>
+    <labels>
+        <fullName>XCPropertyRatingBatchSize</fullName>
+        <categories>Communities (MDU)</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XCPropertyRatingBatchSize</shortDescription>
+        <value>200</value>
+    </labels>
+    <labels>
+        <fullName>XCPropertyRiskStatusBatchSize</fullName>
+        <categories>Communities (MDU)</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XCPropertyRiskStatusBatchSize</shortDescription>
+        <value>200</value>
+    </labels>
+    <labels>
+        <fullName>XCPropertySegmentTypeBatchSize</fullName>
+        <categories>Communities (MDU)</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XCPropertySegmentTypeBatchSize</shortDescription>
+        <value>200</value>
+    </labels>
+    <labels>
+        <fullName>XCSME</fullName>
+        <categories>Xfinity Communities</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XCSME</shortDescription>
+        <value>00e16000000GgtiAAC</value>
+    </labels>
+    <labels>
+        <fullName>XCSalesSupport</fullName>
+        <categories>Xfinity Communities</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XCSalesSupport</shortDescription>
+        <value>00e16000000GgtjAAC</value>
+    </labels>
+    <labels>
+        <fullName>XC_AEContractor_ProfileId</fullName>
+        <categories>Quota Management</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XC_AEContractor_ProfileId</shortDescription>
+        <value>00e16000000GgtaAAC</value>
+    </labels>
+    <labels>
+        <fullName>XC_AE_Contractors</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XC AE Contractors</shortDescription>
+        <value>XC AE Contractors</value>
+    </labels>
+    <labels>
+        <fullName>XC_AE_ProfileId</fullName>
+        <categories>Quota Management</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XC_AE_ProfileId</shortDescription>
+        <value>00e16000000GgtbAAC</value>
+    </labels>
+    <labels>
+        <fullName>XC_Manager_ProfileId</fullName>
+        <categories>Quota Management</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XC_Manager_ProfileId</shortDescription>
+        <value>00e16000000GgtgAAC</value>
+    </labels>
+    <labels>
+        <fullName>XC_PortfolioAE_ProfileId</fullName>
+        <categories>Quota Management</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XC_PortfolioAE_ProfileId</shortDescription>
+        <value>00e16000000GgthAAC</value>
+    </labels>
+    <labels>
+        <fullName>XC_Prefix</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XC Prefix</shortDescription>
+        <value>XC</value>
+    </labels>
+    <labels>
+        <fullName>XSP_Ridealong</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XSP Ridealong</shortDescription>
+        <value>XSP Ridealong</value>
+    </labels>
+    <labels>
+        <fullName>XffinityContractArchiveRecType</fullName>
+        <categories>Contract</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XffinityContractArchiveRecType</shortDescription>
+        <value>01216000001YcAf</value>
+    </labels>
+    <labels>
+        <fullName>XffinityContractNumberToBeProceesed</fullName>
+        <categories>To set no of contract to be processed per hour on execution of ContractWriteBack job</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XffinityContractNumberToBeProceesed</shortDescription>
+        <value>15</value>
+    </labels>
+    <labels>
+        <fullName>XffinityContractUnArchiveRecType</fullName>
+        <categories>Contract</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XffinityContractUnArchiveRecType</shortDescription>
+        <value>01216000001YcAg</value>
+    </labels>
+    <labels>
+        <fullName>Xffinity_Account_Delete_Batch_Name</fullName>
+        <categories>Xffinity Batch Class</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Xffinity Account Delete Batch Name</shortDescription>
+        <value>MDUAccountDeleteBatch</value>
+    </labels>
+    <labels>
+        <fullName>Xffinity_Contract_AutoRenew_Batch_Name</fullName>
+        <categories>Xffinity Batch Class</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Xffinity Contract AutoRenew Batch Name</shortDescription>
+        <value>MDUContractAutoRenewBatch</value>
+    </labels>
+    <labels>
+        <fullName>Xffinity_Contract_RecordType_Name</fullName>
+        <categories>MDU</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Xffinity_Contract_RecordType_Name</shortDescription>
+        <value>Archived_Record_Type</value>
+    </labels>
+    <labels>
+        <fullName>Xffinity_Data_Unit</fullName>
+        <categories>Contract</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Xffinity Data Unit</shortDescription>
+        <value>00N1600000EgZi3</value>
+    </labels>
+    <labels>
+        <fullName>Xffinity_Property_Rating_Auto_Set_Batch_Name</fullName>
+        <categories>Xffinity Batch Class</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Xffinity Property Rating Auto Set Batch Name</shortDescription>
+        <value>MDUPropertyRatingAutoSetBatch</value>
+    </labels>
+    <labels>
+        <fullName>Xffinity_Property_Risk_Status_Auto_Set_Batch_Name</fullName>
+        <categories>Xffinity Batch Class</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Xffinity Property Risk Status Auto Set Batch Name</shortDescription>
+        <value>MDUPropertyRiskStatusAutoSetBatch</value>
+    </labels>
+    <labels>
+        <fullName>Xffinity_Property_Segmentation_Type_Auto_Set_Batch_Name</fullName>
+        <categories>Xffinity Batch Class</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Xffinity Property Segmentation Type Auto Set Batch Name</shortDescription>
+        <value>MDUPropertySegmentationTypeAutoSetBatch</value>
+    </labels>
+    <labels>
+        <fullName>Xffinity_Video_Unit</fullName>
+        <categories>Contract</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Xffinity Video Unit</shortDescription>
+        <value>00N1600000EgZj8</value>
+    </labels>
+    <labels>
+        <fullName>Xffinity_Voice_Unit</fullName>
+        <categories>Contract</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Xffinity Voice Unit</shortDescription>
+        <value>00N1600000EgZjH</value>
+    </labels>
+    <labels>
+        <fullName>XfinityAccountRecordType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XfinityAccountRecordType</shortDescription>
+        <value>Xfinity Record Type</value>
+    </labels>
+    <labels>
+        <fullName>XfinityAccountRecordTypeId</fullName>
+        <categories>Account</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XfinityAccountRecordTypeId</shortDescription>
+        <value>01216000001YcAd</value>
+    </labels>
+    <labels>
+        <fullName>XfinityActivityRecordType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XfinityActivityRecordType</shortDescription>
+        <value>Xfinity_Activity_Record_Type</value>
+    </labels>
+    <labels>
+        <fullName>XfinityContactRecordType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Developer Name Label For Xfinity_Contact_Record_Type</shortDescription>
+        <value>Xfinity Contact Record Type</value>
+    </labels>
+    <labels>
+        <fullName>XfinityContractRecordType</fullName>
+        <categories>MDU Record Type</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Custom Label To Select Record Type Id Xfinity_Contract_Record_Type</shortDescription>
+        <value>Xfinity Contract Type;Xfinity Archived Record Type</value>
+    </labels>
+    <labels>
+        <fullName>XfinityOpportunityRecordType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Custom Label To Execute Trigger For Only Xfinity_Opportunity_Record_Type</shortDescription>
+        <value>Xfinity Opportunity Record Type</value>
+    </labels>
+    <labels>
+        <fullName>XfinityOpptyRecordTypeId</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XfinityOpptyRecordTypeId</shortDescription>
+        <value>01216000001YcAi</value>
+    </labels>
+    <labels>
+        <fullName>XfinityPropertyFeeRecordType</fullName>
+        <categories>Property_Fees__c</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XfinityPropertyFeeRecordType</shortDescription>
+        <value>Door Fee;Recurring Fee;Incentive Fee</value>
+    </labels>
+    <labels>
+        <fullName>XfinityPropertyRecordType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XfinityPropertyRecordType</shortDescription>
+        <value>Xfinity Property Record Type</value>
+    </labels>
+    <labels>
+        <fullName>XfinityTaskRecordType</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XfinityTaskRecordType</shortDescription>
+        <value>Xfinity_Activity_Record_Type</value>
+    </labels>
+    <labels>
+        <fullName>Xfinity_Account_Id</fullName>
+        <categories>Contract</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Xfinity Account Id</shortDescription>
+        <value>00N1600000EgZha</value>
+    </labels>
+    <labels>
+        <fullName>Xfinity_CAR_ProfileName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XfinityCARProfileName</shortDescription>
+        <value>Xfinity CAR</value>
+    </labels>
+    <labels>
+        <fullName>Xfinity_CARmanager_ProfileName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XfinityCARmanagerProfileName</shortDescription>
+        <value>Xfinity CAR Manager</value>
+    </labels>
+    <labels>
+        <fullName>Xfinity_Oppty_PropertyId</fullName>
+        <categories>Opportunity</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Xfinity Oppty PropertyId</shortDescription>
+        <value>00N1600000EgZp6</value>
+    </labels>
+    <labels>
+        <fullName>Xfinity_PropertyId</fullName>
+        <categories>Contract</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Xfinity PropertyId</shortDescription>
+        <value>00N1600000EgZgS</value>
+    </labels>
+    <labels>
+        <fullName>XoC_Value</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>XoC_Value</shortDescription>
+        <value>100</value>
+    </labels>
+    <labels>
+        <fullName>deactivateUsersString</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>deactivateUsersString</shortDescription>
+        <value>SELECT Name, Id,LastLoginDate,CreatedDate FROM User WHERE (LastLoginDate &lt; LAST_N_DAYS:45 OR (CreatedDate &lt; LAST_N_DAYS:45 AND LastLoginDate = NUll)) AND  LastModifiedDate &lt; LAST_N_DAYS:10  AND IsActive = TRUE ORDER BY LastLoginDate DESC NULLS FIRST</value>
+    </labels>
+    <labels>
+        <fullName>metricdailyupdatebatchnewid</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>metricdailyupdatebatchnewid</shortDescription>
+        <value>01p210000004ela</value>
+    </labels>
+    <labels>
+        <fullName>opportunityeditaccess</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>opportunityeditaccess</shortDescription>
+        <value>Edit</value>
+    </labels>
+    <labels>
+        <fullName>serverResponseSuccess</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>serverResponseSuccess</shortDescription>
+        <value>StatusCode=200</value>
+    </labels>
+    <labels>
+        <fullName>to</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>to</shortDescription>
+        <value>to</value>
+    </labels>
+    <labels>
+        <fullName>usertodeletecontract</fullName>
+        <categories>Emptoris</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>usertodeletecontract</shortDescription>
+        <value>usertodeletecontract</value>
+    </labels>
+    <labels>
+        <fullName>walkalong_error_msg</fullName>
+        <categories>Salesspace Coach</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>walkalong error msg</shortDescription>
+        <value>This Page is only accessible from Salesforce1</value>
+    </labels>
+    <labels>
+        <fullName>xsePermissionSetName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>xsePermissionSetName</shortDescription>
+        <value>Xfinity_Sales_Executive</value>
+    </labels>
+    <labels>
+        <fullName>xspProfileName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>xspProfileName</shortDescription>
+        <value>XFINITY Sales Professional</value>
+    </labels>
+</CustomLabels>

@@ -1,0 +1,64 @@
+<apex:component >
+    <apex:attribute name="VisitSummary" required="true" type="StoreVisitSummary" description="The store visit summary for a visit" />
+    <apex:attribute name="UseStandardStylesheets" required="false" type="Boolean" description="Use the built in component CSS style" default="true" />
+
+    <apex:variable value="{!UseStandardStylesheets}" var="uss" rendered="{!UseStandardStylesheets}">
+        <style type="text/css">
+
+            body {
+                background-color: #f0f1f2;
+                font-size: 11pt;
+            }
+
+            .visit-status {
+                font-size: 12pt;
+                font-weight: bold;
+            }
+
+            .visit-active {
+                color: #AF0700;
+            }
+
+            .visit-complete {
+                color: green;
+            }
+
+        </style>
+    </apex:variable>
+
+    <p>
+        <apex:outputPanel styleClass="visit-status visit-active" rendered="{!VisitSummary.IsVisitActive}">
+            Active Visit
+        </apex:outputPanel>
+        <apex:outputPanel styleClass="visit-status visit-complete" rendered="{!VisitSummary.IsVisitComplete}">
+            Visit Complete
+        </apex:outputPanel>
+    </p>
+    <p>
+        <strong>Visit Date: </strong>
+        <apex:outputText value="{0,date,M/dd/YYYY}">
+            <apex:param value="{!VisitSummary.StartDateTime}" />
+        </apex:outputText>
+    </p>
+    <p>
+        <strong>Time: </strong>
+        <apex:outputText value="{0,date,h:mm a}">
+            <apex:param value="{!VisitSummary.StartDateTime}" />
+        </apex:outputText>
+        <apex:outputText value=" - {0,date,h:mm a}" rendered="{!VisitSummary.IsVisitComplete}">
+            <apex:param value="{!VisitSummary.EndDateTime}" />
+        </apex:outputText>
+    </p>
+    <!--<p>
+        <strong>Total Time: </strong>
+        <apex:outputText value="{!VisitSummary.TimeSpentInStore}" />
+    </p>-->
+    <p>
+        <strong>Required Activities: </strong>
+        <apex:outputText value="{!VisitSummary.NumberOfRequiredActivities-VisitSummary.NumberOfRemainingActivities} out of {!VisitSummary.NumberOfRequiredActivities}" />
+    </p>
+    <p>
+        <strong>Tasks Completed: </strong>
+        <apex:outputText value="{!VisitSummary.NumberOfCompletedTasks} out of {!VisitSummary.VisitTasks.size}" />
+    </p>
+</apex:component>

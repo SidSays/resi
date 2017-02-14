@@ -1,0 +1,15 @@
+<!-- 
+/**********************************************************
+* Page Name: AddressDetailPage
+* Author: Amitkumar Bangad, Accenture
+* Date: 14-March-2013 
+* Requirement # Request Id : 124
+* Description: This page displays View Page of Address record (For future use).
+* Last Modified by:
+***********************************************************/
+-->
+<apex:page standardController="Customer_Address__c" extensions="AddressDetailController" action="{!updateAddressFromBiller}">
+	<apex:form >
+		<apex:detail />
+	</apex:form>
+</apex:page>

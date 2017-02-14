@@ -1,0 +1,319 @@
+/**************************************************************************************************
+Name : CreateFeedbackDataBatch
+Description : This batch class created for creation of Feedback Data for all observation forms.
+User Story : US913657: OMNI - Coach - Automate Coach Forms  
+Date : 12 Jan 2017
+Author : Tejaswini Kasar
+***************************************************************************************************/
+
+global class CreateFeedbackDataBatch implements Database.Batchable<sObject>, Database.Stateful
+{
+    /*
+    * Data Member 
+    */
+    private static final String BATCH_COMPLETE_WITH_SUCCESS = 'Completed Without Errors';
+    private static final String BATCH_COMPLETE_WITH_FAIL = 'Completed With Errors';
+    private static final string BATCH_JOB_NAME = 'CreateFeedbackDataBatch';
+    private static final string JOB_STATUS = 'New';
+    private static final string NEW_LINE = '\n';
+    private static final string SYSTEM_EXCEPTION = 'System Exception - ';    
+    private static final string RECORD_TYPE_SEPERATION = ';';
+    private static final string JOB_COMMENT = ' '; 
+    private static final string JOB_NAME_SPACE =  ' - ';        
+    private String observationFormName='';
+    private String formName='';
+    private String staticResourceName='';
+    private Integer nbrOfWeeks = 0;
+    private Id jobStatusId = null; 
+    private FeedbackData__c feedbackData;  
+    private Date startDate;
+    
+    global CreateFeedbackDataBatch(String form)
+    {       
+        observationFormName = form;
+    }
+    
+    global Database.QueryLocator start(Database.BatchableContext BC){
+        //Create Job Status Object
+        Job_Status__c jobStatus = new Job_Status__c();
+        jobStatus.Name = BATCH_JOB_NAME + JOB_NAME_SPACE  + Datetime.now();
+        jobStatus.Status__c = JOB_STATUS;
+        jobStatus.Total_Records_Processed__c = 0;       
+        jobStatus.Batch_Start_Time__c = Datetime.now();
+        jobStatus.Batch_End_Time__c = Datetime.now();
+        jobStatus.Comments__c = JOB_COMMENT;
+        jobStatus.Number_Of_Fallouts__c = 0;
+        Database.insert(jobStatus);  
+        jobStatusId = jobStatus.Id;
+        
+     
+        feedbackData = FeedbackData__c.getInstance(observationFormName);
+        formName = feedbackData.Form_Name__c;
+        nbrOfWeeks = integer.valueOf(feedbackData.No_of_Weeks__c);
+        staticResourceName = feedbackData.Static_Resource_Name__c;
+        startDate = feedbackData.Start_Date__c;
+      
+        String query='SELECT Id, Name FROM User WHERE isActive = True AND Profile.Name = \'System Administrator\' and UserPermissionsWorkDotComUserFeature = true LIMIT 1';
+        return Database.getQueryLocator(query);
+    }
+    
+    global void execute(Database.BatchableContext BC, List<User> userList){ 
+    List<Job_Status__c> jobStatus = getJobStatus(jobStatusId);
+        try{
+            RecordType recType = [SELECT Id,Name FROM RecordType WHERE SObjectType='WorkPerformanceCycle' AND Name =: formName];        
+            List<observationController.Category> categories;
+            
+            if(staticResourceName != null) {            
+                StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name =: staticResourceName  LIMIT 1];
+                String jsonStr = sr.Body.toString();
+                categories = (List<observationController.Category>)JSON.deserialize(jsonStr,List<observationController.Category>.class);
+            }
+            
+            Date endDate = startDate.addDays(6);
+
+            List<WorkFeedbackQuestion> wfqList = new List<WorkFeedbackQuestion>();
+            List<Id> wfqSetIdList = new List<Id>();
+
+            for(Integer nbr=0;nbr<nbrOfWeeks;nbr++){
+                WorkPerformanceCycle wpc=new WorkPerformanceCycle();
+                wpc.State='Setup';
+
+                //Naming convention : <Year> <Week Number>
+                wpc.Name=startDate.year()+' - Week '+(Datetime.newInstance(
+                                            startDate.year(),
+                                            startDate.month(),
+                                            startDate.day())).format('w');
+                wpc.ActivityFrom=startDate;
+                wpc.ActivityTo=endDate;
+                wpc.RecordTypeId=recType.Id;
+                insert wpc;
+                Integer questionNbr = 1;
+
+                WorkFeedbackQuestionSet wfqset= new WorkFeedbackQuestionSet();
+                if(formName.equals(Label.XSP_Ridealong)) {
+                    wfqset.Name='XSP Walkalong';
+                }
+                else if(formName.equals(Label.CAR_Event)) {
+                    wfqset.Name='CAR EVENT Walkalong';
+                }
+                else if(formName.equals(Label.Property_Visit)) {
+                    wfqset.Name='Property Visit Walkalong';
+                }
+                else if(formName.equals(Label.Indirect_Observation)) {
+                    wfqset.Name='Indirect Observation';
+                }
+                else if(formName.equals(Label.CAR_Super_Coach_1_1_Observation)) {
+                    wfqset.Name='1-1 Super Coach';
+                }
+                else if(formName.equals(Label.CAR_Manager_Huddle_Observation)) {
+                    wfqset.Name='CAR Manager Huddle Observation';
+                }
+                wfqset.FeedbackType='CycleManager';
+                wfqset.PerformanceCycleId=wpc.Id;
+                wfqset.DueDate=Date.newInstance(startDate.year(),12,31);
+                insert wfqset;
+
+                //Add to master id list
+                wfqSetIdList.add(wfqSet.Id);
+
+                WorkFeedbackQuestion wfq;
+                
+                //if(!formName.equals(Label.CAR_Super_Coach_1_1_Observation)){
+                    wfq=new WorkFeedbackQuestion();
+                    wfq.Name='Overall Notes';
+                    wfq.Text='Overall Notes';
+                    //qfq.IsOptional=true;
+                    wfq.Number=questionNbr++;
+                    wfq.QuestionSetId=wfqset.Id;
+                    wfq.Type='FreeText';
+                    wfq.Section__c = 'Common';
+                    wfqList.add(wfq);
+
+                    wfq=new WorkFeedbackQuestion();
+                    wfq.Name='Area of Focus';
+                    wfq.Text='Area of Focus';
+                    wfq.Number=questionNbr++;
+                    if(formName.equals(Label.XSP_Ridealong)) {
+                        wfq.Choices='Prepare - Energy\nEngage\nDiscover\nPosition\nClose - Start';
+                    }
+                    else if(formName.equals(Label.CAR_Event)) {
+                        wfq.Choices='Prep or Engage at Events\nDiscover at Events\nPositioning at Events\nEvent Activations\nAll the Above';
+                    }
+                    else if(formName.equals(Label.Property_Visit)) {
+                        wfq.Choices='Prep or Energy\nEngage with Property Staff\nClose with Property Staff\nAll the Above';
+                    }
+                    else if(formName.equals(Label.Indirect_Observation)) {
+                        wfq.Choices='Preparation\nSoft Skills\nBranding\nTraining\nTechnology Usage';
+                    }
+                    else if(formName.equals(Label.CAR_Super_Coach_1_1_Observation)) {
+                        wfq.Choices='Prep and Messaging\nFeedback Delivery\nUses Multiple Techniques\nSMART Action Plans';
+                    }
+                    else if(formName.equals(Label.CAR_Manager_Huddle_Observation)) {
+                        wfq.Choices='Huddle Preparation\nDuring Huddle\nHuddle Structure\nHuddle Conclusion';
+                    }
+                    wfq.QuestionSetId=wfqset.Id;
+                    wfq.Type='MultipleChoice';
+                    wfq.Section__c = 'Common';
+                    wfqList.add(wfq);
+                //}
+                 
+
+               //changes at 13th May 2016
+               /* wfq=new WorkFeedbackQuestion();
+                wfq.Name='Area of Focus - Notes';
+                wfq.Text='Area of Focus - Notes';
+                //qfq.IsOptional=true;
+                wfq.Number=questionNbr++;
+                wfq.QuestionSetId=wfqset.Id;
+                wfq.Type='FreeText';
+                wfq.Section__c = 'Common';
+                wfqList.add(wfq);*/
+
+                if(formName.equals(Label.XSP_Ridealong)){
+                    wfq=new WorkFeedbackQuestion();
+                    wfq.Name='Knocks observed';
+                    wfq.Text='Knocks observed';
+                    wfq.Number=questionNbr++;
+                    wfq.QuestionSetId=wfqset.Id;
+                    wfq.Type='FreeText';
+                    wfq.Section__c = 'Observation Counts';
+                    wfqList.add(wfq);
+
+                    wfq=new WorkFeedbackQuestion();
+                    wfq.Name='Contacts';
+                    wfq.Text='Contacts';
+                    wfq.Number=questionNbr++;
+                    wfq.QuestionSetId=wfqset.Id;
+                    wfq.Type='FreeText';
+                    wfq.Section__c = 'Observation Counts';
+                    wfqList.add(wfq);
+
+                    wfq=new WorkFeedbackQuestion();
+                    wfq.Name='Starts';
+                    wfq.Text='Starts';
+                    wfq.Number=questionNbr++;
+                    wfq.QuestionSetId=wfqset.Id;
+                    wfq.Type='FreeText';
+                    wfq.Section__c = 'Observation Counts';
+                    wfqList.add(wfq);
+                }
+                
+
+                for(observationController.Category category: categories){
+                   // System.debug('The value of weight' +category.weights);
+                    wfq=new WorkFeedbackQuestion();
+                    wfq.Name=category.Text;
+                    wfq.Category__c=category.Text;
+                    wfq.Text=category.text;
+                    wfq.Number=questionNbr++;
+                    if(formName.equals(Label.Indirect_Observation) || formName.equals(Label.CAR_Super_Coach_1_1_Observation) || formName.equals(Label.CAR_Manager_Huddle_Observation)){
+                        wfq.Choices='N/A\nUnacceptable\nNeeds Improvement\nAchieved Expectations\nHighly Effective\nExceptional';
+                    }
+                    else{
+                        wfq.Choices='N/A\nNeeds Improvement\nAchieved Expectations\nHighly Effective';
+                    }
+                    wfq.QuestionSetId=wfqset.Id;
+                    wfq.Type='MultipleChoice';
+                    wfq.Section__c = 'Observations';
+                    //wfq.Weight__c = Integer.valueof(category.weights.trim());
+                    wfq.Weight__c = category.weights;
+                    wfqList.add(wfq);
+                    
+                    for(observationController.Question q:category.questions){
+                        wfq=new WorkFeedbackQuestion();
+                        wfq.Category__c=category.Text;
+                        wfq.Name=q.Name;
+                        wfq.Text=q.Text;
+                        wfq.Number=questionNbr++;
+                        wfq.Choices='N/A\nStrength\nOpportunity';
+                        wfq.QuestionSetId=wfqset.Id;
+                        wfq.Type='MultipleChoice';
+                        wfq.Section__c = 'Observations';
+                        wfqList.add(wfq);
+                        
+                        wfq=new WorkFeedbackQuestion();
+                        wfq.Name=q.Name+' - Notes';
+                        wfq.Category__c=category.Text;
+                        wfq.Text=q.Name+' - Notes';
+                        wfq.Number=questionNbr++;
+                        wfq.QuestionSetId=wfqset.Id;
+                        wfq.Type='FreeText';
+                        wfq.Section__c = 'Observations';
+                        wfq.IsOptional=true;
+                        wfqList.add(wfq);   
+                    }
+                }
+                startDate = endDate.addDays(1);
+                endDate = startDate.addDays(6);
+            }
+
+            //insert wfqList;
+            Database.SaveResult[] insertWfq = Database.Insert(wfqList,false);
+            /*List<WorkFeedbackQuestion> toUpdt = [   select Id,Name, IsOptional from WorkFeedbackQuestion 
+                                                    where Name like '% - Notes'
+                                                    and QuestionSetId in :wfqSetIdList
+                                                    and Name !='Overall Notes'
+                                                    and Name !='Area of Focus - Notes' ] ;
+
+            for(WorkFeedbackQuestion q:toUpdt){
+                q.IsOptional=true;
+            }*/
+
+            //update toUpdt; 
+            executeJob(insertWfq,jobStatus);
+
+        }catch(Exception e) {
+            if(jobStatus!=null && !jobStatus.isEmpty()){
+                  Integer len= Job_Status__c.Comments__c.getDescribe().getLength();
+                  String tempMsg = string.IsBlank(jobStatus[0].Comments__c) ?  SYSTEM_EXCEPTION + e.getMessage() + NEW_LINE : jobStatus[0].Comments__c + SYSTEM_EXCEPTION + e.getMessage() +NEW_LINE;                                    
+                  jobStatus[0].Comments__c=(tempMsg.length() > len)?tempMsg.substring(0, len):tempMsg; Database.update(jobStatus[0]);   
+            }         
+        }  
+    }
+     
+    global void finish(Database.BatchableContext BC){
+        List<Job_Status__c> jobStatus = getJobStatus(jobStatusId); 
+        
+        if(jobStatus!=null && !jobStatus.isEmpty()){ 
+            jobStatus[0].Batch_End_Time__c = Datetime.now(); 
+            jobStatus[0].Status__c = String.isBlank(jobStatus[0].Comments__c) ? BATCH_COMPLETE_WITH_SUCCESS : BATCH_COMPLETE_WITH_FAIL ; 
+            Database.update(jobStatus[0]); 
+        }   
+        
+          
+        feedbackData.Start_Date__c = startDate;
+        update feedbackData;
+            
+        
+        CreateFeedbackDataBatchSchedule sch = new CreateFeedbackDataBatchSchedule(observationFormName);
+        // Cron expression 
+        String expr = '0 0 0 1 12 ?';
+        if(!Test.isRunningTest()){
+            system.schedule('Feedback Data Job for-'+observationFormName+' '+datetime.now(),expr,sch);
+        }
+    }
+    
+    public List<Job_Status__c> getJobStatus(Id jobStatusId) {
+        return [SELECT Total_Records_Processed__c, Comments__c, Number_Of_Fallouts__c, 
+                Batch_Start_Time__c, Batch_End_Time__c 
+                FROM Job_Status__c WHERE Status__c =: JOB_STATUS AND ID=: jobStatusId];
+    }
+    
+    public void executeJob(Database.SaveResult[] insertWfq, List<Job_Status__c> jobStatus)
+    {
+        if(jobStatus!=null && !jobStatus.isEmpty()){
+            for(Database.SaveResult result : insertWfq) {
+                jobStatus[0].Total_Records_Processed__c ++;
+                if(!result.isSuccess()){                                                 
+                    for(Database.Error error : result.getErrors()){
+                        jobStatus[0].Number_Of_Fallouts__c  ++;
+                        Integer len= Job_Status__c.Comments__c.getDescribe().getLength();
+                        String tempMsg = string.IsBlank(jobStatus[0].Comments__c) ?  error.getMessage() + NEW_LINE : jobStatus[0].Comments__c + error.getMessage() + NEW_LINE;                                    
+                        jobStatus[0].Comments__c=(tempMsg.length()>len)?tempMsg.substring(0,len):tempMsg;                                                                 
+                     }
+                }       
+            }
+            Database.update(jobStatus[0]);
+        }   
+    }
+}

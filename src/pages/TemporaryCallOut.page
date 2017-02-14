@@ -1,0 +1,18 @@
+<apex:page controller="TemporaryCallOutController">
+    <apex:form >
+        <apex:pageBlock id="pb">
+            <apex:outputLabel value="Http Request: "/>
+            <apex:inputTextarea value="{!SoapXMLBody}" style="Width:50%"/>
+            <br/><br/><br/>
+            <H1>{!retString}</H1>
+            <br/><br/><br/>
+            {!auth}
+            <apex:pagemessages id="msg"/>
+            
+            <apex:pageblockButtons >
+                <apex:commandButton value="Go!" reRender="msg,pb" action="{!test}"/>
+            </apex:pageblockButtons>
+        </apex:pageBlock>
+        
+    </apex:form>
+</apex:page>

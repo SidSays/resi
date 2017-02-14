@@ -1,0 +1,703 @@
+<apex:page showHeader="false" sidebar="false" controller="sma.MapAnythingMiniMap">    
+    <!--<c:MapAnythingMiniMap Options="{!IF($CurrentPage.parameters.options == 'undefined','',$CurrentPage.parameters.options)}" RecordId="{!IF($CurrentPage.parameters.Id == 'undefined',$User.Id,$CurrentPage.parameters.Id)}"/>-->
+    <head>
+        
+   
+    <apex:stylesheet value="{!URLFOR($Resource.sma__MAMinimaps,'styles.css')}"/>
+    <!--MapAnything Icon Font-->
+    <!--<apex:stylesheet value="{!URLFOR($Resource.MAMinimaps,'css/ma2-style_2.8alpha.css')}"/>-->
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    
+    
+    
+    
+    <apex:pageMessages />
+                     
+    <style>
+/*        #map {
+            height: 500px;
+        }*/
+
+    /* Minimap specific CSS begins here */
+
+    body {
+  min-width: 0; }
+
+#map {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  /**top: 0;*/ }
+
+#miniMapContainer {
+  width: 100%;
+  max-width: 350px;
+  left: 0;
+  /**top: 0;*/;
+  padding: 8px;
+  position: absolute;
+  max-height: calc(100vh - 16px);
+  transition: max-width .2s; }
+  #miniMapContainer #miniMapContainerInner {
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.16); }
+  #miniMapContainer #miniMapHeader {
+    border-radius: 4px 4px 0 0;
+    width: 100%;
+    height: 41px;
+    position: relative; }
+    #miniMapContainer #miniMapHeader .ma-menu-bar {
+      border-radius: 4px 4px 0 0;
+      overflow: hidden;
+      border-bottom: 0;
+      box-shadow: 0 2px 0 #d8dde6; }
+      #miniMapContainer #miniMapHeader .ma-menu-bar .ma-menu-item {
+        height: 41px;
+        line-height: 41px; }
+        #miniMapContainer #miniMapHeader .ma-menu-bar .ma-menu-item.icon-alone .ma-icon {
+          margin: 13px 0 0; }
+        #miniMapContainer #miniMapHeader .ma-menu-bar .ma-menu-item .ma-icon {
+          margin-top: 13px; }
+  #miniMapContainer.contract #miniMapBody {
+    max-height: 0;
+    overflow: hidden; }
+  #miniMapContainer.contract #miniMapHeader .ma-menu-bar {
+    box-shadow: none;
+    border-radius: 4px;
+    transition: all .3s; }
+  #miniMapContainer #miniMapBody {
+    width: 100%;
+    background-color: #fff;
+    max-height: calc(100vh - 105px);
+    border-radius: 0 0 4px 4px;
+    overflow-y: auto;
+    transition: all .3s; }
+    #miniMapContainer #miniMapBody .ma-layer-list {
+      padding: 14px 0 12px; }
+      #miniMapContainer #miniMapBody .ma-layer-list .ma-layer-list-item {
+        background-color: #fff; }
+        #miniMapContainer #miniMapBody .ma-layer-list .ma-layer-list-item .ma-layer-list-text {
+          padding: 12px 16px;
+          color: #16325c;
+          font-size: 14px;
+          font-weight: 400;
+          line-height: 1.3; }
+        #miniMapContainer #miniMapBody .ma-layer-list .ma-layer-list-item .ma-layer-list-icon {
+          padding: 4px 0 0 16px;
+              width: 32px;
+    height: 32px;
+    color: #a7b8d1;}
+          #miniMapContainer #miniMapBody .ma-layer-list .ma-layer-list-item .ma-layer-list-icon .ma-icon {
+            font-size: 21px;
+            width: 21px;
+            height: 21px;
+            line-height: 21px;
+            display: block; }
+
+.color--green {
+  color: #4bca81; }
+
+.flex-basis-0 {
+  flex-basis: 0; }
+
+.error-message {
+  border: 1px solid #c23934;
+  background-color: #c23934;
+  padding: 8px 8px 8px 12px;
+  color: #fff;
+  margin: 6px 8px 16px 10px;
+  position: relative;
+  border-radius: 4px;
+  font-size: 12px;
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  visibility: hidden;
+  opacity: 0;
+  -moz-transition: 0.2s padding 0s, 0.2s margin 0s, 0s visibility 0.2s, 0.2s opacity 0s, 0.2s max-height 0s;
+  -o-transition: 0.2s padding 0s, 0.2s margin 0s, 0s visibility 0.2s, 0.2s opacity 0s, 0.2s max-height 0s;
+  -webkit-transition: 0.2s padding 0s, 0.2s margin 0s, 0s visibility 0.2s, 0.2s opacity 0s, 0.2s max-height 0s;
+  transition: 0.2s padding 0s, 0.2s margin 0s, 0s visibility 0.2s, 0.2s opacity 0s, 0.2s max-height 0s; }
+  .error-message.in {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    visibility: visible;
+    opacity: 1;
+    max-height: 200px;
+    -moz-transition: 0.2s padding 0s, 0.2s margin 0s, 0s visibility 0s, 0.2s opacity 0s, 0.2s max-height 0s;
+    -o-transition: 0.2s padding 0s, 0.2s margin 0s, 0s visibility 0s, 0.2s opacity 0s, 0.2s max-height 0s;
+    -webkit-transition: 0.2s padding 0s, 0.2s margin 0s, 0s visibility 0s, 0.2s opacity 0s, 0.2s max-height 0s;
+    transition: 0.2s padding 0s, 0.2s margin 0s, 0s visibility 0s, 0.2s opacity 0s, 0.2s max-height 0s; }
+  .error-message:before {
+    content: ' ';
+    position: absolute;
+    left: 9px;
+    top: -7px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid #c23934; }
+
+.ma-layer-spinner {
+  padding: 10px 8px 0 0; }
+  .ma-layer-spinner img {
+    max-width: 24px; }
+  .ma-layer-spinner .ma-icon-check {
+    font-size: 22px;
+    color: #4bca81;
+    line-height: 1;
+    width: 22px;
+    height: 22px; }
+  .ma-layer-spinner .ma-icon-warning {
+    font-size: 22px;
+    color: #c23934;
+    line-height: 1;
+    width: 22px;
+    height: 22px; }
+
+img.maMapLogo {
+    position: absolute;
+    left: 4px;
+    bottom: 21px;
+    width: 183px;
+    height: auto;
+    z-index: 500;
+    pointer-events: none;
+}
+
+#layersDiv {
+    display:none;        
+}
+
+#miniMapContainer *:not(.ma-icon) {
+    font-family: 'Salesforce Sans', Helvetica Neue, Arial, Sans-serif;
+}
+
+.flex-horizontal {
+ display: -webkit-box;
+ display: -moz-box;
+ display: -ms-flexbox;
+ display: -webkit-flex;
+ display: flex;
+ -webkit-flex-direction: row;
+ flex-direction: row;
+ width: 100%; }
+ .flex-horizontal > .flex-end {
+   margin-left: auto; }
+
+.flex-vertical {
+ display: -webkit-box;
+ display: -moz-box;
+ display: -ms-flexbox;
+ display: -webkit-flex;
+ display: flex;
+ -webkit-flex-direction: column;
+ flex-direction: column;
+ height: 100%; }
+ .flex-vertical > .flex-end {
+   margin-top: auto; }
+
+.flex-grow-1 {
+ -webkit-flex-grow: 1;
+ -ms-flex-grow: 1;
+ flex-grow: 1; }
+
+.flex-basis-0 {
+ -webkit-flex-basis: 0;
+ -ms-flex-basis: 0;
+ flex-basis: 0; }
+
+
+.ma-menu-bar.background--blue {
+    background-color: #3083d3;
+    color: #fff;
+}
+
+.ma-menu-bar {
+    background-color: #f4f6f9;
+    border-bottom: 2px solid #d8dde6;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    overflow: visible;
+    max-height: 58px;
+    -webkit-transition: 0.15s max-height, 0.15s border, 0s visibility 0s, 0s overflow 0.15s;
+    -moz-transition: 0.15s max-height, 0.15s border, 0s visibility 0s, 0s overflow 0.15s;
+    -ms-transition: 0.15s max-height, 0.15s border, 0s visibility 0s, 0s overflow 0.15s;
+    -o-transition: 0.15s max-height, 0.15s border, 0s visibility 0s, 0s overflow 0.15s;
+    transition: 0.15s max-height, 0.15s border, 0s visibility 0s, 0s overflow 0.15s;
+}
+
+.ma-menu-bar.background--blue .ma-menu-item {
+    color: #fff;
+}
+.ma-menu-bar .ma-menu-item {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: .75px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-decoration: none;
+    cursor: pointer;
+    height: 49px;
+    line-height: 49px;
+    padding: 0 12px;
+    color: #5876a3;
+}
+
+.ma-menu-bar.background--blue .ma-menu-item:hover {
+    background-color: #2072c2;
+    color: #fff;
+}
+
+.ma-menu-bar .ma-menu-item.no-pointer-events {
+    pointer-events: none;
+}
+
+.ma-menu-bar .ma-menu-item > .ma-icon, .ma-menu-bar .ma-menu-item.ma-dropdown-wrap .ma-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    margin: 16px 8px 0 0;
+    line-height: 16px;
+    display: block;
+    letter-spacing: 0;
+    float: left;
+    padding:0;
+}
+
+.ma-layer-list-icon i img {
+    height: auto !important;
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+    max-height: 100%;
+}
+    
+/*=================================*/
+/*
+/* Mobile Break Point Media Query
+/*
+/*=================================*/
+@media (max-width: 600px) {
+  #miniMapContainer {
+    max-width: 300px; } }
+/*=================================*/
+/*
+/* Mobile Break Point Media Query
+/*
+/*=================================*/
+@media (max-width: 300px) {
+  #miniMapContainer {
+    max-width: 100%; } }
+
+/*# sourceMappingURL=minimaps.css.map */
+.esri-popup-content {
+    margin-bottom: 20px;        
+}
+.esri-footer {
+    display:none;        
+}
+    </style>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.1/esri/css/main.css" />
+    <script  src="https://js.arcgis.com/4.1/"></script>
+</head>
+    <apex:image url="{!URLFOR($Resource.sma__MAMinimaps,'img/mapanything_logo_map2.svg')}" styleClass="maMapLogo" />
+
+    <div id="map" class="mini-map-wrap"></div>
+<!-- <div id="logo" >
+<img src="{!URLFOR($Resource.MapAnything,'mapAnythingSettingsLogo.png')}" style="height: 20px;"/>
+</div> -->
+<!-- <div id="layersLegend" style="background-color: white;">
+<table id="layersTable">
+<tr>
+<td>
+<img src="https://product-api-prod.cloudbilt.com/marker/marker.php?marker=#FFF:marker"/>
+</td>
+<td>
+Name of the Marker Layer
+</td>
+</tr>
+<tr>
+<td>
+Loading Image
+</td>
+<td>
+Name of the Marker Layer
+</td>
+</tr>
+<tr>
+<td>
+Error Image
+</td>
+<td>
+Name of the Marker Layer (ERROR) [Need to display long error message, maybe a poup?
+</td>
+</tr>
+<tr>
+<td>
+<img src="https://ma-minimap-dev-ed--sma.na7.visual.force.com/resource/1470062185000/sma__MapAnything/malayersv2/img/folder_shape.svg"/>
+</td>
+<td>
+Name of the Shape Layer
+</td>
+</tr>
+</table>
+</div>
+</div>
+
+<div id="layersDiv" style="display:  none;">
+
+</div> -->
+
+<!--==========================================-->
+<!-- MiniMaps Container                       -->                     
+<!--==========================================-->
+
+    <div id="miniMapContainer">
+        <div id="miniMapContainerInner">
+            <div id="miniMapHeader">
+                <div class="ma-menu-bar background--blue">
+                    <div class="ma-menu-item no-pointer-events"><i class="ma-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 52 52"><path fill="#fff" d="m36 20c0-2.2-1.8-4-4-4h-26c-2.2 0-4 1.8-4 4v26c0 2.2 1.8 4 4 4h26c2.2 0 4-1.8 4-4v-26z m7-18h-26c-3.9 0-7 3.1-7 7v3h26c2.2 0 4 1.8 4 4v26h3c3.9 0 7-3.1 7-7v-26c0-3.9-3.1-7-7-7z"></path></svg></i> Layers</div>
+                    <div class="flex-grow-1"></div>
+                    <div class="ma-menu-item--right">
+                        <div id="miniMapExpandButton" class="ma-menu-item icon-alone" onclick="showMiniMapBody()" style="display:none;">
+                            <i class="ma-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 52 52"><path fill="#fff" d="m48.8 2h-15.5c-1 0-1.3 0.9-0.5 1.7l4.9 4.9-9 9c-0.5 0.5-0.5 1.3 0 1.9l3.7 3.7c0.5 0.5 1.3 0.5 1.9 0l9.1-9.1 4.9 4.9c0.8 0.8 1.7 0.5 1.7-0.5v-15.4c0-0.6-0.6-1.1-1.2-1.1z m-45.3 48h15.4c1 0 1.3-1.1 0.5-1.9l-4.9-5 9-9.1c0.5-0.5 0.5-1.4 0-1.9l-3.7-3.7c-0.5-0.5-1.3-0.5-1.9 0l-9 9-5-4.9c-0.9-0.8-1.9-0.5-1.9 0.5v15.4c0 0.7 0.8 1.6 1.5 1.6z"></path></svg>
+                            </i>
+                        </div>
+                        <div id="miniMapContractButton" class="ma-menu-item icon-alone" onclick="hideMiniMapBody()">
+                            <i class="ma-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 52 52"><path fill="#fff" d="m29.6 23.9h15.4c1 0 1.3-1.1 0.5-1.9l-4.9-5 9-9.1c0.5-0.5 0.5-1.4 0-1.9l-3.7-3.7c-0.5-0.4-1.3-0.4-1.9 0.1l-9 9-5.1-4.9c-0.8-0.8-1.9-0.5-1.9 0.5v15.4c0 0.7 0.9 1.5 1.6 1.5z m-7.2 4.1h-15.4c-1 0-1.3 1.1-0.5 1.9l4.9 5-9 9.1c-0.5 0.5-0.5 1.4 0 1.9l3.7 3.7c0.5 0.5 1.3 0.5 1.9 0l9.1-9.1 5.1 4.9c0.7 0.9 1.8 0.6 1.8-0.4v-15.3c0-0.7-0.9-1.7-1.6-1.7z"></path></svg>
+                            </i>
+                        </div>
+                    </div>
+                </div>
+            </div><!--miniMapHeader-->
+            <div id="miniMapBody">
+                <div class="ma-layer-list">
+                        
+                    
+            </div><!--ma-layer-list-->
+        </div><!--miniMapBody-->
+        </div><!--miniMapsContainerInner-->
+    </div><!--miniMapsContainer-->
+    <div id="layersDiv">
+        
+    </div>
+    
+    
+    <script>
+        var miniMap = {
+            map: null,
+            view: null,
+            info: {!MapInfo}
+        };
+        //console.log(miniMap.info);
+    //var Map = null;
+            
+            
+        //var layerSpinnerArea = $(".ma-layer-spinner");
+        
+    
+        $('document').ready(function(){
+            
+            //Map = undefined;
+            require([
+                "esri/Map",
+                "esri/PopupTemplate",
+                "esri/views/MapView",
+                "esri/Graphic",
+                "esri/geometry/Point",
+                "esri/layers/GraphicsLayer",
+                "esri/symbols/SimpleMarkerSymbol",
+                "esri/symbols/SimpleLineSymbol",
+                "esri/symbols/SimpleFillSymbol",
+                "esri/symbols/PictureMarkerSymbol",
+                "esri/views/ui/UI",
+                "dojo/domReady!"
+            ], function(ESRIMap, PopupTemplate, MapView, Graphic, Point,GraphicsLayer, SimpleMarkerSymbol, SimpleLineSymbol, SimpleFillSymbol,PictureMarkerSymbol,UI)
+                {
+                    
+                    miniMap.map = new ESRIMap({
+                        //basemap: "streets-navigation-vector"
+                        basemap: "streets"
+                    });
+                    var MiniMapSettings = JSON.parse(miniMap.info.obj.sma__Options__c);
+                    
+                    var centerLat = !miniMap.info.center || isNaN(miniMap.info.center.lat) ? 40.084119 : miniMap.info.center.lat;
+                    var centerLng = !miniMap.info.center || isNaN(miniMap.info.center.lng) ? -95.398867 : miniMap.info.center.lng;
+                    //console.log(miniMap.info.center.lat,miniMap.info.center.lng);
+                    console.log(centerLat,centerLng);
+                    
+                    miniMap.view = new MapView({
+                        center: [centerLng,centerLat],
+                        container: "map",
+                        map: miniMap.map,
+                        zoom : MiniMapSettings.zoom ? MiniMapSettings.zoom : 3
+                    });
+                    
+                    miniMap.view.ui.remove("zoom");
+                    
+                    //miniMap.view.ui.add('logo', "top-right");
+                    //miniMap.view.ui.add('layersLegend', "top-left");
+                    
+                    
+                   
+                   miniMap.view.then(function(){
+                        
+                        
+                        //var layerGraphics = new GraphicsLayer();
+                        //miniMap.map.add(layerGraphics);
+                        
+                        //Do logic here
+                        //var MiniMapSettings = JSON.parse(miniMap.info.obj.sma__Options__c);
+                        
+                        //console.log(MiniMapSettings);
+                        
+                        for (var i = 0; i < MiniMapSettings.layers.length; i++)
+                        {
+                            
+                            
+                            console.log(miniMap.map);
+                            //since we're doing this stuff in a loop we have to worry about closures.
+                            (function (n) {
+                               var layerGraphics = new GraphicsLayer();
+                                miniMap.map.add(layerGraphics);
+                                $('#layersDiv').append('<div id="layer_' + n + '"></div>');
+                                
+                                //$('#miniMapBody .ma-layer-list').append('<div id="layer_' + n + '"></div>');
+                                
+                                /**$('#layersTable').append(
+                                    '<tr layerId="layer_' + n + '">' + 
+                                        '<td>' + 'image' + '</td>' + 
+                                        '<td id="status">' + 'Loading...' + '</td>' + 
+                                    '</tr>'
+                                );*/
+                                
+                                var $Row = $('#templates .ma-layer-list-item').clone();
+                                //https://product-api-prod.cloudbilt.com/marker/marker.php?marker=' + $div.attr('marker-color') + ':' + $div.attr('marker-symbol')
+                                var layerLabel = MiniMapSettings.layers[i].label;
+                                $Row.find('.ma-layer-list-text').text(layerLabel);
+                                //console.log($Row.find('i.ma-icon.ma-icon-checkin'));
+                                
+                                $('#miniMapBody .ma-layer-list').append($Row);
+                               
+                                
+                            
+                                var layerString = encodeURI(JSON.stringify(MiniMapSettings.layers[n]));
+                                $( '#layer_' + n).load( "{!$Page.MAMiniMapHTMLAJAX}?recordId={!EntryRecordId}&layer=" + layerString + "&layerId=layer_" + n, function() {
+                                    
+                                    //MAMiniMapHTMLAJAXOnLoad('layer_' + n,PictureMarkerSymbol);
+                                    
+                                    var layerId = 'layer_' + n;
+                                    
+                                   
+                                    
+                                    if ($('#' + layerId + '_errors').length > 0)
+                                    {
+                                        layerSpinnerArea = $Row.find(".ma-layer-spinner");
+                                         //console.log('errors',$('#' + layerId + '_errors').length);
+                                         $(layerSpinnerArea).find('img').hide();
+                                         $(layerSpinnerArea).find('.ma-icon-warning').show();
+                                         $Row.append('<div class="error-message in"><b>Error:</b>' + $('#' + layerId + '_errors').text() + '</div> ');
+                                         
+                                        //for success
+                                        
+                                        //for errors
+                                        
+                                        //$('#errorExample').addClass('in');
+                                        //$('#map').html($('#' + layerId + '_errors').html());
+                                    } else {
+                                        layerSpinnerArea = $Row.find(".ma-layer-spinner");
+                                        //console.log('No Errors',layerId);
+                                        $(layerSpinnerArea).find('img').hide();
+                                        //for success
+                                        $(layerSpinnerArea).find('.ma-icon-check').show();
+                                        /**added to look for on click of the icon to rerender the output
+                                         * panel with out the checked layer.
+                                         **/
+                                         MiniMapSettings.layers[n].active = true;
+                                         console.log(MiniMapSettings.layers[n].active);
+                                         $(layerSpinnerArea).on('click',function(){
+                                             MiniMapSettings.layers[n].active = !MiniMapSettings.layers[n].active ? true : false;
+                                             
+                                             layerGraphics.visible = !MiniMapSettings.layers[n].active ? false : true;
+                                             
+                                             
+                                         })
+                                         
+                                        
+                                    }
+                                    
+                                    //$('tr[layerId="' + layerId + '"] > #status').html('Done');
+                                    
+                                    
+                                    
+                                    $('#' + layerId + '_recordsContainer > div[type="record"]').each(function( index ) {
+                                        
+                                        var $div = $(this);
+                                      
+                                        /**
+                                        var markerSymbol = new SimpleMarkerSymbol({
+                                            color: $div.attr('marker-color'),
+                                            outline : {
+                                                color: "black",
+                                                width : 1
+                                            }
+                                        });
+                                        */
+                                        $Row.find('i.ma-icon.ma-icon-checkin').removeClass().append('<img src="https://product-api-prod.cloudbilt.com/marker/marker.php?marker=' + $div.attr('marker-color') + ':' + $div.attr('marker-symbol') + '" style="height:20px;" />');
+                                        var markerSymbol = new PictureMarkerSymbol({
+                                            url: 'https://product-api-prod.cloudbilt.com/marker/marker.php?marker=' + $div.attr('marker-color') + ':' + $div.attr('marker-symbol'),
+                                            width: '14.5px',
+                                            height: '21px'
+                                        });
+                                        var lng = parseFloat($div.attr('lng'));
+                                        var lat = parseFloat($div.attr('lat'));
+                                        
+                                        //console.log(markerSymbol);
+                                        
+                                        //if(MiniMapSettings.layers[n].active)
+                                        //{
+                                        if(!isNaN(lng) && !isNaN(lat)){
+                                            var point = new Point({
+                                                longitude: lng,
+                                                latitude: lat
+                                            })
+                                            
+                                            var template = {
+                                              id:$div.attr('id'),
+                                              label:layerLabel
+                                            }
+                                            
+                                            //console.log('lng:' + lng);
+                                            //console.log('lat:' + lat);
+                                            
+                                            var pointGraphic = new Graphic({
+                                                geometry: point,
+                                                symbol: markerSymbol,
+                                                popupTemplate : template
+                                            })
+                                            
+                                            //console.log(pointGraphic);
+                                            
+                                            layerGraphics.add(pointGraphic); 
+                                        }
+                                        
+                                    });
+                                    
+                                     
+                                    
+                                    
+                                    
+                                });
+                            })(i);
+                            
+                        }
+                        
+                        miniMap.view.on("click", function(evt){
+                            
+                            miniMap.view.popup.open({
+                                location: evt.mapPoint, // location of the click on the view
+                                title: miniMap.view.popup.selectedFeature.popupTemplate.label,//"You clicked here", // title displayed in the popup
+                                content: $('#' + miniMap.view.popup.selectedFeature.popupTemplate.id).html()// content displayed in the popup
+                            });
+                            $('.esri-footer').css('display','none');
+                            $('.esri-popup-content').css('margin-bottom','20px');
+                        });
+                    });
+                }
+            );
+        });
+        
+        // MiniMaps Scripts
+
+        var miniMapContainer = $("#miniMapContainer");
+        var miniMapContractButton = $("#miniMapContractButton");
+        var miniMapExpandButton = $("#miniMapExpandButton");
+        // var toastInner = $("#toastInner");
+        // var toast = $("#toast");
+        
+        
+        //expand layers container
+        function showMiniMapBody() {
+            $(miniMapContainer).removeClass('contract');
+            $(miniMapContractButton).show();
+            $(miniMapExpandButton).hide();
+        }
+        
+        //contract layers container
+        function hideMiniMapBody() {
+            $(miniMapContainer).addClass('contract');
+            $(miniMapContractButton).hide();
+            $(miniMapExpandButton).show();
+        }
+        
+        // function toastDone() {
+        //  $(toastInner).html('<div><i class="ma-icon ma-icon-check ma-toast-icon--left"></i></div><div class="ma-toast-inner-text">Done.</div>');
+        //  //error example
+        //  $('#errorExample').addClass('in');
+        //  setTimeout(function(){
+        //      $(toast).removeClass('ma-in');
+        //  }, 2500);
+        // }
+        
+        function doneLoading() {
+            //console.log(layerSpinnerArea);
+            $(layerSpinnerArea).find('img').hide();
+            //for success
+            $(layerSpinnerArea).find('.ma-icon-check').show();
+            //for errors
+            $(layerSpinnerArea).find('.ma-icon-warning').show();
+            $('#errorExample').addClass('in');
+        }
+        
+       /** $(document).ready(function(){
+            
+            setTimeout(function(){
+                //toastDone();
+                doneLoading();
+            }, 2000);
+            
+        });*/
+        
+    </script>
+    
+    <div id="templates" style="display:none;">
+        <div class="ma-layer-list-item">
+            <div class="flex-horizontal">
+                <div class="ma-layer-list-icon">
+                    <i class="ma-icon ma-icon-checkin"></i>
+                </div><!--layer-list-icon-->
+                <div class="ma-layer-list-text flex-grow-1 flex-basis-0">
+                    
+                </div><!--ma-layer-list-text-->
+                <div class="ma-layer-spinner">
+            
+                    <apex:image url="{!URLFOR($Resource.sma__MAMinimaps,'img/slds_spinner_brand.gif')}"/>
+                    <i class="ma-icon ma-icon-check" style="display:none;"></i>
+                    <i class="ma-icon ma-icon-warning" style="display:none;"></i>
+                </div>  
+        <!-- <div class="ma-layer-list-chevron">
+        <div class="ma-icon ma-icon-chevronright"></div>
+        </div> --><!--ma-layer-list-chevron-->
+                </div><!--flex-horizontal-->
+         </div><!--ma-layer-list-item-->           
+        
+    </div>
+</apex:page>

@@ -1,0 +1,113 @@
+<apex:page controller="SPKAMF.RecipeUserManagement" tabStyle="ChatterMate__tab" title="ChattoMate User Management">
+    <head>
+        <style>
+            .leftMargin
+            {
+                margin-left: 4em;
+            }
+
+            .inliner
+            {
+                display: inline-block;
+                margin-top: 0.4em;
+            }
+        </style>
+    </head>
+
+    <c:UserList pageController="{!this}"/>
+
+    <apex:form >
+
+        <apex:pageBlock id="recipeList" title="Recipes">
+            <apex:pageMessages />
+
+            <apex:actionStatus id="recipeFilterStatus">
+                <apex:facet name="start">
+                    <apex:outputPanel >
+                        <apex:outputLabel value="Object "/>
+                        <apex:selectList value="{!recipes.objectFilter}" size="1" disabled="true">
+                            <apex:selectOptions value="{!recipes.objectFilters}"/>
+                        </apex:selectList>
+                        <apex:outputLabel value="Type "/>
+                        <apex:selectList value="{!recipes.typeFilter}" size="1" disabled="true">
+                            <apex:selectOptions value="{!recipes.typeFilters}"/>
+                        </apex:selectList>
+                    </apex:outputPanel>
+                </apex:facet>
+
+                <apex:facet name="stop">
+                    <apex:outputPanel >
+                        <apex:outputLabel value="Object "/>
+                        <apex:selectList value="{!recipes.objectFilter}" size="1" id="filter">
+                            <apex:selectOptions value="{!recipes.objectFilters}"/>
+                            <apex:actionSupport action="{!recipes.ApplyFilters}" event="onchange" rerender="recipeList" status="recipeFilterStatus"/>
+                        </apex:selectList>
+                        <apex:outputLabel value="Type "/>
+                        <apex:selectList value="{!recipes.typeFilter}" size="1" id="typeFilter">
+                            <apex:selectOptions value="{!recipes.typeFilters}"/>
+                            <apex:actionSupport action="{!recipes.ApplyFilters}" event="onchange" rerender="recipeList" status="recipeFilterStatus"/>
+                        </apex:selectList>
+                    </apex:outputPanel>
+                </apex:facet>
+            </apex:actionStatus>
+
+            <br/><br/>
+            <div class="listViewport">
+                <apex:pageBlockTable value="{!recipes.Recipes}" var="r">
+                    <apex:column >
+                        <apex:actionStatus id="followStatus" startText="Wait..">
+                            <apex:facet name="stop">
+                                <apex:commandLink value="Follow" action="{!Subscribe}" rerender="recipeList" status="followStatus">
+                                    <apex:param value="{!r.Id}" name="recipeId"/>
+                                </apex:commandLink>
+                            </apex:facet>
+                        </apex:actionStatus>
+                        &nbsp;|&nbsp;
+                        <apex:actionStatus id="unfollowStatus" startText="On it...">
+                            <apex:facet name="stop">
+                                <apex:commandLink value="Unfollow" action="{!Unsubscribe}" rerender="recipeList">
+                                    <apex:param value="{!r.Id}" name="recipeId"/>
+                                </apex:commandLink>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:column>
+                    <apex:column headerValue="Recipe">
+                        <apex:outputField value="{!r.Name}"/>
+                    </apex:column>
+                    <apex:column headerValue="Object">
+                        <apex:outputField value="{!r.SPKAMF__Object_API_Name__c}"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+
+            <!--apex:panelGrid >
+                <apex:commandLink action="{!recipes.sscRecipes.Previous}" rendered="{!recipes.sscRecipes.HasPrevious}" rerender="recipeList">Previous</apex:commandLink>
+                <apex:commandLink action="{!recipes.sscRecipes.Next}" rendered="{!recipes.sscRecipes.HasNext}" rerender="recipeList">Next</apex:commandLink>
+            </apex:panelGrid-->
+
+                <div class="bottomNav">
+                    <div class="paginator">
+                        <span class="prevNextLinks">
+                            <span class="prevNext">
+                                <apex:commandLink action="{!recipes.sscRecipes.Previous}" rendered="{!recipes.sscRecipes.HasPrevious}" rerender="recipeList" styleClass="paginator">
+                                    <img src="/s.gif" title="Previous" alt="Previous" class="prev"/> Previous 
+                                </apex:commandLink>
+                                <apex:outputPanel layout="none" rendered="{!NOT(recipes.sscRecipes.HasPrevious)}">
+                                    <img src="/s.gif" title="Previous" alt="Previous" class="prevoff"/> Previous 
+                                </apex:outputPanel>
+                            </span>
+                            <span class="prevNext">
+                                <apex:commandLink action="{!recipes.sscRecipes.Next}" rendered="{!recipes.sscRecipes.HasNext}" rerender="recipeList" styleClass="paginator">
+                                    Next <img src="/s.gif" title="Next" alt="Next" class="next"/>
+                                </apex:commandLink>
+                                <apex:outputPanel layout="none" rendered="{!NOT(recipes.sscRecipes.HasNext)}">
+                                    Next <img src="/s.gif" title="Next" alt="Next" class="nextoff"/>
+                                </apex:outputPanel>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

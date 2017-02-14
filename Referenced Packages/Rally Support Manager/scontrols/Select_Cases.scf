@@ -1,0 +1,441 @@
+<html>
+<head>
+<!-- (c) 2009 Rally Software Development Corp. All rights reserved. -->
+<link href="/sCSS/15.0/Theme2/default/common.css" type="text/css" rel="stylesheet"/>
+<script type="text/javascript" src="/js/functions.js"></script>
+<script src="/soap/ajax/15.0/connection.js" type="text/javascript"></script>
+{!INCLUDE($SControl.rallyObj)}
+{!INCLUDE($SControl.GetArtifacts)}
+<script type="text/javascript"
+        src="https://s3-us-west-2.amazonaws.com/rsm.rallydev.com/integrations/rsc/yui/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+<script type="text/javascript"
+        src="https://s3-us-west-2.amazonaws.com/rsm.rallydev.com/integrations/rsc/yui/2.6.0/build/element/element-beta-min.js"></script>
+<script type="text/javascript"
+        src="https://s3-us-west-2.amazonaws.com/rsm.rallydev.com/integrations/rsc/yui/2.6.0/build/datasource/datasource-min.js"></script>
+<script type="text/javascript"
+        src="https://s3-us-west-2.amazonaws.com/rsm.rallydev.com/integrations/rsc/yui/2.6.0/build/datatable/datatable-min.js"></script>
+
+<style type="text/css">
+  .yui-skin-sam, .yui-dt {
+    border: 1px solid transparent;
+  }
+
+  .yui-dt table {
+    margin: 0;
+    padding: 0;
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 12px;
+    border-spacing: 0;
+    border: 1px solid;
+  }
+</style>
+
+<script type="text/javascript">
+  rally.sc = {};
+  rally.sc.release = "{!Release_Announcement__c.Id}";
+  rally.sc.releaseName = "{!Release_Announcement__c.Name}";
+  rally.sc.cases = "";
+
+  /* find cases that match status of closed and have a rally association to allow user to choose from */
+  rally.getReleaseCases = function () {
+    if (rally.hasRPM()) {
+      rally.getReleaseCases.renderFeatureStatus();
+    }
+    rally.getReleaseCases.genData();
+  };
+
+  rally.getReleaseCases.genData = function () {
+    var caseIterator = rally.getReleaseCases.query();
+    rally.sc.cases = rally.getReleaseCases.shadowCases(caseIterator, rally.sc.releasename);
+    rally.getReleaseCases.display(caseIterator);
+  };
+
+  rally.getReleaseCases.renderFeatureStatus = function () {
+    var selectOptions = rally.getReleaseCases.getFeatureStatus();
+    var contentStr = "<b>Rally Product Manager customers:</b><br>For cases linked to Rally Product Manager feedback, leave the \"Dismiss Them\" selection to not include them, or select the feature status to include: <select name='selectFeatureStatus' onChange='rally.injectContent(\"results\",\"In Progress...\");rally.getReleaseCases.genData();'>";
+    contentStr += '<option value="None">Dismiss Them</option>';
+    for (var i = 0; i < selectOptions.length; i++) {
+      contentStr += '<option value="' + selectOptions[i].value + '">' + selectOptions[i].label + '</option>';
+    }
+    contentStr += '</select>';
+    rally.injectContent("featureStatus", contentStr);
+  };
+
+  rally.getReleaseCases.getFeatureStatus = function () {
+    var statusArr = [];
+    var featureDesc = sforce.connection.describeSObject("RALLYRPM__Feature__c");
+    var featureFields = featureDesc.fields;
+    for (var i = 0; i < featureFields.length; i++) {
+      if (featureFields[i].name == "RALLYRPM__Status__c") {
+        return(featureFields[i].picklistValues);
+      }
+    }
+    return(statusArr);
+  };
+
+  rally.getReleaseCases.getFeatureStatusFormValue = function () {
+    var fStatusSelect = document.getElementsByName("selectFeatureStatus")[0];
+    var fStatus = fStatusSelect.value;
+    return(fStatus);
+  };
+
+  rally.getReleaseCases.shadowCases = function (caseIterator, release) {
+    var casesStruct = {};
+    caseIterator.index = 0;
+    while (caseIterator.hasNext()) {
+      var record = caseIterator.next();
+      var releaseName = record.RALLYSM__Release_Announcement__r ? record.RALLYSM__Release_Announcement__r.Name : "";
+      if (releaseName == rally.sc.releaseName) {
+        casesStruct[record.Id] = 1;
+      }
+      else {
+        casesStruct[record.Id] = 0;
+      }
+    }
+    return(casesStruct);
+  };
+
+  rally.getReleaseCases.query = function () {
+    if (rally.hasRPM()) {
+      var fStatus = rally.getReleaseCases.getFeatureStatusFormValue();
+      if (fStatus != "None") {
+        var feedback_cases = sforce.connection.query("select a.RALLYRPM__Case_ID__r.Id, a.RALLYRPM__Case_ID__r.CaseNumber, a.RALLYRPM__Case_ID__r.Subject, a.RALLYRPM__Case_ID__r.Account.Name, a.RALLYRPM__Case_ID__r.Status, a.RALLYRPM__Case_ID__r.Priority, a.RALLYRPM__Case_ID__r.RALLYSM__Release_Announcement__r.Name, a.RALLYRPM__Case_ID__r.RALLYSM__Release_Announcement__r.Id, a.RALLYRPM__Case_ID__r.Owner.Name, a.RALLYRPM__Feature__r.RALLYRPM__RallyArtifactRef__c from RALLYRPM__Feedback__c a where a.RALLYRPM__Feature__r.RALLYRPM__Status__c = '" + fStatus + "' and a.RALLYRPM__Feature__r.RALLYRPM__inRally__c = 'Yes' and a.RALLYRPM__Case_ID__c != null");
+        var regular_cases = sforce.connection.query("select a.Id, a.CaseNumber, a.RALLYSM__Rally_Artifact_Ref__c, a.Subject, b.Name, a.Status, a.Priority, a.RALLYSM__release_announcement__r.Name, a.RALLYSM__release_announcement__r.Id, d.Name from Case a, a.account b, a.owner d where IsClosed = false and RALLYSM__Rally_Association__c = 'Yes'");
+        var caseIterator = rally.getReleaseCases.join(regular_cases, feedback_cases);
+      }
+      else {
+        var cases = sforce.connection.query("select a.Id, a.CaseNumber, a.RALLYSM__Rally_Artifact_Ref__c, a.Subject, b.Name, a.Status, a.Priority, a.RALLYSM__release_announcement__r.Name, a.RALLYSM__release_announcement__r.Id, d.Name from Case a, a.account b, a.owner d where IsClosed = false and RALLYSM__Rally_Association__c = 'Yes'");
+        var caseIterator = new sforce.QueryResultIterator(cases);
+      }
+
+    }
+    else {
+      var cases = sforce.connection.query("select a.Id, a.CaseNumber, a.RALLYSM__Rally_Artifact_Ref__c, a.Subject, b.Name, a.Status, a.Priority, a.RALLYSM__release_announcement__r.Name, a.RALLYSM__release_announcement__r.Id, d.Name from Case a, a.account b, a.owner d where IsClosed = false and RALLYSM__Rally_Association__c = 'Yes'");
+      var caseIterator = new sforce.QueryResultIterator(cases);
+    }
+    return(caseIterator);
+  };
+
+  rally.getReleaseCases.join = function (regular_cases, feedback_cases) {
+    var fbIterator = new sforce.QueryResultIterator(feedback_cases);
+    var caseIterator = new sforce.QueryResultIterator(regular_cases);
+
+    while (fbIterator.hasNext()) {
+      var fbRecord = fbIterator.next();
+      caseIterator.records.push({type: 'Case', Id: fbRecord.RALLYRPM__Case_ID__r.Id, CaseNumber: fbRecord.RALLYRPM__Case_ID__r.CaseNumber,
+        RALLYSM__Rally_Artifact_Ref__c: fbRecord.RALLYRPM__Feature__r.RALLYRPM__RallyArtifactRef__c,
+        Subject: fbRecord.RALLYRPM__Case_ID__r.Subject, Account: fbRecord.RALLYRPM__Case_ID__r.Account,
+        Status: fbRecord.RALLYRPM__Case_ID__r.Status, Priority: fbRecord.RALLYRPM__Case_ID__r.Priority,
+        RALLYSM__Release_Announcement__r: fbRecord.RALLYRPM__Case_ID__r.RALLYSM__Release_Announcement__r,
+        Owner: fbRecord.RALLYRPM__Case_ID__r.Owner, CaseType: "Feedback"});
+    }
+    return(caseIterator);
+  };
+
+  rally.getReleaseCases.updateCaseRelease = function (releaseId, caseId, caseTag) {
+    var _tmpcase = new sforce.SObject('Case');
+    _tmpcase.Id = caseId;
+    _tmpcase.RALLYSM__Release_Announcement__c = releaseId;
+    if (caseTag != "") {
+      _tmpcase.RALLYSM__Notification_Tag__c = caseTag;
+    }
+    return(_tmpcase);
+  };
+
+  /* associate/disassociate sf cases from given release */
+  rally.getReleaseCases.addReleaseToCases = function (release) {
+    var casesToAdd = rally.getReleaseCases.getFormCases();
+    var implementedFlag = rally.tagCases.tagExists("Implemented");
+    var fixedFlag = rally.tagCases.tagExists("Fixed");
+    var artifactType = "";
+    var caseTag = "";
+    var caseObjs = [];
+    var results = "";
+    var release_name = "";
+
+    var caseCount = 0;
+    var caseCountLimit = 199;
+    var totalCaseCount = 0;
+
+    for (i = 0; i < rally.getReleaseCases.caseArr.length; i++) {
+      var caseId = rally.getReleaseCases.caseArr[i];
+      if (rally.sc.cases[caseId] != casesToAdd[caseId]) {
+        caseTag = "";
+        if (casesToAdd[rally.getReleaseCases.caseArr[i]]) {
+          rally.getCaseInfo(rally.getReleaseCases.caseArr[i]);
+
+  // if rally.caseArtifactRef is null then assume this case is associated with feedback and hence a story.
+          if (rally.caseArtifactRef) {
+            artifactType = rally.getArtifactType(rally.caseArtifactRef);
+          }
+          else {
+            artifactType = "hierarchicalrequirement";
+          }
+          if (artifactType == "defect" && fixedFlag) {
+            caseTag = "Fixed";
+          }
+          if (artifactType == "hierarchicalrequirement" && implementedFlag) {
+            caseTag = "Implemented";
+          }
+          release_name = release;
+        }
+        else {
+          release_name = null;
+          caseTag = null;
+        }
+        caseCount++;
+        totalCaseCount++;
+        if (caseCount > caseCountLimit) {
+          caseCount = 1;
+          sforce.connection.update(caseObjs);
+          caseObjs = [];
+        }
+        caseObjs.push(rally.getReleaseCases.updateCaseRelease(release_name, rally.getReleaseCases.caseArr[i], caseTag));
+      }
+    }
+    sforce.connection.update(caseObjs);
+    rally.getReleaseCases.added();
+  };
+
+  /* go through form and figure out what cases should be associated/disassociated */
+  rally.getReleaseCases.getFormCases = function () {
+    var casesStruct = {};
+    for (i = 0; i < rally.getReleaseCases.caseArr.length; i++) {
+      var box = eval("document.forms['rallyCaseForm'].CB" + rally.getReleaseCases.caseArr[i]);
+      if (box.checked == true) {
+        casesStruct[rally.getReleaseCases.caseArr[i]] = 1;
+      }
+      else {
+        casesStruct[rally.getReleaseCases.caseArr[i]] = 0;
+      }
+    }
+    return(casesStruct);
+  };
+
+  rally.getReleaseCases.caseArr = [];
+
+  rally.getReleaseCases.display = function (caseIterator) {
+    var json_cases = [];
+    var caseRecordIterator = caseIterator;
+    var ga = new rally.getArtifacts();
+
+    var rallyRefs = ga.getRallyRefs(caseRecordIterator);
+    var rallyInfo = ga.fetch(rallyRefs);
+
+    caseIterator.index = 0;
+    while (caseIterator.hasNext()) {
+      var record = caseIterator.next();
+      var skip = 0;
+      var oidRef = record["RALLYSM__Rally_Artifact_Ref__c"];
+      var oid = rally.getArtifactOid(oidRef);
+      var artifactType = rally.getArtifactType(oidRef);
+      var artifactOwner = "";
+      var artifactID = "";
+      var artifactScheduleState = "";
+      var artifactState = "";
+      var artifactRelease = "";
+      var artifactResolution = "";
+
+      if (rallyInfo[oid]) {
+        artifactOwner = rallyInfo[oid].Owner;
+        artifactID = rallyInfo[oid].FormattedID;
+        artifactScheduleState = rallyInfo[oid].ScheduleState;
+        artifactState = rallyInfo[oid].State;
+        for (var attr in rallyInfo[oid].Release) {
+          if (attr == "_refObjectName") {
+            artifactRelease = rallyInfo[oid].Release._refObjectName;
+          }
+        }
+        if (artifactRelease.length == 0) {
+          artifactRelease = "Unscheduled";
+        }
+        artifactResolution = rallyInfo[oid].Resolution ? rallyInfo[oid].Resolution : "";
+      }
+      else {
+        skip = 1;
+      }
+
+  // Filter out cases that already have a release that we are not interested in.
+      var releaseId = record.RALLYSM__Release_Announcement__r ? record.RALLYSM__Release_Announcement__r.Name : "";
+      if (releaseId != "" && releaseId != rally.sc.releaseName) {
+        skip = 1;
+      }
+
+      if (!skip) {
+        var accountName = record.Account ? record.Account.Name : "";
+        var caseType = record.CaseType ? record.CaseType : (artifactType == "defect" ? "Defect" : "Story");
+
+        rally.getReleaseCases.caseArr.push(record.Id);
+        json_cases.push({Id: record.Id, CaseNumber: record.CaseNumber, artifactOwner: artifactOwner, AccountName: accountName, Subject: record.Subject,
+          Status: record.Status, artifactID: artifactID, artifactScheduleState: artifactScheduleState,
+          artifactState: artifactState, artifactRelease: artifactRelease, releaseId: releaseId, caseOwner: record.Owner.Name,
+          caseType: caseType, artifactResolution: artifactResolution});
+      }
+    }
+    var myDataSource = new YAHOO.util.DataSource(json_cases);
+    myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+    myDataSource.responseSchema = {fields: ["Id", "CaseNumber", "caseOwner", "AccountName", "Subject", "Status",
+      "artifactID", "artifactScheduleState", "artifactState", "artifactRelease",
+      "releaseId", "caseType", "artifactResolution"]};
+    checkBoxFormatter = function (elCell, oRecord, oColumn, oData) {
+      YAHOO.util.Dom.addClass(elCell, "Id");
+      var id = oRecord.getData("Id");
+      var relid = oRecord.getData("releaseId");
+      var checked = "";
+      if (relid == rally.sc.releaseName) {
+        checked = "checked";
+      }
+      elCell.innerHTML = '<div align="center" class="actionColumn"><input type="checkbox" name="CB' + id + '" value="' + id + '" ' + checked + '></div>';
+    };
+
+    var myColumnDefs =
+      [
+        {key: "Id", label: "<th class='actionColumn' scope='col'><div class='pbButton' align='center'><input class='btn' type='button' name='allbox' value='De/Select All' onClick=\"rally.checkAll(\'rallyCaseForm\',\'rally.checked\');\"></div>", formatter: checkBoxFormatter, sortable: false, className: "yui-dt-bd"},
+        {key: "CaseNumber", label: "Case Number", sortable: true, className: "yui-dt-bd"},
+        {key: "caseOwner", label: "Owner", sortable: true, className: "yui-dt-bd"},
+        {key: "AccountName", label: "Account", sortable: true, className: "yui-dt-bd"},
+        {key: "Subject", label: "Subject", sortable: true, className: "yui-dt-bd"},
+        {key: "Status", label: "Status", sortable: true, className: "yui-dt-bd"},
+        {key: "artifactID", label: "Rally ID", sortable: true, className: "yui-dt-bd"},
+        {key: "artifactState", label: "Defect State", sortable: true, className: "yui-dt-bd"},
+        {key: "artifactResolution", label: "Defect Resolution", sortable: true, className: "yui-dt-bd"},
+        {key: "artifactRelease", label: "Rally Release", sortable: true, className: "yui-dt-bd"},
+        {key: "artifactScheduleState", label: "Rally State", sortable: true, className: "yui-dt-bd"},
+        {key: "caseType", label: "Type", sortable: true, className: "yui-dt-bd"}
+      ];
+    var myDataTable = new YAHOO.widget.DataTable("results", myColumnDefs, myDataSource, {sortedBy: {key: "artifactRelease", dir: YAHOO.widget.DataTable.CLASS_ASC}});
+  };
+
+  rally.getReleaseCases.init = function () {
+    try {
+      rally.init();
+    }
+    catch (ex) {
+      alert(ex);
+      return;
+    }
+    rally.getReleaseCases();
+  };
+
+  rally.getReleaseCases.publishStatus = function () {
+    var casesToPublish = rally.getReleaseCases.getFormCases();
+    var caseIterator = rally.getReleaseCases.query();
+    var caseObjs = [];
+    var caseCount = 0;
+    var caseCountLimit = 199;
+
+    while (caseIterator.hasNext()) {
+      var record = caseIterator.next();
+      if (casesToPublish[record.Id]) {
+        try {
+          rally.getArtifact(rally.cleanURL(record.Id, rally.baseUrl, record.RALLYSM__Rally_Artifact_Ref__c));
+        }
+        catch (ex) {
+          continue;
+        }
+        caseCount++;
+        if (caseCount > caseCountLimit) {
+          caseCount = 1;
+          sforce.connection.update(caseObjs);
+          caseObjs = [];
+        }
+        caseObjs.push(rally.updateCaseDetail.updateCase(record.Id, rally.artifactState, rally.artifactRelease));
+      }
+    }
+    var results = sforce.connection.update(caseObjs);
+    alert("The Rally State and Rally Release information has been reflected in the Development Status and Release Target fields of all selected cases. That information can now be made available to customers using the customer portal.");
+  };
+
+  rally.getReleaseCases.scheduleEmail = function () {
+    window.opener.location.href = "/ui/massmail/MassMailStageManager?setupid=MassMailFilter&mm_type=Case&wizardRetUrl=%2F500%2Fo"; 
+    self.close();
+  };
+
+  rally.getReleaseCases.done = function () {
+    window.opener.location.href = "/" + rally.sc.release;
+    self.close();
+  };
+
+  rally.getReleaseCases.added = function () {
+    var opMessage = "The cases to be announced have been tagged for email notifications.\n\nNext, click Schedule Email Notifications and create views based on the Announcement Label and Release Announcement case fields.";
+    alert(opMessage);
+  }
+</script>
+</head>
+
+<body onLoad="rally.getReleaseCases.init();">
+<div class="listRelatedObject caseBlock">
+  <div class="bPageBlock secondaryPalette" style="background-color: #B8338C; border-color: #B8338C">
+    <div class="pbHeader">
+      <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td class="pbTitle"><img src="/s.gif" alt="" width="1" height="1" class="minWidth" title=""/><img
+            src="/s.gif" alt="" class="relatedListIcon" title=""/>
+
+            <h3>Select Cases</h3></td>
+        </tr>
+      </table>
+    </div>
+    <div class="pbBody yui-skin-sam">
+      <form name="rallyCaseForm">
+        <table style="font-size: 100%" class="list" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td class="dataCell" colspan="10">Select the cases to include in this release announcement from
+              the list of outstanding open cases linked to Rally.<br>
+              Refer to the <a href="https://docs.rallydev.com/rsm/onlinehelp.pdf" target="_blank">user
+                guide</a> for details.
+              <br><br>
+
+              <div id="featureStatus"></div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="10">&nbsp;</td>
+          </tr>
+          <tr>
+            <td colspan="10">
+              <div class="pbHeader">
+                <table style="font-size: 100%" class="list" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td colspan="10" class="pbButton"><input type="button" class="btn"
+                                                             onClick="this.style.cursor='wait';rally.getReleaseCases.addReleaseToCases(rally.sc.release);this.style.cursor='auto';"
+                                                             value="Add Selected Cases"
+                                                             title="Add Selected Cases"><input
+                      type="button" class="btn"
+                      onClick="this.style.cursor='wait';rally.getReleaseCases.scheduleEmail();this.style.cursor='auto';"
+                      value="Schedule Email Notifications"
+                      title="Schedule Email Notifications"><input type="button" class="btn"
+                                                                  name="Close" value="Close"
+                                                                  onClick="rally.getReleaseCases.done();"
+                                                                  title="Close"></td>
+                  </tr>
+                </table>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <div id="results" class="yui-dt">In Progress...</div>
+        <div class="pbHeader">
+          <table style="font-size: 100%" class="list" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td colspan="10" class="pbButton"><input type="button" class="btn"
+                                                       onClick="this.style.cursor='wait';rally.getReleaseCases.addReleaseToCases(rally.sc.release);this.style.cursor='auto';"
+                                                       value="Add Selected Cases"
+                                                       title="Add Selected Cases"><input type="button"
+                                                                                         class="btn"
+                                                                                         onClick="this.style.cursor='wait';rally.getReleaseCases.scheduleEmail();this.style.cursor='auto';"
+                                                                                         value="Schedule Email Notifications"
+                                                                                         title="Schedule Email Notifications"><input
+                type="button" class="btn" name="Close" value="Close"
+                onClick="rally.getReleaseCases.done();" title="Close"></td>
+            </tr>
+          </table>
+        </div>
+      </form>
+    </div>
+    <div class="pbFooter"></div>
+  </div>
+</div>
+</body>
+</html>

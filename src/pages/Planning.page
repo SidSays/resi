@@ -1,0 +1,88 @@
+<!-- 
+/**********************************************************
+* Page Name: Planning
+* Author: Vivek Patel, Accenture
+* Date: 07-March-2013 
+* Requirement: 258, 259, 260, 262, 325 - Ability to search statistics based on Zip code or Node and Color code in red which are assigned within 90 days which is configurable value in custom setting.
+* Description: This page is used to search statistics using Zip code and Node and Color code them in red if they are assgined withing last 90 days(Configurable value) and prevent their assignment.
+* Last Modified by: Vivek Patel, Accenture
+***********************************************************/
+-->
+<apex:page controller="PlanningController">
+    <apex:includeScript value="{!$Resource.Jquery}" />
+    <apex:includeScript value="{!URLFOR($Resource.PlanEditPage, 'PlanEditPageScript.js')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.PlanEditPage, 'pleaseWait.css')}" />
+    <apex:sectionHeader Title="Planning" />
+    <apex:pagemessages id="ErrMsg" />
+
+    <script type="text/javascript">
+    $j = jQuery.noConflict();
+    $j(document).ready(function(){
+        $j(".theTextInput").keypress(function(event){
+            if(event.keyCode == 13){
+                $j(".searchBtn").click();
+                return false;
+            }
+        });
+    });
+</script>
+<apex:form id="PlanningForm">
+    <apex:pageBlock id="PlanningBlock">
+        <apex:pageblockButtons location="top">
+            <apex:commandButton value="Search" action="{!searchZipOrNode}" reRender="zipTable,ErrMsg" status="SearchStatus" id="searchBtn" styleclass="searchBtn" />
+            <apex:commandButton value="New Plan" action="{!toPlanPage}" />
+            <apex:commandButton value="Map View" action="{!navigateToMap}" />
+        </apex:pageblockButtons>
+
+        <apex:pageblockSection id="fields">
+            <apex:inputText value="{!zipString}" Label="Zip Code" id="zip" styleclass="theTextInput" title="Enter values separated by a comma. (ex: 22542, 29951)" />
+            <apex:inputText value="{!nodeString}" Label="Node" id="node" styleclass="theTextInput" title="Enter values separated by a comma. (ex: LS2001, LS2002)" />
+        </apex:pageblockSection>
+
+        <apex:pageblockSection columns="1" id="zipTable" title="Search Result" collapsible="false">
+            <apex:actionStatus id="SearchStatus">
+                <apex:facet name="start">
+                    <apex:outputPanel styleclass="waitPanelClass" />
+                </apex:facet>
+            </apex:actionStatus>
+            <apex:outputText value="Enter Zip Code or Node values separated by a comma then click on Search." rendered="{!searchClicked == false }" />
+            <apex:outputText value="*No records found." style="Color:Red" rendered="{!searchClicked==true && addStatWraps.size==0 }" />
+            <apex:outputPanel layout="block" style="overflow:auto;width:970px;height:400px">
+                <apex:pageblockTable value="{!addStatWraps}" var="statWrap" rendered="{!addStatWraps!=null && addStatWraps.size!= 0}" width="50%">
+                    <apex:column headerValue="Select">
+                        <apex:inputCheckbox value="{!statWrap.selected}" disabled="{!if(statWrap.addStat.Worked__c, true, false)}" />
+                    </apex:column>
+                    <apex:column value="{!statWrap.addStat.Zip_Code__c}" style="background-color:{!statWrap.addStat.Colour__c}" rendered="{!selectedGroup=='ZipCode'}" />
+                    <apex:column value="{!statWrap.addStat.Node__c}" style="background-color:{!statWrap.addStat.Colour__c}" rendered="{!selectedGroup=='Node'}"/>
+                    <apex:column value="{!statWrap.addStat.Num_of_Currently_Assigned__c}" />
+                    <apex:column value="{!statWrap.addStat.Percent_Currently_Assigned__c}" />
+                    <apex:column value="{!statWrap.addStat.Currently_Assigned_to_Turf__c}" />
+                    <apex:column value="{!statWrap.addStat.Knocked_in_last__c}" />
+                    <apex:column value="{!statWrap.addStat.Last_Knock_Date__c}" />
+                    <apex:column value="{!statWrap.addStat.Last_Assigned_Date__c}" />
+                    <apex:column value="{!statWrap.addStat.Percent_Competitive_Disco_to_Former__c}" />
+                    <apex:column value="{!statWrap.addStat.Disconnect__c}" />
+                    <apex:column value="{!statWrap.addStat.Active__c}" />
+                    <apex:column value="{!statWrap.addStat.Never__c}" />
+                    <apex:column value="{!statWrap.addStat.Former__c}" />
+                    <apex:column value="{!statWrap.addStat.Percent_Nonpay_Disco_to_Former__c}" />
+                    <apex:column value="{!statWrap.addStat.Percent_Complex_Code__c}" />
+                    <apex:column value="{!statWrap.addStat.Percent_Active_Video__c}" />
+                    <apex:column value="{!statWrap.addStat.Percent_Active_CHSI__c}" />
+                    <apex:column value="{!statWrap.addStat.Percent_Active_CDV__c}" />
+                    <apex:column value="{!statWrap.addStat.Percent_Single__c}" />
+                    <apex:column value="{!statWrap.addStat.Percent_Double__c}" />
+                    <apex:column value="{!statWrap.addStat.Percent_Triple__c}" />
+                    <apex:column value="{!statWrap.addStat.TP_Acquisition_Score__c}" />
+                    <apex:column value="{!statWrap.addStat.TP_Upgrade_Score__c}" />
+                    <apex:column value="{!statWrap.addStat.Video_Acquisition_Score__c}" />
+                    <apex:column value="{!statWrap.addStat.HSD_Acquisition_Score__c}" />
+                    <apex:column value="{!statWrap.addStat.CDV_Acquisition_Score__c}" />
+                </apex:pageblockTable>
+                <apex:commandLink value="<<Previous" action="{!previous}" reRender="zipTable,ErrMsg" status="SearchStatus" rendered="{!if(addStatWraps.size!= 0, true,false)}" /> &nbsp;           
+                <apex:commandLink value="Next>>" action="{!next}" reRender="zipTable,ErrMsg" status="SearchStatus" rendered="{!if(addStatWraps.size!= 0, true,false)}" />
+            </apex:outputPanel>
+        </apex:pageblockSection>
+    </apex:pageBlock>
+</apex:form>
+</apex:page>

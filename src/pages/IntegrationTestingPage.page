@@ -1,0 +1,55 @@
+<apex:page controller="IntegrationTestingController">
+    <apex:form >
+        <apex:actionStatus startText="(Waiting for Response from Super API...)"
+            stopText="(Please find the Response below the Request Parameters....)" id="counterStatus"/>
+            <br/><br/><br/>
+        <apex:pageBlock id="pb">
+        <apex:pageBlockSection >
+            <H1>Billing House Key : </H1>
+            &nbsp;&nbsp;<apex:inputtext value="{!billingHouseKey}"/> <br/>
+            <H1>Location Id : </H1>
+            &nbsp;&nbsp;<apex:inputtext value="{!locationId}"/> <br/>
+            <H1>Street Address1 : </H1>
+            &nbsp;&nbsp;<apex:inputtext value="{!streetAddress1}"/> <br/>
+            <H1>Street Address2 : </H1>
+            &nbsp;&nbsp;<apex:inputtext value="{!streetAddress2}"/> <br/>
+            <H1>Unit Type : </H1>
+            &nbsp;&nbsp;<apex:inputtext value="{!unitType}"/> <br/>
+            <H1>Unit Number : </H1>
+            &nbsp;&nbsp;<apex:inputtext value="{!unitNumber}"/> <br/>
+            <H1>ZipCode: </H1>
+            &nbsp;&nbsp;<apex:inputtext value="{!zipCode}"/> <br/>
+            <H1>Zip4Code: </H1>
+            &nbsp;&nbsp;<apex:inputtext value="{!zip4Code}"/> <br/>
+            <H1>City : </H1>
+            &nbsp;&nbsp;<apex:inputtext value="{!city}"/> <br/>
+            <H1>State : </H1>
+            &nbsp;&nbsp;<apex:inputtext value="{!state}"/> <br/>
+            <H1>Country : </H1>
+            &nbsp;&nbsp;<apex:inputtext value="{!country}"/> <br/>
+            </apex:pageBlockSection>
+            
+            <!--{!serverRequest}
+            <br/><br/><br/>
+            {!responseBody}
+            <br/><br/><br/>-->
+            <H1>{!serverResponse}</H1>
+            <br/><br/><br/>
+            <H1>{!status}</H1>
+            <br/><br/><br/>
+            {!accInfo1}
+            <br/><br/><br/>
+            {!custInfo1}
+            <br/><br/><br/>
+            {!locInfo1}
+            <br/><br/><br/>
+            {!subInfo1}
+            <br/><br/><br/>
+            <apex:pageblockButtons >
+                <apex:commandButton value="Go!" status="counterStatus" reRender="pb,msg" action="{!test}"/>
+            </apex:pageblockButtons>
+        </apex:pageBlock>
+        <apex:pagemessages id="msg"/>
+        
+    </apex:form>
+</apex:page>

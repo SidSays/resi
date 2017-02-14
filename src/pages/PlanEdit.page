@@ -1,0 +1,525 @@
+<!-- 
+/**********************************************************
+* Page Name: PlanEdit
+* Author: Vivek Patel, Accenture
+* Date: 20-March-2013 
+* Requirement: 122 - Creating multi-level plans(National, Division, Region, Area, Turf and Playlist) and associating addresses with Turf and Playlist.
+* Description: Overridden Plan edit page to provide functionality for adding criteria and addresses to the plan.
+* Last Modified by: Vivek Patel, Accenture
+***********************************************************/
+-->
+<apex:page standardController="Plan__c" extensions="PlanEditExtn" id="PlanEditPage" action="{!checkEditAccess}">
+<apex:sectionHeader title="Plan Edit" subtitle="{!if(ISNULL(Plan__c.Id),'New Plan',Plan__c.Name)}"/>
+<apex:pagemessages id="errMsg" escape="false"/>
+<apex:outputPanel rendered="{!Plan__c.Id != null}">
+    Click <a href="/{!Plan__c.Id}" style="font-weight:bold">here</a> to go back to the plan. <br/>
+</apex:outputPanel>
+<apex:includeScript value="{!$Resource.Jquery}"/>
+<style type="text/css">
+    .newWindow
+    {       
+        text-decoration:underline; 
+        cursor:pointer;
+    }
+    .waitPanelClass {
+          width: 100%;
+          height: 100%;
+          position: fixed;
+          top: 0;
+          left: 0;
+          z-index: 10000;
+          -moz-opacity: 0.7; /* makes the div transparent, so you have a cool overlay effect */
+          opacity: .70;
+          display:block-inline;
+          background:#000000 url({!$Resource.WaitImage}) no-repeat center center;
+    }
+</style>
+<script type="text/javascript">
+    $j = jQuery.noConflict();
+    $j(document).ready(function() {
+        var planId = "{!Plan__c.Id}";
+        if(planId == '') {
+            hideOnClickSearch();
+        }
+        var userPicklist = document.getElementById('PlanEditPage:PlanForm:PlanBlock:AssignmentSection:UserAssigned1_mlktp');
+        if(userPicklist != null)
+            userPicklist.style.display = "none";
+        
+        var str = window.location.href;
+        if(str.indexOf("tmpltId") != -1) {
+            window.location.hash = '#PlanEditPage:PlanForm:SearchBlock';
+        }
+        
+        var excId = 'PlanEditPage:PlanForm:PlanBlock:plansection:excId';
+        modifyExclusionLookup(excId);
+        var assignedId = 'PlanEditPage:PlanForm:PlanBlock:AssignmentSection:teamAssigned1';
+        modifyTeamLookup(assignedId);
+       }
+    );
+    
+    function modifyExclusionLookup(excId){ 
+        var excObj = document.getElementById(excId+'_lkwgt');
+        if (excObj != null) {
+            excObj.href = "javascript: openLookup('/apex/ApplyExclusion?lkfm=page%3Afrm&lknm="+excId+"&lktp=' + getElementByIdCS('"+excId+"_lktp').value,670,'1','&lksrch=' + escapeUTF(getElementByIdCS('"+excId+"').value.substring(0, 80)))";
+        }
+    }
+    function modifyTeamLookup(assignedId){ 
+        var assignedObj = document.getElementById(assignedId+'_lkwgt');
+        if (assignedObj != null) {
+            assignedObj .href = "javascript: openLookup('/apex/PlanAssignmentPage?lkfm=page%3Afrm&lknm="+assignedId+"&lktp=' + getElementByIdCS('"+assignedId+"_lktp').value,670,'1','&lksrch=' + escapeUTF(getElementByIdCS('"+assignedId+"').value.substring(0, 80)))";
+        }
+    }
+    
+    var searchBlock = true;
+    var planBlock = true;
+    
+    function hideOnClickSearch() {
+      var compId =  "{!$Component.PlanForm.SearchBlock.SearchCriteria}";    
+      var btnId =  "{!$Component.PlanForm.SearchBlock.SearchBlockButton}";  
+     
+      if(searchBlock) {     
+          if(document.getElementById(compId)!=null)  
+              document.getElementById(compId).style.display = "none";
+          if(document.getElementById(btnId)!=null) {  
+              document.getElementById(btnId).style.display = "none";
+              searchBlock = false;          
+          }
+      } else {
+          if(document.getElementById(compId)!=null)  
+              document.getElementById(compId).style.display = "block";
+          if(document.getElementById(btnId)!=null) {
+              document.getElementById(btnId).style.display = "block";
+              searchBlock = true;
+          }
+      }
+    }
+    function hideOnClickPlan() {        
+      var compId =  "{!$Component.PlanForm.PlanBlock.PlanDetails}";    
+      if(planBlock) {  
+          if(document.getElementById(compId)!=null) {
+              document.getElementById(compId).style.display = "none";
+              planBlock = false;          
+          }
+      } else {
+          if(document.getElementById(compId)!=null) {  
+              document.getElementById(compId).style.display = "block";
+              planBlock = true;
+          }
+      }
+    }
+ 
+    function bulkAssign(){
+        var cdssId = "{!$Component.PlanEditPage:PlanForm:BulkAddressBlock:bulkSection:ContractorDss}";
+        if(document.getElementById(cdssId).value != 'Null'){
+           return confirm('{!$Label.ConfirmMsgForBulkAssignment}');         
+        } else {
+            alert('{!$Label.AlertMsgForBulkAssignment}');
+            return false;
+        }
+    }
+    
+    function addMoreBulkAssign(){     
+        return confirm('Do you want to add more Addresses ?');      
+    }
+    
+     function reAssign(){     
+        return confirm('Do you want to re-assign address to new user?');      
+    }
+  
+</script>
+
+<apex:form id="PlanForm"  >
+
+<apex:pageblock title="Plan Edit" id="PlanBlock">
+ 
+    <apex:pageblockSection title="Plan Information"  onclick="hideOnClickPlan();"  collapsible="true"/>
+    <apex:outputPanel id="PlanDetails" layout="block">
+    <apex:pageblockSection id="plansection">
+       <apex:inputField value="{!Plan__c.Name}" required="true"/>
+       <apex:outputField value="{!Plan__c.Plan_Level__c}" rendered="{!NOT(ISNULL(Plan__c.Id))}"/> 
+       <apex:pageBlockSectionItem rendered="{!ISNULL(Plan__c.Id)}"> 
+       <apex:outputLabel value="Plan Type" for="cbxlevel1"/>
+       <apex:outputPanel styleClass="requiredInput" layout="block">
+       <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+            <apex:selectList value="{!Plan__c.Plan_Level__c}" size="1" required="true" rendered="{!ISNULL(Plan__c.Id)}">
+                <apex:selectOptions value="{!PlanTypeValue}" id="cbxlevel1"/>
+            </apex:selectList>
+        </apex:outputPanel>
+        </apex:pageBlockSectionItem>
+      <!--   <apex:inputField value="{!Plan__c.Plan_Level__c}" rendered="{!ISNULL(Plan__c.Id)}" required="true"/>-->
+        <apex:outputField value="{!Plan__c.Plan_Status__c}" rendered="{!if(($Profile.Name!='System Administrator' && $Profile.Name!='Regional System Admint (RSA)' && $Profile.Name!='Area Sales Manager' && $Profile.Name!='Sales Development Manager' && $Profile.Name!='Contractor Sales Leader' && $Profile.Name!='Community Account Manager' && $Profile.Name!='Community Account Supervisor') || (Plan__c.No_of_Knock__c!=null || Plan__c.No_of_Start__c!=null || Plan__c.No_of_Door_Hanger__c!=null || Plan__c.No_of_Engage__c!=null || Plan__c.No_of_Position__c!=null || Plan__c.No_of_Close__c!=null || Plan__c.No_of_Contact__c!=null || Plan__c.No_of_No_Answer__c!=null || Plan__c.No_of_Discover__c!=null || Plan__c.No_of_No_Knock__c!=null), true, false)}"/>
+        <apex:inputField value="{!Plan__c.Plan_Status__c}" rendered="{!if(($Profile.Name=='System Administrator' || $Profile.Name=='Regional System Admint (RSA)' || $Profile.Name=='Area Sales Manager' || $Profile.Name=='Sales Development Manager' || $Profile.Name=='Contractor Sales Leader' || $Profile.Name=='Community Account Manager' || $Profile.Name=='Community Account Supervisor') && (Plan__c.No_of_Knock__c==null && Plan__c.No_of_Start__c==null && Plan__c.No_of_Door_Hanger__c==null && Plan__c.No_of_Engage__c==null && Plan__c.No_of_Position__c==null && Plan__c.No_of_Close__c==null && Plan__c.No_of_Contact__c==null && Plan__c.No_of_No_Answer__c==null && Plan__c.No_of_Discover__c==null && Plan__c.No_of_No_Knock__c==null), true, false)}"/>
+        <apex:outputField value="{!Plan__c.Parent_Plan__c}"  rendered="{!NOT(ISNULL(Plan__c.Id))}"/>
+        <apex:inputField value="{!Plan__c.Parent_Plan__c}"  rendered="{!ISNULL(Plan__c.Id)}"/>
+        <apex:inputField value="{!Plan__c.Seasonal_Turf__c}"  rendered="{!if(ISNULL(Plan__c.Id) || Plan__c.Plan_Status__c=='Draft', true, false)}"/>
+        <apex:outputField value="{!Plan__c.Seasonal_Turf__c}"  rendered="{!if(NOT(ISNULL(Plan__c.Id)) && Plan__c.Plan_Status__c!='Draft', true, false)}"/>
+        <apex:outputField value="{!Plan__c.True_count_of_Addresses__c}"/>
+        <apex:inputField value="{!Plan__c.Exclusion__c}"  rendered="{!if(Plan__c.Plan_Status__c=='Draft' && Plan__c.Id!=null, true, false)}" id="excId"/>
+        <apex:outputField value="{!Plan__c.Exclusion__c}"  rendered="{!if(Plan__c.Plan_Status__c!='Draft' || Plan__c.Id==null, true, false)}"/>
+        <apex:outputField value="{!Plan__c.Number_of_Excluded_Addresses__c}"/>
+        <apex:outputField value="{!Plan__c.Assigned_Date__c}"/>
+        <apex:outputField value="{!Plan__c.Duration__c}"/>
+        <apex:inputField value="{!Plan__c.Expiration_Date__c}" rendered="{!Plan__c.Plan_Level__c!='Playlist' && NOT(isBulkBatchRunning)}" />
+        <apex:outputField value="{!Plan__c.Expiration_Date__c}" rendered="{!Plan__c.Plan_Level__c='Playlist' || isBulkBatchRunning}" />
+    </apex:pageblockSection>
+    <apex:pageblockSection columns="1" id="CirteriaSection">
+        <apex:outputField value="{!Plan__c.Parameters__c}"/>
+        <apex:outputField value="{!Plan__c.PlanCriteria__c}" rendered="false"/>
+        <apex:outputField value="{!Plan__c.ParentPlanCriteria__c}" rendered="false"/>
+    </apex:pageblockSection>
+    <apex:pageblockSection title="Plan Assignment"  collapsible="false" id="AssignmentSection" rendered="{!If(Plan__c.Plan_Level__c != 'Bulk',true,false)}">
+    
+        <apex:inputField value="{!Plan__c.User__c}" id="UserAssigned1" rendered="{!if((Plan__c.Id!=null && (Plan__c.Plan_Status__c!='Assigned' || $Profile.Name=='System Administrator' || $Profile.Name=='Regional System Admin (RSA)' || $Profile.Name=='Area Sales Manager' || $Profile.Name=='Sales Development Manager' || $Profile.Name == 'Contractor Sales Leader' || $Profile.Name == 'Community Account Manager' || $Profile.Name == 'Community Account Supervisor')) || (Plan__c.Id!=null && Plan__c.Plan_Level__c!='Turf' && Plan__c.Plan_Level__c!='Playlist'), true, false)}"/>
+        <apex:outputField value="{!Plan__c.User__c}" id="UserAssigned2" rendered="{!if(Plan__c.Id==null || Plan__c.Plan_Status__c=='Assigned' && (Plan__c.Plan_Level__c=='Turf' || Plan__c.Plan_Level__c=='Playlist') && $Profile.Name!='System Administrator' && $Profile.Name!='Regional System Admin (RSA)' && $Profile.Name!='Area Sales Manager' && $Profile.Name!='Sales Development Manager' && $Profile.Name!='Contractor Sales Leader' && $Profile.Name != 'Community Account Manager' && $Profile.Name != 'Community Account Supervisor', true, false)}"/>
+        <apex:inputField value="{!Plan__c.Assigned_Team__c}" id="teamAssigned1" rendered="{!if(Plan__c.Id!=null && (Plan__c.Plan_Status__c!='Assigned' || $Profile.Name=='System Administrator' || $Profile.Name=='Regional System Admin (RSA)' || $Profile.Name=='Area Sales Manager' || $Profile.Name=='Sales Development Manager' || $Profile.Name == 'Contractor Sales Leader' || $Profile.Name == 'Community Account Manager' || $Profile.Name == 'Community Account Supervisor') && (Plan__c.Plan_Level__c=='Turf' || Plan__c.Plan_Level__c=='Playlist'), true, false)}"/>
+        <apex:outputField value="{!Plan__c.Assigned_Team__c}" id="teamAssigned2" rendered="{!if(Plan__c.Id==null || (Plan__c.Plan_Status__c=='Assigned' && $Profile.Name!='System Administrator' && $Profile.Name!='Regional System Admin (RSA)' && $Profile.Name!='Area Sales Manager' && $Profile.Name!='Sales Development Manager' && $Profile.Name!='Contractor Sales Leader' && $Profile.Name != 'Community Account Manager' && $Profile.Name != 'Community Account Supervisor') || (Plan__c.Plan_Level__c!='Turf' && Plan__c.Plan_Level__c!='Playlist'), true, false)}"/>
+        <apex:inputField value="{!Plan__c.Assigned_To_CAR__c}" id="carAssigned1" rendered="{!if(Plan__c.Id!=null && (Plan__c.Plan_Status__c!='Assigned' || $Profile.Name=='System Administrator' || $Profile.Name=='Regional System Admin (RSA)' || $Profile.Name=='Area Sales Manager' || $Profile.Name=='Sales Development Manager' || $Profile.Name == 'Contractor Sales Leader' || $Profile.Name == 'Community Account Manager' || $Profile.Name == 'Community Account Supervisor') && (Plan__c.Plan_Level__c=='Turf' || Plan__c.Plan_Level__c=='Playlist'), true, false)}"/>
+        <apex:outputField value="{!Plan__c.Assigned_To_CAR__c}" id="carAssigned2" rendered="{!if(Plan__c.Id==null || (Plan__c.Plan_Status__c=='Assigned' && $Profile.Name!='System Administrator' && $Profile.Name!='Regional System Admin (RSA)' && $Profile.Name!='Area Sales Manager' && $Profile.Name!='Sales Development Manager' && $Profile.Name!='Contractor Sales Leader' && $Profile.Name != 'Community Account Manager' && $Profile.Name != 'Community Account Supervisor') || (Plan__c.Plan_Level__c!='Turf' && Plan__c.Plan_Level__c!='Playlist'), true, false)}"/>
+    </apex:pageblockSection>
+    </apex:outputPanel>
+    <apex:pageBlockButtons location="top" id="PlanButtonsTop">        
+        <apex:commandButton value="Quick Save"  action="{!quickSave}" />
+        <apex:commandButton value="Save" action="{!save}"/>
+        <apex:commandButton value="Cancel" action="{!cancel}"/>
+    </apex:pageBlockButtons>
+    <apex:pageBlockButtons location="bottom" id="PlanButtonBottom"  rendered="{!If(Plan__c.Plan_Level__c == 'Bulk',true,false) && Plan__c.Plan_Status__c=='Assigned'}">        
+            <apex:commandButton value="Quick Save"  action="{!quickSave}" />
+            <apex:commandButton value="Save" action="{!save}"/>
+            <apex:commandButton value="Cancel" action="{!cancel}"/>
+    </apex:pageBlockButtons> 
+    
+</apex:pageblock>
+
+<apex:outputPanel id="pg_msg">
+    <apex:pagemessage severity="info" strength="2" summary="{!noOfSuccess} Address(es) added to the Plan." rendered="{!isAdded}"/>
+</apex:outputPanel>
+
+<apex:pageblock title="Find & Add Addresses" id="SearchBlock" tabStyle="Template__c" rendered="{!NOT(If(Plan__c.Plan_Level__c == 'Bulk',true,false) && (Plan__c.Plan_Status__c =='Expired'))}" >
+    <apex:outputText rendered="{!if(NOT(ISNULL(Plan__c.Id)) && Plan__c.Plan_Status__c!='Draft' && Plan__c.Plan_Level__c != 'Playlist' && Plan__c.Plan_Level__c != 'Bulk', true, false)}" style="color:blue" value="Addresses can only be added when Plan is in Draft status."/>
+    <apex:pageblockButtons location="top" id="SearchBlockButton" rendered="{!if((Plan__c.Id!=null && Plan__c.Plan_Status__c=='Draft') || Plan__c.Plan_Level__c=='Playlist' || Plan__c.Plan_Level__c=='Bulk', true, false)}">
+        <apex:commandButton value="Bulk Search" action="{!searchBulkAddressses}" status="AddressFound1" disabled="{!Not((Plan__c.True_count_of_Addresses__c != null && Plan__c.True_count_of_Addresses__c < bulkLimitAssignment) && NOT(isTurfPlanCreated))}" reRender="AddressPanel,bulkassignbtn,bulkassignbtn1,BulkAddressBlock,errMsgPlan,pageMsg,errMsg" rendered="{!if(Plan__c.Plan_Level__c=='Bulk',true,false)}"  />
+        <apex:commandButton value="Bulk Assign" onclick="return bulkAssign();" action="{!bulkAssignedAddressses}" id="bulkassignbtn" disabled="{!Not(addressCount!= null && addressCount != 0)}" rendered="{!if(Plan__c.Plan_Level__c=='Bulk',true,false) && Plan__c.Plan_Status__c=='Draft'}"/>
+        <apex:commandButton value="Add More Addresses" onclick="return addMoreBulkAssign();" action="{!bulkAssignedAddressses}" id="bulkassignbtn1"  disabled="{!Not((addressCount!= null && addressCount != 0) && (Plan__c.True_count_of_Addresses__c != null && Plan__c.True_count_of_Addresses__c < bulkLimitAssignment) && NOT(isTurfPlanCreated))}" rendered="{!if(Plan__c.Plan_Level__c=='Bulk',true,false) && Plan__c.Plan_Status__c=='Assigned'}"/>
+        
+        <apex:commandButton value="Search"  action="{!searchAddressses}"  status="AddressFound" reRender="AddressPanel,AddSelectedBtn,AddPageBtn,AddAllBtn,pg_msg,AddressBlock,SearchCriteria,errMsgPlan"  rendered="{!if(Plan__c.Plan_Level__c=='Turf'||Plan__c.Plan_Level__c=='Playlist',true,false)}"/>
+        <apex:commandButton value="Add Selected" action="{!addSelected}" status="AddressFound" disabled="{! Not(addrsWrapper!=null && addrsWrapper.size!= 0)}" id="AddSelectedBtn"  reRender="PlanBlock,plansection,pg_msg,SearchCriteria,errMsgPlan,AddressBlock,AddressRemovalBlock" rendered="{!if(Plan__c.Plan_Level__c !='Bulk',true,false)}"/>
+        <apex:commandButton value="Add Page" action="{!addPage}" status="AddressFound" disabled="{! Not(addrsWrapper!=null && addrsWrapper.size!= 0)}" id="AddPageBtn" reRender="PlanBlock,plansection,pg_msg,SearchCriteria,errMsgPlan,AddressBlock,AddressRemovalBlock" rendered="{!if(Plan__c.Plan_Level__c !='Bulk',true,false)}"/>
+        <apex:commandButton value="Add All" action="{!addAll}" status="AddressFound" disabled="{! Not(addrsWrapper!=null && addrsWrapper.size!= 0)}" id="AddAllBtn" reRender="PlanBlock,plansection,pg_msg,SearchCriteria,errMsgPlan,AddressBlock,AddressRemovalBlock" rendered="{!if(Plan__c.Plan_Level__c !='Bulk',true,false)}"/>
+    </apex:pageblockButtons>
+    <apex:pagemessages id="errMsgPlan" escape="false"/>
+    <apex:pageblockSection onclick="hideOnClickSearch();"  title="Search Criteria" collapsible="true"/>
+    <apex:outputPanel id="SearchCriteria"  layout="block"  rendered="{!if((Plan__c.Id!=null && Plan__c.Plan_Status__c=='Draft') || Plan__c.Plan_Level__c=='Playlist' || (If(Plan__c.Plan_Level__c == 'Bulk',true,false) && (Plan__c.Plan_Status__c !='Expired')), true, false)}">
+    <apex:pageblockSection columns="1">
+        <apex:panelGrid columns="3">
+            <apex:outputLabel for="tmpltLookup" value="Template Name  " />
+            <apex:inputText value="{!selectedTemplate.Name}" id="tmpltLookup"  title="Template Name" disabled="true"/>    
+            <img class="newWindow" src="{!$Resource.CustomLookup}" onClick="window.open('/apex/SelectTemplate?PlanId={!Plan__c.Id}', '_blank','height=500,width=650,left=100,top=100,resizable=no,scrollbars=yes,toolbar=no,status=no'); "/>
+        </apex:panelGrid>
+    </apex:pageblockSection>
+    
+    <apex:pageblockSection id="SearchFields">
+        
+        <apex:inputField value="{!selectedTemplate.Zip_Codes__c}" id="zip1" rendered="{!zip_codes==false}" style="{!if(selectedTemplate.Zip_Codes__c!='','background-color:DarkSalmon','background-color:none')}"/>
+        <apex:outputField value="{!selectedTemplate.Zip_Codes__c}" id="zip2" rendered="{!zip_codes}" />
+
+        <apex:inputField value="{!selectedTemplate.Nodes__c}" id="node1" rendered="{!Nodes==false}" style="{!if(selectedTemplate.Nodes__c!='','background-color:DarkSalmon','background-color:none')}"/>
+        <apex:outputField value="{!selectedTemplate.Nodes__c}" id="node2" rendered="{!Nodes}" />
+        
+         <apex:inputField value="{!selectedTemplate.Agent_Code__c}" id="code1" rendered="{!Nodes==false}" style="{!if(selectedTemplate.Agent_Code__c!='','background-color:DarkSalmon','background-color:none')}"/>
+        <apex:outputField value="{!selectedTemplate.Agent_Code__c}" id="code2" rendered="{!Nodes}" />
+        
+         
+        <apex:inputField value="{!selectedTemplate.Targeted__c}" id="orange1" rendered="{!Nodes==false}" style="{!if(selectedTemplate.Targeted__c !='Any','background-color:DarkSalmon','background-color:none')}"/>
+        <apex:outputField value="{!selectedTemplate.Targeted__c}" id="orange2" rendered="{!Nodes}"/>
+
+        <apex:inputField value="{!selectedTemplate.City__c}" id="city1" rendered="{!zip_codes==false}" style="{!if(selectedTemplate.Zip_Codes__c!='','background-color:DarkSalmon','background-color:none')}"/>
+        <apex:outputField value="{!selectedTemplate.City__c}" id="city2" rendered="{!zip_codes}"/>
+
+        <apex:inputField value="{!selectedTemplate.Complex_Code_Exists__c}" id="complexcode1" rendered="{!Complex_Code_Exists==false}" style="{!if(selectedTemplate.Complex_Code_Exists__c!='','background-color:DarkSalmon','background-color:none')}"/>
+        <apex:outputField value="{!selectedTemplate.Complex_Code_Exists__c}" id="complexcode2" rendered="{!Complex_Code_Exists}" />
+
+        <apex:inputField value="{!selectedTemplate.Street__c}" id="street1" rendered="{!zip_codes==false}" style="{!if(selectedTemplate.Zip_Codes__c!='','background-color:DarkSalmon','background-color:none')}"/>
+        <apex:outputField value="{!selectedTemplate.Street__c}" id="street2" rendered="{!zip_codes}"/>
+                     
+        <apex:inputField value="{!selectedTemplate.Management_Area__c}" id="mgmt1" rendered="{!ManagementArea==false}" style="{!if(selectedTemplate.Management_Area__c!='','background-color:DarkSalmon','background-color:none')}"/>
+        <apex:outputField value="{!selectedTemplate.Management_Area__c}" id="mgmt2" rendered="{!ManagementArea}" />
+        
+        <apex:inputField value="{!selectedTemplate.Property_Code__c}" id="pcode1" rendered="{!Property_Code==false}" style="{!if(selectedTemplate.Property_Code__c!='','background-color:DarkSalmon','background-color:none')}"/>
+        <apex:outputField value="{!selectedTemplate.Property_Code__c}" id="pcode2" rendered="{!Property_Code}" />
+                              
+        <apex:inputField value="{!selectedTemplate.Monthly_Rate_MRC__c}" id="mr1" rendered="{!Monthly_Rate_MRC==false}" style="{!if(selectedTemplate.Monthly_Rate_MRC__c!=null,'background-color:DarkSalmon','background-color:none')}"/>
+        <apex:outputField value="{!selectedTemplate.Monthly_Rate_MRC__c}" id="mr2" rendered="{!Monthly_Rate_MRC}" />
+        
+        <apex:inputField value="{!selectedTemplate.Route_Code__c}" id="rc1" rendered="{!Route_Codes==false}" style="{!if(selectedTemplate.Route_Code__c!='','background-color:DarkSalmon','background-color:none')}"/>
+        <apex:outputField value="{!selectedTemplate.Route_Code__c}" id="rc2" rendered="{!Route_Codes}"/>
+
+        <apex:inputField value="{!selectedTemplate.Number_of_Knocks_Less_Than__c}" id="noknocks1" rendered="{!Number_of_Knocks_Less_Than==false}" style="{!if(selectedTemplate.Number_of_Knocks_Less_Than__c!=null, 'background-color:DarkSalmon','background-color:none')}"/>
+        <apex:outputField value="{!selectedTemplate.Number_of_Knocks_Less_Than__c}" id="noknocks2" rendered="{!Number_of_Knocks_Less_Than}" />
+        
+        <apex:inputField value="{!selectedTemplate.Census_Block_Sub_Block__c}" id="cblock1" rendered="{!Census_Block_Sub_Block==false}" style="{!if(selectedTemplate.Customer_Status__c!='','background-color:DarkSalmon','background-color:none')}"/>
+        <apex:outputField value="{!selectedTemplate.Census_Block_Sub_Block__c}" id="cblock2" rendered="{!Census_Block_Sub_Block}"/>
+
+        <apex:inputField value="{!selectedTemplate.Last_Knock_Date__c}" id="lastknock1" rendered="{!Last_Knock_Date==false}" style="{!if(selectedTemplate.Last_Knock_Date__c!=null,'background-color:DarkSalmon','background-color:none')}"/>
+        <apex:outputField value="{!selectedTemplate.Last_Knock_Date__c}" id="lastknock2" rendered="{!Last_Knock_Date}" />
+        
+        <apex:inputField value="{!selectedTemplate.Customer_Status__c}" id="cstatus1" rendered="{!Customer_Status==false}" style="{!if(selectedTemplate.Customer_Status__c!='','background-color:DarkSalmon','background-color:none')}"/>
+        <apex:outputField value="{!selectedTemplate.Customer_Status__c}" id="cstatus2" rendered="{!Customer_Status}" />
+
+        <apex:inputField value="{!selectedTemplate.Disconnect_Date__c}" id="disDate1" rendered="{!Disconnect_Date==false}" style="{!if(selectedTemplate.Disconnect_Date__c!=null,'background-color:DarkSalmon','background-color:none')}"/>
+        <apex:outputField value="{!selectedTemplate.Disconnect_Date__c}" id="disDate2" rendered="{!Disconnect_Date}" />
+
+        <apex:inputField value="{!selectedTemplate.Products__c}" id="prod1" rendered="{!Products==false}" style="{!if(selectedTemplate.Products__c!='','background-color:DarkSalmon','background-color:none')}"/>
+        <apex:outputField value="{!selectedTemplate.Products__c}" id="prod2" rendered="{!Products}" />
+        
+        <apex:inputField value="{!selectedTemplate.Last_Disposition__c}" id="lastDispo1" rendered="{!Last_Disposition==false}"  style="{!if(selectedTemplate.Last_Disposition__c!='' ,'background-color:DarkSalmon','background-color:none')}"/>
+        <apex:outputField value="{!selectedTemplate.Last_Disposition__c}" id="lastDispo2" rendered="{!Last_Disposition}" />
+        
+        <apex:inputField value="{!selectedTemplate.Dwelling_Type__c}" id="dtype1"  rendered="{!Dwelling_Type==false}" style="{!if(selectedTemplate.Dwelling_Type__c!='','background-color:DarkSalmon','background-color:none')}"/>
+        <apex:outputField value="{!selectedTemplate.Dwelling_Type__c}" id="dtype2" rendered="{!Dwelling_Type}" />
+        
+        <apex:inputField value="{!selectedTemplate.Disconnect_Reason__c}" id="dresaon1" rendered="{!Disconnect_Reason==false}" style="{!if(selectedTemplate.Disconnect_Reason__c!='','background-color:DarkSalmon','background-color:none')}"/>
+        <apex:outputField value="{!selectedTemplate.Disconnect_Reason__c}" id="dresaon2" rendered="{!Disconnect_Reason}" />
+
+            <apex:pageBlockSectionItem helpText="Decile of TP Upgrade. Integer values from 0 to 9, with 0 = highest propensity, 9 = lowest propensity.">
+            <apex:outputPanel >
+                <apex:outputLabel >TP Upgrade Score Less</apex:outputLabel><br/>
+                <apex:outputLabel >Than Or Equal To</apex:outputLabel>
+            </apex:outputPanel>
+            <apex:outputPanel >
+                <apex:inputField value="{!selectedTemplate.TP_Upgrade_Score__c}" id="tpupgrade1" rendered="{!TP_Upgrade_Score==false}" style="{!if(selectedTemplate.TP_Upgrade_Score__c!=null,'background-color:DarkSalmon','background-color:none')}"/>
+                <apex:outputField value="{!selectedTemplate.TP_Upgrade_Score__c}" id="tpupgrade2" rendered="{!TP_Upgrade_Score}" />
+            </apex:outputPanel>    
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem helpText="Decile of TP Acquisition. Integer values from 0 to 9, with 0 = highest propensity, 9 = lowest propensity.">
+                <apex:outputPanel > 
+                    <apex:outputLabel >TP Acquisition Score Less</apex:outputLabel><br/>
+                    <apex:outputLabel >Than Or Equal To</apex:outputLabel>
+                </apex:outputPanel> 
+                <apex:outputPanel >
+                    <apex:inputField value="{!selectedTemplate.TP_Acquisition_Score__c}" id="tpacquisition1" rendered="{!TP_Acquisition_Score==false}" style="{!if(selectedTemplate.TP_Acquisition_Score__c!=null,'background-color:DarkSalmon','background-color:none')}"/>
+                    <apex:outputField value="{!selectedTemplate.TP_Acquisition_Score__c}" id="tpacquisition2" rendered="{!TP_Acquisition_Score}" />
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem helpText="Decile of XH Acquisition. Integer values from 0 to 9, with 0 = highest propensity, 9 = lowest propensity.">
+                <apex:outputPanel > 
+                    <apex:outputLabel >Xfinity Home Acquisition Score Less</apex:outputLabel><br/>
+                    <apex:outputLabel >Than Or Equal To</apex:outputLabel>
+                </apex:outputPanel>
+                <apex:outputPanel >
+                    <apex:inputField value="{!selectedTemplate.Xfinity_Home_Acquisition_Score__c}" id="xhacquisition1" rendered="{!Xfinity_Home_Acquisition_Score==false}" style="{!if(selectedTemplate.Xfinity_Home_Acquisition_Score__c!=null,'background-color:DarkSalmon','background-color:none')}"/>
+                    <apex:outputField value="{!selectedTemplate.Xfinity_Home_Acquisition_Score__c}" id="xhacquisition2" rendered="{!Xfinity_Home_Acquisition_Score}" />
+                </apex:outputPanel>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem helpText="Decile of XH Upgrade. Integer values from 0 to 9, with 0 = highest propensity, 9 = lowest propensity.">
+                <apex:outputPanel >
+                    <apex:outputLabel >Xfinity Home Upgrade Score Less </apex:outputLabel><br/>
+                    <apex:outputLabel >Than Or Equal To</apex:outputLabel>
+                </apex:outputPanel>
+                <apex:outputPanel >
+                    <apex:inputField value="{!selectedTemplate.Xfinity_Home_Upgrade_Score__c}" id="xhupgrade1" rendered="{!Xfinity_Home_Upgrade_Score==false}" style="{!if(selectedTemplate.Xfinity_Home_Upgrade_Score__c!=null,'background-color:DarkSalmon','background-color:none')}"/>
+                    <apex:outputField value="{!selectedTemplate.Xfinity_Home_Upgrade_Score__c}" id="xhupgrade2" rendered="{!Xfinity_Home_Upgrade_Score}" />
+                </apex:outputPanel> 
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem helpText="Bad debt propensity for subscribers. Integer values from 1 to 10, with 1 = highest propensity for bad debt, 10 = lowest propensity for bad debt.">
+                <apex:outputPanel >
+                    <apex:outputLabel >Sub Bad Debt Score Greater </apex:outputLabel><br/>
+                    <apex:outputLabel >Than Or Equal To</apex:outputLabel>
+                </apex:outputPanel>
+                <apex:outputPanel >
+                    <apex:inputField value="{!selectedTemplate.Sub_Bad_Debt_Propensity__c}" id="SubBadDebtPropensity1" rendered="{!Sub_Bad_Debt_Propensity==false}" style="{!if(selectedTemplate.Sub_Bad_Debt_Propensity__c!=null,'background-color:DarkSalmon','background-color:none')}"/>
+                    <apex:outputField value="{!selectedTemplate.Sub_Bad_Debt_Propensity__c}" id="SubBadDebtPropensity2" rendered="{!Sub_Bad_Debt_Propensity}" />
+                </apex:outputPanel>
+             </apex:pageBlockSectionItem>
+             <apex:pageBlockSectionItem helpText="Bad debt propensity for non-subscribers. Integer values from 1 to 10, with 1 = highest propensity for bad debt, 10 = lowest propensity for bad debt.">
+                <apex:outputPanel >
+                    <apex:outputLabel >Non Sub Bad Debt Score Greater</apex:outputLabel><br/>
+                    <apex:outputLabel >Than Or Equal To</apex:outputLabel> 
+                </apex:outputPanel>
+                <apex:outputPanel >
+                    <apex:inputField value="{!selectedTemplate.Non_Sub_Bad_Debt_Propensity__c}" id="NonSubBadDebtPropensity1" rendered="{!Non_Sub_Bad_Debt_Propensity==false}" style="{!if(selectedTemplate.Non_Sub_Bad_Debt_Propensity__c!=null,'background-color:DarkSalmon','background-color:none')}"/>
+                    <apex:outputField value="{!selectedTemplate.Non_Sub_Bad_Debt_Propensity__c}" id="NonSubBadDebtPropensity2" rendered="{!Non_Sub_Bad_Debt_Propensity}" />
+                </apex:outputPanel>
+           </apex:pageBlockSectionItem>
+    </apex:pageblockSection>
+    </apex:outputPanel>
+</apex:pageBlock>
+
+<apex:pageBlock id="AddressBlock" tabStyle="Template__c" rendered="{!If(Plan__c.Plan_Level__c != 'Bulk',true,false)}">
+    <apex:pageBlockButtons location="top">        
+        <apex:commandButton value="Search"  action="{!searchAddressses}"  status="AddressFound" reRender="AddressPanel,AddSelectedBtn,AddPageBtn,AddAllBtn,pg_msg,errMsg,AddressBlock,AddressRemovalBlock" rendered="{!if(Plan__c.Plan_Level__c=='Turf'||Plan__c.Plan_Level__c=='Playlist',true,false)}"/>
+        <apex:commandButton value="Add Selected" action="{!addSelected}" status="AddressFound" disabled="{!addrsWrapper == null || addrsWrapper.size == 0}" reRender="PlanBlock,plansection,pg_msg,SearchCriteria,errMsg,AddressBlock,AddressRemovalBlock"/>
+        <apex:commandButton value="Add Page" action="{!addPage}" status="AddressFound" disabled="{!addrsWrapper == null || addrsWrapper.size == 0}" id="AddPageBtn" reRender="PlanBlock,plansection,pg_msg,SearchCriteria,errMsg,AddressBlock,AddressRemovalBlock" />
+        <apex:commandButton value="Add All" action="{!addAll}" status="AddressFound" disabled="{!addrsWrapper == null || addrsWrapper.size == 0}" reRender="PlanBlock,plansection,pg_msg,SearchCriteria,errMsg,AddressBlock,AddressRemovalBlock"/>
+    </apex:pageBlockButtons>
+    <apex:outputPanel id="AddressPanel">
+        <apex:actionStatus id="AddressFound">
+            <apex:facet name="start">
+                <apex:outputPanel styleclass="waitPanelClass"/>
+            </apex:facet>
+        </apex:actionStatus>
+        <apex:pageblockSection columns="3" >
+            <apex:outputPanel id="ResultsPerPage" >
+                <apex:outputText >Results Per Page: </apex:outputText>
+                <apex:selectList id="ResultsPageSize" value="{!pageSize}" size="1" title="Results Per Page" >
+                    <apex:selectOption itemLabel="50" itemValue="50"/>
+                    <apex:selectOption itemLabel="100" itemValue="100"/>
+                    <apex:selectOption itemLabel="250" itemValue="250"/>
+                    <apex:selectOption itemLabel="500" itemValue="500"/>
+                </apex:selectList>
+            </apex:outputPanel>
+            
+            
+            <apex:outputText rendered="{!addrsWrapper!=null && addrsWrapper.size!= 0 && addrsWrapper.size != 4000}">Total {!addrsWrapper.size} Addresses found.</apex:outputText>
+            <apex:outputText >Addresses in Plan: {!numberOfAddressesOnPlan}</apex:outputText>
+            <apex:outputText rendered="{!addrsWrapper!=null && addrsWrapper.size == 4000 && Plan__c.Plan_Level__c != 'Bulk'}">Your search returned a system imposed maximum of 4,000 addresses. To view additional addresses that meet the search criteria, add one or more addresses to a plan and execute the search again.</apex:outputText>
+            <apex:outputPanel id="ShowAssignedCheckbox" rendered="{!If(Plan__c.Plan_Level__c != 'Bulk',true,false)}">
+                <apex:outputText >Show assigned Addresses message</apex:outputText>
+                <apex:inputCheckbox id="ShowAssignedAddresses" value="{!showAssignedAddresses}"/>
+            </apex:outputPanel>
+        </apex:pageblockSection>
+        <apex:pageblockSection columns="2" rendered="{!addrsWrapper!=null && addrsWrapper.size!= 0 && Plan__c.Plan_Level__c != 'Bulk'}" >
+            <apex:commandLink value="<<Previous" action="{!previousSetOfRecords}" status="AddressFound" reRender="AddressTable"/>
+            <apex:commandLink value="Next>>" action="{!nextSetOfRecords}" status="AddressFound" reRender="AddressTable"/>        
+        </apex:pageblockSection> 
+        <apex:pageblockSection columns="1" rendered="{!addrsWrapper!=null && addrsWrapper.size!= 0 && Plan__c.Plan_Level__c != 'Bulk'}" collapsible="true">
+            <apex:pageblockTable value="{!pageAddresses}" var="address" id="AddressTable" width="100%" >
+                <apex:column headerValue="Select" width="40">
+                    <apex:inputCheckbox value="{!address.selected }"/>
+                </apex:column> 
+                <apex:column headerValue="Street" width="300">
+                    <apex:outputLink value="{!URLFOR($Action.Customer_Address__c.View, address.addrs.Id)}" target="blank">{!address.addrs.Name}</apex:outputLink>
+                </apex:column>
+                <apex:column headerValue="Address 2"  rendered="{!$Setup.PlanEditAdressColumnSetting__c.IsTrue__c== true}" width="300">
+                  {!address.addrs.Address_2__c} 
+                </apex:column>
+                <apex:column headerValue="City" width="300">
+                    {!address.addrs.City__c}
+                </apex:column>
+                <apex:column headerValue="Last Knock Date" rendered="{!$Setup.PlanEditAdressColumnSetting__c.IsTrue__c== true}" width="300">
+                    {!address.addrs.Last_Knock_Date__c}
+                </apex:column>
+                <apex:column headerValue="Zip Code" width="150">
+                    {!address.addrs.PostalCode__c}
+                </apex:column>
+                <apex:column headerValue="State" width="300">
+                    {!address.addrs.State__c}
+                </apex:column>
+                <apex:column headerValue="Property Code" width="300">
+                    {!address.addrs.Property_Code__c}
+                </apex:column>
+            </apex:pageblockTable>
+        </apex:pageblockSection>
+        <apex:pageblockSection rendered="{!addrsWrapper == null}">
+            <apex:outputText value="Please add filters and click on Search button to find Addresses."/>
+        </apex:pageblockSection>
+        <apex:pageblockSection rendered="{!addrsWrapper != null && addrsWrapper.size == 0}">
+            <apex:outputText value="*No Addresses found with selected filter criteria." style="Color:Red"/>
+        </apex:pageblockSection>
+    </apex:outputPanel>
+        <apex:pageBlockButtons location="bottom" id="PlanButtonsBottom">        
+            <apex:commandButton value="Quick Save"  action="{!quickSave}" />
+            <apex:commandButton value="Save" action="{!save}"/>
+            <apex:commandButton value="Cancel" action="{!cancel}"/>
+        </apex:pageBlockButtons> 
+</apex:pageBlock>
+
+<apex:pageBlock title="Remove Addresses" id="AddressRemovalBlock" tabStyle="Template__c" rendered="{!($Profile.Name == 'System Administrator' || $Profile.Name == 'Regional System Admin (RSA)' || $Profile.Name == 'Sales Development Manager' || $Profile.Name == 'Area Sales Manager' || $Profile.Name == 'Contractor Sales Leader' || $Profile.Name == 'Community Account Supervisor' ) && Plan__c.Plan_Level__c !='Bulk'}">
+    <apex:pageBlockButtons location="top" id="RemovalButtonsTop">
+        <apex:commandButton value="Search" action="{!addressRemovalSearch}" reRender="plansection,pg_msg,SearchCriteria,pageMsg,AddressBlock,AddressRemovalBlock"/>
+        <apex:commandButton value="Remove Selected" action="{!removeSelected}" disabled="{!removalAddressWrapperList==null || removalAddressWrapperList.size <= 0}" reRender="PlanBlock,plansection,pg_msg,SearchCriteria,pageMsg,AddressBlock,AddressRemovalBlock"/>
+        <apex:commandButton value="Remove All" action="{!removeAll}" disabled="{!removalAddressWrapperList==null || removalAddressWrapperList.size <= 0}" reRender="PlanBlock,plansection,pg_msg,SearchCriteria,errMsg,AddressBlock,AddressRemovalBlock"/>
+    </apex:pageBlockButtons>
+    <apex:pagemessages id="pageMsg" escape="false"/>
+    <apex:pageBlockSection columns="1">
+        <apex:outputPanel id="RemovalToolPanel">
+            <apex:outputText >Search Criteria: </apex:outputText>
+            <apex:selectList id="RemovalQueryOptions" value="{!removalQueryFieldOption}" size="1" title="Removal Search Criteria">
+                <apex:selectOption itemLabel="Street" itemValue="Address__c"/>
+                <apex:selectOption itemLabel="City" itemValue="City__c"/>
+                <apex:selectOption itemLabel="Zip" itemValue="PostalCode__c"/>
+                <apex:selectOption itemLabel="Node" itemValue="Node__c"/>
+                <apex:selectOption itemLabel="Complex Code" itemValue="Property_Code__c"/>
+            </apex:selectList>
+            <apex:inputText id="RemovalQueryField" value="{!removalQueryInputField}"/>
+        </apex:outputPanel>
+    </apex:pageBlockSection>
+    <apex:pageblockSection columns="1" rendered="{!removalAddressWrapperList!=null && removalAddressWrapperList.size!= 0}" collapsible="true">
+        <apex:pageblockTable value="{!removalAddressWrapperList}" var="address" id="AddressRemovalTable" width="100%" >
+            <apex:column headerValue="Select" width="40">
+                <apex:inputCheckbox value="{!address.selected}"/>
+            </apex:column> 
+            <apex:column headerValue="Street" width="300">
+                <apex:outputLink value="{!URLFOR($Action.Customer_Address__c.View, address.addrs.Id)}" target="blank">{!address.addrs.Name}</apex:outputLink>
+            </apex:column>
+            <apex:column headerValue="Address 2" rendered="{!$Setup.PlanEditAdressColumnSetting__c.IsTrue__c== true}" width="300">
+                   {!address.addrs.Address_2__c} 
+                </apex:column>
+            <apex:column headerValue="City" width="300">
+                {!address.addrs.City__c}
+            </apex:column>
+            <apex:column headerValue="Last Knock Date" rendered="{!$Setup.PlanEditAdressColumnSetting__c.IsTrue__c== true}"  width="300">
+                    {!address.addrs.Last_Knock_Date__c}
+                </apex:column>
+            <apex:column headerValue="Zip Code" width="150">
+                {!address.addrs.PostalCode__c}
+            </apex:column>
+            <apex:column headerValue="State" width="300">
+                {!address.addrs.State__c}
+            </apex:column>
+            <apex:column headerValue="Property Code" width="300">
+                {!address.addrs.Property_Code__c}
+            </apex:column>
+        </apex:pageblockTable>
+    </apex:pageblockSection>
+</apex:pageBlock>
+
+ <apex:actionStatus id="AddressFound1">
+            <apex:facet name="start">
+                <apex:outputPanel styleclass="waitPanelClass"/>
+            </apex:facet>
+        </apex:actionStatus>
+
+<apex:pageBlock title="Bulk Assignment" id="BulkAddressBlock"  rendered="{!(If(Plan__c.Plan_Level__c == 'Bulk',true,false) && (Plan__c.Plan_Status__c !='Expired'))}"  >
+    <apex:pageBlockButtons location="Top">
+        <apex:commandButton value="Bulk Search" action="{!searchBulkAddressses}" status="AddressFound1"  disabled="{!Not((Plan__c.True_count_of_Addresses__c != null && Plan__c.True_count_of_Addresses__c < bulkLimitAssignment) && NOT(isTurfPlanCreated))}" reRender="bulkassignbtn,bulkassignbtn1,AddressPanel,BulkAddressBlock,errMsgPlan,pageMsg,errMsg" />
+        <apex:commandButton value="Bulk Assign" onclick="return bulkAssign();" action="{!bulkAssignedAddressses}" disabled="{!Not(addressCount != null && addressCount!=0)}" rendered="{!if(Plan__c.Plan_Level__c=='Bulk',true,false) && Plan__c.Plan_Status__c=='Draft'}"/>
+        <apex:commandButton value="Add More Addresses" onclick="return addMoreBulkAssign();" action="{!bulkAssignedAddressses}" id="bulkassignbtn2"  disabled="{!Not((addressCount!= null && addressCount != 0) && (Plan__c.True_count_of_Addresses__c != null && Plan__c.True_count_of_Addresses__c < bulkLimitAssignment) && NOT(isTurfPlanCreated))}" rendered="{!if(Plan__c.Plan_Level__c=='Bulk',true,false) && Plan__c.Plan_Status__c=='Assigned'}"/>     
+    </apex:pageBlockButtons> 
+          
+    <apex:outputText rendered="{!(addressCount != null)}">Total records available for assignment (maximum {!$Label.BulkAddressAssignLimit}) : {!addressCount}</apex:outputText>
+    <apex:pageblockSection rendered="{!(addressCount != null && addressCount!=0 && Plan__c.Plan_Status__c !='Assigned')}" id="bulkSection">            
+        <apex:outputPanel id="bulkOutputPanel">                    
+            Please select the user for Bulk assignment  : 
+                <apex:selectList id="ContractorDss" value="{!contractorDSSOption }" size="1" >
+                    <apex:selectOption itemLabel="--None--" itemValue="Null"/>
+                    <apex:selectOptions value="{!items}"/>                    
+                </apex:selectList>               
+        </apex:outputPanel>
+    </apex:pageblockSection>
+   
+    <apex:pageblockSection rendered="{!Not(addressCount != null)}">
+        <apex:outputText >Please add filters and click on Search button to find Addresses.</apex:outputText>
+    </apex:pageblockSection>
+     <apex:pageBlock title="Bulk Re-Assignment" rendered="{!Plan__c.True_count_of_Addresses__c != 0 && NOT(isTurfPlanCreated)}">
+      <apex:pageBlockButtons location="Top">
+      <apex:commandButton value="Bulk Reassignment" onclick="return reAssign();" action="{!bulkReAssignedAddressses}"   id="bulkReassignbt" />
+    </apex:pageBlockButtons> 
+    <apex:pageblockSection id="bulkReassignment">            
+        <apex:outputPanel id="bulkOutputPanel">                    
+            Please select the user for Bulk reassignment  : 
+                <apex:selectList id="ContractorDss" value="{!reContractorOption }" size="1" >
+                    <apex:selectOption itemLabel="--None--" itemValue="Null"/>
+                    <apex:selectOptions value="{!ReassignedUsers}"/>                    
+                </apex:selectList>               
+        </apex:outputPanel>
+    </apex:pageblockSection>
+    </apex:pageBlock>
+    <apex:pageBlockButtons location="bottom" id="PlanButtonsBottom">        
+            <apex:commandButton value="Quick Save"  action="{!quickSave}" />
+            <apex:commandButton value="Save" action="{!save}"/>
+            <apex:commandButton value="Cancel" action="{!cancel}"/>
+    </apex:pageBlockButtons> 
+    
+</apex:pageBlock>
+</apex:form>  
+</apex:page>

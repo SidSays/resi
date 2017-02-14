@@ -1,0 +1,9 @@
+<apex:page standardController="Document" extensions="CallCenterImportController" showHeader="true" sidebar="true">
+    <apex:form id="uploadForm">
+        <apex:pageBlock >
+            <apex:inputFile value="{!document.body}" filename="{!document.name}"/>
+            <apex:commandButton value="Update" action="{!updateLeadsAndOpps}"/>
+        </apex:pageBlock>
+        <apex:pageMessages />
+    </apex:form>
+</apex:page>

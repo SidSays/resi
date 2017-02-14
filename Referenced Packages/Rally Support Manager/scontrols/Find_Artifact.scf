@@ -1,0 +1,102 @@
+<html>
+<head>
+  <!-- (c) 2009 Rally Software Development Corp. All rights reserved. -->
+  <link href="/sCSS/15.0/Theme2/default/common.css" type="text/css" rel="stylesheet"/>
+  <script type="text/javascript" src="/js/functions.js"></script>
+  <script src="/soap/ajax/15.0/connection.js"></script>
+  {!INCLUDE($SControl.rallyObj)}
+  <script type="text/javascript">
+    if (!top) {
+      var top = {};
+      top.location = {};
+    }
+    ID = "{!Case.Id}";
+    if (ID.length > 0) {
+      caseNumber = "{!Case.CaseNumber}";
+      artifactRef = "{!Case.Rally_Artifact_Ref__c}";
+    }
+
+    if (ID.length == 0) {
+      top.location.href = "/home/home.jsp";
+    }
+    top.retUrl = "/" + ID;
+
+    rally.showFindArtifactButton = function () {
+      var docStr = '<input type="button" class="btn" name="Select Project" value="Select Project" onClick="this.style.cursor=\'wait\';rally.findArtifactInit();this.style.cursor=\'auto\';"/>';
+      rally.injectContent("findHeader", docStr);
+    };
+
+    rally.findArtifactInit = function () {
+      try {
+        rally.init();
+      }
+      catch (ex) {
+        alert(ex);
+        return;
+      }
+      rally.getCaseInfo(ID);
+      Subject = escape(rally.caseSubject);
+      Description = escape(rally.caseDescription);
+
+// Get the WS Oid off the WS name from Rally Setups and then get
+// the projects associated with that workspace
+
+      rally.getWorkspaceOid(rally.workspace);
+      rally.getProjectTree(rally.workspaceRef);
+      rally.findArtifact.displayHeader();
+    };
+
+    rally.doSubmit = function (ev) {
+      var key;
+      if (window.event) {
+        key = window.event.keyCode;
+      }
+      else {
+        key = ev.which;
+      }
+      switch (key) {
+        case "13":
+        {
+          document.forms[0].submit();
+          return false;
+          //break;
+        }
+      }
+      return true;
+    };
+    rally.findArtifact = {};
+    rally.findArtifact.displayHeader = function () {
+      var hdrStr = '<table style="font-size: 100%;" cellspacing="0" cellpadding="0" border="0">';
+      hdrStr += '<tbody><tr>';
+      hdrStr += '<td class="pbButton">';
+//TODO taro possible 100 count limit 
+      hdrStr += '<form name="srchForm" action="javascript:rally.getRallyArtifacts(document.srchForm.project.value,document.srchForm.search.value,document.srchForm.artifact_type.value,document.srchForm.artifact_search_type.value,1,100);" onSubmit="return true;">';
+      hdrStr += '<h3>Search in ' + rally.workspace + ': ' + rally.getProjectTree.render() + '</h3>';
+      hdrStr += '<span id="caseSearch">';
+      hdrStr += '<input id="srch_Input" type="text" title="Find Artifact" size="16" name="search" maxlength="1000" onKeypress="rally.doSubmit(event)"/>';
+      hdrStr += '<select name="artifact_type"><option value="defect">All Defects</option><option value="defect_state">Non-Closed Defects</option><option value="userstory">All User Stories</option></select>';
+      hdrStr += '<select name="artifact_search_type"><option value="id">Search ID</option><option value="name">Search Name</option><option value="name_descript">Search Name/Description</option></select>';
+      hdrStr += '<input class="btn" type="submit" title="Find Artifact" name="srchbtn" value="Search" tabindex="1" title="Find Artifact" />';
+      hdrStr += '</span></form></td>';
+      hdrStr += '<td class="pbHelp">&nbsp;</td>';
+      hdrStr += '</tr></tbody></table>';
+      rally.injectContent("findHeader", hdrStr);
+    }
+
+  </script>
+</head>
+<body class="bWizardList" onload="rally.showFindArtifactButton()">
+<div class="bRelatedList caseBlock">
+  <div class="bPageBlock secondaryPalette">
+    <div class="pbHeader">
+      <div id="findHeader"></div>
+    </div>
+    <div class="pbBody">
+      <div id="resultsOutput"></div>
+    </div>
+    <div class="pbFooter">
+    </div>
+  </div>
+</div>
+</body>
+</html>

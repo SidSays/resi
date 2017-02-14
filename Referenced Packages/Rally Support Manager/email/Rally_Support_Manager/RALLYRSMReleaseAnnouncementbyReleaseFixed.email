@@ -1,0 +1,10 @@
+Dear {!Contact.FirstName}, 
+
+A defect that you reported has been fixed. The defect related to case "{!Case.Subject}" was corrected in our {!Case.Release_Announcement__c} release.
+
+Please let us know if you experience any further issues. 
+
+Regards, 
+
+{!Case.OwnerFullName} 
+Customer Support

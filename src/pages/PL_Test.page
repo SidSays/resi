@@ -1,0 +1,6 @@
+<apex:page standardController="MDU_Property__c">
+     <chatter:feed entityId="a1h21000000Kzl8" showPublisher="true"/>
+    <h2>
+        This is Test Page for Property
+    </h2>
+</apex:page>

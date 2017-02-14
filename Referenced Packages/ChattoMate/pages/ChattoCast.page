@@ -1,0 +1,34 @@
+<apex:page controller="SPKAMF.UserBroadcast" tabstyle="ChatterMate__tab" title="ChattoMate ChattoCast">
+	<c:UserList pageController="{!this}"/>
+	<apex:form >
+        <apex:pageBlock id="messageBroadcast" title="Broadcast Message">
+            <apex:pageBlockButtons location="bottom">
+                <apex:actionStatus id="broadcastStatus">
+                    <apex:facet name="start">
+                        <apex:commandButton action="{!BroadcastMessage}" value="Broadcast Message" disabled="true"/>
+                    </apex:facet>
+                    <apex:facet name="stop">
+                        <apex:commandButton action="{!BroadcastMessage}" value="Broadcast Message" rerender="messageBroadcast" status="broadcastStatus"/>
+                    </apex:facet>
+                </apex:actionStatus>
+            </apex:pageBlockButtons>
+            <apex:pageMessages />
+            <apex:pageBlockSection columns="2">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel for="messageBody" value="Message"/>
+                    <apex:inputTextarea value="{!message}" rows="6" id="messageBody" cols="80" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel for="cofirmation" value="Safety Catch"/>
+                    <apeX:inputCheckbox value="{!confirmMessage}" id="confirmation"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem rendered="{!GotCommunity}">
+                    <apex:outputLabel for="community" value="Community"/>
+                    <apex:selectList value="{!community}" size="1">
+                        <apex:selectOptions value="{!Communities}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+	</apex:form>
+</apex:page>

@@ -1,0 +1,45 @@
+<apex:page standardController="Store_Visit__c" extensions="StoreVisitRedirectController" action="{!checkActiveVisit}">
+	<apex:form >
+
+		<apex:actionFunction action="{!view}" name="goToStandardView" />
+
+	</apex:form>
+
+	<script type="text/javascript">
+
+		(function() {
+
+			function goToActiveVisit() {
+             
+				 var storeId='{!storeVisit.Store__c}';
+                 var activeVisitUrl ='/apex/StoreVisit';
+                 if(storeId){
+                  var activeVisitUrl = '/apex/StoreVisit?id={!storeVisit.Store__c}'; 
+                 }
+				if (typeof sforce !== 'undefined') {
+					sforce.one.navigateToURL(activeVisitUrl);
+					return;
+				}
+
+				window.location.href = activeVisitUrl;
+			}
+
+			function goToInactiveVisit() {
+				if (typeof sforce !== 'undefined') {
+					sforce.one.navigateToSObject('{!Store_Visit__c.Id}');
+					return;
+				}
+
+				gotoStandardView();
+			}
+
+			var isVisitActive = {!IsVisitActive};
+			if (isVisitActive) {
+				goToActiveVisit();
+			} else {
+				goToInactiveVisit();
+			}
+		})();
+
+	</script>
+</apex:page>

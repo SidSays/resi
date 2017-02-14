@@ -1,0 +1,532 @@
+<html>
+<head>
+<!-- (c) 2009-2013 Rally Software Development Corp. All rights reserved. -->
+<link href="/sCSS/15.0/Theme2/default/common.css" type="text/css" rel="stylesheet"/>
+<script type="text/javascript" src="/js/functions.js"></script>
+<script src="/soap/ajax/15.0/connection.js" type="text/javascript"></script>
+{!INCLUDE($SControl.rallyObj)}
+{!INCLUDE($SControl.FieldMapper)}
+<script type="text/javascript">
+  if (!top) {
+    var top = {};
+  }
+  ID = "{!Case.Id}";
+  if (ID.length > 0) {
+    caseNumber = "{!Case.CaseNumber}";
+  }
+
+  if (ID.length == 0) {
+    top.location = "/home/home.jsp";
+  }
+  top.retUrl = "/" + ID;
+  artifactRef = "{!Case.Rally_Artifact_Ref__c}";
+
+  rally.showArtifactInit = function () {
+    var caseValue = rally.createArtifact.getCookie(rally.createArtifact.caseCookie);
+    if (caseValue === ID) {
+      rally.createArtifactInit();
+    }
+    else {
+      var output = '<input type="button" class="btn" name="Show Association" value="Show Association" onClick="this.style.cursor=\'wait\';rally.createArtifact.setCookie(\'' + rally.createArtifact.caseCookie + '\',\'' + ID + '\');rally.createArtifactInit();this.style.cursor=\'auto\';">';
+      rally.injectContent("outputArea", output);
+    }
+  };
+
+  rally.createArtifactInit = function () {
+    try {
+      rally.init();
+    }
+    catch (ex) {
+      alert(ex);
+      return;
+    }
+
+    // Get the WS Oid off the WS name from Rally Setups and then get
+    // the projects associated with that workspace
+
+    rally.getWorkspaceOid(rally.workspace);
+    rally.getUsers();
+    rally.getProjectTree(rally.workspaceRef);
+    try {
+      if (artifactRef.length > 0) {
+        artifactRef = rally.cleanURL(ID, rally.baseUrl, artifactRef);
+        rally.getArtifact(artifactRef);
+      }
+    }
+    catch (ex) {
+      alert("The associated Rally artifact is no longer present in the Rally project. " +
+             "It may have been deleted in Rally. The artifact will be disassociated with the case.");
+      rally.disassociate.cleanupSF();
+      artifactRef = "";
+    }
+    rally.displayArtifact(artifactRef);
+  };
+
+  rally.displayArtifact = function (artifactRef) {
+    var span = '<span style="{color: red;}">';
+    var endspan = '</span>';
+    var headerStr = '<table style="font-size: 100%" cellspacing="0" cellpadding="0" border="0">';
+    if (artifactRef.length <= 0) {
+      if (rally.workspace != "None") {
+        span = " ";
+        endspan = " ";
+      }
+      headerStr += '<tr><td class="pbTitle"><form name="createArtifactForm" action="#"><h3>Create in<br>' + span + rally.workspace + ': ' + rally.getProjectTree.render() + endspan + '</h3></form></td><td class="pbButton"><input class="btn" name="createDefect" value="Create Defect" title="Create Defect" ' +
+        'onMouseDown="this.style.cursor=\'wait\';rally.createDefect(\'createArtifactForm\',\'' + ID + '\');this.style.cursor=\'auto\';">';
+      if (rally.allowRequirements == "true") {
+        headerStr += '<input class="btn" name="createRequirement" value="Create Requirement" title="Create Requirement" ' +
+          'onMouseDown="this.style.cursor=\'wait\';rally.createRequirement(\'createArtifactForm\',\'' + ID + '\');this.style.cursor=\'auto\';">';
+      }
+      headerStr += '</td></tr></table>';
+    }
+    else {
+headerStr += '<tr><td class="pbTitle"><h3>Association in<br>' + rally.artifactWorkspace + ': ' + rally.artifactProject + '</h3></td><td class="pbButton"><input type="button" class="btn" onClick="this.style.cursor=\'wait\';rally.updateCaseDetail(\'' + ID + '\',rally.artifactState,rally.artifactRelease);this.style.cursor=\'auto\';" title="Publish Rally Status" value="Publish Rally Status"></td><td class="pbHelp">&nbsp;</td></tr></table>';
+    }
+    rally.injectContent("headerArea", headerStr);
+
+    var contentStr = '<table style="font-size: 100%" class="list">';
+    if (artifactRef.length > 0) {
+      var artifactType = rally.getArtifactType(artifactRef);
+      var artifactOid = rally.getArtifactOid(artifactRef);
+      rally.getArtifact(artifactRef);
+
+      switch (artifactType) {
+        case "defect":
+          rally.ca = new rally.dfm();
+          break;
+        case "hierarchicalrequirement":
+          rally.ca = new rally.usfm();
+          break;
+      }
+      rally.ca.fm.getArtifactFieldMap();
+      fieldList = rally.ca.fm.getMappedSFFieldList();
+      rally.getCaseInfo(ID, fieldList);
+      var detailUrl = rally.detailUrl;
+
+      contentStr = rally.sectionHeaderContent(artifactType);
+      contentStr += '<tr class="dataRow">\n';
+
+      var ellipsis = "";
+      if (rally.artifactDescription.length > 100) {
+        ellipsis = "...";
+      }
+
+      switch (artifactType) {
+        case "defect":
+        {
+          detailUrl += '/df/' + artifactOid;
+          contentStr += '<td class="actionColumn"><a class="actionLink" href="#" onClick="rally.disassociate(\'' + ID + '\',\'' + artifactRef + '\')">Disassociate</a></td><td class="dataCell"><a class="actionLink" href="#" onClick="window.open(\'' + detailUrl + '\'); return true;">' + rally.artifactID + '</a></td>';
+          contentStr += '<td class="dataCell">' + rally.artifactName + '</td><td class="dataCell">' + rally.artifactDescription.substr(0, 100) + ellipsis + '</td>';
+          contentStr += '<td class="dataCell">' + rally.defectPriority + '</td>';
+          contentStr += '<td class="dataCell">' + rally.defectSeverity + '</td>';
+          contentStr += '<td class="dataCell">' + rally.defectState + '</td>';
+          contentStr += '<td class="dataCell">' + rally.defectResolution + '</td>';
+          contentStr += '<td class="dataCell">' + rally.artifactState + '</td>';
+          contentStr += '<td class="dataCell">' + rally.artifactRelease + '</td>';
+          break;
+        }
+        case "hierarchicalrequirement":
+        {
+          detailUrl += '/ar/' + artifactOid;
+          contentStr += '<td class="actionColumn"><a class="actionLink" href="#" onClick="rally.disassociate(\'' + ID + '\',\'' + artifactRef + '\')">Disassociate</a></td><td class="dataCell"><a class="actionLink" href="#" onClick="window.open(\'' + detailUrl + '\'); return true;">' + rally.artifactID + '</a></td>';
+          contentStr += '<td class="dataCell">' + rally.artifactName + '</td><td class="dataCell">' + rally.artifactDescription.substr(0, 100) + ellipsis + '</td>';
+          contentStr += '<td class="dataCell">' + rally.artifactState + '</td>';
+          contentStr += '<td class="dataCell">' + rally.artifactRelease + '</td>';
+          break;
+        }
+      }
+    }
+    else {
+      contentStr += '<tr class="headerRow"><th class="noRowsHeader" scope="col">The case is not associated to Rally.</th>';
+    }
+    contentStr += '</tr></table>';
+    rally.injectContent("outputArea", contentStr);
+  };
+
+  /* create a defect based on case information */
+  rally.createDefect = function (formName, ID) {
+    rally.ca = new rally.dfm();
+    rally.ca.fm.getArtifactFieldMap();
+    fieldList = rally.ca.fm.getMappedSFFieldList();
+    rally.getCaseInfo(ID, fieldList);
+    var project = eval("document." + formName + ".project.value");
+    rally.createDefect.retry = 0;
+    rally.createDefect.create(project, rally.createDefect.retry);
+    if (rally.createDefect.retry) {
+      rally.createDefect.create(project, rally.createDefect.retry);
+    }
+    rally.redirect();
+  };
+
+  rally.createDefect.create = function (project, retry) {
+    var defectDoc = rally.createDefect.defectJSON(project, retry);
+
+    rally.agentHeader("createDefect");
+    var result = sforce.connection.remoteFunction({
+        url: rally.webserviceUrl + '/defect/create.js',
+        method: 'POST',
+        mimeType: "text/plain",
+        requestHeaders: rally.requestHeader,
+        requestData: defectDoc,
+        async: false,
+        onSuccess: rally.createDefect.successResponse,
+        onFailure: rally.createDefect.failure }
+    );
+
+  };
+
+  rally.createDefect.failure = function (response, request) {
+    rally.genericFailureHandler(response, request, true);
+
+  };
+
+  rally.createDefect.defectJSON = function (project, retry) {
+    var user = rally.getSFUserInfo();
+    var message = "";
+    var obj = {"Defect": {}};
+
+    rally.userRef(); // Fetch user Ref based on HTTP basic authentication
+
+    obj.Defect.Project = { "_ref": project };
+    obj.Defect.SubmittedBy = rally.userUri;
+    obj.Defect.NumberofCases = 1;
+    obj.Defect.AffectedCustomers = rally.caseAccountName;
+    obj.Defect.Notes = "Created with Rally Support Manager by " + user.userFullName + ".";
+
+    for (var i in rally.ca.fm.artifactFieldMap) {
+      var fld = rally.ca.fm.lookupArtifactField(i);
+      var msgVal = rally.encodeXML(rally.caseRecord[fld]);
+      var msgValLit = rally.encodeXML(rally.ca.fm.lookupArtifactFieldLiteral(i));
+      if (fld != "None") {
+        switch (i) {
+          case "Name":
+            if (fld == "Default") {
+              msgVal = msgValLit;
+            }
+            obj.Defect.Name = msgVal;
+            break;
+          case "FoundInBuild":
+            if (fld == "Default") {
+              msgVal = msgValLit;
+            }
+            obj.Defect.FoundInBuild = msgVal;
+            break;
+          case "Severity":
+            if (fld == "Default") {
+              msgVal = msgValLit;
+            }
+            if (msgVal.length > 0) {
+              obj.Defect.Severity = msgVal;
+            }
+            break;
+          case "Priority":
+            if (fld == "Default") {
+              msgVal = msgValLit;
+            }
+            if (msgVal.length > 0) {
+              obj.Defect.Priority = msgVal;
+            }
+            break;
+          case "Package":
+            if (fld == "Default") {
+              msgVal = msgValLit;
+            }
+            if (msgVal.length > 0) {
+              obj.Defect.Package = msgVal;
+            }
+            break;
+          case "Owner":
+            if (fld == "Default") {
+              msgVal = msgValLit;
+            }
+            if (rally.user_refs[msgVal]) {
+              msgVal = rally.user_refs[msgVal];
+            }
+            if (msgVal.length > 0) {
+              obj.Defect.Owner = msgVal;
+            }
+            break;
+          case "Environment":
+            if (retry == 0) {
+              if (fld == "Default") {
+                msgVal = msgValLit;
+              }
+              obj.Defect.Environment = msgVal;
+            }
+            break;
+          case "Description":
+            var descriptionStr = "";
+            var description = msgVal;
+            if (fld == "Default") {
+              description = msgValLit;
+            }
+
+            if (description == null) {
+              obj.Defect.Description = "";
+            }
+            else {
+              descriptionStr = description.replace(/\r\n|\n|\r/g, "<br>");
+              obj.Defect.Description = descriptionStr;
+            }
+            break;
+          case "Release":
+            var release_ref = "";
+            if (fld == "Default") {
+              msgVal = msgValLit;
+            }
+            obj.Defect.Release = rally.releases[msgVal];
+            window.console && console.log("Default Release Name:", msgVal);
+            window.console && console.log("Create Artifact: available releases are:");
+            window.console && console.log(rally.releases);
+            window.console && console.log("On Release, setting defect info:");
+            window.console && console.log(obj.Defect);
+            break;
+          default:
+            if (fld == "Default") {
+              msgVal = msgValLit;
+            }
+            if (msgVal.length > 0) {
+              obj.Defect[i] = msgVal;
+            }
+        }
+      }
+    }
+
+    obj.Defect.SalesforceCase = {};
+    obj.Defect.SalesforceCase.LinkID = rally.caseId;
+    obj.Defect.SalesforceCase.DisplayString = rally.caseNumber;
+    message = YAHOO.lang.JSON.stringify(obj);
+    return message;
+  };
+
+  rally.createDefect.checkResponseErrors = function (response) {
+    var data = "";
+    if (response.CreateResult.Errors.length > 0) {
+      data = response.CreateResult.Errors[0];
+    }
+    return data;
+  };
+
+  rally.createDefect.successResponse = function (response) {
+    var jsResponse = YAHOO.lang.JSON.parse(response);
+    var docStr = rally.createDefect.checkResponseErrors(jsResponse);
+
+    if (docStr.match("Could not convert") && (rally.createDefect.retry == 0)) {
+      rally.createDefect.retry = 1;
+      return;
+    }
+
+    if (docStr.length > 0) {
+      alert("Error Creating defect in Rally with case Id: " + ID +
+        " with the following Error: " +
+        docStr);
+      return;
+    }
+
+    var defectRef = jsResponse.CreateResult.Object._ref;
+    rally.updateSFCase(ID, defectRef);
+    rally.discussion("associate", defectRef, ID, caseNumber, rally.caseOwner, rally.caseCreator, rally.caseAttachment, rally.caseDescription);
+  };
+
+  /* create a requirement based on the case */
+  rally.createRequirement = function (formName, ID) {
+    rally.ca = new rally.usfm();
+    rally.ca.fm.getArtifactFieldMap();
+    fieldList = rally.ca.fm.getMappedSFFieldList();
+    rally.getCaseInfo(ID, fieldList);
+    var project = eval("document." + formName + ".project.value");
+    var Name = rally.caseSubject;
+    var Description = rally.caseDescription;
+    rally.createRequirement.create(project, ID, caseNumber, Name, Description);
+    rally.redirect();
+  };
+
+  rally.createRequirement.create = function (project, caseId, caseNumber, name, description) {
+    var requirementDoc = rally.createRequirement.requirementJSON(project, caseId, caseNumber, unescape(name), description);
+    rally.agentHeader("createRequirement");
+    sforce.connection.remoteFunction({
+        url: rally.webserviceUrl + '/hierarchicalrequirement/create.js',
+        method: 'POST',
+        mimeType: "text/plain",
+        requestHeaders: rally.requestHeader,
+        requestData: requirementDoc,
+        async: false,
+        onSuccess: rally.createRequirement.successResponse,
+        onFailure: rally.genericFailureHandler }
+    );
+
+  };
+
+  rally.createRequirement.requirementJSON = function (project, caseId, caseNumber, subject, description) {
+    var user = rally.getSFUserInfo();
+    var message = "";
+    var obj = {"HierarchicalRequirement": {}};
+    var ptr = obj.HierarchicalRequirement;
+
+    ptr.Project = { "_ref": project };
+    ptr.NumberofCases = 1;
+    ptr.AffectedCustomers = rally.caseAccountName;
+    ptr.Notes = "Created with Rally Support Manager by " + user.userFullName + ".";
+
+    for (var i in rally.ca.fm.artifactFieldMap) {
+      var fld = rally.ca.fm.lookupArtifactField(i);
+      var msgVal = rally.encodeXML(rally.caseRecord[fld]);
+      var msgValLit = rally.encodeXML(rally.ca.fm.lookupArtifactFieldLiteral(i));
+      if (fld != "None") {
+        switch (i) {
+          case "Name":
+            if (fld == "Default") {
+              msgVal = msgValLit;
+            }
+            ptr.Name = msgVal;
+            break;
+          case "Rank":
+            if (fld == "Default") {
+              msgVal = msgValLit;
+            }
+            ptr.Rank = msgVal;
+            break;
+          case "Package":
+            if (fld == "Default") {
+              msgVal = msgValLit;
+            }
+            if (msgVal.length > 0) {
+              ptr.Package = msgVal;
+            }
+            break;
+          case "Owner":
+            if (fld == "Default") {
+              msgVal = msgValLit;
+            }
+            if (msgVal.length > 0) {
+              ptr.Owner = msgVal;
+            }
+            break;
+          case "Description":
+            var descriptionStr = "";
+            var description = msgVal;
+            if (fld == "Default") {
+              description = msgValLit;
+            }
+
+            if (description == null) {
+              ptr.Description = "";
+            }
+            else {
+              descriptionStr = description.replace(/\r\n|\n|\r/g, "<br>");
+              ptr.Description = descriptionStr;
+            }
+            break;
+          default:
+            if (fld == "Default") {
+              msgVal = msgValLit;
+            }
+            if (msgVal.length > 0) {
+              ptr[i] = msgVal;
+            }
+        }
+      }
+    }
+
+    ptr.SalesforceCase = {};
+    ptr.SalesforceCase.LinkID = caseId;
+    ptr.SalesforceCase.DisplayString = caseNumber;
+
+    message = YAHOO.lang.JSON.stringify(obj);
+    return message;
+  };
+
+  rally.createRequirement.checkResponseErrors = function (response) {
+    var data = "";
+    if (response.CreateResult.Errors.length > 0) {
+      data = response.CreateResult.Errors[0];
+    }
+    if (data.length > 0) {
+      return data;
+    }
+    return data;
+  };
+
+  rally.createRequirement.successResponse = function (response) {
+    var jsResponse = YAHOO.lang.JSON.parse(response);
+    var docStr = rally.createRequirement.checkResponseErrors(jsResponse);
+
+    if (docStr.length > 0) {
+      alert("Error Creating story in Rally with case Id: " + ID +
+        " with the following Error: " +
+        docStr);
+      return;
+    }
+
+    var requirementRef = jsResponse.CreateResult.Object._ref;
+    rally.updateSFCase(ID, requirementRef);
+    rally.discussion("associate", requirementRef, ID, caseNumber, rally.caseOwner, rally.caseCreator, rally.caseAttachment, rally.caseDescription);
+  };
+
+
+  /* disassociate a SF case from Rally artifact */
+  rally.disassociate = function (caseId, refUrl) {
+    rally.updateSFCase(caseId, " ");
+    rally.updateCaseDetail.updateCase(caseId, " ", " ");
+    rally.disassociate.disassociateRally(refUrl);
+    rally.discussion("disassociate", refUrl, ID, caseNumber, "", 0, "");
+    rally.redirect();
+  };
+
+  rally.disassociate.cleanupSF = function () {
+    artifactRef = "";
+    rally.updateSFCase(ID, " ");
+    rally.redirect();
+    return(false);
+  };
+
+  rally.disassociate.disassociateRally = function (refUrl) {
+    var re = /defect\/(\d+)(\.js)*/;
+    var arr = refUrl.match(re);
+    if (arr != null) {
+      rally.associateDefect("", arr[1]);
+      return;
+    }
+    re = /hierarchicalrequirement\/(\d+)(\.js)*/;
+    var arr = refUrl.match(re);
+    if (arr != null) {
+      rally.associateRequirement("", arr[1]);
+
+    }
+
+  };
+
+  rally.createArtifact = {};
+  rally.createArtifact.caseCookie = "rscCase";
+  rally.createArtifact.setCookie = function (cookie, cookieValue) {
+    document.cookie = cookie + "=" + escape(cookieValue);
+  };
+
+  rally.createArtifact.getCookie = function (cookie) {
+    cookies = document.cookie.split(';');
+    for (i = 0; i < cookies.length; i++) {
+      cookie_arr = cookies[i].split('=');
+      cookie_name = cookie_arr[0].replace(/^\s+|\s+$/g, '');
+      if (cookie_name == cookie) {
+        return(unescape(cookie_arr[1].replace(/^\s+|\s+$/g, '')));
+      }
+    }
+    return(null);
+  }
+</script>
+</head>
+
+<body onLoad="rally.showArtifactInit();" class="bWizardList">
+<div class="bRelatedList caseBlock">
+  <div class="bPageBlock secondaryPalette">
+    <div class="pbHeader">
+      <div id="headerArea"></div>
+    </div>
+    <div class="pbBody">
+      <div id="outputArea"></div>
+    </div>
+    <div class="pbFooter"></div>
+  </div>
+</div>
+</body>
+</html>

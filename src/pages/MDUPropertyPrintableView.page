@@ -1,0 +1,1181 @@
+<!-- 
+/**********************************************************
+* Page Name: MDUPropertyPrintableView
+* Author: Abhishek Mathur, Accenture
+* Date: 19 January, 2015 
+* Requirement # Request Id : 
+* Description:
+* Last Modified by:
+***********************************************************/
+-->
+<apex:page StandardController="MDU_Property__c" showHeader="false" sidebar="false" extensions="MDUPropertyPrintViewExtensions">
+<apex:form >
+    <DIV style="border: 3px solid white;">
+<TABLE style="BORDER-COLLAPSE: collapse"  border="1" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%" height="1%">
+<TBODY>
+<TR>
+<TD height="1%" width="43%"><BR />&nbsp;<apex:image value="{!$Resource.XfinityComcastLogo}" style="height:60px;width:140px;" /></TD>
+<TD height="1%" width="55%">
+<P align="right"><FONT size="4"><B><SPAN style="WIDTH: 216px; DISPLAY: inline-block; FONT-FAMILY: Times New Roman; FONT-WEIGHT: bold" 
+
+></SPAN>&nbsp;</B></FONT><B><FONT size="4">CONTRACT SUMMARY</FONT></B></P></TD></TR>
+<TR>
+<TD width="100%" colSpan="3">
+<TABLE style="BORDER-COLLAPSE: collapse"  border="1" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%" height="1">
+<TBODY>
+<TR>
+<TD height="1" borderColor="#ffff00" width="40%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Account Executive:&nbsp; <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!property.Account_Manager__c}"/></SPAN></SPAN> </TD>
+<TD height="1" borderColor="#ffff00" width="30%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Created By:<SPAN style="FONT-WEIGHT: bold" 
+
+>{!$User.FirstName} {!$User.LastName}</SPAN></SPAN> </TD>
+<TD height="1" borderColor="#ffffff" width="30%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">&nbsp;Date:&nbsp;&nbsp; <SPAN style="FONT-WEIGHT: bold" >{!currDate}</SPAN></SPAN> </TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+<TABLE style="BORDER-COLLAPSE: collapse" border="1" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%" height="131">
+<TBODY>
+<TR>
+<TD bgColor="#c0c0c0" height="20" width="100%">
+<P align="center"><B><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 12pt">PROPERTY INFORMATION</SPAN></B></P></TD></TR>
+<TR>
+<TD style="HEIGHT: 17px" width="100%">
+<TABLE style="BORDER-COLLAPSE: collapse"  border="1" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%" height="8">
+<TBODY>
+<TR>
+<TD style="WIDTH: 138px" height="12" borderColor="#ffffff" width="138">
+<P align="left"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"> <SPAN style="FONT-WEIGHT: bold" ></SPAN></SPAN></P></TD>
+<TD style="WIDTH: 294px" height="12" borderColor="#ffffff" width="294"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.System__c.label}:&nbsp; <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!property.System__c}"/></SPAN></SPAN> 
+
+</TD>
+<TD style="WIDTH: 286px" height="12" borderColor="#ffffff" width="286"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.Property_Area__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.Property_Area__c}"/></SPAN></SPAN> </TD>
+<TD style="WIDTH: 313px" height="12" borderColor="#ffffff" width="313"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.Property_Region__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.Property_Region__c}"/></SPAN></SPAN> </TD>
+<TD height="12" borderColor="#ffffff" width="170"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.Node__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!property.Node__c}"/></SPAN></SPAN> 
+
+</TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD height="88" width="100%">
+<TABLE style="BORDER-COLLAPSE: collapse"  border="1" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%" height="1">
+<TBODY>
+<TR>
+<TD style="HEIGHT: 14px" height="14" width="494"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.Name.label}:<STRONG> </STRONG><SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!property.Name}"/></SPAN></SPAN> 
+
+</TD>
+<TD style="HEIGHT: 14px" height="14" width="399" colSpan="2"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Contact: <SPAN style="FONT-WEIGHT: 
+bold" ><apex:outputField value="{!property.Contact_Name__c }"/></SPAN></SPAN> </TD></TR>
+<TR>
+<TD style="HEIGHT: 14px" height="14" width="494"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.Property_Alias__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.Property_Alias__c}"/></SPAN></SPAN></TD>
+<TD style="HEIGHT: 14px" height="14" width="399" colSpan="2"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Title: <SPAN style="FONT-WEIGHT: 
+
+bold" ><apex:outputField value="{!property.Contact_Title__c }"/></SPAN></SPAN> </TD></TR>
+<TR>
+<TD height="18" width="494"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.MDU_Property__c.fields.Address__c.label}: <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!property.Address__c}"/></SPAN> </SPAN></TD>
+<TD height="18" width="200"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Phone: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.Contact_Phone__c }"/></SPAN></SPAN> </TD>
+<TD height="18" width="199"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Fax: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.Contact_Fax__c }"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="21" width="494"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.Address_2__c }"/></SPAN></SPAN></TD>
+<TD height="21" width="399" colSpan="2"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Email: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!property.Contact_Email__c }"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="1" width="100%" colSpan="3">
+<TABLE style="BORDER-COLLAPSE: collapse"  border="0" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%" height="1">
+<TBODY>
+<TR>
+<TD height="5" borderColor="#ffffff" width="380">
+<P align="left"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.MDU_Property__c.fields.City__c.label}:&nbsp; <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!property.City__c}"/></SPAN>&nbsp;&nbsp;&nbsp;&nbsp;</SPAN></P></TD>
+<TD height="5" borderColor="#ffffff" width="162"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.County__c.label}:&nbsp; <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.County__c}"/></SPAN>&nbsp;</SPAN> </TD>
+<TD height="5" borderColor="#ffffff" width="117"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.MDU_State__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.MDU_State__c}"/></SPAN>&nbsp;&nbsp;</SPAN> </TD>
+<TD height="5" borderColor="#ffffff" width="180"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.PostalCode__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!property.PostalCode__c}"/></SPAN></SPAN> 
+
+</TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+<TABLE style="BORDER-COLLAPSE: collapse"  border="1" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%">
+<TBODY>
+<TR>
+<TD bgColor="#cccccc" height="20" width="50%">
+<P align="center"><B><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 12pt">CONTRACT SUMMARY</SPAN></B></P></TD></TR>
+<TR>
+<TD vAlign="top" width="50%" align="left"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">
+<TABLE style="WIDTH: 100%"  border="0" cellSpacing="5">
+<TBODY>
+<TR style="FONT-SIZE: 9pt">
+<TD>{!$ObjectType.Contract__c.fields.Contract_Type__c.Label}</TD>
+<TD>{!$ObjectType.Contract__c.fields.Contract_Status__c.Label}</TD>
+<TD>{!$ObjectType.Contract__c.fields.Expiration_Date__c.Label}</TD></TR>
+<apex:repeat value="{!contractList}" var="cont">
+<TR style="FONT-FAMILY: Times New Roman; FONT-SIZE: 9pt ; FONT-WEIGHT: bold">
+<TD><apex:outputField value="{!cont.Contract_Type__c}"/></TD>
+<TD><apex:outputField value="{!cont.Status_Sub_Status__c}"/></TD>
+<TD><apex:outputField value="{!cont.Expiration_Date__c}"/></TD></TR>
+</apex:repeat>
+</TBODY></TABLE></SPAN></TD></TR>
+<TR>
+
+<TD style="FONT-FAMILY: Times New Roman; FONT-SIZE: 12pt; FONT-WEIGHT: bold" bgColor="#cccccc" vAlign="top" width="50%" colSpan="2" 
+
+align="center">INSTRUMENTS RECORDED </TD></TR>
+<TR>
+<TD style="FONT-FAMILY: Times New Roman; FONT-SIZE: 12pt" vAlign="top" width="50%" colSpan="2"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">
+<TABLE style="WIDTH: 100%"  border="0" cellSpacing="5">
+<TBODY>
+<TR style="FONT-FAMILY: Times New Roman; FONT-SIZE: 9pt">
+<TD>{!$ObjectType.Recorded_Instrument__c.fields.Recorded_Instrument__c.Label}</TD>
+<TD>{!$ObjectType.Recorded_Instrument__c.fields.Recorded_Date__c.Label}</TD>
+<TD>{!$ObjectType.Recorded_Instrument__c.fields.Recorded_County__c.Label}</TD> 
+<TD>{!$ObjectType.Recorded_Instrument__c.fields.State__c.Label}</TD></TR>
+<apex:repeat value="{!recordedInstrumentList}" var="rinstrument">
+<TR style="FONT-FAMILY: Times New Roman; FONT-SIZE: 9pt; FONT-WEIGHT: bold">
+<TD><apex:outputField value="{!rinstrument.Recorded_Instrument__c}"/></TD>
+<TD><apex:outputField value="{!rinstrument.Recorded_Date__c}"/> </TD>
+<TD><apex:outputField value="{!rinstrument.Recorded_County__c}"/></TD>
+<TD><apex:outputField value="{!rinstrument.State__c}"/></TD>
+</TR>
+</apex:repeat>
+</TBODY></TABLE></SPAN></TD></TR></TBODY></TABLE>
+<TABLE style="BORDER-COLLAPSE: collapse"  border="1" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%">
+<TBODY>
+<TR>
+<TD height="15" width="61%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Owner:<STRONG> </STRONG><SPAN style="FONT-WEIGHT: bold" 
+
+><apex:outputField value="{!property.Owner_Account__r.Name}"/> </SPAN></SPAN> </TD>
+<TD style="HEIGHT: 15px" height="15" width="39%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Owner Contact: <SPAN style="FONT-WEIGHT: bold" 
+
+><apex:outputField value="{!propertyOwner.Name }"/></SPAN>&nbsp;&nbsp;&nbsp; </SPAN></TD></TR>
+<TR>
+<TD height="16" width="61%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Address: <SPAN style="FONT-WEIGHT: bold" > <apex:outputField value="{!propertyOwnerAcc.Street__c }"/></SPAN></SPAN> </TD>
+<TD height="16" width="39%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Owner Title: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!propertyOwner.Title }"/></SPAN></SPAN> </TD></TR>
+<TR>
+<TD height="20" width="61%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"> 
+
+<SPAN style="FONT-WEIGHT: bold" ></SPAN></SPAN></TD>
+<TD height="20" width="39%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Owner Phone: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!propertyOwnerAcc.Phone__c }"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="19" width="100%" colSpan="2">
+<TABLE style="BORDER-COLLAPSE: collapse"  border="0" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%" height="1">
+<TBODY>
+<TR>
+<TD height="5" borderColor="#ffffff" width="50%">
+<P align="left"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">City:&nbsp; <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+propertyOwnerAcc.City__c }"/></SPAN></SPAN></P></TD>
+<TD style="WIDTH: 239px" height="5" borderColor="#ffffff" width="239"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">State: <SPAN style="FONT-WEIGHT: bold" >
+<apex:outputField value="{!propertyOwnerAcc.MDU_State__c }"/></SPAN></SPAN> </TD>
+<TD height="5" borderColor="#ffffff" width="25%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Zip: <SPAN style="FONT-WEIGHT: bold" 
+
+><apex:outputField value="{!propertyOwnerAcc.Zip_Code__c }"/></SPAN></SPAN> </TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+<TABLE style="BORDER-COLLAPSE: collapse"  border="1" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%">
+<TBODY>
+<TR>
+<TD style="HEIGHT: 16px" height="16" width="61%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Management: <SPAN style="FONT-WEIGHT: bold" 
+
+><apex:outputField value="{!property.Management_Company__r.Name}"/></SPAN></SPAN> </TD>
+<TD style="HEIGHT: 16px" height="16" width="39%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Management Contact: <SPAN style="FONT-WEIGHT: 
+
+bold" ><apex:outputField value="{!propertyManagementCompany.Name }"/></SPAN></SPAN> </TD></TR>
+<TR>
+<TD height="15" width="61%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Address: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!propertyManagementCompanyAcc.Street__c }"/></SPAN></SPAN> </TD>
+<TD height="15" width="39%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Management Title: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!propertyManagementCompany.Title }"/></SPAN></SPAN> </TD></TR>
+<TR>
+<TD height="19" width="61%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 
+
+10pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="FONT-WEIGHT: bold" ></SPAN></SPAN></TD>
+<TD height="19" width="39%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Management Phone: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!propertyManagementCompanyAcc.Phone__c }"/></SPAN></SPAN> </TD></TR>
+<TR>
+<TD height="19" width="100%" colSpan="2">
+<TABLE style="BORDER-COLLAPSE: collapse"  border="0" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%" height="1">
+<TBODY>
+<TR>
+<TD height="5" borderColor="#ffffff" width="50%">
+<P align="left"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">City: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+propertyManagementCompanyAcc.City__c }"/></SPAN>&nbsp;&nbsp;</SPAN></P></TD>
+<TD height="5" borderColor="#ffffff" width="25%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">State:&nbsp; <SPAN style="FONT-WEIGHT: bold" 
+
+><apex:outputField value="{!propertyManagementCompanyAcc.MDU_State__c }"/></SPAN>&nbsp;</SPAN> </TD>
+<TD height="5" borderColor="#ffffff" width="25%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Zip: <SPAN style="FONT-WEIGHT: bold" 
+
+><apex:outputField value="{!propertyManagementCompanyAcc.Zip_Code__c }"/></SPAN></SPAN> </TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+<TABLE style="BORDER-COLLAPSE: collapse"  border="1" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%">
+<TBODY>
+<TR>
+<TD height="16" width="61%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Developer:<STRONG> </STRONG><SPAN style="FONT-WEIGHT: bold" 
+
+><apex:outputField value="{!property.Developer__r.Name}"/></SPAN></SPAN></TD>
+<TD style="HEIGHT: 16px" height="16" width="39%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Developer Contact: <SPAN style="FONT-WEIGHT: 
+
+bold" ><apex:outputField value="{!propertyDeveloper.Name }"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="17" width="61%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Address: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!propertyDeveloperAcc.Street__c }"/></SPAN></SPAN></TD>
+<TD style="HEIGHT: 17px" height="16" width="39%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Developer Title: <SPAN style="FONT-WEIGHT: bold" 
+
+><apex:outputField value="{!propertyDeveloper.Title }"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="20" width="61%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 
+
+10pt"><SPAN style="FONT-WEIGHT: bold" ></SPAN></SPAN></TD>
+<TD style="HEIGHT: 20px" height="20" width="39%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Developer Phone: <SPAN style="FONT-WEIGHT: bold" 
+
+><apex:outputField value="{!propertyDeveloperAcc.Phone__c }"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="19" width="100%" colSpan="2">
+<TABLE style="BORDER-COLLAPSE: collapse; HEIGHT: 8px"  border="0" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%" height="8">
+<TBODY>
+<TR>
+<TD style="HEIGHT: 25px" height="25" borderColor="#ffffff" width="50%">
+<P align="left"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">City: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+propertyDeveloperAcc.City__c }"/></SPAN>&nbsp;</SPAN></P></TD>
+<TD style="HEIGHT: 25px" height="25" borderColor="#ffffff" width="25%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">State: <SPAN style="FONT-WEIGHT: bold" > <apex:outputField value="{!propertyDeveloperAcc.MDU_State__c}"/></SPAN>&nbsp;</SPAN> </TD>
+<TD style="HEIGHT: 25px" height="25" borderColor="#ffffff" width="25%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Zip: <SPAN style="FONT-WEIGHT: bold" > <apex:outputField value="{!propertyDeveloperAcc.Zip_Code__c }"/></SPAN></SPAN></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+<TABLE style="BORDER-COLLAPSE: collapse" border="1" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%">
+<TBODY>
+<TR>
+<TD bgColor="#c0c0c0">
+<P align="center"><B><SPAN style="BORDER-BOTTOM: medium none; BORDER-LEFT: medium none; FONT-FAMILY: Times New Roman; FONT-SIZE: 12pt; BORDER-TOP: medium 
+
+none; BORDER-RIGHT: medium none">PROPERTY DETAILS</SPAN></B></P></TD></TR>
+<TR>
+<TD>
+<TABLE style="BORDER-COLLAPSE: collapse"  border="1" cellSpacing="0" borderColor="#111111" cellPadding="1" width="100%">
+<TBODY>
+<TR>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.MDU_Property__c.fields.Property_Grade__c.label}: <SPAN style="FONT-WEIGHT: 
+
+bold" ><apex:outputField value="{!property.Property_Grade__c}"/></SPAN></SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.Industry_Type__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.Industry_Type__c}"/></SPAN></SPAN></SPAN> </TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.Property_Type__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.Property_Type__c}"/></SPAN></SPAN></SPAN> </TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"> {!
+
+$ObjectType.MDU_Property__c.fields.Buildings__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.Buildings__c}"/></SPAN></SPAN></SPAN></TD></TR>
+<TR>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.Structure_Type__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.Structure_Type__c}"/></SPAN></SPAN></SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.Number_of_Units__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.Number_of_Units__c}"/></SPAN></SPAN></SPAN> </TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.Complex_Code__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.Complex_Code__c}"/></SPAN></SPAN></SPAN> </TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN >{!
+
+$ObjectType.MDU_Property__c.fields.House_Misc_Code__c.label}:</SPAN><SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.House_Misc_Code__c}"/></SPAN></SPAN></SPAN> </TD></TR>
+<TR>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.Billing_Corp__c.label} : <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.Billing_Corp__c}"/></SPAN></SPAN></SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.Mandatory_Access__c.label} <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.Mandatory_Access__c}"/></SPAN></SPAN></SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-WEIGHT: bold" ></SPAN></SPAN> </TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"></SPAN><SPAN style="FONT-SIZE: x-small; FONT-WEIGHT: bold" ></SPAN></TD></TR>
+<TR>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.Disconnect_Date__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.Disconnect_Date__c}"/></SPAN></SPAN></SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.MDU_Disconnect_Reason__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.MDU_Disconnect_Reason__c}"/></SPAN></SPAN></SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.Franchise_New__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.Franchise_New__c}"/></SPAN></SPAN></SPAN> </TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.Franchise_Tax_No__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.Franchise_Tax_No__c}"/></SPAN></SPAN></SPAN></TD></TR>
+<TR>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-WEIGHT: bold" ></SPAN></SPAN> </TD>
+
+<TD colSpan="3"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.Bulk_Upgradeable__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.Bulk_Upgradeable__c}"/></SPAN></SPAN></SPAN> </TD></TR>
+<TR>
+<TD colSpan="4"><FONT size="2">{!$ObjectType.MDU_Property__c.fields.Wiring_Comments__c.label}: </FONT><SPAN style="FONT-WEIGHT: bold" >
+<apex:outputField value="{!property.Wiring_Comments__c}"/></SPAN> </TD></TR>
+<TR>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.Competitor__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.Competitor__c}"/></SPAN></SPAN></SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.Effective_Date__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.Effective_Date__c}"/></SPAN></SPAN></SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.Expiration_Date__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.Expiration_Date__c}"/></SPAN></SPAN></SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.MDU_Property__c.fields.ROE_or_Bulk__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.ROE_or_Bulk__c}"/></SPAN></SPAN></SPAN></TD></TR>
+<TR>
+<TD colSpan="4"><FONT size="2">{!$ObjectType.MDU_Property__c.fields.Competitor_Comments__c.label}: </FONT><SPAN style="FONT-WEIGHT: bold" >
+<apex:outputField value="{!property.Competitor_Comments__c}"/></SPAN></TD></TR>
+<TR>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$Label.Service_Change}&nbsp;{!
+
+$ObjectType.Service_Change__c.fields.Action__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+currentServiceChange.Action__c}"/></SPAN></SPAN> </SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$Label.Service_Change}&nbsp;{!
+
+$ObjectType.Service_Change__c.fields.Reason__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+currentServiceChange.Reason__c}"/></SPAN></SPAN></SPAN> </TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.Service_Change__c.fields.Implementation_Date__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+currentServiceChange.Implementation_Date__c}"/></SPAN></SPAN></SPAN> </TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.Service_Change__c.fields.Complete__c.label}: <apex:outputField value="{!currentServiceChange.Complete__c}"/></SPAN></SPAN> 
+
+</TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD bgColor="#c0c0c0">
+<P align="center"><B><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 12pt">SERVICES PROVIDED</SPAN></B></P></TD></TR>
+<TR>
+<TD>
+<TABLE width="100%">
+<TBODY>
+<TR>
+<TD bgColor="silver"><FONT size="2">Line of Business</FONT></TD>
+<TD bgColor="silver"><FONT size="2">Comcast Serviced</FONT></TD>
+<TD bgColor="silver"><FONT size="2">Billing Type</FONT></TD>
+<TD bgColor="silver"><FONT size="2">Contract Status</FONT></TD></TR>
+<TR>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.MDU_Property__c.fields.Comcast_Video_Serviced__c.label}</SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><apex:outputField value="{!property.Comcast_Video_Serviced__c}"/></SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><apex:outputField value="{!property.Video_Billing_Type__c}"/></SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><apex:outputField value="{!property.Video_Contract_Status__c}"/></SPAN></TD></TR>
+<TR>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.MDU_Property__c.fields.Comcast_Data_Serviced__c.label}</SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><apex:outputField value="{!property.Comcast_Data_Serviced__c}"/></SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><apex:outputField value="{!property.Data_Billing_Type__c}"/></SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><apex:outputField value="{!property.Data_Contract_Status__c}"/></SPAN></TD></TR>
+<TR>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.MDU_Property__c.fields.Comcast_Voice_Serviced__c.label}</SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><apex:outputField value="{!property.Comcast_Voice_Serviced__c}"/></SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><apex:outputField value="{!property.Voice_Billing_Type__c}"/></SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><apex:outputField value="{!
+
+property.Voice_Contract_Status__c}"/></SPAN></TD></TR></TBODY></TABLE>
+<TABLE  border="0" cellSpacing="1" cellPadding="1" width="100%">
+<TBODY>
+<TR>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.MDU_Property__c.fields.Property_Comments__c.label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+property.Property_Comments__c}"/></SPAN></SPAN> </TD></TR></TBODY></TABLE>
+<P style="PAGE-BREAK-AFTER: always"><BR style="LINE-HEIGHT: 0; HEIGHT: 0px" /></P>
+<TABLE style="BORDER-BOTTOM-COLOR: #111111; BORDER-TOP-COLOR: #111111; BORDER-COLLAPSE: collapse; BORDER-RIGHT-COLOR: #111111; BORDER-LEFT-COLOR: #111111"  
+
+border="1" cellSpacing="0" cellPadding="0" width="100%">
+<TBODY>
+<TR>
+<TD style="BACKGROUND-COLOR: #c0c0c0; WIDTH: 100%; HEIGHT: 20px">
+<P align="center"><B><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 12pt">COURTESY ACCOUNTS</SPAN></B></P></TD></TR>
+<TR>
+<TD>
+<DIV>
+<TABLE style="BORDER-BOTTOM: white 2px solid; BORDER-LEFT: white 2px solid; WIDTH: 100%; BORDER-COLLAPSE: collapse; FONT-SIZE: 10pt; BORDER-TOP: white 2px 
+
+solid; BORDER-RIGHT: white 2px solid"  border="2" rules="all" cellSpacing="0">
+<TBODY>
+<TR style="BACKGROUND-COLOR: lightgrey" align="left">
+<TH scope="col">Account Number</TH>
+<TH scope="col">Services</TH>
+<TH scope="col">Location</TH>
+<TH scope="col">Recipient</TH>
+<TH scope="col">Contractually Obligated</TH></TR>
+<apex:repeat value="{!courtseyAccountList}" var="courtesyAcc">
+<TR>
+<TD><apex:outputField value="{!courtesyAcc.Account_Number__c}"/></TD>
+<TD><apex:outputField value="{!courtesyAcc.Location__c}"/></TD>
+<TD><apex:outputField value="{!courtesyAcc.Services__c}"/></TD>
+<TD><apex:outputField value="{!courtesyAcc.Recipient__c}"/></TD>
+<TD><apex:outputField value="{!courtesyAcc.Contractually_Obligated__c}"/> </TD>
+</TR>
+</apex:repeat>
+</TBODY>
+</TABLE>
+</DIV>
+</TD>
+</TR>
+</TBODY>
+</TABLE>
+<TABLE style="BORDER-BOTTOM-COLOR: #111111; BORDER-TOP-COLOR: #111111; BORDER-COLLAPSE: collapse; BORDER-RIGHT-COLOR: #111111; BORDER-LEFT-COLOR: #111111"  
+
+border="1" cellSpacing="0" cellPadding="0" width="100%">
+<TBODY>
+<TR>
+<TD style="BACKGROUND-COLOR: #c0c0c0; WIDTH: 100%; HEIGHT: 20px">
+<P align="center"><B><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 12pt">PROPERTY COMMUNICATION LOG</SPAN></B></P></TD></TR>
+<TR>
+<TD width="100%">
+<DIV>
+<TABLE style="BORDER-BOTTOM: white 2px solid; BORDER-LEFT: white 2px solid; WIDTH: 100%; BORDER-COLLAPSE: collapse; FONT-SIZE: 10pt; BORDER-TOP: white 2px 
+
+solid; BORDER-RIGHT: white 2px solid"  border="2" rules="all" cellSpacing="0">
+<TBODY>
+<TR style="BACKGROUND-COLOR: lightgrey" align="left">
+<TH scope="col">Completed</TH>
+<TH scope="col">Date</TH>
+<TH scope="col">Assigned to</TH>
+<TH scope="col">Description</TH></TR>
+<apex:repeat value="{!taskInfolist}" var="propLog">
+<TR>
+<TD style="WIDTH: 80px" ><apex:outputField value="{!propLog.Status}"/></TD>
+<TD style="WIDTH: 100px"><apex:outputField value="{!propLog.CreatedDate }"/></TD>
+<TD style="WIDTH: 150px"><apex:outputField value="{!propLog.Owner.Name}"/></TD>
+<TD><apex:outputField value="{!propLog.Description}"/></TD>
+</TR>
+</apex:repeat>
+</TBODY></TABLE></DIV></TD></TR></TBODY></TABLE>
+<P style="PAGE-BREAK-AFTER: always"><BR style="LINE-HEIGHT: 0; HEIGHT: 0px"/></P>
+
+<P style="PAGE-BREAK-AFTER: always"><BR style="LINE-HEIGHT: 0; HEIGHT: 0px"/></P>
+<apex:repeat value="{!wrapperContractList}" var="wrapperCont">
+<TABLE style="BORDER-COLLAPSE: collapse"  border="1" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%" height="615">
+<TBODY>
+<TR>
+<TD height="152" width="100%">
+<TABLE style="BORDER-COLLAPSE: collapse" border="1" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%" height="138">
+<TBODY>
+<TR>
+<TD height="20" vAlign="middle" width="896" colSpan="4">
+<P align="center"><B><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 12pt">CONTRACT TERMS</SPAN></B></P></TD></TR>
+<TR>
+<TD height="60" width="270"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Status: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+wrapperCont.contractValue.Status_Sub_Status__c}"/></SPAN></SPAN></TD>
+<TD height="60" width="451" colSpan="3"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 
+
+10pt">{!$ObjectType.Contract__c.fields.Name.Label}: <SPAN style="BORDER-BOTTOM-STYLE: none; BORDER-LEFT-STYLE: none; WIDTH: 100%; DISPLAY: inline-block; 
+
+BORDER-TOP-STYLE: none; HEIGHT: 0px; BORDER-RIGHT-STYLE: none; FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+wrapperCont.contractValue.Name}"/></SPAN></SPAN> </SPAN></TD></TR>
+<TR>
+<TD height="14" width="270"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Effective_Date__c.Label}: <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Effective_Date__c}"/></SPAN></SPAN></TD>
+<TD height="14" width="270"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Initial_Effective_Date__c.Label}: 
+
+<SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Initial_Effective_Date__c}"/></SPAN></SPAN></TD>
+<TD height="14" width="298"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.Contract__c.fields.Non_Renewal_Notice_Required__c.Label}:&nbsp; <apex:outputField value="{!
+
+wrapperCont.contractValue.Non_Renewal_Notice_Required__c}"/></SPAN></TD></TR>
+<TR>
+<TD height="15" width="451" colSpan="2"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Contract_Term__c.Label}: 
+
+<SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Contract_Term__c}"/> &nbsp; <apex:outputField value="{!wrapperCont.contractValue.Contract_Term_Unit__c}"/></SPAN></SPAN></TD>
+<TD height="15" width="164"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Auto_Renewal_Limit__c.Label}: <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Auto_Renewal_Limit__c}"/></SPAN></SPAN></TD>
+<TD height="15" width="297"><FONT size="2"><SPAN style="FONT-FAMILY: Times New Roman"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.Contract__c.fields.Auto_Renewal_Count__c.Label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+wrapperCont.contractValue.Auto_Renewal_Count__c}"/></SPAN></SPAN></SPAN></FONT></TD></TR>
+<TR>
+<TD height="1" width="270"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Expiration_Date__c.Label}: <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Expiration_Date__c}"/>&nbsp;</SPAN></SPAN></TD>
+<TD height="1" width="270"><FONT size="2"><SPAN style="FONT-FAMILY: Times New Roman">{!$ObjectType.Contract__c.fields.Initial_Expiration_Date__c.Label}: 
+
+<SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Initial_Expiration_Date__c}"/> </SPAN></SPAN></FONT></TD>
+<TD height="1" width="164" colSpan="2"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Renewal_Term__c.Label}: 
+
+<SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Renewal_Term__c}"/> &nbsp; <apex:outputField value="{!
+
+wrapperCont.contractValue.Renewal_Term_Unit__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="15" width="451" colSpan="2"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 
+
+10pt">{!$ObjectType.Contract__c.fields.Days_to_Cancel__c.Label}: <SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-WEIGHT: bold" 
+
+><apex:outputField value="{!wrapperCont.contractValue.Days_to_Cancel__c}"/></SPAN> </SPAN></SPAN></SPAN></TD>
+<TD width="270"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Life_of_Franchise__c.Label}:</SPAN> <SPAN 
+
+style="FONT-SIZE: x-small"><apex:outputField value="{!wrapperCont.contractValue.Life_of_Franchise__c}"/></SPAN></TD></TR>
+<TR>
+<TD height="60" width="100%" colSpan="4"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Term_Details__c.Label}: 
+
+<SPAN style="BORDER-BOTTOM-STYLE: none; BORDER-LEFT-STYLE: none; WIDTH: 100%; DISPLAY: inline-block; BORDER-TOP-STYLE: none; HEIGHT: 0px; BORDER-RIGHT-STYLE: 
+
+none; FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Term_Details__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="20" vAlign="middle" width="896" colSpan="4" align="center"><STRONG>CONTRACTED LINES OF BUSINESS</STRONG></TD></TR>
+<TR>
+<TD height="20" vAlign="middle" width="896" colSpan="4">
+<TABLE width="100%">
+<TBODY>
+<TR>
+<TD bgColor="silver"><FONT size="2">Line of Business</FONT></TD>
+<TD bgColor="silver"><FONT size="2">Units</FONT></TD>
+<TD bgColor="silver"><FONT size="2">Billing Type</FONT></TD></TR>
+<TR>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Video__c.label}</SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><apex:outputField value="{!wrapperCont.contractValue.Video_Units__c}"/></SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><apex:outputField value="{!wrapperCont.contractValue.Video_Billing_Type__c}"/></SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"></SPAN></TD></TR>
+<TR>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Data__c.label}</SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><apex:outputField value="{!wrapperCont.contractValue.Data_Units__c}"/></SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><apex:outputField value="{!wrapperCont.contractValue.Data_Billing_Type__c}"/></SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"></SPAN></TD></TR>
+<TR>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Voice__c.label}</SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><apex:outputField value="{!wrapperCont.contractValue.Voice_Units__c}"/></SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><apex:outputField value="{!wrapperCont.contractValue.Voice_Billing_Type__c}"/></SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"></SPAN></TD></TR></TBODY></TABLE><!------></TD></TR>
+<TR>
+<TD width="100%" colSpan="4">
+<TABLE class="panelShade" border="0" cellSpacing="1" cellPadding="1" width="100%" bgColor="white">
+<TBODY>
+<TR>
+<TD width="100%"><B>&nbsp;MARKETING:</B></TD>
+<TD width="100%"></TD></TR>
+<TR>
+<TD bgColor="white" vAlign="top" width="75%">
+<TABLE width="100%">
+<TBODY>
+<TR bgColor="silver">
+<TD></TD>
+<TD align="left">Marketing Rights </TD></TR>
+<TR>
+<TD>Video </TD>
+<TD><SPAN ><apex:outputField value="{!wrapperCont.contractValue.Video_Marketing_Rights__c}"/></SPAN> </TD></TR>
+<TR>
+<TD>HSI</TD>
+<TD><SPAN ><apex:outputField value="{!wrapperCont.contractValue.Data_Marketing_Rights__c}"/></SPAN> </TD></TR>
+<TR>
+<TD>CDV</TD>
+<TD><SPAN ><apex:outputField value="{!wrapperCont.contractValue.Voice_Marketing_Rights__c}"/></SPAN> </TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD bgColor="white" width="100%">
+<TABLE width="100%">
+<TBODY>
+<TR>
+<TD><B><SPAN >{!$ObjectType.Contract__c.fields.Door_to_Door_Sales_Permitted__c.Label}:</SPAN></B> <SPAN ><apex:outputField value="{!
+
+wrapperCont.contractValue.Door_to_Door_Sales_Permitted__c}"/></SPAN> 
+</TD></TR>
+<TR>
+<TD><B><SPAN >{!$ObjectType.Contract__c.fields.Marketing_Details__c.Label}:</SPAN></B> <SPAN ><apex:outputField value="{!
+
+wrapperCont.contractValue.Marketing_Details__c}"/></SPAN> 
+</TD></TR>
+</TBODY>
+</TABLE>
+</TD>
+</TR>
+</TBODY>
+</TABLE>
+</TD>
+</TR>
+<TR>
+<TD width="100%" colSpan="4">
+<TABLE class="panelShade" border="0" cellSpacing="1" cellPadding="1" width="100%" bgColor="white">
+<TBODY>
+<TR>
+<TD align="center"><B>&nbsp;WIRING:</B></TD></TR>
+<TR>
+<TD bgColor="white">
+<TABLE width="100%">
+<TBODY>
+<TR bgColor="silver">
+<TD></TD>
+<TD vAlign="top">Installed By </TD>
+<TD>Maintained By </TD>
+<TD>Paid By </TD>
+<TD>Owned By </TD>
+<TD>Exclusive Use </TD></TR>
+<TR>
+<TD>Distribution</TD>
+<TD><SPAN ><apex:outputField value="{!wrapperCont.contractValue.Distribution_Installed_by__c}"/></SPAN> </TD>
+<TD><SPAN ><apex:outputField value="{!wrapperCont.contractValue.Distribution_Maintained_By__c}"/></SPAN> </TD>
+<TD><SPAN ><apex:outputField value="{!wrapperCont.contractValue.Distribution_Paid_By__c}"/></SPAN> </TD>
+<TD><SPAN ><apex:outputField value="{!wrapperCont.contractValue.Distribution_Owned_By__c}"/></SPAN> </TD>
+<TD><SPAN ><apex:outputField value="{!wrapperCont.contractValue.Distribution_Exclusive_Use__c}"/></SPAN> </TD></TR>
+
+<TR>
+<TD>Home Run</TD>
+<TD><SPAN ><apex:outputField value="{!wrapperCont.contractValue.Home_Run_Installed_By__c}"/></SPAN> </TD>
+<TD><SPAN ><apex:outputField value="{!wrapperCont.contractValue.Home_Run_Maintained_By__c}"/></SPAN> </TD>
+<TD><SPAN ><apex:outputField value="{!wrapperCont.contractValue.Home_Run_Paid_By__c}"/></SPAN> </TD>
+<TD><SPAN ><apex:outputField value="{!wrapperCont.contractValue.Home_Run_Owned_By__c}"/></SPAN> </TD>
+<TD><SPAN ><apex:outputField value="{!wrapperCont.contractValue.Home_Run_Exclusive_Use__c}"/></SPAN> </TD></TR>
+
+<TR>
+<TD>Home</TD>
+<TD><SPAN ><apex:outputField value="{!wrapperCont.contractValue.Home_Installed_By__c}"/></SPAN> </TD>
+<TD><SPAN ><apex:outputField value="{!wrapperCont.contractValue.Home_Maintained_By__c}"/></SPAN> </TD>
+<TD><SPAN ><apex:outputField value="{!wrapperCont.contractValue.Home_Paid_By__c}"/></SPAN> </TD>
+<TD><SPAN ><apex:outputField value="{!wrapperCont.contractValue.Home_Owned_By__c}"/></SPAN> </TD>
+<TD><SPAN ><apex:outputField value="{!wrapperCont.contractValue.Home_Exclusive_Use__c}"/></SPAN> </TD></TR>
+
+</TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR>
+
+<TR>
+<TD height="20" vAlign="middle" width="100%" colSpan="4" align="center"><STRONG>PROPERTY FEES</STRONG></TD></TR>
+<TR>
+<TD height="20" vAlign="middle" width="100%" colSpan="4" align="center">
+<TABLE style="WIDTH: 100%; BORDER-COLLAPSE: collapse"  border="0" cellSpacing="0">
+<TBODY>
+<TR>
+<TD>
+<apex:repeat value="{!wrapperCont.propertyFeeDoor}" var="wrapperDoorFee">
+<TABLE style="BORDER-COLLAPSE: collapse"   border="1" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%">
+<TBODY>
+<TR align="left">
+<TD colSpan="2"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Fee Type: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+wrapperDoorFee.Type__c}"/></SPAN> </SPAN></TD>
+<TD colSpan="2"></TD></TR>
+<TR align="left">
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Door Fee/Unit Fee: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+wrapperDoorFee.UnitFee__c}"/></SPAN> </SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Total Support Fee: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+wrapperDoorFee.Total_Support_Fee__c}"/></SPAN> </SPAN></TD></TR>
+<TR align="left">
+<TD height="60" style="FONT-SIZE: 10pt" vAlign="top" width="486" colSpan="2"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Payment Terms: <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperDoorFee.Payment_Terms__c}"/></SPAN> </SPAN></TD>
+<TD height="60" style="FONT-SIZE: 10pt" vAlign="top" width="486" colSpan="2"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Check Payee: <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperDoorFee.Check_Payee__c}"/></SPAN> </SPAN></TD></TR>
+<TR align="left">
+<TD style="FONT-SIZE: 10pt" vAlign="top" width="846" colSpan="4"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Fee Paid: <SPAN style="FONT-
+
+WEIGHT: bold" ><apex:outputField value="{!wrapperDoorFee.Fees_Paid__c}"/></SPAN></SPAN>
+</TD>
+</TR>
+</TBODY>
+</TABLE>
+</apex:repeat>
+</TD>
+</TR>
+<TR align="left">
+<TD>
+<apex:repeat value="{!wrapperCont.propertyRecurring}" var="wrapperRecurring">
+<TABLE style="BORDER-COLLAPSE: collapse"  border="1" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%">
+<TBODY>
+<TR align="left">
+<TD colSpan="2"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Fee Type: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+wrapperRecurring.Type__c}"/></SPAN> </SPAN>
+<TD colSpan="2"></TD></TD></TR>
+<TR align="left">
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Revenue Sharing Type: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+wrapperRecurring.Video_Revenue_Share_Type__c}"/></SPAN></SPAN></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Pay Period: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+wrapperRecurring.Pay_Period__c}"/></SPAN></SPAN> </TD></TR>
+<TR align="left">
+<TD height="60" vAlign="top" width="386" colSpan="2"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Payment Terms: <SPAN style="FONT-WEIGHT: 
+
+bold" ><apex:outputField value="{!wrapperRecurring.Payment_Terms__c}"/></SPAN> </SPAN></TD>
+<TD height="60" vAlign="top" width="386" colSpan="2"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Check Payee: <SPAN style="FONT-WEIGHT: bold" 
+
+> <apex:outputField value="{!wrapperRecurring.Check_Payee__c}"/></SPAN> </SPAN></TD></TR>
+<TR align="left">
+<TD vAlign="top" width="486" colSpan="2"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Service Level: <SPAN style="FONT-WEIGHT: bold" 
+
+><apex:outputField value="{!wrapperRecurring.Service_Level__c}"/></SPAN> </SPAN></TD>
+<TD vAlign="top" width="486" colSpan="2"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Revenue Scale: <SPAN style="FONT-WEIGHT: bold" 
+
+><apex:outputField value="{!wrapperRecurring.Revenue_Scale__c}"/></SPAN> </SPAN>
+</TD>
+</TR>
+</TBODY>
+</TABLE>
+</apex:repeat>
+</TD></TR>
+<TR align="left">
+<TD>
+<apex:repeat value="{!wrapperCont.propertyIncentive}" var="wrapperIncentive">
+<TABLE style="BORDER-COLLAPSE: collapse"  border="1" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%">
+<TBODY>
+<TR align="left">
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Fee Type: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+wrapperIncentive.Type__c}"/></SPAN> </SPAN>
+<TD></TD></TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Incentive: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+wrapperIncentive.Incentive_Fee__c}"/></SPAN></SPAN> </TD>
+<TD><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Pay Period: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+wrapperIncentive.Pay_Period__c}"/></SPAN></SPAN> </TD></TR>
+<TR align="left">
+<TD height="60" style="FONT-SIZE: 10pt" vAlign="top" width="486" colSpan="2"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Payment Terms: <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperIncentive.Payment_Terms__c}"/></SPAN> </SPAN></TD>
+<TD  height="60" style="FONT-SIZE: 10pt" vAlign="top" width="486" colSpan="2"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Check Payee: <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperIncentive.Check_Payee__c}"/></SPAN> </SPAN></TD></TR>
+<TR align="left">
+<TD style="FONT-SIZE: 10pt" vAlign="top" width="846" colSpan="4"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Service Level: <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperIncentive.Service_Level__c}"/></SPAN> </SPAN>
+</TD>
+</TR>
+</TBODY>
+</TABLE>
+</apex:repeat>
+</TD></TR>
+</TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR>
+<TR align="left">
+<TD width="100%">
+<TABLE style="BORDER-COLLAPSE: collapse"  border="0" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%">
+<TBODY>
+<TR>
+<TD vAlign="top" width="50%">
+<TABLE style="BORDER-COLLAPSE: collapse"  border="1" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%">
+<TBODY>
+<TR>
+<TD height="20" vAlign="bottom" width="100%">
+<P align="center"><B><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 12pt">BULK INFORMATION</SPAN></B></P></TD></TR>
+<TR>
+<TD height="27" width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><B>
+<TABLE style="BORDER-COLLAPSE: collapse"  border="0" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%">
+<TBODY>
+<TR>
+<TD width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Bulk_Account_Number__c.Label}:&nbsp; <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Bulk_Account_Number__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Equipment__c.Label}:&nbsp; <SPAN style="FONT-
+
+WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Equipment__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Video_Outlets_Per_Unit__c.Label}:&nbsp; <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Video_Outlets_Per_Unit__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Data_Outlets_Per_Unit__c.Label}:&nbsp; <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Data_Outlets_Per_Unit__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Voice_Outlets_Per_Unit__c.Label}:&nbsp; <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Voice_Outlets_Per_Unit__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Video_Rate_Escalator__c.Label}:&nbsp; <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Video_Rate_Escalator__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Data_Rate_Escalator__c.Label}:&nbsp; <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Data_Rate_Escalator__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Voice_Rate_Escalator__c.Label}:&nbsp; <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Voice_Rate_Escalator__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Video_Increase_Period__c.Label}:&nbsp; <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Video_Increase_Period__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Data_Increase_Period__c.Label}:&nbsp; <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Data_Increase_Period__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Voice_Increase_Period__c.Label}:&nbsp; <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Voice_Increase_Period__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Video_Increase_Notice__c.Label}:&nbsp; <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Video_Increase_Notice__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Data_Increase_Notice__c.Label}:&nbsp; <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Data_Increase_Notice__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Voice_Increase_Notice__c.Label}:&nbsp; <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+wrapperCont.contractValue.Voice_Increase_Notice__c}"/></SPAN></SPAN></TD></TR></TBODY></TABLE></B></SPAN></TD></TR>
+<TR>
+<TD vAlign="top" width="100%">
+<TABLE style="WIDTH: 100%; BORDER-COLLAPSE: collapse"  border="1" rules="all" cellSpacing="0">
+<TBODY>
+<TR>
+<TD style="FONT-FAMILY: Times New Roman; FONT-SIZE: smaller">
+<TABLE  border="0" cellSpacing="3" cellPadding="1" width="100%">
+<TBODY>
+<TR>
+<TD bgColor="lightgrey" width="40%" align="left"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Service</SPAN></TD>
+<TD bgColor="lightgrey" width="12%" align="center"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Units/ Subs</SPAN></TD>
+<TD bgColor="lightgrey" width="12%" align="center"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Avg Rev Unit/Sub</SPAN></TD>
+<TD bgColor="lightgrey" width="21%" align="center"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Service 
+
+Total</SPAN></TD></TR></TBODY></TABLE></TD></TR>
+<apex:repeat value="{!wrapperCont.bulkServicesList}" var="wrapperBulkServices">
+<TR>
+<TD>
+<TABLE  border="0" cellSpacing="3" cellPadding="1" width="100%">
+<TBODY>
+<TR>
+<TD width="40%" ><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="WIDTH: 120px; DISPLAY: FONT-WEIGHT: bold; inline-block" 
+
+><apex:outputField value="{!wrapperBulkServices.Service_Type__c}"/></SPAN></SPAN></TD>
+<TD width="20%" align="center"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="TEXT-ALIGN: right;FONT-WEIGHT: bold; WIDTH: 40px; 
+
+DISPLAY: inline-block" ></span> <apex:outputField value="{!wrapperBulkServices.Units__c}"/></SPAN> </TD>
+<TD width="20%" align="center"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="TEXT-ALIGN: right; FONT-WEIGHT: bold; WIDTH: 40px; 
+
+DISPLAY: inline-block" ><apex:outputField value="{!wrapperBulkServices.Rate_Per_Unit__c}"/></SPAN></SPAN> </TD>
+<TD width="20%" align="center"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="BORDER-BOTTOM-STYLE: none; FONT-WEIGHT: bold; 
+
+BORDER-BOTTOM-COLOR: white; TEXT-ALIGN: right; BORDER-TOP-COLOR: white; BORDER-LEFT-STYLE: none; WIDTH: 72px; DISPLAY: inline-block; BORDER-TOP-STYLE: none; 
+
+BORDER-RIGHT-COLOR: white; BORDER-RIGHT-STYLE: none; BORDER-LEFT-COLOR: white" ><apex:outputField value="{!
+
+wrapperBulkServices.Service_Total__c}"/></SPAN></SPAN> </TD></TR>
+</TBODY></TABLE>
+</TD>
+</TR>
+</apex:repeat>
+<TR>
+<TD>
+<TABLE width="100%">
+<TBODY>
+<TR>
+<TD align="right"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Total_Monthly_Billing__c.Label}: <B><SPAN 
+
+><apex:outputField value="{!
+
+wrapperCont.contractValue.Total_Monthly_Billing__c}"/></SPAN></B></SPAN></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD height="19" width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Premium_Service__c.Label}: <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Premium_Service__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="19" width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Specify if Other: <SPAN style="FONT-WEIGHT: bold" 
+
+></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="19" width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Specify if Other: <SPAN style="FONT-WEIGHT: bold" 
+
+></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="19" width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Converters_per_Unit__c.Label}: 
+
+<SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Converters_per_Unit__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="19" width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.MDU_Property__c.fields.Bulk_Upgradeable__c.label}: 
+
+<SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!property.Bulk_Upgradeable__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="19" width="100%" valign="top">
+<P><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Bulk_Other__c.Label}: <SPAN style="FONT-WEIGHT: bold"><apex:outputField value="{!wrapperCont.contractValue.Bulk_Other__c}"/></SPAN></SPAN></P></TD></TR></TBODY></TABLE></TD>
+<TD height="210" vAlign="top" rowSpan="4" width="50%">
+<TABLE style="BORDER-COLLAPSE: collapse"  border="1" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%">
+<TBODY>
+<TR>
+<TD height="20" vAlign="bottom" width="100%">
+<P align="center"><B><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 12pt">INSURANCE INFORMATION</SPAN></B></P></TD></TR>
+<TR>
+<TD height="19" width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.Contract__c.fields.Certificate_of_Insurance_Required__c.Label}:&nbsp; <SPAN ><B><apex:outputField value="{!
+
+wrapperCont.contractValue.Certificate_of_Insurance_Required__c}"/></B></SPAN></SPAN></TD></TR></TBODY></TABLE>
+<TABLE style="BORDER-COLLAPSE: collapse"  border="1" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%">
+<TBODY>
+<TR>
+<TD height="25" align="center"><STRONG>EQUIPMENT</STRONG></TD></TR>
+<TR>
+<TD>
+<TABLE>
+<TBODY>
+<TR>
+<TD height="19" width="50%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.Contract__c.fields.In_House_Channel_Number__c.Label}:<SPAN style="BORDER-BOTTOM-STYLE: none; BORDER-LEFT-STYLE: none; DISPLAY: inline-block; 
+
+BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+wrapperCont.contractValue.In_House_Channel_Number__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="19" width="50%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Number_of_Channels__c.Label}:<SPAN 
+
+style="BORDER-BOTTOM-STYLE: none; BORDER-LEFT-STYLE: none; DISPLAY: inline-block; BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; FONT-WEIGHT: bold" 
+
+><apex:outputField value="{!wrapperCont.contractValue.Number_of_Channels__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="19" width="50%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.Contract__c.fields.Insertion_Equip_Maintained_By__c.Label}: <SPAN style="BORDER-BOTTOM-STYLE: none; BORDER-LEFT-STYLE: none; DISPLAY: inline-
+
+block; BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+wrapperCont.contractValue.Insertion_Equip_Maintained_By__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="19" width="50%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Insertion_Equip_Owned_By__c.Label}: 
+
+<SPAN style="BORDER-BOTTOM-STYLE: none; BORDER-LEFT-STYLE: none; DISPLAY: inline-block; BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; FONT-WEIGHT: bold" 
+
+><apex:outputField value="{!wrapperCont.contractValue.Insertion_Equip_Owned_By__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="19" width="50%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.Contract__c.fields.Insertion_Equip_Installed_By__c.Label}: <SPAN style="BORDER-BOTTOM-STYLE: none; BORDER-LEFT-STYLE: none; DISPLAY: inline-
+
+block; BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+wrapperCont.contractValue.Insertion_Equip_Installed_By__c}"/></SPAN></SPAN></TD></TR></TBODY></TABLE></TD></TR>
+<TR>
+<TD height="25" align="center"><STRONG>MISCELLANEOUS DETAILS</STRONG></TD></TR>
+<TR>
+<TD>
+<TABLE>
+<TBODY>
+<TR>
+<TD width="50%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Most_Favored_Nation_Clause__c.Label}: <SPAN 
+
+style="BORDER-BOTTOM-STYLE: none; BORDER-LEFT-STYLE: none; DISPLAY: inline-block; BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; FONT-WEIGHT: bold" 
+
+><apex:outputField value="{!wrapperCont.contractValue.Most_Favored_Nation_Clause__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD width="50%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.MATV_Maintenance_Required__c.Label}: <SPAN 
+
+style="BORDER-BOTTOM-STYLE: none; BORDER-LEFT-STYLE: none; DISPLAY: inline-block; BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; FONT-WEIGHT: bold" 
+
+><apex:outputField value="{!wrapperCont.contractValue.MATV_Maintenance_Required__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="15" width="164"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.Contract__c.fields.Assignment_ID__c.Label}: <SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><SPAN style="FONT-WEIGHT: bold" 
+
+><apex:outputField value="{!wrapperCont.contractValue.Assignment_ID__c}"/></SPAN></SPAN></SPAN></SPAN></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+<TABLE style="BORDER-COLLAPSE: collapse"  border="1" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%">
+<TBODY>
+<TR>
+<TD height="20" vAlign="bottom" width="100%">
+<P align="center"><B><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 12pt">COURTESY ACCOUNTS</SPAN></B></P></TD></TR>
+<TR>
+<TD height="19" width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Video_Outlets__c.Label}: <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Video_Outlets__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="19" width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"> {!$ObjectType.Contract__c.fields.Video_Service_Level__c.Label}: 
+
+<SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Video_Service_Level__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="19" width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Data_Outlets__c.Label}: <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Data_Outlets__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="19" width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Data_Service_Level__c.Label}: <SPAN 
+
+style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Data_Service_Level__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="19" width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Recipient_Video_Outlets__c.Label}: 
+
+<SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!wrapperCont.contractValue.Recipient_Video_Outlets__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="19" width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!
+
+$ObjectType.Contract__c.fields.Recipient_Video_Service_Level__c.Label}: <SPAN style="FONT-WEIGHT: bold" ><apex:outputField value="{!
+
+wrapperCont.contractValue.Recipient_Video_Service_Level__c}"/></SPAN></SPAN></TD></TR>
+<TR>
+<TD height="30" width="100%" valign="top">
+<P><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">{!$ObjectType.Contract__c.fields.Courtesy_Comments__c.Label}: <SPAN style="FONT-WEIGHT: bold" > <apex:outputField value="{!
+
+wrapperCont.contractValue.Courtesy_Comments__c}"/> </SPAN></SPAN></P>
+</TD>
+</TR>
+</TBODY>
+</TABLE>
+</TD>
+</TR>
+
+</TBODY>
+</TABLE>
+</td></tr>
+
+<TR>
+<TD height="19" width="100%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Contract Comments: <SPAN style="FONT-WEIGHT: bold" > <apex:outputField value="{!
+
+wrapperCont.contractValue.Contract_Comments__c}"/> </SPAN>
+ </SPAN></TD></TR>
+</TBODY>
+</TABLE>
+</apex:repeat>
+
+<P style="PAGE-BREAK-AFTER: always"><BR style="LINE-HEIGHT: 0; HEIGHT: 0px"/></P>
+</TD></TR>
+</TBODY></TABLE>
+
+<TABLE style="BORDER-COLLAPSE: collapse"  border="0" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%">
+<TBODY></TBODY></TABLE>
+<P style="PAGE-BREAK-AFTER: always"><BR style="LINE-HEIGHT: 0; HEIGHT: 0px"/></P>
+
+<P style="PAGE-BREAK-AFTER: always"><BR style="LINE-HEIGHT: 0; HEIGHT: 0px"/></P>
+<TABLE style="BORDER-BOTTOM: 1px solid; BORDER-LEFT: 1px solid; PADDING-BOTTOM: 1px; PADDING-LEFT: 4px; PADDING-RIGHT: 4px; BORDER-COLLAPSE: collapse; 
+
+BORDER-TOP: 1px solid; BORDER-RIGHT: 1px solid; PADDING-TOP: 1px" border="0" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%" height="280">
+<TBODY>
+<TR>
+<TD height="1" width="100%" colSpan="2" align="center">
+<TABLE style="BORDER-COLLAPSE: collapse" border="2" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%">
+<TBODY>
+<TR>
+<TD height="27" width="100%">
+<P align="center"><SPAN style="FONT-VARIANT: small-caps; FONT-FAMILY: Times New Roman; FONT-SIZE: 12pt; FONT-WEIGHT: 700">CONTRACT 
+
+DOCUMENTATION</SPAN></P></TD></TR>
+<TR>
+<TD width="100%" align="center">
+<TABLE style="BORDER-COLLAPSE: collapse" border="0" cellSpacing="0" borderColor="#111111" cellPadding="0" width="100%" height="92">
+<TBODY>
+<TR>
+<TD height="35" width="100%" colSpan="9"><B><I><FONT size="2">Addenda and Attachments</FONT></I></B> </TD></TR>
+<TR>
+<TD height="19" width="137"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Check Request</SPAN> </TD>
+<TD height="19" width="52"><INPUT disabled="true" type="checkbox"/> </TD>
+<TD height="19" width="50"></TD>
+<TD height="19" width="21%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Address List </SPAN></TD>
+<TD height="19" width="4%"><INPUT disabled="true" type="checkbox"/> </TD>
+<TD height="19" width="62"></TD>
+<TD height="19" width="261"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Courtesy Account Addendum </SPAN></TD>
+<TD height="19" width="130"><INPUT disabled="true" type="checkbox"/> </TD>
+<TD height="19" width="7%"></TD></TR>
+<TR>
+<TD height="19" width="137"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">IRS W-9 </SPAN></TD>
+<TD height="19" width="52"><INPUT disabled="true" type="checkbox"/> </TD>
+<TD height="19" width="50"></TD>
+<TD height="19" width="21%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Payback Analysis </SPAN></TD>
+<TD height="19" width="4%"><INPUT disabled="true" type="checkbox"/></TD>
+<TD height="19" width="62"></TD>
+<TD height="19" width="261"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Marketing Support Addendum</SPAN> </TD>
+<TD height="19" width="130"><INPUT disabled="true" type="checkbox"/> </TD>
+<TD height="19" width="7%"></TD></TR>
+<TR>
+<TD height="19" width="137"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">CAF</SPAN> </TD>
+<TD height="19" width="52"><INPUT disabled="true" type="checkbox"/> </TD>
+<TD height="19" width="50"></TD>
+<TD height="19" width="21%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Confidentiality Agreement </SPAN></TD>
+<TD height="19" width="4%"><INPUT disabled="true" type="checkbox"/></TD>
+<TD height="19" width="62"></TD>
+<TD height="19" width="261"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Authority Documentation </SPAN></TD>
+<TD height="19" width="130"><INPUT disabled="true" type="checkbox"/> </TD>
+<TD height="19" width="7%"></TD></TR>
+<TR>
+<TD height="19" width="170"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Compensation Agreement</SPAN> </TD>
+<TD height="19" width="52"><INPUT disabled="true" type="checkbox"/> </TD>
+<TD height="19" width="50"></TD>
+<TD height="19" width="21%"></TD>
+<TD height="19" width="4%"></TD>
+<TD height="19" width="62"></TD>
+<TD height="19" width="261"></TD>
+<TD height="19" width="130"></TD>
+<TD height="19" width="7%"></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+<P align="center"><B><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 14pt">SIGNATURES AND APPROVAL<BR/><BR/></SPAN></B></P></TD></TR>
+<TR>
+<TD height="31" width="45%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Signature of 
+
+Account<BR/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Representative________________________________________</SPAN> </TD>
+<TD height="31" width="31%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Date Submitted:_________________________</SPAN> </TD></TR>
+<TR>
+<TD height="19" width="467"></TD>
+<TD height="19" width="31%"></TD></TR>
+<TR>
+<TD height="17" width="467"></TD>
+<TD height="17" width="31%"></TD></TR>
+<TR>
+<TD height="19" width="467"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Manager Approval: _________________________________________</SPAN> 
+
+</TD>
+<TD height="19" width="32%"><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt">Date Approved::________________________</SPAN> </TD></TR>
+<TR>
+<TD height="19" width="467"></TD>
+<TD height="19" width="32%"></TD></TR>
+<TR>
+<TD height="19" width="467"></TD>
+<TD height="19" width="32%"></TD></TR>
+<TR>
+<TD height="34" width="467">
+<P><SPAN style="FONT-FAMILY: Times New Roman; FONT-SIZE: 10pt"><BR/>Manager Comments:<BR/><BR/><BR/><BR/><BR/><BR/><BR/></SPAN></P></TD>
+<TD height="34" width="32%"></TD></TR></TBODY></TABLE></DIV>
+<table width="100%"><tr style="width:100%"><td align="center"><img src="{!$Resource.XfinityPrintLogo}" style="height:40px;width:40px;cursor:pointer;" onclick="window.print();" /></td></tr></table>
+</apex:form>
+</apex:page>

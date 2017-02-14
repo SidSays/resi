@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <description>Global settings store for ChattoMate.</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Chatter_Follow_Limit__c</fullName>
+        <defaultValue>500</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>This is the maximum number of follows allowed per user per community. Salesforce allows for 500 by default, though you can request higher limits from them.</inlineHelpText>
+        <label>Chatter Follow Limit</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Limit_Notifications__c</fullName>
+        <defaultValue>true</defaultValue>
+        <deprecated>false</deprecated>
+        <externalId>false</externalId>
+        <inlineHelpText>If checked, ChattoMate will send users messages to let them know when they&apos;ve reached their follow limit.</inlineHelpText>
+        <label>Limit Notifications</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <label>ChattoMate Settings</label>
+    <visibility>Public</visibility>
+</CustomObject>

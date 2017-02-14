@@ -1,0 +1,276 @@
+<apex:page showHeader="true" sidebar="true" standardController="SPKAMF__Recipe__c" extensions="SPKAMF.RecipeMakerController" action="{!Init}" tabStyle="ChatterMate__tab" title="ChattoMate Recipe Maker">
+
+	<style>
+		.block
+		{
+			display: block;
+		}
+	</style>
+
+	<script>
+
+		var displayed = false;
+
+		var p = '{!SPKAMF__Recipe__c.SPKAMF__Auto_Subscribe_Profiles__c}';
+		var r = '{!SPKAMF__Recipe__c.SPKAMF__Auto_Subscribe_Roles__c}';
+
+		function showWarning(checked)
+		{
+			if(displayed || checked)
+			{
+				return;
+			}
+
+			alert('Only uncheck this box if you are sure you understand what it\'s for! See the ChattoMate documentation for more information.');
+			displayed = true;
+		}
+	</script>
+
+	<apex:form >
+		<apex:outputPanel id="subscription">
+			<apex:pageBlock title="Status" rendered="{!steps.Size > 0}">
+				<apex:pageBlockSection columns="1">
+					<apex:outputLabel value="{!RecordCount}"/>
+					<chatter:follow entityId="{!recipe.Id}" rerender="subscription"/>
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+		</apex:outputPanel>
+	</apex:form>
+
+	<apex:form >
+		<apex:pageBlock title="Recipe Maker" id="recipeDetails" >
+            
+            <apex:inputHidden value="{!SPKAMF__Recipe__c.SPKAMF__Auto_Subscribe_Profiles__c}"/>
+			<apex:inputHidden value="{!SPKAMF__Recipe__c.SPKAMF__Auto_Subscribe_Roles__c}"/>
+			
+			<apex:pageMessages id="messages"/>
+			<apex:pageMessage severity="Error" strength="2" title="Access denied!" summary="You do not have permission to create recipes. If you feel you should have access, contact your Administrator" rendered="{!isNew && !perms.hasCreate}"/>
+			<apex:pageMessage severity="Info" strength="2" title="No Changes!" summary="You do not have permission to update recipes. If you feel you should have access, contact your Administrator" rendered="{!NOT(isNew) && !perms.hasUpdate}"/>
+
+			<apex:pageBlockButtons location="bottom" id="buttons">
+				<apex:commandButton action="{!SaveRecipe}" value="Save" rendered="{!recipe.Id != null}" disabled="{!NOT(perms.hasUpdate)}"/>
+				<apex:actionStatus id="quickSaveStatus">
+					<apex:facet name="start">
+						<apex:commandButton action="{!QuickSaveRecipe}" value="Saving..." disabled="true"/>
+					</apex:facet>
+					<apex:facet name="stop">
+						<apex:commandButton action="{!QuickSaveRecipe}" value="{!IF(ISBLANK(recipe.SPKAMF__Object_API_Name__c), 'Add Steps', 'Quick Save')}" rerender="stepsPanel, subscription, messages, recipeDetails" status="quickSaveStatus" disabled="{!NOT(perms.hasUpdate) && NOT(isNew)}" rendered="{!NOT(isNew) || (isNew && perms.hasCreate)}"/>
+					</apex:facet>
+				</apex:actionStatus>
+				<apex:commandButton action="{!ViewFollowers}" value="View Followers" rendered="{!recipe.Id != null}"/>
+				<apex:commandButton action="{!BackToList}" value="Back to List"/>
+			</apex:pageBlockButtons>
+
+
+			<apex:pageBlockSection title="Details" rendered="{!NOT(isNew) || (isNew && perms.hasCreate)}" id="dateCheckPanel">
+				<apex:inputField value="{!SPKAMF__Recipe__c.Name}"/>
+				<apex:inputField value="{!SPKAMF__Recipe__c.SPKAMF__Type__c}">
+					<apex:actionSupport event="onchange" action="{!NULL}" reRender="dateCheckPanel" status="dateStatus"/>
+				</apex:inputField>
+				<apex:selectList value="{!SPKAMF__Recipe__c.SPKAMF__Object_API_Name__c}" size="1" rendered="{!steps.Size == 0}">
+					<apex:selectOptions value="{!Objects}"/>
+				</apex:selectList>
+				<apex:outputField value="{!SPKAMF__Recipe__c.SPKAMF__Object_API_Name__c}" rendered="{!steps.Size > 0}"/>
+				<apex:inputField value="{!SPKAMF__Recipe__c.SPKAMF__Priority__c}"/>
+				<apex:inputField value="{!SPKAMF__Recipe__c.SPKAMF__Active__c}"/>
+				<apex:inputField value="{!SPKAMF__Recipe__c.SPKAMF__Enable_Date_Check__c}" onclick="showWarning(this.checked);" rendered="{!SPKAMF__Recipe__c.SPKAMF__Type__c == 'Notify'}"/>
+			</apex:pageBlockSection>
+
+
+			<apex:pageBlockSection id="autoSection" title="Auto-Assign New Users" rendered="{!NOT(isNew) || (isNew && perms.hasCreate)}">
+				<apex:pageBlockSectionItem >
+					<p>Auto-assignment occurs for new users or when existing users are given a new role/profile. Custom filters 
+					can be used to narrow down matching users, but a role/profile option must be selected.</p>
+				</apex:pageBlockSectionItem>
+
+				<apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="Auto Subscribe Profiles"/>
+					<apex:selectList value="{!selectedProfiles}" multiselect="true" size="6" disabled="{!NOT(perms.hasUpdate) && NOT(isNew)}">
+						<apex:selectOptions value="{!ProfileOptions}"/>
+					</apex:selectList>
+				</apex:pageBlockSectionItem>
+
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="Auto Subscribe Roles"/>
+					<apex:selectList value="{!selectedRoles}" multiselect="true" size="6" disabled="{!NOT(perms.hasUpdate) && NOT(isNew)}">
+						<apex:selectOptions value="{!RoleOptions}"/>
+					</apex:selectList>
+				</apex:pageBlockSectionItem>
+
+				<apex:pageBlockSectionItem >
+					<apex:outputLabel value="User custom filter" for="customFilterBox"/>
+					<apex:inputCheckbox value="{!useCustomFilter}" id="customFilterBox"/>
+				</apex:pageBlockSectionItem>
+
+				<apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+
+				<apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Custom"/>
+                    <apex:selectList value="{!filterStep.SPKAMF__Field_API_Name__c}" size="1">
+                        <apex:actionSupport event="onchange" action="{!UpdateFilterFieldType}" rerender="messages, fieldStatus" status="fieldStatus"/>
+                        <apex:selectOptions value="{!FilterFieldOptions}"/>
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+
+                <apex:actionStatus id="fieldStatus">
+                    <apex:facet name="start">
+                        <apex:outputText value="Wait up..."/>
+                    </apex:facet>
+                    <apex:facet name="stop">
+                        <apex:outputPanel >
+                            <apex:selectList value="{!filterStep.SPKAMF__Operator__c}" size="1">
+                                <apex:selectOptions value="{!FilterOperatorOptions}"/>
+                            </apex:selectList>
+
+                            <apex:inputField value="{!filterStep.SPKAMF__Text_Value__c}" rendered="{!filterStep.SPKAMF__Field_Type__c == 'string'}"/>
+                            <apex:inputField value="{!filterStep.SPKAMF__Date_Value__c}" rendered="{!filterStep.SPKAMF__Field_Type__c == 'date'}"/>
+                            <apex:inputField value="{!filterStep.SPKAMF__Numeric_Value__c}" rendered="{!filterStep.SPKAMF__Field_Type__c == 'number'}"/>
+                            <apex:inputField value="{!filterStep.SPKAMF__Truth_Value__c}" rendered="{!filterStep.SPKAMF__Field_Type__c == 'boolean'}"/>
+                        </apex:outputPanel>
+                    </apex:facet>
+                </apex:actionStatus>
+
+			</apex:pageBlockSection>
+
+			<apex:outputPanel layout="none" rendered="{!hideAutoPanel}">
+				<script>
+	    			twistSection(document.getElementById('{!$Component.recipeDetails.autoSection}').getElementsByTagName('img')[0])
+				</script>
+			</apex:outputPanel>
+		</apex:pageBlock>
+	</apex:form>
+
+
+	<!-- Steps -->
+
+	<apex:form >
+		<apex:outputPanel id="stepsPanel">
+			<apex:pageBlock title="Steps" rendered="{!NOT(ISBLANK(recipe.SPKAMF__Object_API_Name__c))}">
+				<apex:pageBlockButtons location="bottom" id="buttons">
+				</apex:pageBlockButtons>
+
+				<apex:pageBlockSection title="Existing Steps" collapsible="false" columns="1" rendered="{!steps.size > 0}">
+
+					<apex:pageBlockTable value="{!steps}" var="s" title="Existing Steps">
+						<apex:column width="25%">
+							<apex:facet name="header">Action</apex:facet>
+							<apex:commandLink action="{!EditStep}" value="Edit" rerender="messages, stepsPanel" rendered="{!perms.hasUpdateStep}">
+								<apex:param value="{!s.Id}" name="editStepId"/>
+							</apex:commandLink>
+							<apex:outputText value=" | " rendered="{!perms.hasUpdateStep && perms.hasDeleteStep}"/>
+							<apex:commandLink action="{!DeleteStep}" value="Delete" rerender="messages, subscription, stepsPanel, buttons" rendered="{!perms.hasDeleteStep}">
+								<apex:param value="{!s.Id}" name="deleteStepId"/>
+							</apex:commandLink>
+						</apex:column>
+						<apex:column width="25%">
+							<apex:facet name="header">Field</apex:facet>
+							<apex:outputField value="{!s.SPKAMF__Field_API_Name__c}"/>
+						</apex:column>
+						<apex:column width="25%">
+							<apex:facet name="header">Operator</apex:facet>
+							<apex:outputField value="{!s.SPKAMF__Operator__c}"/>
+						</apex:column>
+						<apex:column width="25%">
+							<apex:facet name="header">Value</apex:facet>
+							<apex:outputField value="{!s.SPKAMF__Display_Value__c}" rendered="{!s.SPKAMF__Field_Type__c == 'string'}"/>
+							<apex:outputField value="{!s.SPKAMF__Date_Value__c}" rendered="{!s.SPKAMF__Field_Type__c == 'date' && NOT(s.SPKAMF__Dynamic__c)}"/>
+							<apex:outputField value="{!s.SPKAMF__Display_Value__c}" rendered="{!s.SPKAMF__Field_Type__c == 'date' && s.SPKAMF__Dynamic__c}"/>
+							<apex:outputField value="{!s.SPKAMF__Truth_Value__c}" rendered="{!s.SPKAMF__Field_Type__c == 'boolean'}"/>
+							<apex:outputText value="{0, number, ###,###.#####}" rendered="{!s.SPKAMF__Field_Type__c == 'number'}">
+								<apex:param value="{!s.SPKAMF__Numeric_Value__c}"/>
+							</apex:outputText>
+						</apex:column>
+					</apex:pageBlockTable>
+				</apex:pageBlockSection>
+
+
+				<!-- Step Editing Panel -->
+
+				<apex:pageBlockSection id="edit" title="{!IF(ISNULL(step.Id), 'New Step', 'Edit Step')}" collapsible="false" columns="1">
+					
+					<apex:pageMessage severity="Info" strength="2" title="Can't Create Steps" summary="You do not have permission to create steps. If you feel you should do, contact your Administrator" rendered="{!ISNULL(step.Id) && !perms.hasCreateStep}"/>
+
+					<apex:pageBlockTable value="{!step}" var="s" columns="3" rendered="{!(ISNULL(step.Id) && perms.hasCreateStep) || (!ISNULL(step.Id) && perms.hasUpdateStep)}">
+						<apex:column width="33%">
+							<apex:facet name="header">Field</apex:facet>
+							<apex:actionRegion >
+								<apex:selectList size="1" value="{!step.SPKAMF__Field_API_Name__c}">
+									<apex:selectOptions value="{!Fields}"/>
+									<apex:actionSupport event="onchange" action="{!UpdateFieldType}" rerender="messages, stepsPanel, stepStatus" status="stepStatus"/>
+								</apex:selectList>
+							</apex:actionRegion>
+						</apex:column>
+
+						<apex:column width="67%">
+							<apex:facet name="header">Condition</apex:facet>
+							<apex:actionStatus id="stepStatus" startText="Wait up....">
+								<apex:facet name="stop">
+									<apex:outputPanel >
+												<apex:outputText styleClass="block" value="Specify override value or choose from picklist values." rendered="{!isPickList && allowOverride}"/>
+
+												<apex:outputText styleClass="block" value="Choose a set date or a dynamic option." rendered="{!step.SPKAMF__Field_Type__c == 'date'}"/>
+
+                                                <apex:outputText styleClass="block" value="Select a specific user or check follow to use the follower's user ID." rendered="{!isUserLookup}"/>
+
+
+										<apex:dataTable value="{!step}" var="s2" columns="2">
+											<apex:column width="40%">
+												<apex:selectList size="1" value="{!step.SPKAMF__Operator__c}" id="theOperator">
+													<apex:selectOptions value="{!Operators}"/>
+												</apex:selectList>
+											</apex:column>
+											<apex:column width="60%">
+
+												<!-- Text input -->
+												<apex:inputField value="{!step.SPKAMF__Text_Value__c}" rendered="{!step.SPKAMF__Field_Type__c == 'string' && isPickList == false && isLookup == false && isUserLookup == false}"/>
+
+												<!-- Date input -->
+												<apex:outputPanel layout="none" rendered="{!step.SPKAMF__Field_Type__c == 'date'}">
+													<apex:inputField value="{!step.SPKAMF__Date_Value__c}"/>
+													<apex:selectList value="{!dateOverride}" size="1">
+														<apex:selectOptions value="{!dateLiteralOptions}"/>
+													</apex:selectList>
+												</apex:outputPanel>
+
+												<!-- Number input -->
+												<apex:inputField value="{!step.SPKAMF__Numeric_Value__c}" rendered="{!step.SPKAMF__Field_Type__c == 'number'}"/>
+
+												<!-- Boolean input -->
+												<apex:inputField value="{!step.SPKAMF__Truth_Value__c}" rendered="{!step.SPKAMF__Field_Type__c == 'boolean'}"/>
+
+												<!-- Picklist input -->
+												<apex:inputText value="{!pickListOverride}" rendered="{!isPickList && allowOverride}"/>
+												<apex:selectList value="{!step.SPKAMF__Text_Value__c}" size="1" rendered="{!isPickList}">
+													<apex:selectOptions value="{!PickListValues}"/>
+												</apex:selectList>
+
+												<!-- User Lookup input -->
+                                                <apex:inputField value="{!inputObj[FieldName]}" required="false" rendered="{!isLookup || isUserLookup}"/>
+                                                <apex:inputCheckbox value="{!useSubscriberId}" rendered="{!isUserLookup}">Follower</apex:inputCheckbox>
+												<apex:inputHidden value="{!step.SPKAMF__Display_Value__c}" rendered="{!isLookup || isUserLookup}" id="hidden"/>
+
+												<script type="text/javascript">
+													function copyValue()
+													{
+														var v = document.getElementById('{!$Component.source}').value;
+														document.getElementById('{!$Component.hidden}').value = v;
+													}
+												</script>
+											</apex:column>
+										</apex:dataTable>
+									</apex:outputPanel>
+								</apex:facet>
+							</apex:actionStatus>
+						</apex:column>
+						<apex:column >
+							<apex:commandButton action="{!AddStep}" value="Add Step" rendered="{!ISNULL(step.Id)}" rerender="stepsPanel, buttons, subscription, messages"/>
+							<apex:commandButton action="{!AddStep}" value="Save Step" rendered="{!NOT(ISNULL(step.Id))}" rerender="stepsPanel, subscription, messages"/>
+						</apex:column>
+					</apex:pageBlockTable>
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+		</apex:outputPanel>
+	</apex:form>
+</apex:page>

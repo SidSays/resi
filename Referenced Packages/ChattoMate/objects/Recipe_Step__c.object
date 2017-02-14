@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>CancelEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Follow</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>SaveEdit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <deprecated>false</deprecated>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableDivisions>false</enableDivisions>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <enableSearch>true</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <fields>
+        <fullName>Comparison_Type__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Determines if this step compares a field against a user-specified value, or another field on the same record.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Determines if this step compares a field against a user-specified value, or another field on the same record.</inlineHelpText>
+        <label>Comparison Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Value</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Field</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Comparison__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The API name of the field to compare against.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The API name of the field to compare the first field against.</inlineHelpText>
+        <label>Comparison Field</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Date_Value__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Date value used when the field selected is a date field.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The date to compare against.</inlineHelpText>
+        <label>Date Value</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Display_Value__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The value displayed to the user on VF pages etc.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The pretty version of the chosen value.</inlineHelpText>
+        <label>Display Value</label>
+        <length>64</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Dynamic__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>This indicates whether the value for the step is a dynamic one, e.g. using the subscriber&apos;s user ID when ChattoMate runs.</description>
+        <externalId>false</externalId>
+        <label>Dynamic</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Field_API_Name__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The API name of the field this rule relates to.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The API name of the field this rule relates to.</inlineHelpText>
+        <label>Field API Name</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Field_Type__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The high-level data type of the selected field.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The basic data type of the selected field, IDs and picklists etc. are string.</inlineHelpText>
+        <label>Field Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>string</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>date</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>boolean</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>number</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Numeric_Value__c</fullName>
+        <deprecated>false</deprecated>
+        <description>A numeric value to evaluate the expression against.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The number to compare against.</inlineHelpText>
+        <label>Numeric Value</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Operator__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The operator this rule is based around.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The operator to use, based on the type of the field selected.</inlineHelpText>
+        <label>Operator</label>
+        <picklist>
+            <picklistValues>
+                <fullName>=   (Equal To)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>&lt;&gt; (Not Equal To)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>&gt;   (Greater Than / After)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>&lt;   (Less Than / Before)</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Contains</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Does Not Contain</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Recipe__c</fullName>
+        <deprecated>false</deprecated>
+        <description>The recipe this step is part of</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The recipe this step belongs to.</inlineHelpText>
+        <label>Recipe</label>
+        <referenceTo>Recipe__c</referenceTo>
+        <relationshipLabel>Recipe Steps</relationshipLabel>
+        <relationshipName>Steps</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <trackTrending>false</trackTrending>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Text_Value__c</fullName>
+        <deprecated>false</deprecated>
+        <description>A text value to evaluate the rule against.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>The text to compare against.</inlineHelpText>
+        <label>Text Value</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Truth_Value__c</fullName>
+        <defaultValue>false</defaultValue>
+        <deprecated>false</deprecated>
+        <description>A truth value to evaluate the expression with.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Whether the field should be true or false.</inlineHelpText>
+        <label>Truth Value</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Type__c</fullName>
+        <deprecated>false</deprecated>
+        <description>Used to determine whether a step is a regular recipe step or is being used as a custom filter for automatic subscription to the recipe.</description>
+        <externalId>false</externalId>
+        <label>Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Standard</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>AutoFilter</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+    </fields>
+    <label>Recipe Step</label>
+    <nameField>
+        <label>Recipe Step Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Recipe Steps</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Null_date_comparison_check</fullName>
+        <active>true</active>
+        <description>Date fields can be compared against NULL using &apos;= (Equal To)&apos; or &apos;&lt;&gt; (Not Equal To).</description>
+        <errorConditionFormula>ISPICKVAL(Field_Type__c, &apos;date&apos;)
+&amp;&amp;
+(
+  BEGINS(TEXT(Operator__c), &apos;&lt;&apos;) ||
+  BEGINS(TEXT(Operator__c), &apos;&lt;=&apos;) || 
+  BEGINS(TEXT(Operator__c), &apos;&gt;&apos;) || 
+  BEGINS(TEXT(Operator__c), &apos;&gt;=&apos;)
+)
+&amp;&amp; ISNULL(Date_Value__c)
+&amp;&amp; NOT(BEGINS(TEXT(Operator__c), &apos;&lt;&gt;&apos;))
+&amp;&amp; ISBLANK(Text_Value__c)
+&amp;&amp; NOT(Dynamic__c)</errorConditionFormula>
+        <errorMessage>You can only use the &apos;Equal To&apos; and &apos;Not Equal To&apos; operators when comparing date fields with NULL.</errorMessage>
+    </validationRules>
+</CustomObject>

@@ -1,0 +1,131 @@
+<!-- 
+/**********************************************************
+* Page Name: AddressNewPage
+* Author: Amitkumar Bangad, Accenture
+* Date: 29-April-2013 
+* Requirement # Request Id : 128,129
+* Description: To create a new Address in the system.
+* Last Modified by:
+***********************************************************/
+-->
+<apex:page standardController="Customer_Address__c" showHeader="true"
+    sidebar="true" id="addPage">
+    <apex:pageMessages />
+    <apex:form id="myForm">
+        <apex:sectionHeader title="Customer Address"
+            subtitle="{!Customer_Address__c.name}" />
+        <apex:pageBlock id="pgBlock" mode="edit" title="Customer Address New">
+            <apex:pageBlockButtons location="both">
+                <apex:commandButton value="Save" action="{!Save}" />
+                <apex:commandButton value="Cancel" action="{!Cancel}" />
+            </apex:pageBlockButtons>
+            <apex:pageBlockSection id="pgBlockSectionAcctInfo"
+                title="Information" collapsible="false" columns="2">
+                <apex:pageBlockSectionItem id="namepbs">
+                    <apex:inputHidden id="Name" value="{!Customer_Address__c.Name}" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem id="add1pbs">
+                    <apex:outputLabel >Address line1</apex:outputLabel>
+                    <apex:inputField id="add1"
+                        value="{!Customer_Address__c.Address__c}" required="true"
+                        onchange="populateAddress()" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem id="add2pbs">
+                    <apex:outputLabel >Address line2</apex:outputLabel>
+                    <apex:inputField id="add2"
+                        value="{!Customer_Address__c.Address_2__c}"
+                        onchange="populateAddress()" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >State</apex:outputLabel>
+                    <apex:inputField id="State" value="{!Customer_Address__c.State__c}"
+                        required="true" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >City</apex:outputLabel>
+                    <apex:inputField id="City" value="{!Customer_Address__c.City__c}"
+                        required="true" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Country</apex:outputLabel>
+                    <apex:inputField id="Country"
+                        value="{!Customer_Address__c.Country__c}" required="true" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Zip/Postal Code</apex:outputLabel>
+                    <apex:inputField id="ZipCode"
+                        value="{!Customer_Address__c.PostalCode__c}" required="true" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem id="pbicorp">
+                    <apex:outputLabel >Corp</apex:outputLabel>
+                    <apex:inputField id="corp" value="{!Customer_Address__c.Corp__c}" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel >Zip/Postal Code+4</apex:outputLabel>
+                    <apex:inputField id="ZipCode1"
+                        value="{!Customer_Address__c.PostalCode_4__c}" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem id="pbinode">
+                    <apex:outputLabel >Node</apex:outputLabel>
+                    <apex:inputField id="node" value="{!Customer_Address__c.Node__c}" />
+                </apex:pageBlockSectionItem>
+
+                <apex:pageBlockSectionItem id="pbircode">
+                    <apex:outputLabel >Route Code</apex:outputLabel>
+                    <apex:inputField id="rcode"
+                        value="{!Customer_Address__c.Route_Code__c}" />
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection id="pgBlockSectionAdditionalInfo"
+                title="Additional Information" collapsible="false" columns="2">
+                <apex:pageBlockSectionItem id="pbiComplex">
+                    <apex:outputLabel >Complex Office</apex:outputLabel>
+                    <apex:inputField id="complexOffice"
+                        value="{!Customer_Address__c.Complex_Office__c}">
+                    </apex:inputField>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem id="pbiProperty">
+                    <apex:outputLabel >Property Code</apex:outputLabel>
+                    <apex:inputField id="PropertyCode"
+                        value="{!Customer_Address__c.Property_Code__c}"
+                        onchange="enableComplexOffice()" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem id="pbireg">
+                    <apex:outputLabel >Region</apex:outputLabel>
+                    <apex:inputField id="reg" value="{!Customer_Address__c.Region__c}" />
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem id="pbiDwt">
+                    <apex:outputLabel >Dwelling Type</apex:outputLabel>
+                    <apex:inputField id="Dwt"
+                        value="{!Customer_Address__c.Dwelling_Type__c}">
+                    </apex:inputField>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+    <script>
+        var s = document.getElementById("addPage:myForm:pgBlock:pgBlockSectionAdditionalInfo:pbiProperty:PropertyCode").value;
+        document.getElementById("addPage:myForm:pgBlock:pgBlockSectionAdditionalInfo:pbiDwt:Dwt").disabled = true;
+        document.getElementById("addPage:myForm:pgBlock:pgBlockSectionAdditionalInfo:pbireg:reg").disabled = true;
+        if(s.replace(" ","") == ""){
+            document.getElementById("addPage:myForm:pgBlock:pgBlockSectionAdditionalInfo:pbiComplex:complexOffice").disabled = true;
+        }  
+        
+        function enableComplexOffice(){
+            var r = document.getElementById("addPage:myForm:pgBlock:pgBlockSectionAdditionalInfo:pbiProperty:PropertyCode").value;
+            if(r.replace(" ","") != ""){
+                document.getElementById("addPage:myForm:pgBlock:pgBlockSectionAdditionalInfo:pbiComplex:complexOffice").disabled = false;
+            } else{
+                document.getElementById("addPage:myForm:pgBlock:pgBlockSectionAdditionalInfo:pbiComplex:complexOffice").disabled = true;
+                document.getElementById("addPage:myForm:pgBlock:pgBlockSectionAdditionalInfo:pbiComplex:complexOffice").checked = false;
+            }
+        }
+        function populateAddress(){
+            var add1 = document.getElementById("addPage:myForm:pgBlock:pgBlockSectionAcctInfo:add1pbs:add1").value;
+            var add2 = document.getElementById("addPage:myForm:pgBlock:pgBlockSectionAcctInfo:add2pbs:add2").value;
+            document.getElementById("addPage:myForm:pgBlock:pgBlockSectionAcctInfo:namepbs:Name").value = add1 + ' ' + add2;        
+        }                        
+ </script>
+</apex:page>

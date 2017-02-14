@@ -1,0 +1,40 @@
+<!-- 
+/**********************************************************
+* Page Name: ViewAddressUnits
+* Author: Amitkumar Bangad, Accenture
+* Date: 14-March-2013 
+* Requirement # Request Id : 130
+* Description: This page shows the units attached to a complex office.
+* Last Modified by:
+***********************************************************/
+-->
+<apex:page standardController="Customer_Address__c" showHeader="true" sidebar="true" id="addPage" extensions="ViewAddressunitsController">
+    <apex:form id="myForm">
+    <br/>
+        <img src="/s.gif" class="pageTitleIcon" title="Address" alt="Address"/>
+        <apex:OutputLabel style="font-weight:bold;font-size:11px;">Complex Office Address</apex:OutputLabel><br/>
+        <a href="/{!Customer_Address__c.Id}" target="_self" style="font-weight:bold;font-size:16px;">{!Customer_Address__c.Name}</a>
+        <apex:pagemessages ></apex:pagemessages>
+        <apex:pageBlock rendered="{!showFlag}" id="pb">
+            <apex:pageBlockSection title="Address units : Page #{!pageNumber}" columns="1" collapsible="false">
+            <apex:pageBlockTable value="{!Units}" var="unitsAB">
+            <apex:column headerValue="Unit/Suite">
+            <a href = "/{!unitsAB.Id}"> {!unitsAB.Address_2__c}</a>
+            </apex:column>
+            <apex:column headerValue="Address">
+            <a href = "/{!unitsAB.Id}"> {!unitsAB.Name}</a>
+            </apex:column>
+            <apex:column value="{!unitsAB.Status__c}"/>
+            <apex:column value="{!unitsAB.Last_Knock_Date__c}"/>
+            <apex:column value="{!unitsAB.Most_Recent_Disposition__c}"/>
+            </apex:pageBlockTable>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:panelGrid columns="8" style="text-align:center;">
+            <apex:commandLink action="{!first}" rendered="{!showFlag}" style="font-weight:bold" rerender="pb">| First</apex:commandlink> &nbsp;
+            <apex:commandLink action="{!previous}" rendered="{!AND(hasPrevious,showFlag)}" style="font-weight:bold" rerender="pb">Previous</apex:commandlink>
+            <apex:commandLink action="{!next}" rendered="{!AND(hasNext,showFlag)}" style="font-weight:bold" rerender="pb">Next</apex:commandlink>&nbsp;
+            <apex:commandLink action="{!last}" rendered="{!showFlag}" style="font-weight:bold" rerender="pb">Last |</apex:commandlink>
+        </apex:panelGrid>
+   </apex:form>
+</apex:page>

@@ -1,0 +1,40 @@
+<apex:page standardController="Store_Visit__c" extensions="StoreVisitMailController" showHeader="false" sidebar="false" action="{!sendVisitMail}">
+ <link rel="stylesheet" href="{!URLFOR($Resource.bootstrap,'css/bootstrap.min.css')}"/>
+        <link rel="stylesheet" href="{!URLFOR($Resource.bootstrap,'css/bootstrap-theme.min.css')}"/>
+        <link rel="stylesheet" href="{!URLFOR($Resource.bootstrap,'css/main.css')}"/>
+        <link rel="stylesheet" href="{!URLFOR($Resource.bootstrap_sf1,'css/bootstrap.css')}"></link>
+    <style type="text/javascript">
+
+        .visit-return {
+            color: #157dfa;
+            font-size: 16pt;
+        }
+
+    </style>
+
+     <div class='alert alert-info'><apex:pageMessages /></div>
+ <div class="container" align='center' >
+
+ <button class="btn btn-success" OnClick='retailSales.returnToVisit();'>Return to Visit</button>
+        </div>
+    
+
+    <script type="text/javascript">
+
+        var retailSales = (function(retailSales) {
+
+            retailSales.returnToVisit = function() {
+                if (typeof sforce !== 'undefined') {
+                    sforce.one.navigateToSObject('{!Store_Visit__c.Id}')
+                    return;
+                }
+
+                window.location.href = '/{!Store_Visit__c.Id}';
+            }
+
+            return retailSales;
+
+        })(retailSales || {})
+
+    </script>
+</apex:page>

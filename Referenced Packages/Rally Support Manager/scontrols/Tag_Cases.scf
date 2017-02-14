@@ -1,0 +1,243 @@
+<html>
+<head>
+  <!-- (c) 2009 Rally Software Development Corp. All rights reserved. -->
+  <link href="/sCSS/15.0/Theme2/default/common.css" type="text/css" rel="stylesheet"/>
+  <script type="text/javascript" src="/js/functions.js"></script>
+  <script src="/soap/ajax/15.0/connection.js"></script>
+  {!INCLUDE($SControl.rallyObj)}
+  {!INCLUDE($SControl.GetArtifacts)}
+  <script type="text/javascript"
+          src="https://s3-us-west-2.amazonaws.com/rsm.rallydev.com/integrations/rsc/yui/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+  <script type="text/javascript"
+          src="https://s3-us-west-2.amazonaws.com/rsm.rallydev.com/integrations/rsc/yui/2.6.0/build/element/element-beta-min.js"></script>
+  <script type="text/javascript"
+          src="https://s3-us-west-2.amazonaws.com/rsm.rallydev.com/integrations/rsc/yui/2.6.0/build/datasource/datasource-min.js"></script>
+  <script type="text/javascript"
+          src="https://s3-us-west-2.amazonaws.com/rsm.rallydev.com/integrations/rsc/yui/2.6.0/build/datatable/datatable-min.js"></script>
+  <style type="text/css">
+
+    .yui-dt table {
+      margin: 0;
+      padding: 0;
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 12px;
+      border-spacing: 0;
+      border: 1px solid;
+    }
+  </style>
+  <script type="text/javascript">
+    rally.release = "{!Release_Announcement__c.Id}";
+    if (!rally.tagCases) {
+      rally.tagCases = {};
+    }
+    rally.tagCases.caseArr = [];
+
+
+    /* get cases that are associated with this release, are not closed, and have a rally artifact ref */
+    rally.tagCases.getCasesToTag = function (releaseId) {
+//if (rally.tagCases.hasRPM())
+//{
+//	alert("This functionality is currently not available when using Rally Product Manager.");
+//	self.close();
+//}
+//else
+//{
+      var cases = sforce.connection.query("select a.Id, a.CaseNumber, a.RALLYSM__Rally_Artifact_Ref__c, a.Subject, b.Name, a.Status, a.Priority, a.RALLYSM__Notification_Tag__c from Case a, a.account b where a.RALLYSM__release_announcement__c = '" + releaseId + "' and isClosed = false");
+      rally.tagCases.display(cases);
+//}
+    };
+
+    rally.tagCases.addTagToCases = function (release) {
+      var casesToTag = rally.tagCases.getFormCases();
+      var caseObjs = [];
+      for (i = 0; i < casesToTag.length; i++) {
+        caseObjs.push(rally.tagCases.updateCaseTag(casesToTag[i], document.forms['rallyTagCaseForm'].notification_tag.value));
+      }
+      results = sforce.connection.update(caseObjs);
+      rally.tagCases.getCasesToTag(release);
+    };
+
+    rally.tagCases.getFormCases = function () {
+      var casesArray = [];
+      for (i = 0; i < rally.tagCases.caseArr.length; i++) {
+        var box = eval("document.forms['rallyTagCaseForm'].CB" + rally.tagCases.caseArr[i]);
+        if (box.checked == true) {
+          casesArray.push(rally.tagCases.caseArr[i]);
+        }
+//box.checked = false;
+      }
+      return(casesArray);
+    };
+
+    rally.tagCases.getFormCasesHash = function () {
+      var casesArray = [];
+      for (i = 0; i < rally.tagCases.caseArr.length; i++) {
+        var box = eval("document.forms['rallyTagCaseForm'].CB" + rally.tagCases.caseArr[i]);
+        if (box.checked == true) {
+          casesArray[rally.tagCases.caseArr[i]] = 1;
+        }
+      }
+      return(casesArray);
+    };
+
+    rally.tagCases.clearCases = function () {
+      rally.tagCases.caseArr = [];
+    };
+
+    rally.tagCases.casesHash = [];
+    rally.tagCases.display = function (cases) {
+      var json_cases = [];
+      var caseIterator = new sforce.QueryResultIterator(cases);
+
+      var caseRecordIterator = new sforce.QueryResultIterator(cases);
+
+      rally.tagCases.casesHash = rally.tagCases.getFormCasesHash();
+
+      while (caseIterator.hasNext()) {
+        var record = caseIterator.next();
+        var skip = 0;
+        var oidRef = record["RALLYSM__Rally_Artifact_Ref__c"];
+        var artifactType = "";
+        if (oidRef) {
+          artifactType = rally.getArtifactType(oidRef);
+        }
+        else {
+          artifactType = "Feedback";
+        }
+
+        if (!skip) {
+          var accountName = record.Account ? record.Account.Name : "";
+          var currentTag = record.RALLYSM__Notification_Tag__c ? record.RALLYSM__Notification_Tag__c : "None";
+          rally.tagCases.caseArr.push(record.Id);
+          var caseType = (artifactType == "defect" || artifactType == "hierarchicalrequirement") ? (artifactType == "defect" ? "Defect" : "Story") : "Feedback";
+          json_cases.push({Id: record.Id, CaseNumber: record.CaseNumber, currentTag: currentTag, AccountName: accountName, Subject: record.Subject,
+            Status: record.Status, Priority: record.Priority, caseType: caseType});
+        }
+      }
+      var myDataSource = new YAHOO.util.DataSource(json_cases);
+      myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+      myDataSource.responseSchema = {fields: [
+        {key: "Id"},
+        {key: "currentTag"},
+        {key: "CaseNumber"},
+        {key: "AccountName"},
+        {key: "Subject"},
+        {key: "Status"},
+        {key: "Priority"},
+        {key: "caseType"}
+      ]
+      };
+
+      rally.tagCases.checkBoxFormatter = function (elCell, oRecord, oColumn, oData) {
+        YAHOO.util.Dom.addClass(elCell, "Id");
+        var id = oRecord.getData("Id");
+        var checked = "";
+        if (rally.tagCases.casesHash[id]) {
+          checked = "checked";
+        }
+        elCell.innerHTML = '<div align="center" class="actionColumn"><input type="checkbox" name="CB' + id + '" value="' + id + '" ' + checked + '></div>';
+      };
+
+      var myColumnDefs =
+        [
+          {key: null, label: "<th class='actionColumn' scope='col'><div class='pbButton' align='center'><input class='btn' type='button' name='allbox' value='De/Select All' onClick=\"rally.checkAll(\'rallyTagCaseForm\',\'rally.checked\');\"></div>", formatter: rally.tagCases.checkBoxFormatter, sortable: false, className: "yui-dt-bd"},
+          {key: "currentTag", label: "Label", sortable: true, className: "yui-dt-bd"},
+          {key: "CaseNumber", label: "Case Number", sortable: true, className: "yui-dt-bd"},
+          {key: "AccountName", label: "Account", sortable: true, className: "yui-dt-bd"},
+          {key: "Subject", label: "Subject", sortable: true, className: "yui-dt-bd"},
+          {key: "Status", label: "Status", sortable: true, className: "yui-dt-bd"},
+          {key: "Priority", label: "Priority", sortable: true, className: "yui-dt-bd"},
+          {key: "caseType", label: "Type", sortable: true, className: "yui-dt-bd"}
+        ];
+      var myDataTable = new YAHOO.widget.DataTable("results", myColumnDefs, myDataSource);
+    };
+
+    rally.tagCases.init = function () {
+      try {
+        rally.init();
+      }
+      catch (ex) {
+        alert(ex);
+        return;
+      }
+      rally.tagCases.getCasesToTag(rally.release);
+    };
+
+    rally.tagCases.scheduleEmail = function () {
+      window.opener.location.href = "/ui/massmail/MassMailStageManager?setupid=MassMailFilter&ftype=T";
+      self.close();
+    }
+  </script>
+</head>
+
+<body onLoad="rally.tagCases.init();">
+<div class="listRelatedObject caseBlock">
+  <div class="bPageBlock secondaryPalette" style="background-color: #B8338C; border-color: #B8338C">
+    <div class="pbHeader">
+      <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td class="pbTitle"><img src="/s.gif" alt="" width="1" height="1" class="minWidth" title=""/><img
+            src="/s.gif" alt="" class="relatedListIcon" title=""/>
+
+            <h3>Set Custom Labels</h3></td>
+        </tr>
+      </table>
+    </div>
+    <div class="pbBody">
+      <form name="rallyTagCaseForm">
+        <table style="font-size: 100%" class="list" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td class="dataCell" colspan="10">Custom labels provide the option to override the default email
+              communication behavior for release announcements.
+              <br><br>
+              Below are the release announcement cases with their default email communication label (Fixed
+              for defects, Implemented for enhancement requests). To set a custom label to some cases,
+              select those cases, the custom label from the drop down list and click <b>Label Selected
+                Cases</b>.
+              <br><br>
+              When done, click <b>Schedule Email Notifications</b>, create views to identify cases whose
+              Announcement Label field value matches the custom label, and follow the mass email wizard
+              steps.
+            </td>
+          </tr>
+          <tr>
+            <td colspan="10">&nbsp;</td>
+          </tr>
+        </table>
+        <div id="results"></div>
+        <table style="font-size: 100%" class="list" border="0" cellspacing="0" cellpadding="0">
+          <tr class="headerRow">
+            <td class="pbButton">
+              <span class="bFilter fBody">
+                <select name="notification_tag">
+                  <script type="text/javascript">
+                    var selectOptions = rally.tagCases.getAnnouncementTags();
+                    for (var i = 0; i < selectOptions.length; i++) {
+                      document.write('<option value="' + selectOptions[i].value + '">' + selectOptions[i].label + '</option>');
+                    }
+                  </script>
+                  <option value=" ">None</option>
+                </select>
+              </span>
+              &nbsp;
+              <input type="button" class="btn"
+                     onClick="this.style.cursor='wait';rally.tagCases.addTagToCases(rally.release);this.style.cursor='auto';"
+                     value="Label Selected Cases" title="Label Selected Cases">
+              <input type="button"
+                     class="btn"
+                     onClick="this.style.cursor='wait';rally.tagCases.scheduleEmail();this.style.cursor='auto';"
+                     value="Schedule Email Notifications"
+                     title="Schedule Email Notifications">
+              <input type="button" class="btn" name="Close" value="Close" onClick="self.close();"
+                     title="Close">
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+    <div class="pbFooter"></div>
+  </div>
+</div>
+</body>
+</html>

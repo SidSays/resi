@@ -1,0 +1,35 @@
+<apex:page standardController="SPKAMF__Recipe__c" extensions="SPKAMF.RecipeFollowers" action="{!Init}" showHeader="true" sidebar="true" tabStyle="ChatterMate__tab" title="Recipe Followers">
+    <apex:form >
+        <apex:pageBlock title="Users Following Recipe: {!SPKAMF__Recipe__c.Name}">
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Recipe Builder" action="{!ToRecipeBuilder}"/>
+                <apex:commandButton value="Recipe List" action="{!ToRecipeList}"/>
+            </apex:pageBlockButtons>
+            <apex:pageMessages />
+            <div class="listViewport">
+                <apex:pageBlockTable value="{!SubscribedUsers}" var="u" id="userList">
+                    <apex:column headerValue="Action">
+                        <apex:actionStatus id="followStatus" startText="Wait..">
+                            <apex:facet name="stop">
+                                <apex:outputPanel layout="none">
+                                    <apex:commandLink value="Follow" action="{!Subscribe}" rerender="userList" status="followStatus" rendered="{!NOT(subscribed[u.Id])}">
+                                        <apex:param value="{!u.Id}" name="userId"/>
+                                    </apex:commandLink>
+                                    <apex:commandLink value="Unfollow" action="{!Unsubscribe}" rerender="userList" status="followStatus" rendered="{!subscribed[u.Id]}">
+                                        <apex:param value="{!u.Id}" name="userId"/>
+                                    </apex:commandLink>
+                                </apex:outputPanel>
+                            </apex:facet>
+                        </apex:actionStatus>
+                    </apex:column>
+                    <apex:column headerValue="User" width="45%">
+                        <apex:outputField value="{!u.Name}"/>
+                    </apex:column>
+                    <apex:column headerValue="Profile" width="45%">
+                        <apex:outputField value="{!u.Profile.Name}"/>
+                    </apex:column>
+                </apex:pageBlockTable>
+            </div>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
