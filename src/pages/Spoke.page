@@ -1,3 +1,0 @@
-<apex:page showHeader="true" sidebar="false">
-    <apex:iframe src=" https://spoketraining.com/comcast/" scrolling="true" id="spoke_frame" height="984px" /> 
-</apex:page>

@@ -1,3 +1,0 @@
-<apex:page standardController="Store_Visit__c" extensions="StoreVisitSummaryController" showHeader="false" sidebar="false">
-    <c:StoreVisitSummary visitSummary="{!VisitSummary}" />
-</apex:page>

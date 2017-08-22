@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>35.0</apiVersion>
-    <availableInTouch>false</availableInTouch>
-    <confirmationTokenRequired>false</confirmationTokenRequired>
-    <description>This VF page will display the list of all available accounts (including active/former etc) and the contacts associated with these accounts.</description>
-    <label>AccountHistoryDisplayerPage</label>
-</ApexPage>
