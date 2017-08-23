@@ -1,0 +1,7 @@
+Hello {!one_one_Coaching__c.Coach_Name__c},{!one_one_Coaching__c.Coached_Name__c},
+
+{!one_one_Coaching__c.Coached_Name__c} has created and submitted a 1-1 Coaching. 
+
+{!one_one_Coaching__c.Link}
+
+Thanks!

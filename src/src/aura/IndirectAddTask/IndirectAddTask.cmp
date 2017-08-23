@@ -1,0 +1,139 @@
+<aura:component controller="IndirectAddTaskController" implements="force:appHostable" >
+    <ltng:require styles="/resource/SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="task" type="Task" default=""/> 
+    <aura:attribute name="loggedInUser" type="User"/>
+    <aura:attribute name="title" type="String" required="true" default="test"/>
+    <aura:attribute name="closable" type="Boolean" default="true"/>    
+    <aura:attribute name="closeLabel" type="String" default="Close"/> 
+    <aura:attribute name="confirmLabel" type="String" default="OK"/>    
+    <aura:attribute name="onclose" type="Aura.Action" default="{!c.defaultCloseAction}"/> 
+    <aura:attribute name="onconfirm" type="Aura.Action" default="{!c.defaultCloseAction}"/>   
+    <aura:attribute name="status" type="String" default="Not Started"/>    
+    <aura:attribute name="priority" type="String" />
+    <aura:attribute name="priorityList" type="String[]" />
+    <aura:attribute name="statusList" type="String[]" />
+    <aura:attribute name="storeVisit" type="Store_Visit__c"/>
+    <aura:attribute name="store" type="Account" />
+    <div class="slds">
+        <div>
+            <!-- instead of using display property of css, use aria-hidden from HTML5 -->
+            <div aria-hidden="false" role="dialog" class="slds-modal slds-fade-in-open">
+                
+                <div class="slds-modal__container">
+                        <div class="slds-modal__header">
+                            <h2 class="slds-text-heading--medium">{!v.title}</h2>
+                            <aura:if isTrue="{!v.closable}">
+                                <button class="slds-button slds-modal__close" onclick="{!v.onclose}">
+                                    <c:svgIcon svgPath="/resource/SLDS100/assets/icons/action-sprite/svg/symbols.svg#close" 
+                                               category="standard" 
+                                               size="small" 
+                                               name="close" />
+                                    
+                                    <span class="slds-assistive-text">{!v.closeLabel}</span>
+                                </button>
+                            </aura:if>
+                        </div> 
+                        <div class="slds-modal__content">
+                                <form style="padding:5px">
+                                	 <h3 class="slds-section-title--divider">TASK INFORMATION</h3> 
+									 <fieldset class="slds-form--compound">
+  
+										<div class="form-element__group">
+										  <div class="slds-form-element__row">
+											<div class="slds-form-element slds-size--1-of-2">
+																	<ui:inputText aura:id="subject"
+																							  label="Subject"
+																							  class="slds-input" 
+																							  required="true"
+																							  labelClass="slds-form-element__label"
+																							  value="{!v.task.Subject}" />
+											</div>
+											<div class="slds-form-element slds-size--1-of-2">
+																	<ui:inputDateTime label="Due Date"
+																							  aura:id="dueDate" 
+																							  class="slds-form-element__control slds-input" 
+																							  labelClass="slds-form-element__label"
+																							  displayDatePicker="true"																							  
+																							  value="{!v.task.ActivityDate}"/>
+											</div>
+										  </div>
+										</div>
+									</fieldset>
+									<fieldset class="slds-form--compound">
+  
+										<div class="form-element__group">
+										  <div class="slds-form-element__row">
+											 <div class="slds-form-element slds-size--1-of-2">
+												<span class="slds-form-element__label">Assigned To<span class="required">*</span></span>	
+                                                
+												<span class="slds-form-element__static slds-form-element__control slds-input">{!v.loggedInUser.Name}</span>
+											</div>
+											 <div class="slds-form-element slds-size--1-of-2">
+												<ui:inputTextArea label="Comments"
+														  aura:id="comments" 
+														  class="slds-form-element__control slds-input" 
+														  labelClass="slds-form-element__label"
+														  maxlength="32000"
+														  value="{!v.task.Description}"/>		
+											</div>                                           
+											</div>
+										  </div>
+										
+									</fieldset> 
+                                    <fieldset class="slds-form--compound">
+  
+										<div class="form-element__group">
+										  <div class="slds-form-element__row">
+											 <div class="slds-form-element slds-size--1-of-2">
+												<span class="slds-form-element__label">Related To</span>												
+												<span class="slds-form-element__static slds-form-element__control slds-input">{!v.store.Name}</span>												
+                                              </div>
+											<div class="slds-form-element slds-size--1-of-2">
+												<ui:inputSelect aura:id="statusDropdown" 
+                            								label="Status"
+                            								class="slds-form-element__control slds-select"
+                            								labelClass="slds-form-element__label" 
+                                                            required="true"
+                            								value="{!v.status}" />	
+											</div>
+                                           
+											</div>
+										  </div>
+										
+									</fieldset> 
+                                     <fieldset class="slds-form--compound">  
+										<div class="form-element__group">
+										  <div class="slds-form-element__row">
+											 <div class="slds-form-element slds-size--1-of-1">
+												<ui:inputSelect aura:id="priorityDropdown" 
+                            								label="Priority"
+                            								class="slds-form-element__control slds-select"
+                            								labelClass="slds-form-element__label"  
+                                                            required="true"
+                                                            value="{!v.priority}">
+                                                    
+                                                 </ui:inputSelect>
+                                              </div>
+											</div>
+										  </div>										
+									</fieldset> 
+								                                  
+                                </form>
+                        </div>
+                        <div class="slds-modal__footer"> 
+                            <div style="text-align: center">
+                                        <button aura:id="btnSuchedule"
+                                                type="button"
+                                                class="slds-button slds-button--neutral"                                               
+                                                onclick="{!c.SaveTask}">
+                                            Save
+                                        </button>
+                                    </div> 
+                    </div>
+                    </div> 
+            </div>
+            <div class="slds-modal-backdrop slds-modal-backdrop--open"></div>
+        </div>
+    </div>
+</aura:component>

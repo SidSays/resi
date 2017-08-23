@@ -1,0 +1,13 @@
+.THIS .user-icon {
+    margin-top: 9px;
+    margin-left:8px;
+}
+.THIS .toggle{
+    display: none;
+}
+.THIS .tooltip ul li{
+    padding: 8px;
+}
+.THIS .tooltip ul li a{
+    font-weight: normal;
+}

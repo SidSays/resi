@@ -1,0 +1,24 @@
+A {!Case.Status} Case has been submitted for your region:
+
+Case Creator: {!Case.Requested_For__c}
+Creator Phone: {!Case.Preferred_Phone__c}
+Creator Email: {!Case.Preferred_Email__c}
+Region:  {!Case.Region__c}
+Channel: {!Case.Channel__c} 
+Case Subject: {!Case.Request_Type__c}
+Ticket Category I: {!Case.Ticket_Category__c} 
+Ticket Category II: {!Case.Ticket_Category_II__c} 
+Case Status: {!Case.Status}
+
+Case Details: {!Case.Description}
+
+
+{!User.Business_Partner_email__c} 
+------
+Case Link: {!Case.Link}
+------
+ 
+You have three (3) hours to accept and solve this issue before it moves to Accenture.
+ 
+Regards,
+Your SFA2 Support Team

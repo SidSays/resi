@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Comcast_LetterHead</letterhead>
+    <name>Claim : Untouched by Investigation Queue</name>
+    <style>freeForm</style>
+    <subject>Claim {!Case.CaseNumber} : Untouched by Investigation Queue</subject>
+    <textOnly>Hello,
+
+A claim has been untouched by Investigation Queue.
+
+Claim Details :
+
+Case Number              : {!Case.CaseNumber}
+Claim Link                    : {!Case.Link}.
+
+
+Kindly take necessary actions.
+
+Best Regards,
+Comcast Turnpike Support.</textOnly>
+    <type>html</type>
+</EmailTemplate>

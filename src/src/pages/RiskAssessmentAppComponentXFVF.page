@@ -1,0 +1,16 @@
+<apex:page sidebar="false" showHeader="true">
+    <!-- Include Lightning Components for Visualforce JavaScript library (lightning.out.js) -->
+    <apex:includeLightning />
+    <!-- Include Salesforce Lighning Design System (slds). This tag allows us to bypass uploading slds as a static resource -->    
+    <apex:slds />
+    <div id="component"></div>
+    <!-- Create the two-column grid for the Dashboard and Component -->
+    <script>
+        $Lightning.use("c:RiskAssessmentLightningOutApp", function(evt) {
+            /* 
+             * Create the Risk Assessment App Component
+             */
+            $Lightning.createComponent("c:RiskAssessmentAppComponent", {channel: "XfinityStores"}, "component", function(cmp, msg, err) {});
+        });
+      </script>
+</apex:page>

@@ -1,0 +1,37 @@
+<aura:component implements="flexipage:availableForAllPageTypes" controller="TilesControllerKP">
+	<aura:attribute name="tiles" type="Object[]" />
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+	
+    <center>
+        <div class="slds">
+            <c:CoachAnalyticsHeader />
+            
+            <div class="slds-grid slds-wrap slds-grid_align-spread tile-size">
+                <aura:iteration items="{!v.tiles}" var="tile">
+                    <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3">
+                        <div class="slds-container--small slds-p-around--medium" >
+                            <div class="slds-text-align--center">
+                                <div class="slds-tile">
+                                    <lightning:icon iconName="{!tile.Tile_Icon__c}" size="medium"/>
+                                    <aura:if isTrue="{!tile.IsExternal__c}">
+    									<p class="slds-tile__title slds-truncate slds-p-top_small">
+                                            <a href="{!tile.Tile_URL__c}" target="_blank">{!tile.Name}</a>
+                                        </p>
+    									<aura:set attribute="else">
+      										<p class="slds-tile__title slds-truncate slds-p-top_small">
+                                                <a href="{!tile.Tile_URL__c}">{!tile.Name}</a>
+                                            </p>
+    									</aura:set>
+  									</aura:if>                                     
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aura:iteration>
+                <aura:if isTrue="{!mod(v.tiles.length, 3) == 2}">
+                  <div class="slds-col slds-size--1-of-1 slds-small-size--1-of-1 slds-medium-size--1-of-2 slds-large-size--1-of-3" />
+                </aura:if>
+            </div>
+        </div>
+    </center>
+</aura:component>

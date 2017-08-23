@@ -1,0 +1,7 @@
+<aura:event type="APPLICATION" description="Navigate to Dashboard or My Stores">
+    <aura:attribute name="headerTitle" type="String"/>
+    <aura:attribute name="bodyToRender" type="String"/>
+    <aura:attribute name="footerModule" type="String"/>
+    <aura:attribute name="loggedInUser" type="User"/>   
+    <aura:attribute name="role" type="UserRole"/>
+</aura:event>

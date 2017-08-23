@@ -1,0 +1,8 @@
+<br>
+<br>
+While reviewing marketing materials, the following things were observed: 
+<br>
+<br>
+ {!Store_Activity__c.Marketing_Email_Template_Checkboxes__c}
+<br>
+Out of date materials: {!Store_Activity__c.Please_select_out_of_date_materials__c}

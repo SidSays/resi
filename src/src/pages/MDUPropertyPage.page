@@ -1,0 +1,914 @@
+<!-- 
+/**********************************************************
+* Page Name: MDUPropertyPage
+* Author: Ashish Sonawane, Accenture
+* Date: 02-Nov-2013 
+* Requirement # Request Id : 
+* Description:This is a custom page to edit the MDU Addresses in the system.This page created to create custom dependent picklist state, county and franchise 
+* Last Modified by:
+* Description : Require 'Public Easement' field for FIND Manager,FIND Rep,XC SME,XC Sales Support,RSA(US1082419)
+* Last Modified by :Amit Kumar Pradhan
+* Last Modified Date :12th May 2017
+* Last Modified by :Suchita Sharma
+* Last Modified Date :7th June 2017
+* Last Modified by :Lavanya Hosbet
+* Last Modified Date :3rd August 2017
+***********************************************************/
+-->                                                                                                                                        
+
+<apex:page standardController="MDU_Property__c" showHeader="true" id="mduPropertyPahe" sidebar="true"  extensions="MDUPropertyExtensions" >
+
+<style type="text/css">
+.imgclass{
+   content:url("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTYpw2_Auy6no1oPDv9kr5RO8qSixp0NhJgJDttL245v5ygpEjRoA");
+ }
+ .loadingBackground { 
+    /* Background color */ 
+    background-color:black; 
+    opacity: 0.10; 
+    filter: alpha(opacity = 10); 
+    
+    /* Dimensions */ 
+    width: 100%; 
+    height: 100%; 
+    top: 0; 
+    left: 0; 
+    z-index: 999; 
+    position:fixed;
+   } 
+.loadingPanel { 
+    /* Dimensions */ 
+    left: 48%; 
+    top: 48%; 
+    height: 50px; 
+    z-index: 999; 
+    position: fixed; 
+   } 
+</style>
+     <apex:pageMessages id="pMsg"/>
+    <Script> 
+     function save_changed() // custom function
+    {
+    // logic(this part works)
+      stateChange();// call to the action function
+    }   
+     </Script> 
+    <apex:form id="myForm">
+     <apex:actionStatus startText="In progress..." id="fetchStatus"> 
+       
+        <apex:facet name="start">
+          <div>  
+             <div class="loadingBackground" />          
+             <div class="loadingPanel">
+                 <img src="/img/loading32.gif"/>
+             </div>
+          </div> 
+       </apex:facet>
+      </apex:actionStatus> 
+        
+        <!-- <apex:actionFunction name="stateChange" action="{!BindCountyPick}" rerender="picklistCounty,picklistFranchise" status="fetchStatus"/> -->
+         <!--<apex:actionFunction name="applyOnChangeFilters" reRender="picklistFranchise" action="{!BindFranchisePick}" status="fetchStatus"/> 
+         -->
+        <!--
+        /**********************************************************
+        * Author: Sagar Gurav, Accenture
+        * Description: Car edit access disabled as part of US516870
+        ***********************************************************/
+        -->
+         <apex:pageBlock rendered="{!profileReadOnlyAccess}">
+            <apex:pageBlockButtons location="top" >       
+                <apex:commandButton action="{!cancel}" value="Cancel"/>
+            </apex:pageBlockButtons>
+         </apex:pageBlock>
+         <apex:pageBlock id="pgBlock" rendered="{!!profileReadOnlyAccess}">
+          <!-- US516870 ends here -->
+         <apex:pageBlockButtons >
+            <apex:commandButton action="{!save}" value="Save"/>           
+            <apex:commandButton action="{!cancel}" value="Cancel"/>
+         </apex:pageBlockButtons>
+        
+         <apex:pageBlockSection collapsible="false" columns="2" title="Property Information"> 
+           
+            <apex:pageblockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Name.label}"  />            
+                  <apex:inputField taborderhint="1"   value="{!property.Name}" required="true"/> 
+            </apex:pageblockSectionItem> 
+            
+             <apex:pageblockSectionItem >                
+            </apex:pageblockSectionItem>
+            
+            <apex:pageblockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Property_Alias__c.label}"/>            
+                <apex:inputField taborderhint="2" value="{!property.Property_Alias__c}" />
+            </apex:pageblockSectionItem> 
+            
+            <apex:pageblockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Corporate__c.label}"/>           
+                <apex:inputField taborderhint="9" value="{!property.Corporate__c}" required="true" />
+            </apex:pageblockSectionItem> 
+           
+           <!-- Added By Joognu Rao to implement US1082416 *START*-->
+            <apex:pageblockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Assigned_FIND_Rep__c.label}"/>           
+                <apex:inputField taborderhint="9" value="{!property.Assigned_FIND_Rep__c}" required="{!OR($Profile.Name=='XC FIND Manager',$Profile.Name=='XC FIND Representative')}" />
+            </apex:pageblockSectionItem>
+            <!-- Added By Joognu Rao to implement US1082416 *END*-->
+           <apex:pageblockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Address__c.label}"/>            
+                  <apex:inputField taborderhint="3" value="{!property.Address__c}" required="true"  /> 
+            </apex:pageblockSectionItem> 
+           
+             <apex:pageblockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Property_Division__c.label}"/>           
+                <apex:inputField taborderhint="10" value="{!property.Property_Division__c}" required="true" />
+            </apex:pageblockSectionItem> 
+              
+            <apex:pageblockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Address_2__c.label}"/>           
+                <apex:inputField taborderhint="4" value="{!property.Address_2__c}"  />
+            </apex:pageblockSectionItem> 
+            
+            <apex:pageblockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Property_Region__c.label}" />           
+                <apex:inputField taborderhint="11" value="{!property.Property_Region__c}" required="true" />
+            </apex:pageblockSectionItem> 
+                                  
+             <apex:pageblockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.City__c.label}"/>            
+                  <apex:inputField taborderhint="5" value="{!property.City__c}" required="true"/> 
+            </apex:pageblockSectionItem>
+            
+            <apex:pageblockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Property_Area__c.label}"/>            
+                <apex:inputField taborderhint="12" value="{!property.Property_Area__c}" required="true" />
+            </apex:pageblockSectionItem>  
+            
+             <apex:pageblockSectionItem >
+                     <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.MDU_State__c.label}"/>                                      
+                         <apex:actionRegion immediate="true" >
+                            <apex:outputPanel layout="block" styleClass="requiredInput">
+                            <apex:outputPanel layout="block" styleClass="requiredBlock"></apex:outputPanel>
+                                <apex:inputField taborderhint="6"  value="{!property.MDU_State__c}" rendered="true" >
+                                    <apex:actionSupport event="onchange" action="{!BindCountyPick}" rerender="picklistCounty,picklistFranchise" status="fetchStatus"> </apex:actionSupport>
+                                </apex:inputField>  
+                            </apex:outputPanel>
+                         </apex:actionRegion>       
+              </apex:pageblockSectionItem>  
+              
+           <apex:pageblockSectionItem >
+           <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.System__c.label}"/>                
+                <apex:inputField taborderhint="13" value="{!property.System__c}" required="true"/>
+            </apex:pageblockSectionItem> 
+            
+            
+            <apex:pageblockSectionItem >
+                <apex:outputLabel value="County"/>           
+                 <apex:actionRegion immediate="true">
+                <apex:selectList size="1" value="{!county}" id="picklistCounty" disabled="{!($Profile.Name=='XC Event Specialist'||$Profile.Name=='Xfinity CAR')}">
+                    <apex:selectOptions value="{!Counties}"/>
+                    <apex:actionSupport event="onchange" reRender="picklistFranchise" action="{!BindFranchisePick}" status="fetchStatus" />                                       
+                </apex:selectList>
+              </apex:actionRegion> 
+            </apex:pageblockSectionItem>     
+            
+            <apex:pageblockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Node__c.label}"/>            
+                <apex:inputField taborderhint="14" value="{!property.Node__c}" />
+            </apex:pageblockSectionItem>   
+                                                                  
+         
+         <apex:pageblockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.PostalCode__c.label}"/>           
+                <apex:inputField taborderhint="7" value="{!property.PostalCode__c}"  />
+         </apex:pageblockSectionItem>
+         
+         <apex:pageblockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Development__c.label}"/>            
+                <apex:inputField taborderhint="15" value="{!property.Development__c}"  />
+            </apex:pageblockSectionItem>
+                                
+         </apex:pageBlockSection>
+         
+       <apex:pageBlockSection columns="1">
+               <apex:pageblockSectionItem > 
+                <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Franchise_New__c.label}"/>           
+                <apex:selectList size="1" value="{!Franchise}" id="picklistFranchise" disabled="{!($Profile.Name=='XC Event Specialist'||$Profile.Name=='Xfinity CAR')}">
+                    <apex:selectOptions value="{!Franchisies}"/>                     
+                </apex:selectList>
+            </apex:pageblockSectionItem> 
+          </apex:pageBlockSection>
+        <apex:pageBlockSection columns="2">              
+            <apex:pageblockSectionItem >  
+                <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Franchise_Tax_No__c.label}" />           
+                <apex:inputField taborderhint="8" value="{!property.Franchise_Tax_No__c}"  />
+            </apex:pageblockSectionItem>
+            <apex:pageblockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Account_Manager__c.label}"/>           
+                    <apex:inputField taborderhint="16" value="{!property.Account_Manager__c}" />
+            </apex:pageblockSectionItem>
+            
+        </apex:pageBlockSection>
+        
+         <apex:pageBlockSection columns="1"> 
+            <apex:pageblockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Coffee_Vendor_on_Site__c.label}"/>            
+                <apex:inputField taborderhint="9" value="{!property.Coffee_Vendor_on_Site__c}" />
+            </apex:pageblockSectionItem>
+                      </apex:pageBlockSection>
+                      
+                       <apex:pageBlockSection columns="1"> 
+            <apex:pageblockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Coffee_Vendor_Name__c.label}"/>            
+                <apex:inputField taborderhint="10" value="{!property.Coffee_Vendor_Name__c}" />
+            </apex:pageblockSectionItem>
+          </apex:pageBlockSection>  
+            
+        
+        <apex:pageBlockSection columns="2">              
+            <apex:pageblockSectionItem > 
+                <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Assigned_CAR__c.label}" />           
+                <apex:inputField taborderhint="16" value="{!property.Assigned_CAR__c}"  />
+            </apex:pageblockSectionItem>
+            <apex:pageblockSectionItem >
+            </apex:pageblockSectionItem>
+        </apex:pageBlockSection>
+        
+        <apex:pageBlockSection columns="2">              
+            <apex:pageblockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Module__c.label}" />           
+                <apex:inputField taborderhint="9" value="{!property.Module__c}"  />
+            </apex:pageblockSectionItem>
+             
+            <apex:pageblockSectionItem >
+            </apex:pageblockSectionItem>
+             
+             <!-- Added By Joognu Rao to implement US1082416 *START*-->
+            <apex:pageblockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.FIND_Module__c.label}" />           
+                <apex:inputField taborderhint="9" value="{!property.FIND_Module__c}"  />
+            </apex:pageblockSectionItem>
+            <!-- Added By Joognu Rao to implement US1082416 *END*-->
+         <!-- Added By Kiran to implement US1082450 *START*-->
+         <apex:pageblockSectionItem >
+            </apex:pageblockSectionItem>
+            <apex:pageblockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Language_spoken_most_often_by_tenants__c.label}" />           
+                <apex:inputField taborderhint="9" value="{!property.Language_spoken_most_often_by_tenants__c}"  />
+            </apex:pageblockSectionItem>
+            <!-- Added By Kiran to implement US1082450 *END*-->
+          </apex:pageBlockSection>
+                                    
+        <apex:pageBlockSection id="pgBlockSectionPropertyDetails"
+                title="Property Details" collapsible="false" columns="2"> 
+             <apex:pageBlockSectionItem id="pbiComplex">
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Segmentation__c.label}"/>
+                    <apex:outputLabel value="{!property.Segmentation__c}" >  </apex:outputLabel>
+             </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Mandatory_Access__c.label}"/>
+                    <apex:inputField taborderhint="22" value="{!property.Mandatory_Access__c}">  </apex:inputField>
+              </apex:pageBlockSectionItem>
+             <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Risk_Status__c.label}"/>
+                    <apex:outputLabel value="{!property.Risk_Status__c}">  </apex:outputLabel>
+             </apex:pageBlockSectionItem>
+             <!--
+            /**********************************************************
+            * Added By Joognu Rao to implement US1082416 *START*
+            * Start - US1082419
+            * Description : Require 'Public Easement' field for FIND Manager,FIND Rep,XC SME,XC Sales Support,RSA
+            * Last Modified by :Amit Kumar Pradhan(Already required check for FIND Manager,FIND Rep.Now added XC SME,XC Sales Support,RSA profile check)
+            * Last Modified Date :12th May 2017
+            ***********************************************************/
+            -->
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Public_Easement__c.label}"/>
+                <apex:inputField taborderhint="23" value="{!property.Public_Easement__c}" required="{!OR($Profile.Name == $Label.XC_FIND_Manager,$Profile.Name == $Label.XC_FIND_Rep,$Profile.Name == $Label.XC_SME,$Profile.Name == $Label.XC_Sales_Support,$Profile.Name == $Label.RSA_Profile_Name)}">  </apex:inputField>
+            </apex:pageBlockSectionItem>
+            <!--
+            /**********************************************************
+            * Added By Joognu Rao to implement US1082416 *END*
+            * End - US1082419
+            ***********************************************************/
+            -->    
+             
+             <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Bulk_Upgradeable__c.label}"/>
+                    <apex:inputField taborderhint="24" value="{!property.Bulk_Upgradeable__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+             
+               <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Property_Rating__c.label}" />
+                    <apex:outputLabel value="{!property.Property_Rating__c}">  </apex:outputLabel>
+             </apex:pageBlockSectionItem>
+             
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Property_Rank__c.label}" />
+                    <apex:inputField value="{!property.Property_Rank__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+             
+             <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Property_Rank_Status__c.label}"/>
+                      <apex:inputField value="{!property.Property_Rank_Status__c}">  </apex:inputField> 
+             </apex:pageBlockSectionItem>
+             
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Industry_Type__c.label}"/>
+                      <apex:inputField taborderhint="17" value="{!property.Industry_Type__c}" required="true">  </apex:inputField> 
+             </apex:pageBlockSectionItem>
+             
+             <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Wiring_Comments__c.label}" />
+                    <apex:inputField taborderhint="25" value="{!property.Wiring_Comments__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>  
+             
+                          
+             <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Property_Type__c.label}"/>
+                      <apex:inputField value="{!property.Property_Type__c}" required="true">  </apex:inputField> 
+             </apex:pageBlockSectionItem>
+             
+             <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Distribution_Wiring__c.label}"/>
+                      <apex:inputField value="{!property.Distribution_Wiring__c}">  </apex:inputField> 
+             </apex:pageBlockSectionItem>
+             
+             
+             <!--<apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Ownership_Type__c.label}"/>
+                      <apex:inputField value="{!property.Ownership_Type__c}" required="true">  </apex:inputField> 
+             </apex:pageBlockSectionItem>
+             -->
+             <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Contracting_Org_Type__c.label}"/>
+                      <apex:inputField value="{!property.Contracting_Org_Type__c}" required="false">  </apex:inputField> 
+             </apex:pageBlockSectionItem>
+             
+             <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Inside_Wiring__c.label}"/>
+                      <apex:inputField value="{!property.Inside_Wiring__c}">  </apex:inputField> 
+             </apex:pageBlockSectionItem>
+             
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Lease_Date__c.label}"/>
+                    <apex:inputField value="{!property.Lease_Date__c}">  </apex:inputField> 
+              </apex:pageBlockSectionItem>
+             
+             <!-- US1115559 XC Courtsey outlets Start -->
+             <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Number_of_Common_Area_internet_outlets__c.label}" />
+                    <apex:inputField taborderhint="25" value="{!property.Number_of_Common_Area_internet_outlets__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+             <!-- US1115559 XC Courtsey outlets End -->
+             
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Mixed_Use_Property__c.label}"/>
+                      <apex:inputField value="{!property.Mixed_Use_Property__c}">  </apex:inputField> 
+             </apex:pageBlockSectionItem>
+             
+              <!-- US1115559 XC Courtsey outlets Start -->
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Number_of_Common_Area_Video_outlets__c.label}" />
+                    <apex:inputField taborderhint="25" value="{!property.Number_of_Common_Area_Video_outlets__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+              <!-- US1115559 XC Courtsey outlets End -->
+              
+            
+             <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Property_Grade__c.label}"/>
+                    <apex:inputField taborderhint="18" value="{!property.Property_Grade__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+             
+            <!-- US1115525 : XC Home Run Wiring Start -->
+            <apex:pageBlockSectionItem >       
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.CHRW_Exclusivity__c.label}"/>      
+                    <apex:inputField value="{!property.CHRW_Exclusivity__c}"/>         
+             </apex:pageBlockSectionItem>
+            <!-- US1115525 : XC Home Run Wiring End -->
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Structure_Type__c.label}"/>
+                    <apex:inputField taborderhint="19" value="{!property.Structure_Type__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+             </apex:pageBlockSectionItem>             
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Buildings__c.label}" />
+                    <apex:inputField taborderhint="20" value="{!property.Buildings__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+             <apex:pageBlockSectionItem >
+             </apex:pageBlockSectionItem>
+             <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Number_of_Units__c.label}"/>
+                      <apex:inputField taborderhint="21" value="{!property.Number_of_Units__c}" required="true" >  </apex:inputField> 
+             </apex:pageBlockSectionItem>
+             <apex:pageBlockSectionItem >
+             </apex:pageBlockSectionItem> 
+             <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Common_Area_Wide_WiFi_Ready__c.label}"/>
+                    <apex:inputField taborderhint="50" value="{!property.Common_Area_Wide_WiFi_Ready__c}">  </apex:inputField>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+             </apex:pageBlockSectionItem> 
+            <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Property_Wide_WiFi_Ready__c.label}"/>
+                    <apex:inputField taborderhint="51" value="{!property.Property_Wide_WiFi_Ready__c}">  </apex:inputField>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+             </apex:pageBlockSectionItem> 
+            <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.WiFi_Ready__c.label}"/>
+                    <apex:inputField taborderhint="52" value="{!property.WiFi_Ready__c}">  </apex:inputField>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+             </apex:pageBlockSectionItem>  
+            <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Number_of_outlets_per_unit__c.label}" />
+                    <apex:inputField value="{!property.Number_of_outlets_per_unit__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>                                      
+          </apex:pageBlockSection>
+          <!-- Added By Joognu Rao to implement US1082416 *START*-->
+          <apex:pageBlockSection columns="2" title="Property Profile – FIND" collapsible="false">
+          
+          <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Home_Value__c.label}"/>
+                    <apex:inputField taborderhint="27" value="{!property.Home_Value__c}">  </apex:inputField>
+          </apex:pageBlockSectionItem>
+          
+          <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Model_Home_Courtesy_Account__c.label}"/>
+                    <apex:inputField taborderhint="27" value="{!property.Model_Home_Courtesy_Account__c}">  </apex:inputField>
+          </apex:pageBlockSectionItem>
+          
+          <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Business_Service_Connections_Required__c.label}"/>
+                    <apex:inputField taborderhint="27" value="{!property.Business_Service_Connections_Required__c}">  </apex:inputField>
+          </apex:pageBlockSectionItem>
+          
+          <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Model_Home_Courtesy_Account_Service__c.label}"/>
+                    <apex:inputField taborderhint="27" value="{!property.Model_Home_Courtesy_Account_Service__c}">  </apex:inputField>
+          </apex:pageBlockSectionItem>
+          
+          <apex:pageBlockSectionItem >
+          </apex:pageBlockSectionItem>
+                
+          <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Courtesy_Service_Available_For__c.label}"/>
+                    <apex:inputField taborderhint="28" value="{!property.Courtesy_Service_Available_For__c}">  </apex:inputField>
+          </apex:pageBlockSectionItem>
+          
+           <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Estimated_International_Resident__c.label}"/>
+                    <apex:inputField taborderhint="28" value="{!property.Estimated_International_Resident__c}">  </apex:inputField>
+          </apex:pageBlockSectionItem>
+          
+           <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.If_above_25_what_is_origin_country__c.label}"/>
+                    <apex:inputField taborderhint="28" value="{!property.If_above_25_what_is_origin_country__c}">  </apex:inputField>
+          </apex:pageBlockSectionItem>
+          
+          </apex:pageBlockSection>
+           <!-- Added By Joognu Rao to implement US1082416 *END*-->
+          
+           <apex:pageBlockSection columns="2" title="Billing Information" collapsible="false">
+                                                                                                                          
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Sys__c.label}"/>
+                    <apex:inputField taborderhint="27" value="{!property.Sys__c}">  </apex:inputField>
+                </apex:pageBlockSectionItem>
+                   
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Billing_Corp__c.label}" />
+                    <apex:inputField taborderhint="31" value="{!property.Billing_Corp__c}">  </apex:inputField>
+                </apex:pageBlockSectionItem>
+                 
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Prin__c.label}"/>
+                    <apex:inputField taborderhint="28" value="{!property.Prin__c}">  </apex:inputField>
+                </apex:pageBlockSectionItem>    
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Complex_Code__c.label}"/>
+                    <apex:inputField taborderhint="32" value="{!property.Complex_Code__c}">  </apex:inputField>
+                </apex:pageBlockSectionItem>        
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Agent__c.label}" />
+                    <apex:inputField taborderhint="29" value="{!property.Agent__c}">  </apex:inputField>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.House_Misc_Code__c.label}" />
+                    <apex:inputField taborderhint="30" value="{!property.House_Misc_Code__c}">  </apex:inputField>
+                </apex:pageBlockSectionItem>                        
+                <apex:pageBlockSectionItem >
+                </apex:pageBlockSectionItem>           
+            </apex:pageBlockSection>
+            
+          <apex:pageBlockSection columns="1" title="Accounts" collapsible="false" id="pageBlockAccount">
+          
+          <style>
+             .activeTab {FONT-Style:Bold; font-size:12px;background-color:#F8F8F8;}
+             .inactiveTab { FONT-Style:Bold;font-size:12px;background-color:#aaaaaa;color:Black}
+             .background {FONT-Style:Bold;font-size:12px}
+             
+                .rich-tab-active {
+                    background-image: none !important;
+                    background-color: #EFC9C9;
+                    color: black !important;
+                }
+                
+                .rich-tabpanel-content {
+background-color: #F8F8F8;
+FONT-Style:Bold; font-size:12px;
+font-family: Arial,Verdana,sans-serif;
+}
+                .rich-tabpanel-content .rich-tabpanel-content-position {
+                height: 100%;
+                position: relative;
+                background-color: #EFC9C9;
+                }   
+                
+                .rich-tab-header {
+
+                font-size: 11px;
+                font-family: Arial,Verdana,sans-serif;
+                }
+                .rich-tab-inactive {
+                background-image: none !important;
+                background-color: #C26B96;
+                color: white !important;
+                }
+                
+                .pbBody, .pbBody a, .pbBody td, .lbBody a, .lbBodyDescription, .list .headerRow .noRowsHeader {
+                color: none !important;
+                }
+         </style>
+
+            <div class = "rich-tabpanel-content">   
+            <apex:tabPanel switchType="client" selectedTab="Owner" id="AccountTabs" activeTabClass="rich-tab-active" inactiveTabClass="rich-tab-inactive" 
+                 >
+                <apex:tab label="Owner" name="propertyOwner" id="tabOwner" labelWidth="100px" style="Font-Size:12px; FONT-Style:Bold">
+                    <apex:pageBlockSection columns="1">
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Owner_Account__c.label}"/>
+                            <apex:actionRegion immediate="true" >
+                                <apex:inputField value="{!property.Owner_Account__c}" >
+                                    <apex:actionSupport event="onchange" action="{!readOwner}" reRender="ownerDetails, pMsg" status="fetchStatus"/>
+                                </apex:inputField>
+                            </apex:actionRegion> 
+                        </apex:pageBlockSectionItem>
+                     </apex:pageBlockSection>
+                    <apex:outputPanel id="ownerDetails">
+                        <apex:pageBlockSection columns="1" id="ownerAccSection">
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.Name__c.label}"/>
+                            <apex:inputText value="{!propertyOwner.Name__c}" disabled="{!ownerEdit}">  </apex:inputText>
+                        </apex:pageblockSectionItem>
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.Phone.label}"/>
+                            <apex:inputText value="{!propertyOwner.Phone__c}" disabled="{!ownerEdit}">  </apex:inputText>
+                        </apex:pageblockSectionItem>
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.Street__c.label}"/>
+                            <apex:inputText value="{!propertyOwner.Street__c}" disabled="{!ownerEdit}">  </apex:inputText>
+                        </apex:pageblockSectionItem>
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.City__c.label}"/>
+                            <apex:inputText value="{!propertyOwner.City__c}" disabled="{!ownerEdit}">  </apex:inputText>
+                        </apex:pageblockSectionItem>
+                        <apex:pageBlockSectionItem id="ownerAccSecItem">    
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.MDU_State__c.label}"  />
+                            <apex:selectList size="1" value="{!ownerAccountState}" id="ownerAccState" >
+                                <apex:selectOptions value="{!MDUStates}" />                                 
+                            </apex:selectList>  
+                          
+                        </apex:pageblockSectionItem>
+                        <script>
+                            document.getElementById('{!$Component.mduPropertyPahe.myForm.pgBlock.pageBlockAccount.ownerAccSection.ownerAccSecItem.ownerAccState}').disabled = {!ownerEdit};                         
+                        </script>
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.Zip_Code__c.label}"/>
+                            <apex:inputText value="{!propertyOwner.Zip_Code__c}" disabled="{!ownerEdit}">  </apex:inputText>
+                        </apex:pageblockSectionItem>
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.Country__c.label}"/>
+                            <apex:inputText value="{!propertyOwner.Country__c}" disabled="{!ownerEdit}">  </apex:inputText>
+                        </apex:pageblockSectionItem>
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Contact_Owner__c.label}"/>
+                            <apex:inputField value="{!property.Contact_Owner__c}" >  </apex:inputField>
+                        </apex:pageblockSectionItem>
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.ParentId.label}"/>
+                            <apex:outputField value="{!propertyOwner.ParentId}" >  </apex:outputField>
+                        </apex:pageblockSectionItem>
+                        </apex:pageBlockSection>
+                    </apex:outputPanel> 
+                </apex:tab>
+                <apex:tab label="Management Company" name="propertyManageComp" id="tabManageComp" labelWidth="175px" style="Font-Size:12px; FONT-Style:Bold">
+                    <apex:pageBlockSection columns="1">
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Management_Company__c.label}"/>
+                            <apex:actionRegion immediate="true" >
+                                <apex:inputField value="{!property.Management_Company__c}" >
+                                    <apex:actionSupport event="onchange" action="{!readManagComp}" reRender="manageCompDetails, pMsg" status="fetchStatus"/>
+                                </apex:inputField>
+                            </apex:actionRegion> 
+                        </apex:pageBlockSectionItem>
+                     </apex:pageBlockSection>
+                    <apex:outputPanel id="manageCompDetails">
+                        <apex:pageBlockSection columns="1" id="ManComAccSection">
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.Name__c.label}"/>
+                            <apex:inputText value="{!propertyManageComp.Name__c}" disabled="{!manageCompanyEdit}">  </apex:inputText>
+                        </apex:pageblockSectionItem>
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.Phone.label}"/>
+                            <apex:inputText value="{!propertyManageComp.Phone__c}" disabled="{!manageCompanyEdit}">  </apex:inputText>
+                        </apex:pageblockSectionItem>
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.Street__c.label}"/>
+                            <apex:inputText value="{!propertyManageComp.Street__c}" disabled="{!manageCompanyEdit}">  </apex:inputText>
+                        </apex:pageblockSectionItem>
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.City__c.label}"/>
+                            <apex:inputText value="{!propertyManageComp.City__c}" disabled="{!manageCompanyEdit}">  </apex:inputText>
+                        </apex:pageblockSectionItem>
+                        <apex:pageBlockSectionItem id="manComAccSecItem">    
+                             <apex:outputLabel value="{!$ObjectType.Account.fields.MDU_State__c.label}"/>
+                            <apex:selectList size="1" value="{!manageCompAccountState}" id="manComAccState" >
+                                <apex:selectOptions value="{!MDUStates}" />                                 
+                            </apex:selectList>
+                        
+                        </apex:pageblockSectionItem>
+                        <script>
+                            document.getElementById('{!$Component.mduPropertyPahe.myForm.pgBlock.pageBlockAccount.ManComAccSection.manComAccSecItem.manComAccState}').disabled = {!manageCompanyEdit};                          
+                        </script>
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.Zip_Code__c.label}"/>
+                            <apex:inputText value="{!propertyManageComp.Zip_Code__c}" disabled="{!manageCompanyEdit}">  </apex:inputText>
+                        </apex:pageblockSectionItem>
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.Country__c.label}"/>
+                            <apex:inputText value="{!propertyManageComp.Country__c}" disabled="{!manageCompanyEdit}">  </apex:inputText>
+                        </apex:pageblockSectionItem>
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Contact_Management_Company__c.label}"/>
+                            <apex:inputField value="{!property.Contact_Management_Company__c}" >  </apex:inputField>
+                        </apex:pageblockSectionItem>
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.ParentId.label}"/>
+                            <apex:outputField value="{!propertyManageComp.ParentId}" >  </apex:outputField>
+                        </apex:pageblockSectionItem>
+                        </apex:pageBlockSection>
+                    </apex:outputPanel>                 
+                </apex:tab>
+                <apex:tab label="Developer" name="propertyDeveloper" id="tabDeveloper" labelWidth="100px" style="Font-Size:12px; FONT-Style:Bold">
+                    <apex:pageBlockSection columns="1">
+                        <apex:pageBlockSectionItem >
+                            <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Developer__c.label}"/>
+                            <apex:actionRegion immediate="true" >
+                                <apex:inputField value="{!property.Developer__c}" >
+                                    <apex:actionSupport event="onchange" action="{!readDeveloper}" reRender="developerDetails, pMsg" status="fetchStatus"/>
+                                </apex:inputField>
+                            </apex:actionRegion> 
+                        </apex:pageBlockSectionItem>
+                     </apex:pageBlockSection>
+                    <apex:outputPanel id="developerDetails">
+                        <apex:pageBlockSection columns="1" id="devAccSection">
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.Name__c.label}"/>
+                            <apex:inputText value="{!propertyDeveloper.Name__c}" disabled="{!developerEdit}">  </apex:inputText>
+                        </apex:pageblockSectionItem>
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.Phone.label}"/>
+                            <apex:inputText value="{!propertyDeveloper.Phone__c}" disabled="{!developerEdit}">  </apex:inputText>
+                        </apex:pageblockSectionItem>
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.Street__c.label}"/>
+                            <apex:inputText value="{!propertyDeveloper.Street__c}" disabled="{!developerEdit}">  </apex:inputText>
+                        </apex:pageblockSectionItem>
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.City__c.label}"/>
+                            <apex:inputText value="{!propertyDeveloper.City__c}" disabled="{!developerEdit}">  </apex:inputText>
+                        </apex:pageblockSectionItem>
+                        <apex:pageBlockSectionItem id="devAccSecItem">    
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.MDU_State__c.label}"/>
+                            <apex:selectList size="1" value="{!developerAccountState}" id="devAccState" >
+                                <apex:selectOptions value="{!MDUStates}" />                                 
+                            </apex:selectList>
+                        
+                        </apex:pageblockSectionItem>
+                        <script>
+                            document.getElementById('{!$Component.mduPropertyPahe.myForm.pgBlock.pageBlockAccount.devAccSection.devAccSecItem.devAccState}').disabled = {!developerEdit};                           
+                        </script>
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.Zip_Code__c.label}"/>
+                            <apex:inputText value="{!propertyDeveloper.Zip_Code__c}" disabled="{!developerEdit}">  </apex:inputText>
+                        </apex:pageblockSectionItem>
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.Country__c.label}"/>
+                            <apex:inputText value="{!propertyDeveloper.Country__c}" disabled="{!developerEdit}">  </apex:inputText>
+                        </apex:pageblockSectionItem>
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Contact_Developer__c.label}"/>
+                            <apex:inputField value="{!property.Contact_Developer__c}" >  </apex:inputField>
+                        </apex:pageblockSectionItem>
+                        <apex:pageBlockSectionItem >    
+                            <apex:outputLabel value="{!$ObjectType.Account.fields.ParentId.label}"/>
+                            <apex:outputField value="{!propertyDeveloper.ParentId}" >  </apex:outputField>
+                        </apex:pageblockSectionItem>
+                        </apex:pageBlockSection>
+                    </apex:outputPanel>                 
+                </apex:tab>
+            </apex:tabPanel>        
+            </div> 
+             
+            <apex:pageBlockSection columns="2" title="Property Contact" collapsible="false">
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Contact_Name__c.label}"/>
+                    <apex:inputField taborderhint="32" value="{!property.Contact_Name__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Contact_Title__c.label}"/>
+                    <apex:inputField taborderhint="35"  value="{!property.Contact_Title__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Contact_Phone__c.label}"/>
+                    <apex:inputField taborderhint="33"  value="{!property.Contact_Phone__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Contact_Email__c.label}"/>
+                    <apex:inputField taborderhint="36"  value="{!property.Contact_Email__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+             
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Contact_Fax__c.label}"/>
+                    <apex:inputField taborderhint="34"  value="{!property.Contact_Fax__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+             
+               <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Hours_Contact_Available__c.label}"/>
+                    <apex:inputField taborderhint="37"  value="{!property.Hours_Contact_Available__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+             <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Same_as_Above__c.label}"/>
+                    <apex:inputField taborderhint="38"  value="{!property.Same_as_Above__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem > 
+            </apex:pageBlockSectionItem>
+    <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Property_Contact_Address__c.label}"/>
+                    <apex:inputField taborderhint="39"  value="{!property.Property_Contact_Address__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+               <apex:pageBlockSectionItem > 
+            </apex:pageBlockSectionItem>
+    <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Property_Contact_Address_2__c.label}"/>
+                    <apex:inputField taborderhint="40"  value="{!property.Property_Contact_Address_2__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+             <apex:pageBlockSectionItem > 
+            </apex:pageBlockSectionItem>
+    <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Property_Contact_City__c.label}"/>
+                    <apex:inputField taborderhint="41"  value="{!property.Property_Contact_City__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+             <apex:pageBlockSectionItem > 
+            </apex:pageBlockSectionItem>
+    <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Property_Contact_State__c.label}"/>
+                    <apex:inputField taborderhint="42"  value="{!property.Property_Contact_State__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+             <apex:pageBlockSectionItem > 
+            </apex:pageBlockSectionItem>
+    <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Property_Contact_Zip__c.label}"/>
+                    <apex:inputField taborderhint="43"  value="{!property.Property_Contact_Zip__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+          
+            </apex:pageBlockSection>     
+          </apex:pageBlockSection>
+          <apex:pageBlockSection columns="2" title="Services Provided" collapsible="false">
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Comcast_Video_Serviced__c.label}"/>
+                    <apex:inputField taborderhint="44" required="true" value="{!property.Comcast_Video_Serviced__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Comcast_Voice_Serviced__c.label}"/>
+                    <apex:inputField taborderhint="48" required="true" value="{!property.Comcast_Voice_Serviced__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Video_Billing_Type__c.label}"/>
+                    <apex:inputField taborderhint="45" required="true" value="{!property.Video_Billing_Type__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Voice_Billing_Type__c.label}"/>
+                    <apex:inputField taborderhint="49" required="true" value="{!property.Voice_Billing_Type__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Video_Contract_Status__c.label}"/>
+                    <apex:outputLabel value="{!property.Video_Contract_Status__c}">  </apex:outputLabel>
+             </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Voice_Contract_Status__c.label}" />
+                    <apex:outputLabel value="{!property.Voice_Contract_Status__c}">  </apex:outputLabel>
+             </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Comcast_Data_Serviced__c.label}" />
+                    <apex:inputField taborderhint="46" required="true" value="{!property.Comcast_Data_Serviced__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+             <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Wifi__c.label}"/>
+                    <apex:inputField taborderhint="50" value="{!property.Wifi__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+             
+             <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Data_Billing_Type__c.label}" />
+                    <apex:inputField taborderhint="47" required="true" value="{!property.Data_Billing_Type__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem> 
+            
+             <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Common_Area_WiFi__c.label}"/>
+                    <apex:inputField taborderhint="51" value="{!property.Common_Area_WiFi__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem> 
+             <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Data_Contract_Status__c.label}" />
+                    <apex:outputLabel value="{!property.Data_Contract_Status__c}">  </apex:outputLabel>
+             </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Property_Wide_WiFi__c.label}"/>
+                    <apex:inputField taborderhint="52" value="{!property.Property_Wide_WiFi__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>   
+             <apex:pageBlockSectionItem >
+             </apex:pageBlockSectionItem>
+           </apex:pageBlockSection>
+           
+            <apex:pageBlockSection columns="2" title="Disconnect Details" collapsible="false">
+               <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Disconnect_Date__c.label}" />
+                    <apex:inputField taborderhint="53" value="{!property.Disconnect_Date__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.MDU_Disconnect_Reason__c.label}"/>
+                    <apex:inputField taborderhint="54" value="{!property.MDU_Disconnect_Reason__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+    <!-- 
+           /***** Based on US1083692
+            <apex:pageBlockSection columns="2" title="Competitor Details">
+               <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Competitor__c.label}" />
+                    <apex:inputField taborderhint="55" value="{!property.Competitor__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.ROE_or_Bulk__c.label}"/>
+                    <apex:inputField taborderhint="58" value="{!property.ROE_or_Bulk__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+             
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Effective_Date__c.label}"/>
+                    <apex:inputField taborderhint="56" value="{!property.Effective_Date__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Competitor_Comments__c.label}"/>
+                    <apex:inputField taborderhint="59" value="{!property.Competitor_Comments__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+             
+             <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Expiration_Date__c.label}"/>
+                    <apex:inputField taborderhint="57" value="{!property.Expiration_Date__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+              <apex:pageBlockSectionItem >
+                  
+             </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+                ****/US1083692 Ends
+        -->
+            <apex:pageBlockSection columns="1" title="Comment Section" collapsible="false">
+               <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Property_Comments__c.label}"/>
+                    <apex:inputField taborderhint="60" value="{!property.Property_Comments__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+              
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection columns="2" title="System Details">
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Delete_Reason__c.label}"/>
+                    <apex:inputField taborderhint="61" value="{!property.Delete_Reason__c}">  </apex:inputField>
+             </apex:pageBlockSectionItem>
+            
+             <apex:pageBlockSectionItem >       
+                    <apex:outputLabel value="{!$ObjectType.MDU_Property__c.fields.Delete_Property__c.label}"/>      
+                    <apex:inputField taborderhint="62" value="{!property.Delete_Property__c}"/>         
+             </apex:pageBlockSectionItem>
+             
+             </apex:pageBlockSection>
+        </apex:pageBlock>
+        
+    </apex:form>
+   
+   
+</apex:page>

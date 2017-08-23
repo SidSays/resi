@@ -1,0 +1,24 @@
+<apex:page controller="AccountManagementServiceCallout" sidebar="false" showHeader="false" >
+
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+
+        .ma-iframe-wrapper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .ma-iframe-wrapper > iframe {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
+   <apex:pageBlock >     
+      <apex:pageMessages ></apex:pageMessages></apex:pageBlock>
+   <iframe src="data:application/pdf;base64,{!pdfBlobData}" width="100%" height="900"></iframe>
+
+</apex:page>

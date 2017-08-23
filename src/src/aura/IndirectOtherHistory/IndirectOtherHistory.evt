@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="Event to navigate to Other Visit View">
+    <aura:attribute name="bodyToRender" type="String" />
+</aura:event>

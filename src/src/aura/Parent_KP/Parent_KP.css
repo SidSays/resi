@@ -1,0 +1,26 @@
+.THIS {    
+}
+
+.THIS.rotate {
+    display: none;
+}
+
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait ) {
+    .THIS.rotate {
+        background-color: rgba(0,0,0,0.5);
+        display: block;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+}
+
+/*@media (max-width:1200px) {
+.THIS .waveFrame {
+    width: 740px !important;
+	}  
+}*/

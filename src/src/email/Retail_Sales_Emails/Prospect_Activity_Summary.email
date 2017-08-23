@@ -1,0 +1,7 @@
+Name of Company Prospected: {!Store_Activity__c.Name_of_the_company_you_prospected__c}  <br />
+Visit Type: {!Store_Activity__c.What_type_of_visit_was_this__c} <br />
+Name of person met with: {!Store_Activity__c.Who_did_you_meet_with_text__c} <br />
+Activities completed: {!Store_Activity__c.What_did_you_complete__c}  <br />
+Interest Level of Dealer: {!Store_Activity__c.Interest_Level_of_Dealer__c}  <br />
+Follow up Items for Next Meeting: {!Store_Activity__c.Follow_up_items_to_prep_for_next_meeting__c}  <br />
+Notes: {!Store_Activity__c.Notes__c}  <br />

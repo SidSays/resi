@@ -1,0 +1,66 @@
+<!--Author     : Malay Desai
+Date       : 4/4/2017
+Description: Custom Page for creating Coaching record for XSPs and CARs. Called from within CoachingEditRedirect page -->
+
+<apex:page docType="html-5.0"  standardController="WorkCoaching" extensions="CoachingEditRedirectController" tabStyle="WorkCoaching"
+           title="Coaching: New Coaching">
+    
+    <apex:pageMessages />
+    <apex:form >
+    	<!-- Redering for SF Classic Starts -->
+		<apex:outputPanel id="classicPanel" rendered="{!AND( $User.UIThemeDisplayed <> 'Theme4d', $User.UIThemeDisplayed <> 'Theme4t') }">
+            <apex:sectionHeader title="Coaching" subtitle="New Coaching" />
+            <apex:pageBlock mode="edit" Title="Coaching Edit" tabStyle="WorkCoaching">
+                <apex:pageBlockButtons >
+                    <apex:commandButton action="{!saveRecord}" value="Save"/>
+                    <apex:commandButton action="{!cancel}" value="Cancel"/>
+                </apex:pageBlockButtons>
+                <apex:pageBlockSection columns="2" title="Coaching Information">
+                    <apex:inputField value="{!coach.Name}" label="Coach" />
+                    <apex:inputField value="{!personCoached.Name}" label="Person Coached" />
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        <!-- Redering for SF Classic End -->
+        <!-- Redering for SF1 and Lightning Experience Starts -->
+        <div class="slds-scope">
+        	<apex:slds />    
+            <apex:outputPanel id="sf1Panel" rendered="{!OR( $User.UIThemeDisplayed == 'Theme4d', $User.UIThemeDisplayed == 'Theme4t') }">
+                <br/>
+                <div class="slds-modal__header slds-grid slds-wrap slds-grid--pull-padded">
+                    <div class="slds-p-horizontal--small slds-size--3-of-12 slds-medium-size--2-of-12 slds-large-size--1-of-12">
+                        <button class="slds-button slds-button--neutral" onclick="cancelRec();">Cancel</button>
+                    </div>
+                    <div class="slds-p-horizontal--small slds-size--6-of-12 slds-medium-size--8-of-12 slds-large-size--10-of-12">
+                        <div class="slds-text-heading--medium slds-truncate slds-text-align--center">Create Coaching</div>
+                    </div>
+                    <div class="slds-p-horizontal--small slds-size--3-of-12 slds-medium-size--2-of-12 slds-large-size--1-of-12">
+                        <button class="slds-button slds-button--brand" onclick="saveRec();">Save</button>
+                    </div>
+                </div>
+                <div class="slds-modal__content">
+                    <h3 class="slds-section-title--divider">COACHING INFORMATION</h3>
+                    <div class="slds-form--stacked slds-p-around--medium slds-m-bottom--x-small">
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="inputNameSample1">Coach</label>
+                            <div class="slds-form-element__control">
+                                <input type="text" id="inputNameSample1" class="slds-input" value="{!coach.Name}" readonly="readonly"/>
+                            </div>
+                        </div>
+                        <div class="slds-form-element">
+                            <label class="slds-form-element__label" for="inputNameSample2">Person Coached</label>
+                            <div class="slds-form-element__control">
+                                <input type="text" id="inputNameSample2" class="slds-input" value="{!personCoached.Name}" readonly="readonly"/>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+                
+            </apex:outputPanel>
+        </div>
+        <!-- Redering for SF1 and Lightning Experience Ends -->
+        <apex:actionFunction action="{!saveRecord}" name="saveRec"/>
+        <apex:actionFunction action="{!cancel}" name="cancelRec"/>
+    </apex:form>
+    
+</apex:page>

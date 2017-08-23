@@ -1,0 +1,83 @@
+<aura:component controller="IndirectStoreController" implements="force:appHostable,flexipage:availableForAllPageTypes" >
+    <ltng:require styles="/resource/SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />
+    
+    <aura:attribute name="title" type="String" default="HOME"/>
+    <aura:attribute name="renderbody" type="String"/>
+    <aura:attribute name="store" type="Account"/>
+    <aura:attribute name="storeMap" type="Map"/>
+    <aura:attribute name="storevisits" type="Event[]"/>
+    <aura:attribute name="upcomingEvents" type="Event[]"/>
+    <aura:attribute name="module" type="String" default="preparation"/>
+    <aura:attribute name="loggedInUser" type="User"/>
+    <aura:attribute name="role" type="UserRole"/>
+    <aura:attribute name="storeVisitObj" type="Store_Visit__c"/>
+    <aura:attribute name="storeActivities" type="Store_Activity__c[]"/>
+    <aura:attribute name="recommendedCategory" type="String[]"/>
+    <aura:attribute name="storeVisitCategory" type="Store_Visit_Activity_Category__c[]"/>
+    <aura:attribute name="allCategories" type="Store_Visit_Activity_Category__c[]"/>
+    <aura:attribute name="contactsList" type="IndirectStoreController.IndirectContactWrapper[]"/>
+    <aura:attribute name="emailSummaryForOtherVisits" type="String"/>
+    
+    <aura:attribute name="storeActivityId" type="String"/>
+    <aura:attribute name="storeId" type="String"/>
+    <aura:attribute name="StoreActivityCatagory" type="String"/>
+    <aura:attribute name="LookupFieldValue" type="String"/>
+    <aura:attribute name="fromMultiContComp" type="boolean"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="c:IndirectNavigateToMyStores" action="{!c.navigateToMyStore}"/>
+    <aura:handler event="c:IndirectNavigateToDashboard" action="{!c.navigateToDashboard}"/>
+    <aura:handler event="c:IndirectNavigateToStoreDetails" action="{!c.navigateToStoreDetail}"/>
+    <aura:handler event="c:IndirectNavigateToVisitHistory" action="{!c.navigateToVisitHistorySurvey}"/>
+    <aura:handler event="c:IndirectNavigateToStoreVisit" action="{!c.navigateToStoreVisit}"/>
+    <aura:handler event="c:IndirectAddNoteEvent" action="{!c.navigateToAddNotes}"/>
+    <aura:handler event="c:IndirectNavigateToNextSteps" action="{!c.navigateToNextSteps}"/>
+    <aura:handler event="c:IndirectSendSummaryEvent" action="{!c.navigateToSendSummary}"/>
+    <aura:handler event="c:IndirectGetStoreRelatedData" action="{!c.setValuesStoreRelatedData}"/>
+    <aura:handler event="c:IndirectNavigateToOtherVisits" action="{!c.navigateToOtherVisits}"/>
+    <aura:handler event="c:IndirectNavigateToContactDetails" action="{!c.navigateToContactDetails}"/>
+    <aura:handler event="c:IndirectOtherHistory" action="{!c.navigateToIndirectOtherHistory}"/>
+    <aura:handler event="c:IndirectContactSelectionForActivityEvent" action="{!c.navigateToContactSelection}"/>
+    
+    
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}" />
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/> 
+
+    <div id="wrapper" class="slds slds-scrollable--y"> 
+        
+        <div>
+            <div aura:id="modalspinner" class="slds-hide modalspinner">
+                <div class="centered">
+                    <ui:spinner aura:id="spinner"/>
+                </div>
+            </div>
+        </div > 
+        <c:IndirectHomeHeader title="{!v.title}" loggedInUser="{!v.loggedInUser}" 
+                              store="{!v.store}" 
+                              role="{!v.role}"                                                                 
+                              storeVisitCategory="{!v.storeVisitCategory}"/>
+        
+        <c:IndirectHomeBody store="{!v.store}" storeMap="{!v.storeMap}"
+                              storevisits="{!v.storevisits}" upcomingEvents="{!v.upcomingEvents}" 
+                              renderbody="{!v.renderbody}"
+                              loggedInUser="{!v.loggedInUser}" role="{!v.role}" 
+                              storeVisitObj="{!v.storeVisitObj}" storeActivities="{!v.storeActivities}"
+                              recommendedCategory="{!v.recommendedCategory}"
+                              storeVisitCategory="{!v.storeVisitCategory}"
+                              allCategories="{!v.allCategories}"
+                              emailSummaryForOtherVisits="{!v.emailSummaryForOtherVisits}"
+                              contactsList="{!v.contactsList}"
+                              storeActivityId="{!v.storeActivityId}" storeId="{!v.storeId}"
+                              StoreActivityCatagory="{!v.StoreActivityCatagory}"
+                              LookupFieldValue="{!v.LookupFieldValue}"
+                              fromMultiContComp="{!v.fromMultiContComp}"/>	
+        
+        <c:IndirectHomeFooter loggedInUser="{!v.loggedInUser}" storevisits="{!v.storevisits}"
+                              storeMap="{!v.storeMap}" title="{!v.title}" store="{!v.store}"
+                              module="{!v.module}" role="{!v.role}" 
+                              storeVisitCategory="{!v.storeVisitCategory}"  
+                              bodyToRender="{!v.renderbody}"/> 
+        
+    </div> 
+  
+</aura:component>

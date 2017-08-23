@@ -1,0 +1,62 @@
+<apex:page tabStyle="MDU_Property__c" standardController="MDU_Property__c"  extensions="UnassignCAR" showHeader="false" standardStylesheets="true" sidebar="false" applyBodyTag="false" applyHtmlTag="false" docType="html-5.0" >
+       <script> 
+        function show_alert()
+        {
+            var assignId= "{!MDU_Property__c.Assigned_CAR__c}";
+            if(assignId == ''){
+                alert('Assigned CAR is not available to unassign');
+            }else{
+                var r = confirm("Click OK to confirm the unassignment of CAR");
+                if (r == true) {
+                    return true;
+                }else{ 
+                   return false;
+                }
+            }
+        }
+        </script>
+     <div style="height:250px;overflow:auto;width:100%;">   <apex:pageMessages ></apex:pageMessages>
+  <apex:sectionHeader title="Unassignment of CAR"/>
+    
+    <apex:form id="formId">
+         <apex:pageBlock id="pB" mode="edit">
+           <apex:pageBlockButtons location="Bottom">
+            <apex:commandButton title="Unassign"  value="Unassign" onclick="if(show_alert() == false){return false;}"  action="{!Unassign}" rerender="redirectPanel">
+            </apex:commandButton>
+             <apex:outputPanel id="redirectPanel" >
+             <apex:outputText rendered="{!shouldRedirect}">
+                <script type="text/javascript">
+                  if (typeof sforce !== 'undefined') {                               
+                    Sfdc.canvas.publisher.publish({ name: "publisher.close",
+                           payload:{ refresh:"true" }
+                            }
+                       );              
+                       }else{
+                           window.top.location.href = '/{!MDU_Property__c.Id}';             
+                       } 
+                </script>
+            </apex:outputText>
+           </apex:outputPanel>
+          
+           <apex:commandButton title="Cancel" value="Cancel" onclick="ReturnToProperty();" />
+            </apex:pageBlockButtons>
+             <apex:pageBlockSection title="Unassign CAR from Property" collapsible="false"  columns="1" id="userTypesOption">   
+            </apex:pageBlockSection>
+       </apex:pageBlock>
+     </apex:form>
+    </div>
+    <script type='text/javascript' src='/canvas/sdk/js/publisher.js'/>
+      <script type="text/javascript">
+       function ReturnToProperty(){
+          if (typeof sforce !== 'undefined') {                               
+                  Sfdc.canvas.publisher.publish({ name: "publisher.close",
+                                             payload:{ refresh:"true" }
+                                         }
+                    );              
+           }else{
+               window.top.location.href = '/{!Mdu_Property__c.Id}';             
+           }  
+           
+       }
+      </script>
+</apex:page>

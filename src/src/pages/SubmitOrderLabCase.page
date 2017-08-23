@@ -1,0 +1,99 @@
+<!--  
+Created Date : 02-June-2017
+US number    : US1112140
+Description  : NSO - Web-to-Case for OL Cases - New VF Home Page and Controller for Order Lab Case creation
+Author       : Siddharth Sinha
+Last modified: Mohan Pudi/Siddharth Sinha as part of (US1128342- Dynamic Report Name field)
+-->
+<apex:page controller="SubmitOrderLabCaseController" id="page" showHeader="false" sidebar="false" cache="false">
+    <script language="JavaScript" type="text/javascript">
+        function openAttachmentPopup() {
+            window.open('AttachFilesToCase?CaseId={!newcase.Id}',
+                'Popup', 'height=400,width=1000,left=100,top=100,scrollbars=yes,toolbar=no,status=no');
+            return false;
+        }
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+           $('.R1').closest('tr').hide();
+        });
+        
+        function showReportName(){
+            var t1 = $('.T1').val();   
+            if(t1==="Reporting"){
+                $('.R1').closest('tr').show();
+             } else{
+                $('.R1').closest('tr').hide();
+                $('.R1').val('');
+             }  
+        }
+    </script>
+
+<apex:form style="margin-left:10px;margin-right:10px;" id="frm" onmousemove="showReportName();" >
+<apex:image value="{!$Resource.Xfinity}" style="height:10%;width:10%;" /><br/><br/>
+<span style="font-weight:bold;font-family:arial;font-size: 10.5pt;">Submit New Service Request</span><br/><br/>
+<span style="font-weight:regular;font-family:arial;font-size: 10.5pt;">All fields are required. If you do not know the Account Number, Order Number or Order Lab Session ID, enter "N/A"</span><br/><br/>
+        <apex:pageMessages />
+          <apex:pageBlock id="pb">
+            <apex:pageBlockButtons location="bottom" rendered="{!!submitted && !attachmentsAdded}">
+                <apex:commandButton action="{!SubmitCase}" value="Submit" rendered="{!!submitted && !attachmentsAdded}"/>
+             <!--   <apex:commandButton action="{!attachFiles}" value="Attach Files" rendered="{!submitted}"/>-->
+             </apex:pageBlockButtons>
+             <apex:pageBlockSection title="Contact Information" columns="1" id="pbs" >
+                <!--<apex:inputField value="{!newcase.Requested_For__c}" label="This Request is for"/>-->                        
+                <apex:inputText value="{!firstName}"  label="First Name:" rendered="{!!submitted && !attachmentsAdded}" />                                            
+                <apex:inputText value="{!lastName}" label="Last Name:" rendered="{!!submitted && !attachmentsAdded}"  />
+                <apex:outputText value="{!firstName}" label="First Name" rendered="{!submitted || attachmentsAdded}" />
+                <apex:outputText value="{!lastName}" label="Last Name" rendered="{!submitted || attachmentsAdded}" />
+                <apex:inputField value="{!newcase.AccountNumber__c}" label="Account Number:"  rendered="{!!submitted && !attachmentsAdded}" />
+                <apex:outputField value="{!newcase.AccountNumber__c}" label="Account Number:" rendered="{!submitted || attachmentsAdded}" />
+                <apex:inputField value="{!newcase.OrderID__c}" label="Order Number:"  rendered="{!!submitted && !attachmentsAdded}" />
+                <apex:outputField value="{!newcase.OrderID__c}" label="Order Number:" rendered="{!submitted || attachmentsAdded}" />
+                <apex:inputField value="{!newcase.Region__c}" label="Region:"  rendered="{!!submitted && !attachmentsAdded}"  />
+                <apex:outputField value="{!newcase.Region__c}" label="Region:" rendered="{!submitted || attachmentsAdded}" />
+                <apex:inputField value="{!newcase.Preferred_Email__c}" label="Email:"  rendered="{!!submitted && !attachmentsAdded}" />
+                <apex:outputField value="{!newcase.Preferred_Email__c}" label="Email:" rendered="{!submitted || attachmentsAdded}"/>
+                <apex:inputField value="{!newcase.Preferred_Phone__c}" label="Preferred Phone:"  rendered="{!!submitted && !attachmentsAdded}" />
+                <apex:outputField value="{!newcase.Preferred_Phone__c}" label="Preferred Phone:" rendered="{!submitted || attachmentsAdded}"/>
+                <apex:inputField value="{!newcase.Channel__c}" label="Channel:"  rendered="{!!submitted && !attachmentsAdded}" />
+                <apex:outputField value="{!newcase.Channel__c}"  label="Channel:" rendered="{!submitted || attachmentsAdded}"/>
+                <apex:inputField value="{!newcase.Request_Type__c}" label="Product:"  rendered="{!!submitted && !attachmentsAdded}" />
+                <apex:outputField value="{!newcase.Request_Type__c}" label="Product:" rendered="{!submitted || attachmentsAdded}"/>
+                <apex:inputField value="{!newcase.Ticket_Category__c}" label="Ticket Category:" styleClass="T1" id="T1"  rendered="{!!submitted && !attachmentsAdded}" onclick="showReportName();"/>
+                <apex:outputField value="{!newcase.Ticket_Category__c}" label="Ticket Category:" rendered="{!submitted || attachmentsAdded}" />
+                <apex:inputField value="{!newcase.Ticket_Category_II__c}" label="Ticket Category II:" id="T2"  rendered="{!!submitted && !attachmentsAdded}" />
+                <apex:outputField value="{!newcase.Ticket_Category_II__c}" label="Ticket Category II:" rendered="{!submitted || attachmentsAdded}" />
+                <apex:inputField value="{!newcase.Report_Name__c}" label="Report Name:" styleClass="R1" rendered="{!!submitted && !attachmentsAdded}"  />    
+                <apex:outputField value="{!newcase.Report_Name__c}" label="Report Name:" styleClass="R1" rendered="{!submitted || attachmentsAdded}" />
+                <apex:inputField value="{!newcase.Description}" label="Description:" style="width:50%;"  rendered="{!!submitted && !attachmentsAdded}" />
+                <apex:outputField value="{!newcase.Description}" label="Description:" style="width:50%;" rendered="{!submitted || attachmentsAdded}" />
+                <apex:inputField value="{!newcase.Session_ID__c}" label="Order Lab Session ID:"  rendered="{!!submitted && !attachmentsAdded}"  />
+                <apex:outputField value="{!newcase.Session_ID__c}" label="Order Lab Session ID:" rendered="{!submitted || attachmentsAdded}" />
+                
+                 <!-- Code to add attachments on the same page -->
+                                
+                <apex:pageBlockSectionItem rendered="{!!submitted && !attachmentsAdded}" >
+                    <apex:outputText style="font-weight:bold;" value="Attachment 1:" rendered="{!!submitted && !attachmentsAdded}"/>
+                    <apex:inputFile value="{!fileBody1}" filename="{!fileName1}" id="file1" contentType="{!contentType1}" rendered="{!!submitted && !attachmentsAdded}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem rendered="{!!submitted && !attachmentsAdded}" >
+                    <apex:outputText style="font-weight:bold;" value="Attachment 2:" rendered="{!!submitted && !attachmentsAdded}"/><apex:inputFile value="{!fileBody2}" filename="{!fileName2}" id="file2" contentType="{!contentType2}" rendered="{!!submitted && !attachmentsAdded}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem rendered="{!!submitted && !attachmentsAdded}" >
+                    <apex:outputText style="font-weight:bold;" value="Attachment 3:" rendered="{!!submitted && !attachmentsAdded}"/><apex:inputFile value="{!fileBody3}" filename="{!fileName3}" id="file3" contentType="{!contentType3}" rendered="{!!submitted && !attachmentsAdded}"/>
+                </apex:pageBlockSectionItem>
+                
+                
+                <apex:pageBlockSectionItem rendered="{!submitted || attachmentsAdded}">
+                    <apex:outputText value="Attached Files: "/>
+                    {!filename1}<br/>
+                    {!filename2}<br/>
+                    {!filename3}
+                </apex:pageBlockSectionItem>
+                 
+            </apex:pageBlockSection>   
+                                          
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

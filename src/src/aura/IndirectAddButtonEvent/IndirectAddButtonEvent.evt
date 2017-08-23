@@ -1,0 +1,5 @@
+<aura:event type="APPLICATION" description="Event template" >
+    <aura:attribute name="storeActivities" type="Store_Activity__c"/>
+    <aura:attribute name="edit" type="boolean" />
+    <aura:attribute name="readOnly" type="boolean" />    
+</aura:event>

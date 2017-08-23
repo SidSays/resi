@@ -1,0 +1,13 @@
+<apex:page showHeader="false" sidebar="false" controller="AttachFilesToCaseController">
+	<apex:form >
+	<apex:image value="{!$Resource.Xfinity}" style="height:10%;width:10%;" /><br/><br/>
+	<span style="font-weight:bold;font-family:arial;font-size: 10.5pt;">Attach Files To Case Created On {!attachCaseDate} </span><br/><br/>
+	<apex:outputText style="font-weight:bold;" value="Attachment 1:"/><apex:inputFile value="{!fileBody1}" filename="{!fileName1}" id="file1"/>
+	<br/>
+    <apex:outputText style="font-weight:bold;" value="Attachment 2:"/><apex:inputFile value="{!fileBody2}" filename="{!fileName2}" id="file2"/>
+    <br/>
+    <apex:outputText style="font-weight:bold;" value="Attachment 3:"/><apex:inputFile value="{!fileBody3}" filename="{!fileName3}" id="file3"/>
+    <br/><br/>
+    <apex:commandButton action="{!AttachFiles}" value="Attach Files"/>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,15 @@
+.THIS.errorSec {
+    border: 2px solid rgb(255, 12, 12); 
+    padding: 10px;
+    background: #fff;
+    color: rgb(255, 12, 12);
+    width: 100%;
+}
+
+.THIS.infoSec {
+    border: 2px solid #ffd56c; 
+    padding: 10px;
+    background: #fff;
+    color: #ffd56c;
+    width: 100%;
+}

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This template will be used in the store visit summary email</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Issue Resolution Summary</name>
+    <style>none</style>
+    <subject>3PL Manager Review Summary</subject>
+    <textOnly>An issue was discovered with the following description: {!Store_Activity__c.Notes__c} Issue Resolved in Store?</textOnly>
+    <type>custom</type>
+</EmailTemplate>

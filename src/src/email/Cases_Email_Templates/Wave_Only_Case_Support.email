@@ -1,0 +1,13 @@
+A new case has been submitted by a Wave Only user, via email-to-case. 
+Below are the relevant details for this case: 
+
+Case Number: {!Case.CaseNumber} 
+Case Created Date: {!Case.CreatedDate} 
+Case Submitter (email): {!Case.SuppliedEmail} 
+
+Case Subject: {!Case.Subject} 
+Case Description: {!Case.Description} 
+
+--------------------- 
+Case Link: {!Case.Link} 
+--------------------

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Comcast_LetterHead</letterhead>
+    <name>Claim : Cancelled by Affiliate</name>
+    <style>freeForm</style>
+    <subject>Claim {!Case.CaseNumber} : Cancelled by Affiliate</subject>
+    <textOnly>Hello {!Case.OwnerFullName},
+
+A claim has been cancelled by Affiliate.
+
+Claim Details :
+
+Case Number              : {!Case.CaseNumber}
+Case Name                  : {!Case.Case_Name__c}
+Claim Link                     : {!Case.Link}.
+
+
+
+Best Regards,
+Comcast Turnpike Support.</textOnly>
+    <type>html</type>
+</EmailTemplate>

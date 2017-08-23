@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event template">
+    <aura:attribute type="Plan__c[]" name="Plans" />  
+    <aura:attribute type="String" name="CurrentPlanName" /> 
+</aura:event>

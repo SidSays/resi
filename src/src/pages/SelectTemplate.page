@@ -1,0 +1,55 @@
+<!-- 
+/**********************************************************
+* Page Name: SelectTemplate
+* Author: Vivek Patel, Accenture
+* Date: 01-March-2013 
+* Requirement: 122, 301 -  User should be able to apply saved Template to the plan.
+* Description: Custom Template lookup page to apply template to the plan.
+* Last Modified by: Vivek Patel, Accenture
+***********************************************************/
+-->
+<apex:page controller="SearchTemplateController" showHeader="false"  sideBar="false" tabStyle="Template__c">
+<apex:pagemessages id="ErrMsg"/>
+<apex:includeScript value="{!URLFOR($Resource.PlanEditPage, 'PlanEditPageScript.js')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.PlanEditPage, 'pleaseWait.css')}"/>
+<body class="lookupTab  LookupSearchFrame, marginCls">
+<apex:form >
+<apex:sectionHeader title="Template Search" />
+<apex:pageblock >
+    <apex:outputPanel id="top" layout="block" styleClass="searchPanelCls">
+        <apex:outputLabel value="Search" styleClass="searchLabelCls" for="txtSearch"/>
+        <apex:inputText value="{!searchString}" id="txtSearch"/>
+        <span Class="searchspanCls">
+            <apex:commandButton value="Go!" action="{!searchTemplates}" reRender="templatesBlock,ErrMsg" status="TemplateFound"/>
+        </span>
+    </apex:outputPanel>
+    <apex:outputPanel id="TemplateSearchStatusPanel">
+        <apex:actionStatus id="TemplateFound">
+            <apex:facet name="start">         
+                <apex:outputPanel styleclass="waitPanelClass"/>
+            </apex:facet>
+        </apex:actionStatus>
+    </apex:outputPanel>  
+    <apex:outputPanel id="templatesBlock">
+    <apex:pageblockSection id="templates"  columns="1" rendered="{!Templates!=null && Templates.size!=0}">
+        <apex:pageBlockTable value="{!Templates}" var="tmplt"> 
+            <apex:column headerValue="Template Name">
+                <apex:commandLink value="{!tmplt.Name}"   onclick="closeWindow('{!tmplt.Id}','{!planObj.Id}');" >                
+                    <apex:param name="tempId" value="{!tmplt.Id}"/>
+                </apex:commandLink>                
+            </apex:column>                     
+            <apex:column value="{!tmplt.Zip_Codes__c}"/>
+            <apex:column value="{!tmplt.Nodes__c}"/>
+            <apex:column value="{!tmplt.Customer_Status__c}"/>
+            <apex:column value="{!tmplt.Complex_Code_Exists__c}"/>
+            <apex:column value="{!tmplt.Products__c}"/>                                    
+        </apex:pageBlockTable>
+    </apex:pageblockSection>
+    <apex:pageblockSection rendered="{!Templates!=null && Templates.size==0}">
+        <apex:outputText value="*No Templates found." style="Color:Red"/>
+    </apex:pageblockSection>
+    </apex:outputPanel>
+</apex:pageblock>
+</apex:form>
+</body>
+</apex:page>

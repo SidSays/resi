@@ -1,0 +1,5 @@
+To whom it may concern,
+
+{!Store_Activity__c.CreatedBy} visited {!Account.Name}, located at {!Account.BillingAddress} today. They noted that the following marketing materials were out of date: {!Store_Activity__c.Please_select_out_of_date_materials__c}
+
+Thank you.

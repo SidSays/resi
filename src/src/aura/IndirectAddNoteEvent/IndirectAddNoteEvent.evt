@@ -1,0 +1,5 @@
+<aura:event type="APPLICATION" description="Event template" >
+    <aura:attribute name="storeId" type="String"/>
+    <aura:attribute name="bodyToRender" type="String"/>
+    <aura:attribute name="storeVisitCategory" type="Store_Visit_Activity_Category__c[]"/>
+</aura:event>

@@ -1,0 +1,46 @@
+<aura:component controller="IndirectAddTaskController">
+	<ltng:require styles="/resource/SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />
+    <aura:attribute name="store" type="Account" />
+    <aura:attribute name="role" type="UserRole"/>
+    <aura:attribute name="loggedInUser" type="User"/>
+    <aura:attribute name="recommendedCategory" type="String[]"/>
+    <aura:attribute name="storeVisitCategory" type="Store_Visit_Activity_Category__c[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <div class="slds">
+         <div aura:id="optionalModalDialog"/>
+         <div class="slds-grid slds-grid--align-space slds-box 
+                 slds-media__body navbar navbar-default navbar-static-top">  
+             <div> 
+           		 <p class="slds-text-heading--small slds-truncate slds-align-middle slds-text-align--center" 
+              		title="Rohde Corp - 80,000 Widgets">Next Steps</p> 
+                 <p class="slds-text-body--regular slds-truncate slds-align-middle slds-text-align--center" 
+              		title="Rohde Corp - 80,000 Widgets">Recommended Activities for this Visit</p>  
+        	</div>        
+        </div>
+        
+       <table class="slds-table slds-table--bordered slds-scrollable--y">
+ 
+         <tbody>
+            <aura:iteration items="{!v.recommendedCategory}" var="recat">
+           <tr>
+               		<td onclick ="{!c.navigateToActivityScreen}">
+                        <ui:outputText value="{!recat}"/>
+                   </td>                      
+            </tr>
+            </aura:iteration> 
+          </tbody>
+     
+        </table>
+        <br/>
+        <div class="container">
+  		  
+         <div style="text-align: center">
+             <b>
+         <button class="slds-button slds-button--neutral slds-button--brand slds-align-middle slds-text-align--center " onclick="{!c.AddItems}">Add Task</button>
+                 <br/></b>
+             </div>            
+        </div>
+          <br/> 
+    </div>
+</aura:component>

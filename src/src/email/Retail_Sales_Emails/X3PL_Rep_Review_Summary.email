@@ -1,0 +1,6 @@
+<br> 
+While reviewing: {!Store_Activity__c.What_did_you_review_with_the_employees3P__c} 
+with the 3PL Rep, {!Store_Activity__c.Who_did_you_meet_with_for_email__c}, the following things were observed: 
+<br> 
+<br>
+{!Store_Activity__c.Rep_Review_Email_Template_Checkboxes__c}

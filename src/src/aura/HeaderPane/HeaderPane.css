@@ -1,0 +1,79 @@
+.THIS {
+    position:absolute;
+    top: 0px;
+    left:0px;
+    height: 15px;
+    width: 100%;
+}
+
+.THIS .zclass{
+    z-index:1000;
+}
+
+.THIS .labelStyle{
+    margin-left:10%;
+    margin-top:3%;
+    font-size:15px
+}
+
+.THIS .open-on-right{
+    position: absolute;
+    left: 200px;
+}
+
+.THIS .open-on-right2{
+    position: absolute;
+    left: 220px;
+}
+
+.THIS .showwt {
+    display:block;
+    visibility:visible
+}
+
+.THIS .hide-initially {
+    display:none;
+}
+
+.THIS .filter-item{
+    width:160px;
+    height:30px;
+}
+
+.THIS span > div.slds-dropdown--right{
+     left:-15em; 
+}
+
+.THIS .filter-item-header{
+    width:160px;
+    height:10px;
+}
+
+.THIS .left-margin{
+    margin-left:8%
+}
+.THIS .left-margin2{
+    margin-left:5%
+}
+
+.THIS .morewidth{
+    width:320px;
+}
+
+.THIS .font-reduced{
+    font-size : 0.8em;
+}
+
+.THIS .search-results{
+     width:400px;
+}
+
+.THIS .search-results-cards{
+
+    height:500px; 
+}
+.THIS .uiInputDate .datePicker-openIcon {
+    position: absolute;
+    left: 95%;
+    top: 55%;
+}

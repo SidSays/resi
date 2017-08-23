@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used  to notify Portal User that a case has been modified</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Comcast_LetterHead</letterhead>
+    <name>Field Modification Email Template</name>
+    <style>freeForm</style>
+    <subject>Case {!Case.CaseNumber} Has Been Modified</subject>
+    <textOnly>Hello
+
+You are receiving this email as notification that your case {!Case.CaseNumber} has been modified.
+Below is the relevant information of this Case.
+
+Case Number : {!Case.CaseNumber}
+Case Date : {!Case.CreatedDate}
+User : {!User.FirstName} {!User.LastName}
+Tool : {!Case.Account}
+Region : {!Case.Region__c}
+Division: {!Case.Division}
+Description: {!Case.Description}
+Customer Name : {!Case.Customer_Name__c}
+Street : {!Case.Street__c}
+City : {!Case.City__c}
+State : {!Case.State__c}
+Zip : {!Case.Zip__c}
+Customer Phone Number : {!Case.Customer_Phone_Number__c}
+Affiliate Notes : {!Case.AffiliateNotes__c}
+Comcast Notes : {!Case.ComcastNotes__c}
+Escalation Details :
+[
+Account : {!Case.AccountNumber__c}
+Order # : {!Case.OrderID__c}
+Session Id : {!Case.Session_ID__c}
+Issue Type : {!Case.IssueType__c}
+]
+
+Closed Date : {!Case.ClosedDate}
+
+
+Thank you</textOnly>
+    <type>html</type>
+</EmailTemplate>

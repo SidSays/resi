@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event template">
+    <aura:attribute name="showCreateOneOneCoaching" type="Boolean"/>
+    <aura:attribute name="showCoachingTimeline" type="Boolean"/>
+</aura:event>

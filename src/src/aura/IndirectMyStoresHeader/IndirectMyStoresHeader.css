@@ -1,0 +1,20 @@
+.THIS body {
+	margin:0;
+	padding:0;
+	height:90%;
+}
+
+.THIS #wrapper {
+	min-height:100%;
+	position:relative;
+}
+
+.THIS #content {
+	padding-bottom:100px; /* Height of the footer element */
+}
+.THIS #footer {
+	width:100%;
+	position:absolute;
+	bottom:0;
+	left:0;
+}

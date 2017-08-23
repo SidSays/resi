@@ -1,0 +1,81 @@
+.THIS body {
+	margin:0;
+	padding:0;
+	height:90%;
+}
+/*
+.THIS .headroom {
+    will-change: transform;
+    transition: transform 200ms linear;
+}
+.THIS .headroom--pinned {
+    transform: translateY(0%);
+}
+.THIS .headroom--unpinned {
+    transform: translateY(-100%);
+}
+*/
+.THIS .modalspinner .centered {
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+}
+
+.THIS .modalspinner {
+    position:absolute;
+    height: 100%;
+    width:100%;
+    z-index: 500;
+    opacity: 0.9;
+    background-color: grey;
+}
+
+/*.THIS #header {
+	height:20%;
+	position:relative;
+}*/
+.THIS #wrapper {
+	min-height:100%;
+	position:relative;
+    overflow-y: auto;
+}
+
+.THIS #content {
+    position:absolute;
+    height:80%;
+    overflow-y: auto;
+    width:100%;
+	padding-bottom:100px; /* Height of the footer element */
+}
+/*
+.THIS #footer {
+	width:100%;
+	position:absolute;
+	bottom:7%;
+    left:0;
+}*/
+.THIS #header {
+    width:100%;
+    height:4em;
+}
+
+
+.THIS #footer {
+   width:100%;
+    height:6em;
+    position:fixed;
+    bottom:50px;
+    left:0;
+}
+
+.THIS #spaceholder_t {
+	width:100%;
+    height:2em;
+    position:relative;
+}
+.THIS #spaceholder_b {
+	width:100%;
+    height:130px;
+    position:relative;
+}

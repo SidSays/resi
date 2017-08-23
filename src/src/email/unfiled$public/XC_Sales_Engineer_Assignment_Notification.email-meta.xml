@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>XC Sales Engineer Assignment Notification</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>XC Sales Engineer Assignment Notification</name>
+    <style>none</style>
+    <subject>New Opportunity Assignment</subject>
+    <type>text</type>
+</EmailTemplate>

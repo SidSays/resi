@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used for the Final Claims status to notify Affiliate Claims User</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Comcast_LetterHead</letterhead>
+    <name>Final Claim Status</name>
+    <style>freeForm</style>
+    <subject>Final Claims status</subject>
+    <textOnly>You are receiving this email as notification that your case {!Case.CaseNumber} has been updated to its final Claims Status. Below is the relevant information of this Claim Case.
+
+{!Case.CaseNumber}
+{!Case.CreatedDate}
+{!Case.Status}
+{!Case.Claim_Result__c}
+{!Case.Claim_Reason_Description__c}
+{!Case.Claimed_Amount__c}
+{!Case.Approved_Amount__c}
+
+Thank you</textOnly>
+    <type>html</type>
+</EmailTemplate>

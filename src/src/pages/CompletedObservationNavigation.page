@@ -1,0 +1,20 @@
+<!-- 
+/**********************************************************
+* Page Name: CompletedObservationNavigation
+* Author: Ashish Srivastava, Accenture
+* Date: 22-March-2017 
+* Requirement # DE174163
+* Description: This Page detect the device in context and redirect the user to Completed Observation Form.
+***********************************************************/
+-->
+<apex:page controller="WalkalongUtilsReadOnly" showHeader="false" standardStylesheets="false" sidebar="false">
+    <script>
+            var observationUrl  = "/apex/CompletedObservationViaChatterPost?SubjectId={!subject}&FeedbackId={!feedback}";
+            if( (typeof sforce != 'undefined') && (sforce != null) ) {
+                    sforce.one.navigateToURL(observationUrl,true);
+            }
+            else {
+                    window.location.href = observationUrl;
+            }
+        </script>
+</apex:page>

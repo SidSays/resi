@@ -1,0 +1,6 @@
+<design:component label="Dashboard Viewer">
+    <design:attribute name="developerName" label="Developer Name" description="The developer name of the dashboard"/>
+    <design:attribute name="dashboardId" label="Dashboard ID" description="The ID of the dashboard"/>
+    <design:attribute name="height" label="Height" description="Height of the dashboard, defaults to 300"/>
+    <design:attribute name="preload" label="Preload Dashboards" description="Enable preloading of dashboards"/>
+</design:component>

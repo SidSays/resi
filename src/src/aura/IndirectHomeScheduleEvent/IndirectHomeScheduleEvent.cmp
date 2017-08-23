@@ -1,0 +1,4 @@
+<aura:component implements="force:appHostable" >
+    <aura:attribute name="objectname" type="String" default="Event"/>
+	<ui:button aura:id="eventButton" class="button" label="Create Event" press="{!c.createRecord}"/>
+</aura:component>

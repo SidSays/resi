@@ -1,0 +1,38 @@
+<p>
+	Good Morning {!Receiving_User.FirstName},
+</p>
+<p>
+	Version 1.0.6 of the Direct Sales Mobile App has been posted to the Comcast App Catalog and can be downloaded at your convenience. The current version
+	installed on your device will continue to work until you are able to install the latest version.
+</p>
+<p>
+	The app freeze issue that is occurring with the following functions will be addressed with the 1.0.6 release:
+</p>
+<ul>
+<li>Creating dispositions.</li>
+	<li>
+		Creating a playlist.
+	</li>
+         <li>Navigating the turf / playlist.</li>
+ <li>Searching off-turf.</li>
+<li> Creating a disposition for an off-turf address.
+</li>
+<li>General usability issues, that occur while the sync is in-progress, will also be addressed with this release. </li>
+
+</ul>
+</p>
+<p>
+	Attached are detailed release notes for the above fixes as well as step by step instructions to install version 1.0.6 of the Direct Sales Mobile app.
+</p>
+<p>
+	You can also find the release notes and job aid by clicking the below links and selecting "view file":
+</p>
+<p>
+	Release Notes: <a href='https://onecomcast.my.salesforce.com/015G000000Cc1ND'>https://onecomcast.my.salesforce.com/015G000000Cc1ND</a>
+</p>
+<p>
+	Downloading &amp; Installing the App: <a href='https://onecomcast.my.salesforce.com/015G000000CbpVu'>https://onecomcast.my.salesforce.com/015G000000CbpVu</a> 
+</p>
+<p>
+	Thank You
+</p>

@@ -1,0 +1,5 @@
+To whom it may concern, 
+
+{!Store_Activity__c.CreatedBy} visited {!Account.Name}, located at {!Account.BillingAddress} today. They noted that {!Store_Activity__c.Who_did_you_meet_with__c} did not have their tablet with them at the store.
+
+Thank you.

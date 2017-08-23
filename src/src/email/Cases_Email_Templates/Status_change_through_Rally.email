@@ -1,0 +1,14 @@
+Your Case has been updated:<br/><br/>
+
+<b>Case Number:</b> <br/>
+{!Case.CaseNumber} <br/><br/>
+
+<b>New Case Status:</b> <br/>
+{!Case.Status} <br/><br/>
+
+<b>Request Description:</b><br/>
+{!Case.Description}<br/><br/>
+
+<br/>
+
+Thank you

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Action Item Overdue</name>
+    <style>none</style>
+    <subject>Action Item {!Action_Item__c.Name} is Overdue</subject>
+    <textOnly>Action Item {!Action_Item__c.Name} is overdue:
+
+Due Date:
+{!Action_Item__c.Due_Date__c}
+
+Title:
+{!Action_Item__c.Title__c}
+
+Channel:
+{!Action_Item__c.Channel__c}
+
+Initiative:
+{!Action_Item__c.Initiative__c}
+
+Details:
+{!Action_Item__c.Details__c}
+
+Status:
+{!Action_Item__c.Status__c}
+
+Last Updated:
+{!Action_Item__c.Last_Updated__c}
+
+Identified By:
+{!Action_Item__c.Identified_By__c}</textOnly>
+    <type>custom</type>
+</EmailTemplate>

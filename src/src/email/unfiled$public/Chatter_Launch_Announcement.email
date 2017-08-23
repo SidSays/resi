@@ -1,0 +1,33 @@
+<table border="0" cellpadding="0" width="650" cellspacing="0" height="400" >
+<tr valign="top" >
+<td width="180" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" >
+<table border="0" cellpadding="5" width="180" cellspacing="5" height="400" >
+<tr valign="top" height="100" >
+<td rowspan="3" width="180" tEditID="c1r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div><br></div><font><font size="2"><font face="Arial,Sans-Serif"><u><b><div><font><font size="2"><font face="Arial,Sans-Serif"><u><b><br></b></u></font></font></font></div><div><font><font size="2"><font face="Arial,Sans-Serif"><u><b><br></b></u></font></font></font></div>Chatter FAQ:</b></u><br><br><b>Can my XFINITY Sales Professional participate?</b><font> <br>At this time, we are opening Chatter only to Sales Development Managers,Area Sales Managers, Directors, and Leadership. <br><br></font></font></font></font><font size="2"><font face="Arial,Sans-Serif"><font><font><font face="Arial,Sans-Serif"><b>What do I need to set up in Chatter? <br></b></font></font>Take a look at this&nbsp;</font><a href="https://onecomcast.my.salesforce.com/069G0000001C84B">Getting Started with Chatter</a> </font>guide. <br><br><font face="Arial,Sans-Serif"><b>Where can I go for Chatter questions? </b><br><font>Check out the <a href="https://onecomcast.my.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F9G00000008vSP">Chatter: Support &amp; Training</a> group in SFAII.&nbsp; </font><br><br><b>Who can I contact with other questions? </b><br><font>Contact our Chatter Community Managers, </font><a href="https://onecomcast.my.salesforce.com/005G0000004J7XG">Becky Webster</a><font> and </font><a href="https://onecomcast.my.salesforce.com/_ui/core/userprofile/UserProfilePage?u=005G0000004J7XL">Jennifer Sun</a><font>. </font></font></font>]]></td>
+</tr>
+</table>
+</td>
+<td width="10" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" >
+<![CDATA[]]></td>
+<td width="460" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" >
+<table border="0" cellpadding="5" width="460" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c2r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c2r1" locked="0" >
+<![CDATA[<font size="2"><font>Hello {!Receiving_User.FirstName}, <br>
+<br>I am pleased to announce that we have officially launched Salesforce
+ Chatter to Sales Development Managers ,Area Sales Managers Directors, and 
+Leadership.&nbsp;<br><br><a href="https://www.youtube.com/watch?v=9D8X82sbewQ">Chatter</a>
+ is a collaboration tool in our SFA platform that will help us 
+communicate and share information with each other more efficiently. 
+Chatter provides real-time, contextualized collaboration among team 
+members so that everyone has the most up-to-date information all in one 
+place. <br><br></font><font>Specifically, our organizational goals for using Chatter include:&nbsp;<br></font></font><ul><li><font size="2">Using badges to <b>publicly recognize </b>our colleagues for outstanding work. <br></font></li><li><font size="2">Using private groups that will allow divisions and regions<b> more streamlined communication with their teams</b>. <b><br></b></font></li><li><font size="2">Using public groups that allow anyone to <b>share ideas, request feedback, or get answers to questions</b>. <b><br></b></font></li></ul><font><div><font size="2">I
+ encourage you all to <a href="https://onecomcast.my.salesforce.com">log in</a> to SFAII, set up your profile, become 
+acquainted with your respective Division and Region groups, and find 
+your manager and team members' profiles in Chatter. Feel free to c</font><span style="font-size: small;">lick on my name below to access my profile and get started. <br><br>If you have questions, please post them to the <a href="https://onecomcast.my.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F9G00000008vSP">Chatter: Support &amp; Training</a> group. As a function of this launch, we ask that if you have any questions or concerns to refrain from emailing, and instead post comments on my Chatter post <a href="https://onecomcast.my.salesforce.com/0D5G000001XgbVd">here</a>, or in the <a href="https://onecomcast.my.salesforce.com/_ui/core/chatter/groups/GroupProfilePage?g=0F9G00000008vSP">Chatter: Support &amp; Training</a> group. <br></span></div><div><span style="font-size: small;"><br></span></div><div><span style="font-size: small;">I look forward to hearing from you all!&nbsp;</span></div><font size="2"><br><a href="https://onecomcast.my.salesforce.com/_ui/core/userprofile/UserProfilePage?u=005G0000004IbHt&amp;srKp=005&amp;srPos=2&amp;tab=sfdc.ProfilePlatformFeed">Kevin Sweeney</a></font><br></font><div><font><font size="2">Vice President, Direct Sales <br></font></font></div>]]></td>
+</tr>
+</table>
+</td>
+</tr>
+</table>

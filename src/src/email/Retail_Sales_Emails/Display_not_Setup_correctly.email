@@ -1,0 +1,5 @@
+{!User.FirstName} {!User.LastName},
+
+This is a reminder that the Xfinity display at the {!Account.Name} store located at {!Account.BillingAddress} is not set up according to the POG. Please correct this issue the next time you visit the store.
+
+Thank you.

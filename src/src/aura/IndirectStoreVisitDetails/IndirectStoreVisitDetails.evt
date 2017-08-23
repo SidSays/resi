@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION">
+    <aura:attribute name="visitDetails" type="Store_Visit__c[]"/>
+    <aura:attribute name="visitId" type="String"/>
+</aura:event>

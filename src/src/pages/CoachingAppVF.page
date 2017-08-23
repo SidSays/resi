@@ -1,0 +1,51 @@
+<!-- 
+/**********************************************************
+* Page Name: CoachingAppVF
+* Author: Amit Kumar Pradhan, Accenture
+* Date: 24th July 2017
+* User Story: US1137915(Coach/Wave Integration - VF Page to wrap Lightning Page)
+* Description: This VF Page is for showing wave dashboard coaching App in classic view
+* Last Modified : Siddharth Sinha (US1162346 : Salesforce1 Mobile Browser App (on iPad in Safari))
+***********************************************************/
+-->
+<apex:page sidebar="false" showHeader="true" standardStylesheets="true">
+<apex:stylesheet value="{!$Resource.VFWaveTablets}" />
+    <!-- Include Lightning Components for Visualforce JavaScript library (lightning.out.js) -->
+    <apex:includeLightning />
+    <!-- Include Salesforce Lighning Design System (slds). This tag allows us to bypass uploading slds as a static resource -->    
+    <apex:slds />
+    <div class="outer">
+    <br/>
+      <div class="slds-grid" style="height:100%;">
+        <div class="left-pane slds-p-horizontal--small slds-size--8-of-12 slds-medium-size--9-of-12 slds-large-size--8-of-12">
+          <div id="dashboardviewer"></div>
+        </div>
+        <div class="right-pane slds-p-horizontal--small slds-size--4-of-12 slds-medium-size--3-of-12 slds-large-size--4-of-12">
+            <div id="componentpicker"></div>
+            <div id="coachingcomponent"></div>
+        </div>
+      </div>
+     </div>
+    <script>
+        //Convert Dashboard Id to Custom Setting
+        var dashboardId = "0FKc0000000CawcGAC";
+        $Lightning.use("c:CoachingApp", function(evt) {
+            // Setup the Wave Dashboard component config
+            var dashboardConfig = {
+                dashboardId: dashboardId,
+                width: "1250",
+                height: "800",
+                showTitle: true,
+                showSharing: false,
+                openLinksInNewWindow: false
+            };
+            /* 
+             * Create the Coaching App Component
+             * The component is surfaced within the "coaching_component" div above
+             */
+            $Lightning.createComponent("c:dashboardPicker", {}, "componentpicker", function(cmp, msg, err) {});
+            $Lightning.createComponent("c:CoachingComponent", {}, "coachingcomponent", function(cmp, msg, err) {});
+            $Lightning.createComponent("c:dashboardViewer", {}, "dashboardviewer", function(cmp, msg, err) {});
+        });
+      </script>
+</apex:page>

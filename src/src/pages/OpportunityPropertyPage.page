@@ -1,0 +1,100 @@
+<!-- 
+/**********************************************************
+* Page Name: OpportunityPropertyPage
+* Author: Sagar Gurav, Accenture
+* Date: 05-Feb-2013 
+* Requirement # Request Id : 
+* Description:This is a custom page to used to build a custom lookup page on properties. 
+* Last Modified by:Sagar Gurav, Accenture
+***********************************************************/
+-->
+<apex:page standardController="Opportunity" showHeader="true" id="OpportunityPropertyPage" sidebar="true" tabStyle="Opportunity" extensions="OpportunityPropertyExtensions">
+<script type="text/javascript">
+function setFocusOnLoad() {
+}
+</script>
+<apex:PageMessages id="pMsg"></apex:PageMessages>
+<apex:form id="myForm">
+    <apex:pageBlock id="pageBlock">
+        <apex:pageBlockButtons >
+            <apex:commandButton action="{!doSave}" value="Save"/>  
+            <apex:commandButton action="{!doCancel}" value="Cancel" immediate="true"/>
+        </apex:pageBlockButtons>
+        <apex:pageBlockSection id="pageBlockSectionId" collapsible="false" columns="2" title="Information">
+        
+          <apex:pageblockSectionItem id="pageBlockSectionItemId">
+            <apex:outputLabel value="Properties"  />
+            <apex:outputPanel >                                        
+            <apex:commandLink id="propLink" value="Select Properties" onclick="openLookupPopup('{!$Component.idList}'); return false" />
+            <apex:inputHidden id="idList" value="{!OppProperty.Id_List__c}"/>
+            </apex:outputPanel>   
+            </apex:pageblockSectionItem>
+            
+           <apex:pageblockSectionItem >       
+                <apex:outputLabel value="{!$ObjectType.Opportunity_Property__c.fields.ECM__c.label}"  />            
+                <apex:inputField taborderhint="2" value="{!OppProperty.ECM__c}"/> 
+            </apex:pageblockSectionItem>
+            
+            <apex:pageblockSectionItem >
+                <apex:outputLabel value="{!$ObjectType.Opportunity_Property__c.fields.Primary_Property__c.label}"  />            
+                <apex:outputField value="{!OppProperty.Primary_Property__c}"/>
+            </apex:pageblockSectionItem>
+                        
+        </apex:pageBlockSection>
+               
+        <apex:pageBlockSection collapsible="false" columns="2" title="System Information"> 
+
+        <apex:pageblockSectionItem >
+            <apex:outputLabel value="{!$ObjectType.Opportunity_Property__c.fields.Opportunity__c.label}"  />            
+            <apex:inputField taborderhint="4" value="{!OppProperty.Opportunity__c}" required="true"/> 
+        </apex:pageblockSectionItem>
+               
+        </apex:pageBlockSection>
+        
+        <apex:outputPanel id="prop">
+        <apex:pageBlockSection title="Properties" columns="1" collapsible="false" rendered="{!render}">
+        <apex:pageBlockTable id="propTable" value="{!props}" var="row">
+         <apex:column >
+           <a href="javascript:RemoveProp('{!row.Id}');" style="font-weight:bold">Remove</a>
+         </apex:column>
+         <apex:column value="{!row.Name}"/>
+         <apex:column value="{!row.Property_Type__c}"/>
+         <apex:column value="{!row.Industry_Type__c}"/>
+         </apex:pageBlockTable>
+         </apex:pageBlockSection>
+         </apex:outputPanel>
+        </apex:pageBlock>
+    
+    <apex:actionFunction action="{!showProps}" name="showProps" reRender="prop"/>
+    <apex:actionFunction action="{!RemoveProp}" name="RemoveProp" oncomplete="removeId('{!SelectedPropId}');" reRender="propTable" >
+    <apex:param name="propid" value="" assignTo="{!SelectedPropId}"/>
+    </apex:actionFunction>
+</apex:form>
+<!-- JavaScript -->
+
+    <script type="text/javascript">
+    var newWin=null;
+    function openLookupPopup(id){
+        var url="/apex/PropertyLookupPage?optyId={!OppProperty.Opportunity__c}&idfield=" + id;
+        newWin=window.open(url, 'Popup','height=500,width=1000,left=250,top=100,resizable=no,scrollbars=yes,toolbar=no,status=no');
+        if (window.focus) 
+        {
+            newWin.focus();
+        }
+            
+        return false;
+    }
+    function closeLookupPopup(){
+        if (null!=newWin)
+        {
+           newWin.close();
+           showProps();
+        }  
+     }
+   function removeId(id){     
+     var t = 'OpportunityPropertyPage:myForm:pageBlock:pageBlockSectionId:pageBlockSectionItemId:idList';
+     var remove = document.getElementById(t);
+     remove.value = (remove.value).replace(new RegExp(id+';', 'g'),'');
+   }  
+</script>                     
+</apex:page>

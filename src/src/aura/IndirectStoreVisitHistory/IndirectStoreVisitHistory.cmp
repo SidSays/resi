@@ -1,0 +1,137 @@
+<!--IndirectStoreVisitHistory-->
+<aura:component controller="IndirectStoreVisitHistory" implements="force:appHostable,flexipage:availableForAllPageTypes">
+    <ltng:require styles="/resource/SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="store" type="Account" />
+    <aura:attribute name="storeVisits" type="Store_Visit__c[]"/>
+    <aura:attribute name="storeId" type="String" />
+    <aura:attribute name="storeVisit" type="Store_Visit__c"/>
+    <aura:attribute name="role" type="UserRole"/>
+    <aura:attribute name="storeVisitWrapperList" type="Object[]"/>
+    <aura:attribute name="storeVisitCategory" type="Store_Visit_Activity_Category__c[]"/>
+    <aura:attribute name="allCategories" type="Store_Visit_Activity_Category__c[]"/>
+    <aura:attribute name="storeActivity" type="Store_Activity__c"/>
+    <aura:attribute name="isVisible" type="Boolean" default="false"/>
+    <aura:attribute name="LookupFieldValue" type="String[]"/>
+    <!-- <aura:handler event="c:IndirectAddButtonEvent" action="{!c.handleApplicationEvent}"/>-->
+    <!--<aura:handler event="c:IndirectAccordionCloseEvent" action="{!c.close}"/>-->
+    <aura:attribute name="listOfStoreVisitWrapper" type="IndirectStoreVisitHistory.ChildStoreVisitWrapper[]"/>
+    <aura:attribute name="svgPath" type="String" default="symbols.svg#chevrondown"/>
+    <aura:if isTrue="{!v.storeVisitWrapperList.length == 0}">
+        <div class="slds" style="text-align:center;font-size:20px">
+            <br/><b>No records found. </b>
+        </div>
+        <br/>	
+    </aura:if>
+    <div class="slds">       
+        <table class="slds-table slds-table--bordered slds-scrollable--y">
+            
+            <aura:iteration items="{!v.storeVisitWrapperList}" var="stv" indexVar="index">
+                <tr>
+                    <td>
+                        <h2><b><ui:outputText value="{!stv.stv.Store_Visit_Name__c}"/></b></h2>
+                    </td>
+                    
+                    <aura:if isTrue="{!stv.check ==  false}">
+                        <td colspan="2">
+                            
+                            <div onclick="{!c.showVisitDetails}" data-record="{!stv.stv.Id}"> 
+                                <c:svg class="slds-icon slds-icon--medium slds-icon-text-default slds-float--right" 
+                                       xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"/>
+                            </div>
+                        </td>
+                    </aura:if> 
+                    <aura:if isTrue="{!stv.check ==  true}">
+                        <td colspan="2">
+                            
+                            <div onclick="{!c.showVisitDetails}" data-record="{!stv.stv.Id}"> 
+                                <c:svg class="slds-icon slds-icon--medium slds-icon-text-default slds-float--right" 
+                                       xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevronup"/>
+                            </div>
+                        </td> 
+                    </aura:if> 
+                </tr>
+                <aura:if isTrue="{!stv.check ==  true}">
+                    
+                    <tr class="grey">
+                        <td scope="col" ><p>Notes</p></td>
+                        <td scope="col" colspan="2"><ui:outputTextArea value="{!stv.stv.Notes__c}"/></td>
+                    </tr>
+                    <tr class="grey">
+                        <td scope="col" ><p>Completed Activities</p></td>
+                        <aura:if isTrue="{!stv.stv.Number_of_Completed_Activities__c > 0}">
+                            <td scope="col"><p>{!stv.stv.Number_of_Completed_Activities__c}</p></td>
+                            <aura:set attribute="else">
+                                <td scope="col"><p>{!stv.stv.Number_of_Completed_Activities_New__c}</p></td>
+                            </aura:set>    
+                        </aura:if>
+                        <!-- <td scope="col"><p>{!stv.stv.Number_of_Completed_Activities_New__c}</p></td> -->
+                        <aura:if isTrue="{!stv.stv.Number_of_Completed_Activities__c > 0 || stv.stv.Number_of_Completed_Activities_New__c > 0}">
+                            <td scope="col">
+                                <aura:if isTrue="{!stv.checkActivity ==  false}">
+                                    <span><div onclick="{!c.showCategoryDetails}" data-record="{!stv.stv.Id}">
+                                        <c:svg class="slds-icon slds-icon--small slds-float--right"
+                                               xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"/>
+                                        </div></span>
+                                </aura:if>   
+                                <aura:if isTrue="{!stv.checkActivity ==  true}">
+                                    <span><div onclick="{!c.showCategoryDetails}" data-record="{!stv.stv.Id}">
+                                        <c:svg class="slds-icon slds-icon--small slds-float--right"
+                                               xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevronup"/>
+                                        </div></span> 
+                                </aura:if>        
+                            </td></aura:if>
+                    </tr>
+                    <aura:if isTrue="{!stv.checkActivity ==  true}">
+                        
+                        <aura:iteration items="{!v.listOfStoreVisitWrapper}" var="classIte">    
+                            <tr class="alignment">
+                                <td>
+                                    <aura:if isTrue="{!classIte.stc.Number_Required__c > 0}">
+                                        <b><ui:outputText value="{!classIte.stc.Store_Activity_Category__c}"/></b> 
+                                        <aura:set attribute="else">
+                                            <ui:outputText value="{!classIte.stc.Store_Activity_Category__c}"/> 
+                                        </aura:set>
+                                    </aura:if> 
+                                </td>
+                                <td >
+                                    <aura:if isTrue="{!classIte.check == false}">
+                                        <div onclick ="{!c.getInput}" colspan="2"  data-record="{!classIte.stc.Record_Type_Id__c}">
+                                            <c:svg class="slds-icon slds-icon--small slds-icon-text-default slds-float--right" 
+                                                   xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"/>	  
+                                        </div>
+                                    </aura:if>
+                                    <aura:if isTrue="{!classIte.check == true}">
+                                        <div onclick ="{!c.toggleup}" colspan="2"  data-record="{!classIte.stc.Record_Type_Id__c}">
+                                            <c:svg class="slds-icon slds-icon--small slds-icon-text-default slds-float--right" 
+                                                   xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevronup"/>
+                                        </div>
+                                    </aura:if>   
+                                </td>                     
+                                
+                            </tr>
+                            
+                            <tr>
+                                <aura:if isTrue="{!(classIte.sta != undefined) &amp;&amp; (classIte.check == true)}">
+                                    <div onclick="{!c.getTypeOfContact}" data-record="{!classIte.sta.Id}">
+                                        <!--ui:outputText value="{!classIte.stc.Lookup_field_value__c}"/-->
+                                        <aura:iteration items="{!v.LookupFieldValue}" var="value">
+                                        <div style="margin-left:14px;">
+                                            <button class="slds-button slds-button--neutral" >{!value} </button>                                            
+                                        </div>  
+                                            <br/>
+                                        </aura:iteration>
+                                    </div>    
+                                    <div><force:recordView recordId="{!classIte.sta.Id}" type="FULL"/></div> 
+                                </aura:if>
+                                <aura:if isTrue="{!classIte.sta == undefined}">
+                                </aura:if>
+                            </tr>
+                        </aura:iteration> 
+                        
+                    </aura:if> 
+                </aura:if>
+            </aura:iteration>
+        </table>
+    </div>    
+</aura:component>

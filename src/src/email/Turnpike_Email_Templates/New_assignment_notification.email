@@ -1,0 +1,9 @@
+The following case has been assigned to you.  
+
+Contact Name:  {!Contact.Name} 
+Case #:  {!Case.CaseNumber} 
+Subject:  {!Case.Subject} 
+Description: {!Case.Description}  
+Additional Notes: {!Case.Additional_Notes__c}
+
+Click on the link to access the case:  {!Case.Link}

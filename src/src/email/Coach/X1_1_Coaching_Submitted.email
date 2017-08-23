@@ -1,0 +1,7 @@
+Hello {!one_one_Coaching__c.Coached_Name__c}, {!one_one_Coaching__c.Coach_Name__c},
+
+{!one_one_Coaching__c.Coach_Name__c} has changed the status of a 1-1 Coaching to "Submitted".
+
+{!one_one_Coaching__c.Link}
+
+Thanks!

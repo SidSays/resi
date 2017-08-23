@@ -1,0 +1,5 @@
+During a training session with 
+<br />
+{!Store_Activity__c.Who_did_you_meet_with_for_email__c}, it was determined that the 3PL rep lacked knowledge of the following topics: 
+<br />
+{!Store_Activity__c.What_topics_did_you_cover_in_training__c}

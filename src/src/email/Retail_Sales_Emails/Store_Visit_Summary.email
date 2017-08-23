@@ -1,0 +1,11 @@
+To whom it may concern,
+
+{!Store_Visit__c.Owner_Full_Name__c} just conducted a store visit for {!Store_Visit__c.Store_Name__c} located at {!Store_Visit__c.Store_Address__c}.
+
+<br />
+
+While visiting the store, {!Store_Visit__c.Owner_Full_Name__c} noticed the following things:
+
+<br />
+
+<StoreActivities>

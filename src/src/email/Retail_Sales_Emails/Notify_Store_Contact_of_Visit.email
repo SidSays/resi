@@ -1,0 +1,7 @@
+Dear {!Contact.FirstName} {!Contact.LastName},
+
+{!Event.OwnerFullName__c} has scheduled a store visit for your store located at {!Contact.Store_Address__c} to begin at {!Event.StartDateTime}. 
+
+If you have any issues with the timing of this visit, please send an email to {!Event.OwnerEmail__c}
+
+Thanks!

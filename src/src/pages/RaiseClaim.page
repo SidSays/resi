@@ -1,0 +1,77 @@
+<!-- 
+/**********************************************************
+* Page Name: RaiseClaim
+* Author: Amitkumar Bangad, Accenture
+* Date: 02-December-2012 
+* Requirement # Request Id : 
+* Description: To raise a claim from Order list view (operation performed by Affiliate/Business Admin)
+* Last Modified by:
+***********************************************************/
+-->
+<apex:page standardController="Order__c" extensions="RaiseClaimController"  action="{!displayOrder}">
+<apex:form id="firstForm">
+    <apex:sectionHeader title="{!$Label.Raise_Claim}"  subTitle="{!$Label.Affiliate_Case_Management}" description="{!$Label.Verify_Orders}" rendered="{!isValid}"/>
+    <apex:outputPanel id="hiddenblock">
+    <apex:pageMessages />
+    </apex:outputPanel>
+    <apex:pageBlock rendered="{!isValid}">
+    {!$Label.Claim_Submitted}
+        <br/>
+        <br/>
+        <apex:pageBlockTable value="{!order}" var="ord" id="ordTable">
+            <apex:column value="{!ord.Name}" headerValue="{!$ObjectType.Order__c.fields.Name.label}" id="name"/>
+            <apex:column value="{!ord.OrderStatus__c}" headerValue="{!$ObjectType.Order__c.fields.OrderStatus__c.label}" id="stat"/>
+            <apex:column value="{!ord.Order_Created_Date__c}" headerValue="{!$ObjectType.Order__c.fields.Order_Created_Date__c.label}" id="crDate"/>
+            <apex:column value="{!ord.OrderCompletedDate__c}" headerValue="{!$ObjectType.Order__c.fields.OrderCompletedDate__c.label}" id="coDate"/>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+    <!--<apex:pageBlock rendered="{!NOT(isValid)}">
+     <FONT COLOR="red" SIZE="2">{!$Label.Claim_Cannot_Be_Submitted}</FONT>
+        <br/>
+        <br/>
+        &nbsp;&nbsp; <FONT COLOR="red" SIZE="2"> {!$Label.Claim_Cannot_Be_Submitted1}</FONT>
+        <br/>
+        &nbsp;&nbsp; <FONT COLOR="red" SIZE="2"> {!$Label.Claim_Cannot_Be_Submitted2}</FONT>
+        <br/>
+        &nbsp;&nbsp; <FONT COLOR="red" SIZE="2"> {!$Label.Claim_Cannot_Be_Submitted3}</FONT>
+        <br/>
+        <br/>
+    </apex:pageBlock>-->
+    <apex:pageBlock rendered="{!isValid}">
+    {!$Label.Provide_Claim_Explanation}
+        <br/>
+        <br/>
+        <apex:pageBlockTable value="{!newClaim}" var="claim" id="claimTable">
+            <apex:column headerValue="{!$Label.Contact_Name}" rendered="{!isInternalUser}">
+                <div class = "requiredInput">
+                <div class = "requiredBlock"></div>
+                <apex:inputField value="{!claim.ContactId}"/>
+                </div>
+            </apex:column>
+            <apex:column headerValue="{!$Label.Claim_Explanation}">
+                <div class = "requiredInput">
+                <div class = "requiredBlock"></div>
+                <apex:inputTextarea value="{!description}" rows="4" cols="60"/>
+                </div>
+            </apex:column>
+            <apex:column headerValue="{!$Label.Claim_Amount}">
+                <div class = "requiredInput">
+                <div class = "requiredBlock"></div>
+                <apex:inputText value="{!claimAmount}"/>
+                </div>
+            </apex:column>
+        </apex:pageBlockTable>
+        <apex:pageBlockButtons location="bottom">
+            <apex:actionStatus id="SaveStatus">
+                <apex:facet name="stop">
+                    <apex:commandButton value="{!$Label.Submit_Claim}" action="{!submitClaim}" id="submitBtn" status="SaveStatus" reRender="firstForm" rendered="true"/>
+                </apex:facet>
+                <apex:facet name="start">
+                    <apex:commandButton value="{!$Label.Please_Wait}" disabled="true"/>
+                </apex:facet>
+            </apex:actionStatus>
+            <apex:CommandButton value="{!$Label.Cancel}" immediate="true" action="{!cancelOperation}"/>
+        </apex:pageBlockButtons>
+    </apex:pageBlock>
+</apex:form>
+</apex:page>

@@ -1,0 +1,137 @@
+<aura:component controller="IndirectStore">   
+    <ltng:require styles="/resource/SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />
+    <aura:attribute name="store" type="Account" />
+    <aura:attribute name="StoreVisitObj" type="Store_Visit__c"/> 
+    <aura:attribute name="role" type="UserRole"/>
+    <aura:attribute name="loggedInUser" type="User" />
+    <aura:attribute name="storeVisitCategory" type="Store_Visit_Activity_Category__c[]"/>
+    <aura:attribute name="storeActivity" type="Store_Activity__c"/>
+    <aura:attribute name="storeActivityList" type="Store_Activity__c[]"/>
+    <aura:attribute name="parentId" type="Id"/>
+    <aura:handler event="c:IndirectAddButtonEvent" action="{!c.handleApplicationEvent}"/>
+   
+    <aura:attribute name="buttoncolor" type="String"/>
+    <aura:attribute name="messages" type="Aura.Component[]" access="GLOBAL"/>
+    <aura:attribute name="edit" type="boolean" default="true"/>
+    <aura:attribute name="readOnly" type="boolean" default="false"/>
+    <aura:attribute name="StoreVisitWrapper2" type="IndirectStore.StoreVisitWrapper2[]"/>
+    <aura:attribute name="lat" type="String"/>
+    <aura:attribute name="longi" type="String"/>
+    <aura:attribute name="StoreActivityCatagory" type="String"/>
+    <aura:attribute name="LookupFieldValue" type="String[]"/>
+    <aura:attribute name="storeActivityId" type="String"/>
+    <aura:attribute name="LookupField" type="String"/>
+    <aura:attribute name="fromMultiContComp" type="boolean" default="false"/>
+    <aura:attribute name="Attachment" type="String[]"/>
+    <aura:attribute name="showAttachment" type="boolean" />
+    <aura:attribute name="activitiesWrapper" type="Object" />
+     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="c:IndirectShowSummaryEvent" action="{!c.IndirectShowSummary}"/>
+   <!-- <aura:handler event="c:IndirectShowAlertEventForOK" action="{!c.OkBox}"/> -->
+     <aura:handler event="c:IndirectShowSummaryonEndVisitEvent" action="{!c.IndirectShowSummaryonEndVisit}"/>
+    
+
+    <div aura:id="messages">
+        {!v.messages}
+    </div>
+    <div aura:id="optionalModalDialog"/>
+    <div class="slds">
+        <div aura:id="ModalDialogPlaceholder" />
+        <div class="slds-grid slds-grid--align-space slds-box 
+                    slds-media__body navbar navbar-default navbar-static-top">  
+          
+            <div>         
+                <button class="slds-button slds-button--neutral slds-button--brand" onclick="{!c.endVisit}">End Visit</button>
+            </div>
+           
+            <div> 
+                <p class="slds-page-header__title slds-truncate slds-align-middle slds-text-align--center" 
+                   title="Rohde Corp - 80,000 Widgets">Activities</p>            
+            </div>
+            
+            <div  > 
+                <c:svg class="slds-hide slds-icon slds-icon--medium slds-icon-text-default slds-float--right" 
+                       xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#adduser" />
+            </div> 
+            
+        </div> 
+        <table class="slds-table slds-table--bordered slds-scrollable--y">
+            
+            <tbody>
+                <aura:iteration items="{!v.StoreVisitWrapper2}" var="classVar">
+                    
+                    <tr>
+                        <td >
+                            <aura:if isTrue="{!classVar.stc.Number_Required__c > 0}">
+                                <b><ui:outputText value="{!classVar.stc.Store_Activity_Category__c}"/> </b> 
+                                <aura:set attribute="else">
+                                    <ui:outputText value="{!classVar.stc.Store_Activity_Category__c}"/> 
+                                </aura:set>
+                            </aura:if> 
+                        </td> 
+                        
+                        <td >
+                         
+                            <aura:if isTrue="{!classVar.check == false }">
+                                <div onclick ="{!c.getInput}" colspan="2"  data-record="{!classVar.stc.Record_Type_Id__c}">
+                                    <c:svg class="slds-icon slds-icon--small slds-icon-text-default slds-float--right" 
+                                           xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"/>	  
+                                </div>
+                            </aura:if>
+                            <aura:if isTrue="{!(classVar.check == true)}">
+                                <div onclick ="{!c.toggleup}" colspan="2"  data-record="{!classVar.stc.Record_Type_Id__c}">
+                                    <c:svg class="slds-icon slds-icon--small slds-icon-text-default slds-float--right" 
+                                           xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevronup"/>
+                                </div>
+                            </aura:if>   
+                        </td>                     
+                    </tr>    
+                    <aura:renderIf isTrue="{!(classVar.stc.Record_Type_Name__c ==  v.storeActivity.RecordType.DeveloperName )}"> 
+                        <tr>                          
+                            <span><c:IndirectStoreActivityDetails storeActivity="{!v.storeActivity}"
+                                                                  storeVisitCategory="{!v.storeVisitCategory}"
+                                                                  storeTest="{!v.store}" 
+                                                                  loggedInUser="{!v.loggedInUser}"  
+                                                                  edit="{!v.edit}"
+                                                                  LookupFieldValue="{!v.LookupFieldValue}"
+                                                                  StoreActivityCatagory="{!classVar.stc.Record_Type_Id__c}"
+                                                                  readOnly="{!v.readOnly}"/></span>
+                        </tr>
+                        <br/>   
+                    </aura:renderIf> 
+                </aura:iteration> 
+            </tbody>
+            
+        </table>    
+        <br/>
+        
+         <div class="container">
+            <b> <ui:inputTextArea label="Visit Notes" class="slds-input" aura:id="notesId" 
+                                  labelClass="slds-form-element__label" value="{!v.StoreVisitObj.Notes__c}"/></b>
+            
+            <button class="slds-button slds-button--neutral slds-button--brand" onclick="{!c.SaveNotes}">Add Notes</button>
+        </div>
+        
+        <br/>
+        <aura:if isTrue="{!v.showAttachment}">
+            <div class="slds-media slds-box slds-grow">
+                <aura:iteration items="{!v.Attachment}" var="attachment"> 
+                    <div class="slds-media__figure">
+                        <img src="{!$Resource.Attachment_Logo}" height="30" width="30" ></img>
+                    </div> 
+                    <div class="slds-media__body">   
+                        <h2 class="cell slds-cell-wrap" data-label="Attachment Name" title="{!attachment.Name}">{!attachment}</h2>   
+                    </div>
+                </aura:iteration>
+            </div>
+            
+            <br/>
+            <aura:set attribute="else">
+                <div class="container">
+                    <input type="file" class="file" aura:id="file" label="file"/><br/><br/>
+                    <button class="slds-button slds-button--neutral slds-button--brand" onclick="{!c.save}">Attach</button>   
+                </div> 
+            </aura:set>
+        </aura:if>
+    </div>            
+</aura:component>

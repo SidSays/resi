@@ -1,0 +1,5 @@
+To whom it may concern,
+
+{!Store_Activity__c.CreatedBy} visited {!Account.Name}, located at {!Account.BillingAddress} today. They noted that third party sales reps at the store did not have their tablet loaded with the attractor loop.
+
+Thank you.

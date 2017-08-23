@@ -1,0 +1,98 @@
+.THIS {
+    position:absolute;
+    top:50px;    
+    width: inherit;
+}
+
+.THIS .font-reduced{
+    font-size : 0.8em;
+}
+
+.THIS .filter-item{
+    width:160px;
+    height:30px;
+}
+
+.THIS .filter-item-header{
+    width:160px;
+    height:15px;
+}
+
+.THIS .slds-nubbin_top-left {
+    background:#16325c;
+}
+
+
+.THIS .width100{
+    width:100%
+}
+.THIS .sortDropdown .slds-button--neutral{
+	text-align: left;
+    font-size: .58em;
+    line-height: 1rem;
+    padding: 7px 0 6px 8px;
+}
+.THIS .sortDropdown .slds-dropdown__item{
+	border-bottom: 1px solid #d8dde6;
+}
+.THIS .sortDropdown .slds-dropdown__item:last-child {
+    border-bottom: none;
+}
+.THIS .sortDropdown .sort-item.slds-active{
+	background: #D8EDFF;
+}
+.THIS .sortDropdown .sort-item .menu-label{
+	display: inline-block;
+    padding: 5px;
+}
+.THIS .sortDropdown .slds-dropdown{
+	width:200px;
+	left:16%;
+}
+.THIS .sortDropdown .slds-nubbin--top-left:before, .THIS .sortDropdown .slds-nubbin--top-left:after {
+    left: 7.5rem;
+}
+.THIS .sortDropdown .slds-dropdown__item {
+    line-height: 1.5;
+}
+.THIS .sortDropdown .sort-icon{
+	background-image: url(/resource/SLDS/assets/icons/utility/chevronright_60.png);
+    background-repeat: no-repeat;
+    background-size: 13%;
+    background-position: 97% 55%;
+}
+.THIS .sortDropdown .sort-icon.asc{
+    background-image: url(/resource/SLDS/assets/icons/utility/chevronup_60.png);
+    background-repeat: no-repeat;
+    background-size: 13%;
+    background-position: 97% 55%;
+}
+.THIS .sortDropdown .sort-icon.desc{
+    background-image:url("/resource/SLDS/assets/icons/utility/chevrondown_60.png");
+    background-repeat: no-repeat;
+    background-size: 13%;
+    background-position: 97% 55%;
+}
+.THIS .sortDropdown .sort-item.asc{
+    background-image: url(/resource/SLDS/assets/icons/utility/chevronup_60.png);
+    background-repeat: no-repeat;
+    background-size: 10%;
+    background-position: 88% 42%;
+}
+.THIS .sortDropdown .sort-item.desc{
+    background-image:url("/resource/SLDS/assets/icons/utility/chevrondown_60.png");
+    background-repeat: no-repeat;
+    background-size: 10%;
+    background-position: 88% 42%;
+}
+.THIS .sortDropdown .sort-item .menu-icon{
+	margin: 6px 11px 0 0;
+}
+
+/*.THIS .slds-dropdown-trigger .slds-dropdown{
+   display: none;
+}
+
+.THIS .slds-dropdown-trigger .slds-button:focus + .slds-dropdown{
+    display: block;
+}*/

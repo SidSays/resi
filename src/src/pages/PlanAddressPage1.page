@@ -1,0 +1,19 @@
+<!-- Created By Radhika Bansal for US1066873: DSM to SF1: See Addresses on a map (Analysis + Lightning Components) -->
+<!-- Creation Date: 15-March-2017 -->
+<apex:page standardStylesheets="false" showHeader="false" sidebar="false" standardController="Plan__c" extensions="PlanAddressController">
+ <!-- <apex:includeScript value="/lightning/lightning.out.js" /> -->
+     <apex:includeLightning />  
+      <div id="lightning" />
+
+    <script>
+    var planId = "{!$CurrentPage.parameters.id}";
+        $Lightning.use("c:PlanAddressesApp", function() {
+          $Lightning.createComponent("c:PlanAddressesComponent", 
+          {pageRecordId: planId},        
+          "lightning",
+          function(cmp) {
+            // do some stuff
+          });
+        });
+    </script>
+</apex:page>

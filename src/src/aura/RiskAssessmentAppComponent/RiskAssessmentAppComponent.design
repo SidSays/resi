@@ -1,0 +1,3 @@
+<design:component label="RiskAssessmentAppComponentDesignResources">
+    <design:attribute name="channel" label="Select Channel" datasource="DirectSales,IndirectSales,InboundSales,XfinityStores" required="true" />
+</design:component>

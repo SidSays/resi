@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>email template for messages sent from SalesSpace Collateral mobile app</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>SalesSpace Collateral</name>
+    <style>none</style>
+    <subject>Your Xfinity Offer</subject>
+    <textOnly>Hi {!Contact.Name} -  Thank you for your interest in Xfinity.  As your local Xfinity Sales Professional, it is my goal to help you choose the best solution for XFINITY TV, Internet, home phone and security service that best fits your budget and lifestyle.  
+
+Call me today if you have any additional questions about the offer we discussed!  Best of all, we back all our services with the 30-Day Money-Back Comcast Customer Guarantee.</textOnly>
+    <type>custom</type>
+</EmailTemplate>

@@ -1,0 +1,83 @@
+<!-- 
+/**********************************************************
+* Page Name: PropertyVisitForStandardEvent
+* Author: Deepika Jain Naresh, Accenture
+* Date: 16-June-2017 
+* Description: Use to create a Property Visit from Standard Event
+* Last Modified : Lavanya Hosbet
+* Last Modified Date : 12-July-2017
+* User Story : US1137253 - XC DT - Edit Property Visit
+***********************************************************/
+--> 
+<apex:page standardController="Event" docType="html-5.0" extensions="PropertyVisitForStandardEventController" showQuickActionVfHeader="false" showHeader="true"  sidebar="false" action="{!initializeData}" standardStylesheets="false" >
+  <head>
+       <link rel="stylesheet" href="{!URLFOR($Resource.bootstrap_sf1,'css/bootstrap.css')}" />
+       <style>
+        #loadingDiv{
+            position:fixed;
+            top:0px;
+            left:0px;
+            width:100%;
+            height:100%;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/d/de/Ajax-loader.gif') 50% 50% no-repeat #000; /* You can adjust the color */
+            z-index:99999;
+            opacity: 0.4;
+        }
+    </style>
+  </head>
+  <body>
+      <apex:form id="formid"> 
+           <header class="navbar navbar-default navbar-static-top navbar-branded" role="banner">
+             <div class="container">
+                <div class="navbar-header">
+                    <ul class="navbar-brand navbar-foundation-logo">Visit Detail Information</ul>
+                </div>
+             </div>
+           </header>
+           
+           <apex:pageBlock id="pgBlock" >
+               <apex:pageMessages ></apex:pageMessages>
+               <apex:pageblockButtons location="bottom" rendered="{!NOT(propertyVisit.Status__c == 'Completed')}">
+                  <apex:commandbutton action="{!savePropertyVisits}" value="Save" style="background:LightBlue;width:100px;" status="updateStatus" rerender="formid"/>
+                  <apex:actionStatus id="updateStatus">
+                    <apex:facet name="start">
+                       <div id="loadingDiv"></div>
+                    </apex:facet>
+                  </apex:actionStatus>   
+                  <apex:commandbutton action="{!cancel}" value="Cancel" style="background:LightBlue;width:100px;"/>
+               </apex:pageblockButtons> 
+               
+               <apex:pageBlockSection title="Details of Visit"> 
+                  <apex:pageblockSectionItem rendered="{!NOT(ispropVisitExists)}" >
+                    <apex:outputLabel value="Property" for="m1" /> 
+                    <apex:outputText value="{!propertyName}" id="m1" html-readonly="true" />
+                  </apex:pageblockSectionItem>
+                  <apex:pageblockSectionItem rendered="{!ispropVisitExists}" >
+                    <apex:outputLabel value="Property" for="m2" /> 
+                    <apex:outputText value="{!propertyVisit.Property__r.Name}" id="m2" html-readonly="true" />
+                  </apex:pageblockSectionItem>
+                  <apex:pageblockSectionItem rendered="{!NOT(ispropVisitExists) || (ispropVisitExists && propertyVisit.Status__c == 'Completed')}" >
+                    <apex:outputLabel value="Start Date Time" for="m1"/> 
+                    <apex:outputText value="{!formattedStartDateTimeOfVisit}" id="m1" html-readonly="true" />
+                  </apex:pageblockSectionItem>
+                  <apex:pageblockSectionItem rendered="{!ispropVisitExists && NOT(propertyVisit.Status__c == 'Completed')}">
+                    <apex:outputLabel value="Start Date Time" for="m3"/>  
+                    <apex:inputField value="{!propertyVisit.Start_Date_Time__c}" id="m3" showDatePicker="false" type="datetime-local" />
+                  </apex:pageblockSectionItem>
+                  <apex:pageblockSectionItem rendered="{!NOT(propertyVisit.Status__c == 'Completed')}">
+                    <span>Visit Plan</span>
+                      <apex:actionRegion immediate="true">
+                         <apex:selectList id="visitPlan" size="1" required="true" value="{!selectedVisitPlan}">
+                         <apex:selectOptions value="{!VisitPlanOptions}"/>
+                         </apex:selectList>
+                     </apex:actionRegion>
+                 </apex:pageblockSectionItem>
+				<apex:pageblockSectionItem rendered="{!ispropVisitExists && propertyVisit.Status__c == 'Completed'}">
+					<apex:outputLabel value="Visit Plan" for="m1" />
+					<apex:outputText value="{!selectedVisitPlan}" id="m1" />
+				</apex:pageblockSectionItem>
+			</apex:pageBlockSection>
+           </apex:pageBlock>
+      </apex:form>
+  </body>
+</apex:page>

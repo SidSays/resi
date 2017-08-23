@@ -1,0 +1,6 @@
+<aura:event type="APPLICATION" description="Event template" >
+	<aura:attribute name="user" type="User" default="{'sobjectType': 'User','Id': '005q0000001LlKD',
+                                                             'Name': 'Suchita Sharma'}"/>
+    <aura:attribute name="store" type="Account" default="{'sobjectType': 'Account','Id': '001q000000IeQxN',
+                                                             'Store_Type__c': '3PL','Name': 'Best Buy','BillingAddress': '1270 East Street, California, USA'}"/>
+</aura:event>

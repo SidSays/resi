@@ -1,0 +1,15 @@
+Hello {!Case.Requested_By__c}
+
+Your Case {!Case.CaseNumber} has been closed. 
+
+Case Details
+
+Case #: {!Case.CaseNumber}
+Channel : {!Case.Channel__c}
+Product: {!Case.Request_Type__c}
+Case Category I: {!Case.Ticket_Category__c}
+Case Category II: {!Case.Ticket_Category_II__c}
+Description: {!Case.Description}
+Resolution Comments: {!Case.Resolution_Notes__c}
+
+Thank You

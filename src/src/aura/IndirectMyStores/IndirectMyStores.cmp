@@ -1,0 +1,48 @@
+<aura:component >
+    <ltng:require styles="/resource/SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />
+    <aura:attribute name="stores" type="Account[]"/>
+    <aura:attribute name="storeMap" type="Map"/>
+    <aura:attribute name="lastvisiteddate" type="String"/>
+    <aura:attribute name="sortlevels" type="String[]" default="Alphabetical,Last Visit Date"/>
+    <aura:attribute name="loggedInUser" type="User"/>
+    <aura:attribute name="role" type="UserRole"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:if isTrue="{!v.stores.length > 0}">
+        <ui:inputSelect aura:id="levels" label="" change="{!c.sortStoreList}">
+            <aura:iteration items="{!v.sortlevels}" var="level">
+                <ui:inputSelectOption text="{!level}" label="{!level}"/>
+            </aura:iteration>
+        </ui:inputSelect>
+        
+        <aura:iteration items="{!v.stores}" var="store" indexVar="idx">
+            <div class="slds-card"  data-record="{!store.Id}"  onclick="{!c.goToStoreDetail}">
+                <header class="slds-card__header slds-grid grid--flex-spread">    
+                    <aura:if isTrue="{!store.Store_Visit_Status__c}">
+                        <img src="/resource/1471514057000/Indirect_Indicator" height="10" width="20"/>
+                        <div class="slds-m-left--x-small">
+                        <h2 class="slds-text-heading--medium slds-truncate">{!store.Name}</h2>
+                        </div>
+                      <aura:set attribute="else">
+                         <h2 class="slds-text-heading--medium slds-truncate">{!store.Name}</h2> 
+                      </aura:set>
+                    </aura:if>
+                </header>
+                <section class="slds-card__body">
+                    <div class="slds-tile slds-hint-parent">
+                        <p class="slds-tile__title slds-truncate">
+                            {!store.BillingStreet},{!store.BillingCity},{!store.BillingState},{!store.BillingPostalCode}
+                        </p>
+                        <p class="slds-tile__title slds-truncate">Last Visited On : {!store.Last_Visit_Date_Text__c}</p>
+                    </div>
+                </section>
+            </div>                                                
+        </aura:iteration>
+        <aura:set attribute="else">
+            <div class="slds" style="text-align:center;font-size:20px">
+                <br/><b>No records found. </b>
+            </div>
+            <br/>	
+        </aura:set>
+    </aura:if>
+</aura:component>

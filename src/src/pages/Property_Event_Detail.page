@@ -1,0 +1,76 @@
+<apex:page standardController="Event" docType="html-5.0" extensions="PropertyEventForStandardEventController" showQuickActionVfHeader="false" showHeader="true" sidebar="false" action="{!initializeData}" standardStylesheets="false">
+<link rel="stylesheet" href="{!URLFOR($Resource.bootstrap_sf1,'css/bootstrap.css')}"></link>	
+	<apex:form >
+		<apex:pageBlock >
+			<apex:pageBlockSection columns="2">
+				<apex:pageBlockSectionItem >
+						<label class = "">
+                            Property Events Name
+                        </label>
+			        <apex:inputText required="true" id="theTextInput"/>
+				</apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem >
+			        <apex:outputLabel value="Owner"/> 
+                    <apex:outputText value="Sagarika"/>
+				</apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem >
+			        <apex:selectList styleClass="form-control" id="typeOptions" size="1" required="true">
+		            	<apex:selectOptions value="{!typeDD}"/>
+		            </apex:selectList>
+				</apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem >
+			        <apex:selectList styleClass="form-control" id="typeOptions" size="1" required="true">
+		            	<apex:selectOptions value="{!typeDD}"/>
+		            </apex:selectList>
+				</apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem >
+			        <apex:selectList styleClass="form-control" id="typeOptions" size="1" required="true">
+		            	<apex:selectOptions value="{!typeDD}"/>
+		            </apex:selectList>
+				</apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem >
+			        <apex:selectList styleClass="form-control" id="typeOptions" size="1" required="true">
+		            	<apex:selectOptions value="{!typeDD}"/>
+		            </apex:selectList>
+				</apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem >
+			        <apex:selectList styleClass="form-control" id="typeOptions" size="1" required="true">
+		            	<apex:selectOptions value="{!typeDD}"/>
+		            </apex:selectList>
+				</apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem >
+			        <apex:selectList styleClass="form-control" id="typeOptions" size="1" required="true">
+		            	<apex:selectOptions value="{!typeDD}"/>
+		            </apex:selectList>
+				</apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem >
+			        <apex:selectList styleClass="form-control" id="typeOptions" size="1" required="true">
+		            	<apex:selectOptions value="{!typeDD}"/>
+		            </apex:selectList>
+				</apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem >
+			        <apex:selectList styleClass="form-control" id="typeOptions" size="1" required="true">
+		            	<apex:selectOptions value="{!typeDD}"/>
+		            </apex:selectList>
+				</apex:pageBlockSectionItem>
+				
+				<apex:pageBlockSectionItem >
+			        <apex:selectList styleClass="form-control" id="typeOptions" size="1" required="true">
+		            	<apex:selectOptions value="{!typeDD}"/>
+		            </apex:selectList>
+				</apex:pageBlockSectionItem>
+				
+				
+			</apex:pageBlockSection>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

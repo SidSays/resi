@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This template will be used in the store visit summary email</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Target Sales Summary</name>
+    <style>none</style>
+    <subject>Target Sales Summary</subject>
+    <textOnly>While reviewing  following things were observed:
+Attempted to close custs. on services?  : {!Store_Activity__c.Did_the_MS_rep_attempt_to_close_customer__c}</textOnly>
+    <type>custom</type>
+</EmailTemplate>

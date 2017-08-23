@@ -1,0 +1,29 @@
+<aura:component >
+	<ltng:require styles="/resource/SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css"/>
+    <aura:attribute name="store" type="Account" default="{'sobjectType': 'Account',
+																'Id': '001q000000IeQxN'}"/>
+    <aura:registerEvent name="acc" type="c:IndirectAddNoteEvent"/> 
+    <!--<aura:handler event="c:IndirectAddNoteEvent" action="{!c.actionReq}"/> -->
+    
+    <div class="slds" style="margin-top:5px;margin-left:10px;">
+		<div class="slds-grid slds-grid--align-space slds-box slds-theme--info " 
+             style="white-space:nowrap;position:absolute;bottom:0%;width:100%;"   role="navigation">
+      		
+       		<div>
+               
+                <c:button class="slds-button slds-button--neutral" 
+            	label="Notes"
+             	svgXlinkHref="/resource/SLDS100/assets/icons/standard-sprite/svg/symbols.svg#note" 
+             	svgClass="slds-icon slds-icon-text-default"
+                          onclick="{!c.showDetails}"/>
+                	
+                 
+			</div>
+       		
+		</div> 
+        {!v.body}
+        
+   <!-- <c:IndirectAddNoteComp /> -->
+	</div>
+    
+</aura:component>

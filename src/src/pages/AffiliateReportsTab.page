@@ -1,0 +1,66 @@
+<!-- 
+/**********************************************************
+* Page Name: AffiliateReportsTab
+* Author: Amitkumar Bangad, Accenture
+* Date: 03-February-2013 
+* Requirement # Request Id : UAT Enhancement
+* Description: To provide the feature of filtering affiliate reports on date ranges
+* Last Modified by:
+***********************************************************/
+-->
+<apex:page >
+	<div style="width: 40%; height: 100%; min-width: 450px;">
+		<div style="width: 100%; float: left; height: 100%; min-width: 450px;">
+			<apex:pageBlock >
+				<br />
+				<h1>Enter the date range below to view Orders created between a
+					specific time period.</h1>
+				<br />
+				<br />
+				<B>Order Created Date:</B>
+				<br />
+				<br />
+            From &nbsp;(MM/DD/YYYY):
+               <input type="text" id="from"
+					onchange="populateFromFilters()" />
+				<br />
+            To &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(MM/DD/YYYY):
+               <input type="text" id="to" onchange="populateToFilters()" />
+			</apex:pageBlock>
+		</div>
+		<div style="width: 50%; height: 50%; float: left; min-width: 225px;">
+			<form method="get" action="{!$label.Order_Summary_Report}">
+				<apex:pageBlock >
+					<input type="hidden" name="pv0" id="pv0" />
+					<input type="hidden" name="pv1" id="pv1" />
+					<br />
+					<br />
+					<input type="submit" value="View Order Summary Report"
+						class="submit" />
+				</apex:pageBlock>
+			</form>
+		</div>
+		<div style="width: 50%; float: left; height: 50%; min-width: 225px;">
+			<form method="get" action="{!$label.Order_Detail_Report}">
+				<apex:pageBlock >
+					<input type="hidden" name="pv0" id="pv2" />
+					<input type="hidden" name="pv1" id="pv3" />
+					<br />
+					<br />
+					<input type="submit" value="View Order Detail Report"
+						class="submit" style="margin-right: 5px;" />
+				</apex:pageBlock>
+			</form>
+		</div>
+	</div>
+	<script>
+   function populateFromFilters(){
+       document.getElementById("pv0").value = document.getElementById("from").value;
+       document.getElementById("pv2").value = document.getElementById("from").value;
+   }
+   function populateToFilters(){
+       document.getElementById("pv1").value = document.getElementById("to").value;
+       document.getElementById("pv3").value = document.getElementById("to").value;
+   }
+   </script>
+</apex:page>

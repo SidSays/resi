@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>As a XSP, I can log a &quot;Door Hanger&quot; knock by clicking the &quot;Door Hanger&quot; SF1 Address button so that I can log my door knocking activity</description>
+    <fieldOverrides>
+        <field>Disposition__c</field>
+        <literalValue>Door Hanger</literalValue>
+    </fieldOverrides>
+    <fieldOverrides>
+        <field>OwnerId</field>
+        <formula>$User.Id</formula>
+    </fieldOverrides>
+    <fieldOverrides>
+        <field>Priority</field>
+        <literalValue>Normal</literalValue>
+    </fieldOverrides>
+    <fieldOverrides>
+        <field>Status</field>
+        <literalValue>Completed</literalValue>
+    </fieldOverrides>
+    <label>Door Hanger</label>
+    <optionsCreateFeedItem>false</optionsCreateFeedItem>
+    <quickActionLayout>
+        <layoutSectionStyle>TwoColumnsLeftToRight</layoutSectionStyle>
+        <quickActionLayoutColumns>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Description</field>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+        </quickActionLayoutColumns>
+        <quickActionLayoutColumns/>
+    </quickActionLayout>
+    <targetObject>Task</targetObject>
+    <targetParentField>Customer_Address__c</targetParentField>
+    <targetRecordType>Task.Knock</targetRecordType>
+    <type>Create</type>
+</QuickAction>

@@ -1,0 +1,94 @@
+<aura:component controller="IndirectStoreController">
+    <ltng:require styles="/resource/SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />
+    
+    <aura:attribute name="subject" type="String"/>
+    <aura:attribute name="startDateTime" type="DateTime"/>
+    <aura:attribute name="relatedTo" type="String" />
+    <aura:attribute name="assignedTo" type="String" />
+    <aura:attribute name="whatId" type="String"/>
+    
+    <aura:attribute name="title" type="String" required="true"/>
+    <aura:attribute name="closable" type="Boolean" default="true"/>
+    
+    <aura:attribute name="closeLabel" type="String" default="Close"/> 
+    <aura:attribute name="confirmLabel" type="String" default="OK"/>
+    
+    <aura:attribute name="onclose" type="Aura.Action" default="{!c.defaultCloseAction}"/> 
+    <aura:attribute name="onconfirm" type="Aura.Action" default="{!c.defaultCloseAction}"/>   
+    <div class="slds">
+        
+        <div>
+            <!-- instead of using display property of css, use aria-hidden from HTML5 -->
+            <div aria-hidden="false" role="dialog" class="slds-modal slds-fade-in-open">
+                
+                <div class="slds-modal__container">
+                    
+                    <div class="slds-modal__header">
+                        <h2 class="slds-text-heading--medium">{!v.title}</h2>
+                        <aura:if isTrue="{!v.closable}">
+                            <button class="slds-button slds-modal__close" onclick="{!v.onclose}">
+                                <c:svgIcon svgPath="/resource/SLDS100/assets/icons/action-sprite/svg/symbols.svg#close" 
+                                           category="standard" 
+                                           size="small" 
+                                           name="close" />
+                                
+                                <span class="slds-assistive-text">{!v.closeLabel}</span>
+                            </button>
+                        </aura:if>
+                    </div> 
+                    <div class="slds-modal__content">
+                        <div>
+                            <form>
+                                <form class="slds-form--stacked" style="padding:5px">
+                                    <div class="slds-form-element">
+                                        <ui:inputText aura:id="subject"
+                                                      label="Subject"
+                                                      class="slds-input" 
+                                                      labelClass="slds-form-element__label"
+                                                      value="{!v.subject}" />
+                                    </div>
+                                    <div class="slds-form-element">
+                                        <ui:inputDateTime label="Start Date"
+                                                          aura:id="startDateTime" 
+                                                          class="slds-form-element__control slds-input" 
+                                                          labelClass="slds-form-element__label"
+                                                          displayDatePicker="true"
+                                                          required="true"
+                                                          value="{!v.startDateTime}"/>
+                                        
+                                    </div>
+                                    
+                                    <div class="slds-form-element">
+                                        <span class="slds-form-element__label">Assigned To</span>
+                                        <div class="slds-form-element__control slds-has-divider--bottom">
+                                            <span class="slds-form-element__static">{!v.assignedTo}</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="slds-form-element">
+                                        <span class="slds-form-element__label">Related To</span>
+                                        <div class="slds-form-element__control slds-has-divider--bottom">
+                                            <span class="slds-form-element__static">{!v.relatedTo}</span>
+                                        </div>
+                                    </div>
+                                    
+                                </form>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="slds-modal__footer"> 
+                        <div style="text-align: center">
+                            <button aura:id="btnSuchedule"
+                                    type="button"
+                                    class="slds-button slds-button--neutral"                                               
+                                    onclick="{!c.SaveEvent}">
+                                SCHEDULE
+                            </button>
+                        </div> 
+                    </div>
+                </div> 
+            </div>
+            <div class="slds-modal-backdrop slds-modal-backdrop--open"></div>
+        </div>
+    </div>
+</aura:component>

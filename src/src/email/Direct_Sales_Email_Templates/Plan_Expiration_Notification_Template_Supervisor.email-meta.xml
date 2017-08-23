@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Comcast_LetterHead</letterhead>
+    <name>Plan : Expiration Notification Template Supervisor</name>
+    <style>freeForm</style>
+    <subject>Action Required : Turf {!Plan__c.Name} - Nearing Expiration</subject>
+    <textOnly>Hello {!Plan__c.User__c},
+
+A turf that has been assigned to you is approaching expiration.
+Please take the necessary action.
+
+Turf Details:
+
+Turf Name : {!Plan__c.Name}
+Expiration Date : {!Plan__c.Expiration_Date__c}
+
+
+
+
+Best Regards,
+Comcast</textOnly>
+    <type>html</type>
+</EmailTemplate>

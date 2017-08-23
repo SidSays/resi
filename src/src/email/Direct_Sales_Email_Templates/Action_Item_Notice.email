@@ -1,0 +1,13 @@
+ATTENTION: 
+
+Action Item {!Action_Item__c.Name} has had no activity in 5 days. Please provide an update as soon as possible. 
+
+{!Action_Item__c.Name} 
+{!Action_Item__c.Assigned_To__c} 
+{!Action_Item__c.Status__c} 
+{!Action_Item__c.00NG000000EfGPh} 
+{!Action_Item__c.Details__c} 
+
+{!Action_Item__c.Link} 
+
+Thank You

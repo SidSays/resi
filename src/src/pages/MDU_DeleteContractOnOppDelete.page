@@ -1,0 +1,53 @@
+<!-- 
+/**********************************************************
+* Page Name: MDU_DeleteContractOnOppDelete
+* Author: Deepika Jain Naresh, Accenture
+* Date: 29-June-2017 
+* Description: Used to override the delete button on Opportunity and also delete contracts when an opportunity is deleted.
+***********************************************************/
+--> 
+<apex:page standardController="Opportunity" extensions="MDU_DeleteContractOnOppDeleteController" showHeader="false"  sidebar="false" standardStylesheets="false" >
+  <head>
+       <link rel="stylesheet" href="{!URLFOR($Resource.bootstrap_sf1,'css/bootstrap.css')}" />
+   </head>
+  <body>
+      <apex:form id="formid"> 
+      <script type="text/javascript">
+        function callContractDelete(){
+            var oppId="{!oppId}";
+            if(typeof Visualforce === 'object') {
+                  Visualforce.remoting.Manager.invokeAction(
+                  '{!$RemoteAction.MDU_DeleteContractOnOppDeleteController.deleteContractOnOppDel}',oppId,
+                    function(result, event){
+                        if (event.status) {                       
+                            }                     
+                    },{escape: true}
+                  );
+            }    
+        }
+      </script>
+      <script>callContractDelete();</script>
+      <center>
+      <div style="font-weight:bold;text-align:center;">
+               <apex:outputPanel id="outputPanel1" rendered="{!NOT(isContractExists)}">
+                   Opportunity will be deleted shortly.
+               </apex:outputPanel>
+      </div>
+      <div style="font-weight:bold;text-align:center;">
+               <apex:outputPanel id="outputPanel2" rendered="{!isContractExists}">
+                   Opportunity and all the associated contracts will be deleted shortly.
+               </apex:outputPanel>
+      </div>
+           <apex:pageBlock id="pgBlock">
+           <apex:pageMessages ></apex:pageMessages>
+              <!-- <apex:pageBlockSection > 
+                       <apex:outputText value="Opportunity deleted successfully." style="font-weight:bold;text-align:center;" ></apex:outputText>
+               </apex:pageBlockSection> -->
+               <apex:pageblockButtons location="bottom">
+                   <apex:commandButton value="Back to Home" action="{!openPage}" style="background:LightBlue;width:100px;"/>  
+               </apex:pageblockButtons> 
+           </apex:pageBlock>
+        </center>
+      </apex:form>
+  </body>
+</apex:page>

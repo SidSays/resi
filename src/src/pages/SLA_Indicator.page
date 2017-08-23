@@ -1,0 +1,54 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" >
+  <!-- <apex:image id="theImage" value="{!$Resource.SLA_Mockup}" width="280" height="60"/> -->
+  <apex:includeLightning />
+  <apex:includeScript value="/support/console/37.0/integration.js"/>
+  <script src="/soap/ajax/37.0/connection.js" type="text/javascript"></script>
+
+    <style>
+        html {
+            height: 100% !important;
+        }
+        body {
+            min-height: 100% !important;
+            overflow-y: hidden;
+        }
+    </style>
+    <div id="timer" />
+    
+  
+    <script>
+    sforce.connection.sessionId='{!GETSESSIONID()}';
+
+    sforce.console.getFocusedPrimaryTabObjectId(function(result){
+        var result = sforce.connection.query("SELECT CreatedDate, SLA_Due_Date__c FROM Case WHERE Id ='"+result.id+"'");
+        var records = result.getArray("records");
+        
+       
+        sla = records[0].SLA_Due_Date__c;
+        dueDate = sla !=null ? new Date(sla) : null;
+        now = new Date();
+        
+        remaining = dueDate - now;
+
+        if(dueDate == null){
+            remaining = null;
+        }
+        
+        document.body.style.cssText = '100% !important';
+
+        $Lightning.use("c:ProgressIndicatorApp", function() {
+            $Lightning.createComponent("c:CountdownTimerCmp",
+                { 
+                  remaining:remaining
+                },
+            "timer",
+            function(cmp) {
+              
+            });
+        });
+        
+
+        
+    });
+    </script>
+</apex:page>

@@ -1,0 +1,6 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<div><font style="background-color: rgb(255, 255, 255);">You are receiving this email as notification that your case&nbsp;</font><span style="background-color: rgb(255, 255, 255);">{!Case.CaseNumber} has been updated to its final Claims Status. Below is the relevant information of this Claim Case.</span></div><font face="arial"><div><font face="arial"><br></font></div>{!Case.CaseNumber}</font><div><font face="arial">{!Case.CreatedDate}</font></div><div><font face="arial">{!Case.Status}</font></div><div><font face="arial">{!Case.Claim_Result__c}</font></div><div><font face="arial">{!Case.Claim_Reason_Description__c}</font></div><div><font face="arial">{!Case.Claimed_Amount__c}</font></div><div><font face="arial">{!Case.Approved_Amount__c}</font></div><div><font face="arial"><br></font></div><div><font face="arial">Thank you</font></div>]]></td>
+</tr>
+</table>

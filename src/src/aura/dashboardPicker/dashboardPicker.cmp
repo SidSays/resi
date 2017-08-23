@@ -1,0 +1,19 @@
+<!-- This component is used to show the picklist of dashboards  -->
+<aura:component implements="flexipage:availableForAllPageTypes"
+                access="global"
+                controller="CoachingApp">
+    <aura:attribute name="coachingAppMetaData" type="CoachingApp__mdt[]" 
+                    access="global" 
+                   />
+    <aura:attribute name="dashboardIds" type="String[]" 
+                    access="global" 
+                   />
+     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	
+    <p>Select Dashboard</p>
+    <ui:inputSelect aura:id="levels"  change="{!c.onSelectChange}">
+    </ui:inputSelect>
+    <div class="slds-float_right">
+    <lightning:button variant="brand" label="Observation Form" onclick="{!c.openObservationForm}" />
+    </div>    
+</aura:component>

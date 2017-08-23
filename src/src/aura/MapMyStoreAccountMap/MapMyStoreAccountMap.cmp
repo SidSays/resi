@@ -1,0 +1,145 @@
+<aura:component access="global" 
+                controller="CARMapViewLightning">
+    <ltng:require styles="/resource/SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />
+    <aura:attribute name="map" type="Object"/>    
+    <aura:attribute name="user" type="String"/>
+    <aura:attribute name="viewType" type="String"/>
+    <aura:attribute name="fromDate" type="Date"/>
+    <aura:attribute name="toDate" type="Date"/>
+    <aura:attribute name="redLegend" type="String"/>
+    <aura:attribute name="yellowLegend" type="String"/>
+    <aura:attribute name="orangeLegend" type="String"/>
+    <aura:attribute name="lastLocationTime" type="String"/>
+    <aura:attribute name="lastLocationCoordinates" type="String"/>
+    <aura:attribute name="dailyLocationItems" type="String"/>
+    <aura:attribute name="endDailyLocation" type="Object"/>
+    <aura:attribute name="CARstartActivityLocation" type="Object"/>
+    <aura:attribute name="CARendActivityLocation" type="Object"/>
+    <aura:attribute name="markers" type="Object"/>
+    <aura:attribute name="markerLayerGroup" type="Object"/>
+    
+    <!--<aura:handler event="c:MapMyStoreAccountsLoaded" action="{!c.accountsLoaded}"/> -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="c:PlanAddressesEvent" action="{!c.addressesLoaded}"/> 
+    <!-- <aura:handler event="c:CARMapViewEvent" action="{!c.propertyAndPropertVisit}"/> -->
+    <!--  This handler is for extracting the values from the modal dialog -->
+    <!--  <aura:handler event="c:CARMapViewSelectedDataEvent" action="{!c.carMapView}"/> -->
+    <aura:handler event="c:CARMapViewToMap" action="{!c.carMapView}"/> 
+    
+    
+    <ltng:require styles="/resource/leaflet/leaflet.css"
+                  scripts="/resource/leaflet/leaflet.js"
+                  afterScriptsLoaded="{!c.jsLoaded}" />
+    
+    <div id="screen">
+        <div id="map"></div>
+        <div id ="mapFooter">
+        <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout">
+            
+            <aura:if isTrue="{!v.viewType == 'Last reported location today'}" >
+                <thead>
+                    <tr class="slds-text-heading--label">
+                        <th width="33%" scope="col" title="Location">
+                            <div ><b>Location </b></div>
+                        </th>
+                        <th width="33%" scope="col" title="Time">
+                            <div ><b>Time</b></div>
+                        </th>
+                        <th width="33%" scope="col" title="Latitude/Longitude">
+                            <div ><b>Latitude/Longitude</b></div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><img src="{!v.redLegend}"/></td>
+                        <td>{!v.lastLocationTime}</td>
+                        <td>{!v.lastLocationCoordinates}</td>
+                    </tr>
+                </tbody>
+            </aura:if>
+            <aura:if isTrue="{!v.viewType == 'Daily location history' &amp;&amp; (v.dailyLocationItems[0] != null)}" >
+                <thead>  
+                    <tr >
+                        <td colspan="2" class="slds-align--absolute-left">
+                            
+                            <p> <b> StartLocation:</b> &nbsp; {!v.dailyLocationItems[0].Geocode_TimeStamp__c}&nbsp; 
+                                {!v.dailyLocationItems[0].Latitude__c},{!v.dailyLocationItems[0].Longitude__c}   </p>
+                            
+                            <p> <b> EndLocation:</b> &nbsp; {!v.endDailyLocation.Geocode_TimeStamp__c}&nbsp; 
+                                {!v.endDailyLocation.Latitude__c},{!v.endDailyLocation.Longitude__c}
+                            </p>
+                            
+                        </td>
+                        <td  class="slds-align--absolute-right">
+                            
+                            <p><img src="{!v.redLegend}"/><b> Location History</b> </p>
+                            
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td width="30%" title="SNo">
+                            <div class="slds-truncate">S No.
+                                
+                            </div>    
+                        </td>
+                        <td width="30%"  title="Time">
+                            <div class="slds-truncate">Time
+                                
+                            </div>    
+                        </td>
+                        <td width="40%"  title="Lat/Longi">
+                            <div class="slds-truncate">Latitude/Longitude
+                                
+                            </div>    
+                        </td>
+                    </tr>
+                </thead>  
+                <tbody>
+                    
+                    <aura:iteration items="{!v.dailyLocationItems}" var="loc" indexVar="dailyIndex">
+                        <tr>
+                            <td>{!dailyIndex+ 1}</td>
+                            <td>{!loc.Timestamp__c}</td>
+                            <td>{!loc.Latitude__c}/{!loc.Longitude__c}</td>
+                        </tr>
+                    </aura:iteration>
+                    
+                </tbody>  
+            </aura:if>
+            <aura:if isTrue="{!v.viewType == 'CAR Activity locations'}">
+                
+                <thead>  
+                    <tr >
+                        <td colspan="2" class="slds-align--absolute-left">
+                            
+                            <p> <b> StartLocation:</b> &nbsp; 
+                                <ui:outputDate value="{!(v.CARstartActivityLocation.CreatedDate)}"
+                                                   format="MM/DD/YYYY"/>&nbsp;
+                                {!v.CARstartActivityLocation.Start_Date_Time__c}&nbsp; 
+                                {!v.CARstartActivityLocation.Visit_Location__Latitude__s},{!v.CARstartActivityLocation.Visit_Location__Longitude__s}   </p>
+                            
+                            <p> <b> EndLocation:</b> &nbsp; 
+                                <ui:outputDate value="{!(v.CARendActivityLocation.CreatedDate)}"
+                                                   format="MM/DD/YYYY"/>&nbsp;
+                                {!v.CARendActivityLocation.End_Date_Time__c}&nbsp; 
+                                {!v.CARendActivityLocation.Visit_Location__Latitude__s},{!v.CARendActivityLocation.Visit_Location__Longitude__s}
+                            </p>
+                            
+                        </td>
+                        <td  class="slds-align--absolute-right">
+                            <img src="{!v.orangeLegend}"/><b> Property with visit</b>                            
+                            <img src="{!v.yellowLegend}"/><b> Property Visit </b> 
+                            <img src="{!v.redLegend}"/><b> Property </b> 
+                            
+                        </td>
+                        
+                    </tr>
+                    
+                </thead>
+            </aura:if>
+        </table>
+        </div>
+    </div>
+</aura:component>

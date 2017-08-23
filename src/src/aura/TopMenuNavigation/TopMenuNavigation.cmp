@@ -1,0 +1,60 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:appHostable" controller="SalesSpaceCoreService">
+    <aura:attribute access="public" name="navigationMenuWrapperList" type="SalesSpaceCoreService.NavigationMenuWrapper" />
+    <aura:attribute access="public" name="submenuWrapperList" type="SalesSpaceCoreService.SubmenuWrapper" />
+    <aura:attribute access="public" name="userphotourl" type="String" />
+    <aura:attribute access="public" name="userName" type="String" /><aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="c:ToggleCloseEvent" action="{!c.toggleMenu}"/>
+    <aura:registerEvent name="appLauncherEvent" type="c:AppLauncherEvent"/>
+    <aura:registerEvent name="toggleDashboardEvent" type="c:ToggleDashboardEvent"/>
+    <div class="dashboard headMenucls" aura:id="headMenu">
+        <header>
+            <h1 class="slds-float--right">
+                <a href="javascript:;">SALES SPACE</a>
+            </h1>
+            <a href="javascript:;" class="slds-float--left icons icons-menu js-menu js-preventEvent" onclick="{!c.appLauchClick}" aura:id="jsMenu"></a>
+            <a href="javascript:;" class="slds-float--left icons " onclick="{!c.toggleSubMenus}">
+                <img src="{!v.userphotourl}" alt="{!v.userName}" title="{!v.userName}" class="slds-avatar slds-avatar--circle slds-avatar--small user-icon"/>
+            </a>
+            
+            <nav class="site-navigation slds-not-mobile" id="topNavigationNav1">
+                <ul class="slds-list--horizontal" >
+                    <aura:iteration items="{!v.navigationMenuWrapperList}" var="navigationMenuWrapperObj">
+                        <!-- Display Navigation Menu's - Desktop View-->
+                        <li class="slds-list__item"><a href="{!navigationMenuWrapperObj.url}" target="_BLANK" class="{!navigationMenuWrapperObj.defaultMenu ? 'slds-active' : ''}" onclick="{!c.navigateTo}">{!navigationMenuWrapperObj.label}</a></li>
+                    </aura:iteration>
+                </ul>
+            </nav>
+            <div class="tooltip slds-is-mobile toggle" aura:id="submenuMobileId">
+                <span class="triangle"></span>
+                <ul>
+                    
+                    <aura:iteration items="{!v.submenuWrapperList}" var="submenuWrapperObj">
+                        <!-- Display Navigation Menu's - Desktop View-->
+                        <li ><a href="{!submenuWrapperObj.url}" >{!submenuWrapperObj.label}</a></li>
+                    </aura:iteration>
+                </ul>
+            </div>
+            <!--/ tooltip mobile-->
+            <div class="tooltip slds-not-mobile toggle" aura:id="submenuNotMobileId">
+                <span class="triangle"></span>
+                <ul>
+                    <aura:iteration items="{!v.submenuWrapperList}" var="submenuWrapperObj">
+                        <!-- Display Navigation Menu's - Mobile View-->
+                        <li ><a href="{!submenuWrapperObj.url}" >{!submenuWrapperObj.label}</a></li>
+                    </aura:iteration>
+                </ul>
+            </div>
+            
+        </header>
+        <div class="slds-is-mobile slds-navigation">
+            <nav class="site-navigation" id="topNavigationNav2">
+                <ul class="slds-list">
+                    <aura:iteration items="{!v.navigationMenuWrapperList}" var="navigationMenuWrapperObj">
+                        <!-- Display Navigation Menu's - Mobile View-->
+                        <li class="slds-list__item"><a href="{!navigationMenuWrapperObj.url}" target="_BLANK" class="{!navigationMenuWrapperObj.defaultMenu ? 'slds-active' : ''}" onclick="{!c.navigateTo}">{!navigationMenuWrapperObj.label}</a></li>
+                    </aura:iteration>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</aura:component>

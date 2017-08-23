@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	</head>
+	<body style="background-color:lightgrey;">
+	    <div style="font-family:'Times New Roman';">
+			 <b><p style="float:left;">Store Visit Summary for {!Store_Visit__c.End_Date_Time__c}</p></b>
+			 <b><p style="float:right;">{!Store_Visit__c.OwnerFullName}</p></b>
+        </div>
+		    <br>
+		    <br>	
+		<div style="background-color:white;">
+	        <center>
+				<p>
+					<img src="https://onecomcast--devpro--c.cs21.content.force.com/servlet/servlet.ImageServer?id=015q00000006ORX&oid=00Dq0000000BA1K&lastMod=1468740548000" alt="test image for mail" height= "100" width="100" />
+				</p>
+			</center>
+	    </div>
+			
+		<div style="background-color:white;">
+			<br>
+		<div style="font-family:'Times New Roman';">
+			<center><b><p style="font-size:20px;"> {!Store_Visit__c.Store_Name__c}</p></b>
+			<p style="font-size:15px ;">billingStreet billingCity </p>
+			<p style ="font-size:15px ;">billingState billingCountry billingPostalCode</p></center>
+		</div>
+			<br>
+		<div style="margin-left: 40px; font-family:'Times New Roman';">		 
+			<h3> Activities Completed :</h3>
+			<h4 style="margin-left: 45px;font-weight:normal;">{!myCustomString}</h4>  	
+		</div>
+			<br>
+		<div style="margin-left: 40px; font-family:'Times New Roman'">
+			<h3 style="margin-bottom : 0px;">Notes:</h3>
+			<h3  style="font-size:15px ;  font-family:'Times New Roman';font-weight:normal; margin-top: 5px; ">{!Store_Visit__c.Notes__c}</h3>
+		</div>
+		</div>
+			<br>
+		<div style="background-color:white; text-align:right;">
+			<img src="https://onecomcast--devpro2--c.cs26.content.force.com/servlet/servlet.ImageServer?id=015210000000fkz&oid=00D210000008dNy&lastMod=1479455823000" style="opacity:0.5;" alt="test image for mail" height=50 width=150 />
+		</div>
+			<br><br><br>
+	</body>
+</html>

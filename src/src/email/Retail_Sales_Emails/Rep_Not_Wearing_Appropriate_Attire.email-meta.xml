@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This email will be sent to an XSR if they check the &quot;Rep not wearing appropriate attire?&quot; checkbox on a 3PL rep review activity.</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Rep Not Wearing Appropriate Attire</name>
+    <style>none</style>
+    <subject>3PL Rep Not Wearing Appropriate Attire</subject>
+    <type>text</type>
+</EmailTemplate>

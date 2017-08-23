@@ -1,0 +1,134 @@
+<!-- CoachingTimeline - This component displays the 5 most recent disposition of the user selected from wave dashboard -->
+<aura:component implements="flexipage:availableForAllPageTypes" access="global" controller="CoachingPayrollController">    
+    <aura:attribute name="selectedCoachings" type="one_one_Coaching__c[]" />
+	<aura:attribute name="errorMessages" type="String[]" />    
+    <aura:attribute name="CoachInfo" type="one_one_Coaching__c" />
+    <aura:attribute name="workCoachingId" type="String"/>
+    <aura:attribute name="userDetails" type="User"/>
+    <aura:attribute name="isRep" type="Boolean"/>
+    <ltng:require styles="{!$Resource.RiskAssessmentDisposition + '/RiskAssessmentDisposition/css/default.css'}" 
+                  scripts="{!$Resource.RiskAssessmentDisposition + '/RiskAssessmentDisposition/js/jquery.js'}"/>
+    <!--Conditional variables which decides when to display and hide the modal; See Aura:If tag-->
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    <aura:attribute name="showCoaching" type="boolean" default="false"/>
+    <aura:attribute name="showCoachingTimeline" type="boolean" default="false"/>
+    <aura:attribute name="showCoachingButton" type="boolean" default="false"/>
+    <aura:handler event="wave:selectionChanged" action="{!c.handleSelectionChanges}"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="c:OneOneCoachingDetailsEvent" action="{!c.gettingOldOneOneList}"/>
+
+    <div class=" slds-p-vertical_xx-small">
+        <div class="slds-grid slds-grid_align-spread slds-section-title--divider">
+            <div class="slds-col slds-p-top_x-small">Coaching</div>
+            <div  class="slds-col">
+                <lightning:button variant="brand" label="Observation" onclick="{!c.openmodalP}" />
+            </div>
+        </div>
+    </div>
+    
+    <aura:renderif isTrue="{!v.showCoachingTimeline}">  
+        <div class=" slds-p-vertical_xx-small slds-align_absolute-center">
+        <lightning:button variant="brand" label="Create 1-1 Coaching" onclick="{!c.navigateToOneOneCoachingCmp}" />
+            </div>
+        <!--<button class="slds-button slds-button_brand" onclick="{!c.navigateToOneOneCoachingCmp}">Create 1-1 Coaching</button> -->                   	
+    </aura:renderif>
+    <aura:renderif isTrue="{!v.showCoachingButton}">
+        <aura:renderif isTrue="{!$User.UIThemeDisplayed == 'Theme4d' || !$User.UIThemeDisplayed == 'Theme4t'}">
+        	<button class="slds-button slds-button_brand" onclick="{!c.navigateToCoachingSF1}">Create Coaching Relationship</button>
+            <aura:set attribute="else">
+            	<button class="slds-button slds-button_brand" onclick="{!c.navigateToCoachingClassic}">Create Coaching Relationship</button>            
+            </aura:set>
+        </aura:renderif>
+
+    </aura:renderif>
+    <!-- Error/Success Message Section -->
+ 
+    <div id="messageSec" style="display:none;"></div>
+    <aura:renderif isTrue="{!v.showCoaching}">		
+        <div class="slds-grid slds-p-around_medium">   
+             <div class="slds-tile__detail slds-text-body_small">
+              	<dl class="slds-list_horizontal slds-wrap">
+                	<dt class="slds-item_label slds-text-color_weak" style="font-weight:bold">Manager:</dt>
+                	<dd class="slds-item_detail slds-truncate" title="Description for first label">{!v.userDetails.Manager.Name}</dd>
+                	<dt class="slds-item_label slds-text-color_weak" style="font-weight:bold">Sales Employee:</dt>
+                	<dd class="slds-item_detail slds-truncate" title="Description for second label">{!v.userDetails.Name}</dd>
+              	</dl>
+            </div>
+        </div>    
+        
+        <ul class="slds-timeline slds-p-around_medium">
+            <aura:iteration items="{!v.selectedCoachings}" var="coaching">
+                <li>
+                    <div class="slds-timeline__item">
+                        <span class="slds-assistive-text">Coaching</span>
+                        <div class="slds-media">
+                            <div class="slds-media__body">
+                                <div class="slds-media slds-timeline__media slds-timeline__media_event">
+                                    <div class="slds-media__figure">
+                                        <div class="slds-icon_container slds-icon-standard-event" title="event">
+                                            <lightning:icon iconName="custom:custom15" size="small"/>
+                                        </div>
+                                    </div>
+                                    <div class="slds-media__body">
+                                        <h3 class="slds-truncate" title="1:1 Coaching">
+                                            <a href="javascript:void(0);" data-coachingid="{!coaching.Id}" onclick="{!c.showDetails}">{!coaching.Name}</a>
+                                        </h3>
+                                        <p class="slds-truncate" title="">
+                                            <span class="slds-text-title">Manager Comments: </span>
+                                            <span class="slds-text-body_small">
+                                                {!coaching.Manager_Comments__c}
+                                            </span>    
+                                        </p>
+                                        <ul class="slds-list_horizontal slds-wrap">
+                                            <li class="slds-m-right_large">
+                                                <span class="slds-text-title">Status: </span>
+                                                <span class="slds-text-body_small">
+                                                    <ui:outputDate value="{!coaching.Status__c}"/>
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                </li> 
+            </aura:iteration>
+        </ul>        
+    </aura:renderif>
+    
+    <aura:if isTrue="{!v.isOpen}">
+        <!-- Applying the Style to the Modal -->    
+        <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
+            <!-- Referencing the SLDS Modal Container pre-built function -->
+            <div class="slds-modal__container">
+                <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                <div class="slds-modal__header">
+                </div>
+                
+                <!--###### MODAL BOX BODY Data elements with associated Labels ######-->
+                
+                <!--<div class="slds-modal__content slds-p-around- -medium"> 
+                    <force:recordView aura:id="details" recordId="{!v.CoachInfo.Id}" type="FULL"/>
+                </div> -->
+                <div class="slds-modal__content slds-p-around--medium"> 
+                    <force:recordEdit aura:id="details" recordId="{!v.CoachInfo.Id}"/>
+                </div>
+                
+                <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button--neutral" onclick="{!c.saveDetails}" >Save</button>
+                    <button class="slds-button slds-button--neutral" onclick="{!c.hideDetails}" >Close</button>
+                </div>
+            </div>
+        </div>
+        
+        <!--Greying out Background of Modal-->
+        <div class="slds-backdrop slds-backdrop--open"></div>
+    </aura:if>  
+    
+    <div>
+         <c:ObservationForm aura:id="ObservationFormComp"/>
+    </div> 
+    
+</aura:component>

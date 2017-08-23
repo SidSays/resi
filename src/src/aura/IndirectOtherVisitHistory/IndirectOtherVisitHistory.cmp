@@ -1,0 +1,64 @@
+<aura:component controller="IndirectOtherVisitsController" >
+    
+    <ltng:require styles="/resource/SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css"/>
+    
+    <aura:attribute name="otherVisitWrapperList" type="Object[]"/>
+    <aura:attribute name="loggedInUser" type="User"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="slds">  
+        <ui:inputSelect aura:id="visitList" change="{!c.onSelectChange}"/>
+        <aura:if isTrue="{!v.otherVisitWrapperList.length == 0}">
+            <div class="slds" style="text-align:center;font-size:20px">
+                <br/><b>No records found. </b>
+            </div>
+            <br/>	
+        </aura:if>
+        <table class="slds-table slds-table--bordered slds-scrollable--y">
+            <aura:iteration items="{!v.otherVisitWrapperList}" var="sov" indexVar="index">
+                <tr>
+                    <td>
+                        <h2><b><ui:outputText value="{!sov.stv.Store_Visit_Name__c }"/></b></h2>
+                    </td>
+                    <aura:if isTrue="{!sov.check == false}">
+                        <td colspan="2">
+                            <div onclick="{!c.showOtherVisitDetails}" data-record="{!sov.stv.Id}"> 
+                                <c:svg class="slds-icon slds-icon--medium slds-icon-text-default slds-float--right" 
+                                       xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"/>
+                            </div>
+                        </td>
+                    </aura:if>
+                    <aura:if isTrue="{!sov.check ==  true}">
+                        <td colspan="2">
+                            
+                            <div onclick="{!c.showOtherVisitDetails}" data-record="{!sov.stv.Id}"> 
+                                <c:svg class="slds-icon slds-icon--medium slds-icon-text-default slds-float--right" 
+                                       xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevronup"/>
+                            </div>
+                        </td> 
+                    </aura:if> 
+                </tr>
+                <aura:if isTrue="{!sov.check ==  true}">
+                    <tr class="grey">
+                        <td scope="col" ><p>Start Date/Time</p></td>
+                        <td scope="col" colspan="2"><ui:outputDateTime value="{!sov.stv.Start_Date_Time__c}" format="YYYY-MM-DD, hh:mm a"/></td>
+                    </tr>
+                    <tr class="grey">
+                        <td scope="col" ><p>End Date/Time</p></td>
+                        <td scope="col" colspan="2"><ui:outputDateTime value="{!sov.stv.End_Date_Time__c}" format="YYYY-MM-DD, hh:mm a"/></td>
+                    </tr>
+                    <aura:renderIf isTrue="{!sov.stv.Visit_Type__c == 'Event'}">
+                        <tr class="grey">
+                            <td scope="col" ><p>Title</p></td>
+                            <td scope="col"><p>{!sov.stv.Title__c}</p></td>
+                        </tr>
+                    </aura:renderIf>
+                    <tr class="grey">
+                        <td scope="col" ><p>Notes</p></td>
+                        <td scope="col"><p>{!sov.stv.Notes__c}</p></td>
+                    </tr>
+                </aura:if>
+            </aura:iteration>
+        </table>
+    </div>
+    
+</aura:component>

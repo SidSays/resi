@@ -1,0 +1,18 @@
+<aura:component controller="IndirectStoreController">
+    <aura:attribute name="store" type="Account" />
+    <div class="slds-grid slds-grid--align-space slds-page-header slds-box slds-theme--alt-inverse 
+                slds-media__body navbar navbar-default navbar-static-top" role="navigation"> 
+        <div onclick="{!c.scheduleEvent}">
+            <c:svg class="slds-icon" 
+                   xlinkHref="/resource/SLDS100/assets/icons/standard-sprite/svg/symbols.svg#event" /> 
+        </div>
+        <div>
+            <h2 class="slds-text-heading--small slds-truncate"><b>{!v.store.Name}</b></h2>
+            <h4>{!v.store.BillingStreet}</h4>
+        </div>
+        <div>
+            <c:svg class="slds-icon" 
+                   xlinkHref="/resource/SLDS100/assets/icons/standard-sprite/svg/symbols.svg#people" />                 
+        </div>
+    </div>    
+</aura:component>

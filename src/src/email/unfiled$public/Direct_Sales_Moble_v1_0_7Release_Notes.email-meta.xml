@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Direct Sales Moble v1.0.7 Release Notes</name>
+    <style>none</style>
+    <subject>Important: Direct Sales Mobile Version 1.0.7 Now Available</subject>
+    <textOnly>Good Morning {!Receiving_User.FirstName},
+
+Version 1.0.7 of the Direct Sales Mobile App has been posted to the Comcast App Catalog and can be downloaded at your convenience. The current version 	installed on your device will continue to work until you are able to install the latest version.
+
+The following functions will be addressed with the 1.0.7 release:
+
+Expired or Deleted Turf/Playlists will no longer be displayed in the My Plans list.
+Off Turf Search Results will now be ordered by the Sort Code.
+You can now filter by Last Disconnect Date.
+Non-Marketable Reasons have been added to the Non-Marketable Knock.
+Event Type/Name will only show for the Start Knock.
+Appointments will no longer show &quot;Null, Null&quot;.
+We are researching the approach required to populate the associated Off Turf address information on events and tasks.
+
+
+Attached are detailed release notes for the above fixes as well as step by step instructions to install version 1.0.7 of the Direct Sales Mobile app.
+
+You can also find the release notes and job aid by clicking the below links and selecting &quot;view file&quot;:
+
+Release Notes: https://onecomcast.my.salesforce.com/015G000000CcN4A
+
+Downloading &amp; Installing the App: https://onecomcast.my.salesforce.com/015G000000CbpVu
+
+Thank You</textOnly>
+    <type>custom</type>
+</EmailTemplate>

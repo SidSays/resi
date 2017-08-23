@@ -1,0 +1,161 @@
+<aura:component >
+    <aura:attribute type="Plan__c[]" name="Turfs" />
+    <aura:attribute type="Plan__c[]" name="Playlists" />
+    <aura:attribute type="String" name="PlansType" default="Turf"/>
+    <aura:attribute type="String" name="planId"/>
+    <aura:attribute type="String" name="currentPlanName"/>
+    <aura:attribute name="sortedAddresses" type="Customer_Address__c[]"/>
+    <aura:attribute name="sortLabel" type="String" default="Address"/>
+    <aura:attribute name="originalAddresses" type="Customer_Address__c[]"/>
+    <aura:handler event="c:SendFilteredAndOriginalAddressList" action="{!c.addressesLoaded}"/>
+    <aura:handler event="c:SendPlanList" action="{!c.plansLoaded}"/>
+    <aura:handler event="c:UpdatePlanInfo" action="{!c.getsortLabel}"/>    
+    
+    <div class="slds-grid slds-grid_pull-padded-xxx-small">
+        <div class="slds-col slds-p-horizontal--xxx-small" style="width:60%"> 
+            <div aura:id="planpopover"  class="slds-dropdown-trigger slds-dropdown-trigger_click width100">
+                <button id="planbutton"  class="slds-button slds-button--neutral width100" aria-haspopup="true" title="Show More" onclick="{!c.openPlans}">            
+                    <div class="slds-grid slds-wrap slds-grid_pull-padded">    
+                        <div class="slds-size_5-of-6">
+                            <p class="slds-truncate slds-text-align_left font-reduced">{!v.currentPlanName}</p>                        
+                        </div> 
+                        <div class="slds-size_1-of-6" style="margin-top:5%">
+                            <c:svg class="slds-button__icon" 
+                                   xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevronright"/>                        
+                        </div>
+                    </div>
+                </button>
+                
+                <div  class="slds-dropdown slds-dropdown_left slds-nubbin_top-left slds-dropdown_medium">
+                    <ul class="slds-dropdown__list" role="menu">
+                        <li class="slds-dropdown__item" role="presentation">
+                            <a href="javascript:void(0);" role="menuitem" tabindex="0">
+                                <span class="slds-dropdown-trigger slds slds-dropdown-trigger--click">                                    
+                                    <div class="slds-button-group" role="group">
+                                        <button aura:id="turfs" style="width:150px" class="slds-button slds-button_brand" onclick="{!c.listTurfs}">Turfs</button>
+                                        <button aura:id="playlists" style="width:150px" class="slds-button slds-button_neutral" onclick="{!c.listPlaylists}">Playlists</button>                                     
+                                    </div>
+                                </span>
+                            </a>
+                        </li>
+                        <aura:renderif isTrue="{!v.PlansType == 'Turf'}" >
+                            <aura:if isTrue="{!v.Turfs.length > 0 }" >
+                                <aura:iteration items="{!v.Turfs}" var="plan" indexVar="idx">
+                                    <li class="slds-dropdown__item " role="presentation" data-record="{!plan.Id}" onclick="{!c.loadPlan}">                            
+                                        <span class="slds-dropdown-trigger slds slds-dropdown-trigger--click width100" >
+                                            <article class="slds-card" >
+                                                <div class="slds-card__header slds-grid">
+                                                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                        <div class="slds-media__body">
+                                                            <div class="slds-grid slds-wrap slds-grid_pull-padded">    
+                                                                <div class="slds-size_4-of-6">
+                                                                    <p style="margin-left:5%" class="slds-truncate slds-text-heading_small" title="{!plan.Name}">{!plan.Name}</p>                        
+                                                                </div> 
+                                                                <div class="slds-size_2-of-6 slds-no-flex">
+                                                                    <p class="slds-text-align_center">{!$Label.c.PlanTypeTurf}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </header>
+                                                </div>
+                                                <div class="slds-card__body slds-card__body_inner">{!plan.Total_Worked_Addresses__c}/{!plan.True_count_of_Addresses__c} Addresses worked</div>
+                                                <footer class="slds-card__body slds-card__body_inner font-reduced">Expires: {!plan.Expiration_Date__c}  Created: {!plan.Plan_Created_Date__c} <span class="slds-float_right">{!plan.Plan_Status__c}</span></footer>
+                                            </article>
+                                        </span>                            
+                                    </li> 
+                                </aura:iteration>
+                                <aura:set attribute="else">
+                                    <li class="slds-dropdown__item " role="presentation">                            
+                                        <span class="slds-dropdown-trigger slds slds-dropdown-trigger--click width100">
+                                            <article class="slds-card">
+                                                <div class="slds-card__header slds-grid">
+                                                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                        <div class="slds-media__body">
+                                                            {!$Label.c.No_Turf_Assigned}
+                                                        </div>
+                                                    </header>                                                
+                                                </div>
+                                            </article>                                            
+                                        </span>                            
+                                    </li> 
+                                </aura:set>
+                            </aura:if>
+                        </aura:renderif>
+                        <aura:renderif isTrue="{!v.PlansType == 'Playlist'}" >
+                            <aura:if isTrue="{!v.Playlists.length > 0 }" >
+                                <aura:iteration items="{!v.Playlists}" var="plan" indexVar="idx">                                    
+                                    <li class="slds-dropdown__item " role="presentation" data-record="{!plan.Id}" onclick="{!c.loadPlan}">                            
+                                        <span class="slds-dropdown-trigger slds slds-dropdown-trigger--click width100">
+                                            <article class="slds-card">
+                                                <div class="slds-card__header slds-grid">
+                                                    <header class="slds-media slds-media_center slds-has-flexi-truncate" >
+                                                        <div class="slds-media__body">
+                                                            <div class="slds-grid slds-wrap slds-grid_pull-padded">    
+                                                                <div class="slds-size_4-of-6">
+                                                                    <p style="margin-left:5%" class="slds-truncate slds-text-heading_small" title="{!plan.Name}">{!plan.Name}</p>                        
+                                                                </div> 
+                                                                <div class="slds-size_2-of-6 slds-no-flex">
+                                                                    <p class="slds-text-align_center">{!$Label.c.PlanTypePlaylist}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </header>
+                                                </div>
+                                                <div class="slds-card__body slds-card__body_inner">{!plan.Total_Worked_Addresses__c}/{!plan.True_count_of_Addresses__c} Addresses worked</div>
+                                                <footer class="slds-card__body slds-card__body_inner font-reduced">Expires:{!plan.Expiration_Date__c}  Created:{!plan.Plan_Created_Date__c} <span class="slds-float_right">{!plan.Plan_Status__c}</span></footer>
+                                            </article>                                            
+                                        </span>                            
+                                    </li>                                 
+                                </aura:iteration>
+                                <aura:set attribute="else">
+                                    <li class="slds-dropdown__item " role="presentation">                            
+                                        <span class="slds-dropdown-trigger slds slds-dropdown-trigger--click width100">
+                                            <article class="slds-card">
+                                                <div class="slds-card__header slds-grid">
+                                                    <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                                                        <div class="slds-media__body">
+                                                            {!$Label.c.No_Playlist_Assigned}
+                                                        </div>
+                                                    </header>                                                
+                                                </div>
+                                            </article>                                            
+                                        </span>                            
+                                    </li> 
+                                </aura:set>
+                            </aura:if>
+                        </aura:renderif>
+                    </ul>
+                </div>
+            </div>        
+        </div>
+        <div id="sort_cmp" class="slds-col slds-p-horizontal--xxx-small" style="width:35%"> 
+        	<div aura:id="sortDropdown" class="sortDropdown slds-dropdown-trigger slds slds-dropdown-trigger--click width100">
+        		<div class="slds-button slds-button--neutral width100 sort-icon asc" aria-haspopup="true" title="Show More" onclick="{!c.toggleSort}">
+                   {!v.sortLabel}
+               	</div> 
+               	<div class="slds-dropdown slds-nubbin--top-left zclass">
+               		<ul class="slds-dropdown__list" role="menu">
+               			<li class="slds-dropdown__item" role="presentation">
+               			    <div class="sort-item" data-dd="Type" onclick="{!c.sortAddr}"><span class="menu-label">Type</span></div>
+                        </li>
+                        <li class="slds-dropdown__item" role="presentation">
+               			    <div class="sort-item" data-dd="Disconnect Date" onclick="{!c.sortAddr}"><span class="menu-label">Disconnect Date</span></div>
+                        </li>
+               			<li class="slds-dropdown__item" role="presentation">
+               			    <div class="sort-item asc" data-dd="Address" onclick="{!c.sortAddr}"><span class="menu-label">Address</span></div>
+                        </li>
+               			<li class="slds-dropdown__item" role="presentation">
+               			    <div class="sort-item" data-dd="Knocked Date" onclick="{!c.sortAddr}"><span class="menu-label">Knocked Date</span></div>
+                        </li>
+               			<li class="slds-dropdown__item" role="presentation">
+               			    <div class="sort-item" data-dd="Status" onclick="{!c.sortAddr}"><span class="menu-label">Status</span></div>
+                        </li>                                                                         
+                        <li class="slds-dropdown__item" role="presentation">
+               			    <div class="sort-item" data-dd="Name" onclick="{!c.sortAddr}"><span class="menu-label">Name</span></div>
+                        </li>
+               		</ul>
+               	</div>                       
+        	</div>
+        </div>
+    </div>         
+</aura:component>

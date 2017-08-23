@@ -1,0 +1,5 @@
+To Whom it may concern,
+
+Your Rep, {!User.FirstName} {!User.LastName}, was able to find a better location for the Comcast table at the {!Account.Name} store located at {!Account.BillingAddress}.
+
+Thank you.

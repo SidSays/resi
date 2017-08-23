@@ -1,0 +1,33 @@
+<aura:component controller="IndirectOtherVisitsController">
+    <ltng:require styles="/resource/SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />
+    <aura:attribute name="selectedvisit" type="String" />
+    <aura:attribute name="loggedInUser" type="User" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="lat" type="String"/>
+    <aura:attribute name="longi" type="String"/>
+  
+    <aura:handler event="c:checkErrorsOnEndVisitEvent" action="{!c.checkErrorsOnEndVisit}"/>
+    <div aura:id="optionalModalDialog"/>
+    
+    <div class="slds">
+        <ui:inputSelect aura:id="visitList" change="{!c.onSelectChange}"/>
+        
+        <ui:message aura:id="messagebox" title="Error" class="slds-hide" severity="error" 
+                    closable="false">    
+            <ui:outputText value=""/>
+        </ui:message>
+        
+        <aura:if isTrue="{!(v.selectedvisit=='Prospect' || v.selectedvisit=='Training' 
+                         || v.selectedvisit=='Office Visit')}"><br/>
+            <br/><ui:inputDateTime aura:id="startdate" label="Start Date/Time" class="form-control"
+                                   displayDatePicker="true" required="true" />
+            <br/><ui:inputDateTime aura:id="enddate" label="End Date/Time" class="form-control"
+                                   displayDatePicker="true" required="true" />
+            <br/><ui:inputTextArea aura:id="notes" label="Notes" rows="5"/>
+            <br/><ui:button label="End Visit" press="{!c.saveVisit}"/>
+        </aura:if>
+        <aura:if isTrue="{!v.selectedvisit=='Event'}">
+            <c:IndirectEventVisit loggedInUser="{!v.loggedInUser}"/>
+        </aura:if>
+    </div>        
+</aura:component>

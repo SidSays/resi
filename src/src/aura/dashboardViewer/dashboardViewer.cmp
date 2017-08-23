@@ -1,0 +1,27 @@
+<!-- This component is used to dynamically create wave dashboard based on the value selected from dashboard picker.
+	Intially it loads value in dashboardIds by the event fired from the dashboardPicker lightning component, sendDashboardIds. 
+-->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+                access="global" 
+                controller="SystemProperties">
+    <!-- current dashbaord Id-->
+    <aura:attribute name="dashboardId" type="String" access="global" />
+    <!-- list of dashboard id that are displayed-->
+    <aura:attribute name="dashboardIds" type="String[]" access="global"/>
+    <!-- preload variable is created to show the default dashboard on pageload -->
+    <aura:attribute name="preload" type="Boolean" access="global" default="false"/>
+    <aura:attribute name="height" type="Integer" access="global" default="700"/>
+    
+    <!-- sendDashboardIds event is fired from dashboardPicker to populate total dashboardsIds -->
+    <aura:handler event="c:sendDashboardIds" action="{!c.populateDashboardIds}"/>
+    
+    <!-- change event is fired whenever v.dashboardId is changed to show the dashboard accordingly -->
+    <aura:handler name="change" value="{!v.dashboardId}" action="{!c.dashboardIdChange}"/>
+    
+    <!-- showDashboard event is fired whenvever there is a change in selection on dashboard picker -->
+    <aura:handler event="c:showDashboard" action="{!c.handleShowDashboard}"/>
+    <aura:attribute name="developerName" type="String" access="global"/>
+    <div class="outer">
+	    {!v.body}
+    </div>
+</aura:component>

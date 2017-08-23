@@ -1,0 +1,32 @@
+<aura:component controller="IndirectAddContact">
+	<ltng:require styles="/resource/SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />
+ 
+    <aura:attribute name="title" type="String"/>	
+    <aura:attribute name="loggedInUser" type="User"/>
+    <aura:attribute name="store" type="Account" />
+    <!--aura:attribute name="visible" type="String"/-->
+    <aura:attribute name="role" type="UserRole"/>
+    <aura:attribute name="storeVisitCategory" type="Store_Visit_Activity_Category__c[]"/>
+    
+   	<div aura:id="optionalModalDialog"/>
+   	<div aura:id="ModalDialogPlaceholder" />
+    <div id="header">
+        <div id="header">
+            <div class="slds-grid slds-grid--align-space slds-page-header slds-box slds-theme--alt-inverse 
+                        slds-media__body navbar navbar-default navbar-static-top" role="navigation"> 
+            	<div onclick="{!c.scheduleEvent}">
+                    <c:svg class="slds-icon" 
+                           xlinkHref="/resource/SLDS100/assets/icons/standard-sprite/svg/symbols.svg#event" /> 
+                </div>
+                <div>
+                    <h2 class="slds-text-heading--small slds-truncate"><b>{!v.title}</b></h2>
+                    <!--<h4>{!v.store.BillingStreet}</h4>-->
+                </div>
+                <div onclick="{!c.addContactToStore}" class="{!(v.store==null)?'slds-hidden':'slds-visible'}">
+                    <c:svg class="slds-icon" 
+                           xlinkHref="/resource/SLDS100/assets/icons/standard-sprite/svg/symbols.svg#people" />                 
+                </div>
+            </div>
+    	</div>        
+	</div>   
+</aura:component>

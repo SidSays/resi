@@ -1,0 +1,15 @@
+.THIS #screen{
+    height :100%;
+    width: 100%;
+}
+
+.THIS #map{
+    width: 98.5%;
+    height: 80%;
+    z-index:0;
+}
+
+.THIS #mapFooter{
+    width: 98.5%;
+    height: 20%;
+}

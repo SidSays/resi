@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Comcast_LetterHead</letterhead>
+    <name>Defect Management : DM Case Status Closed</name>
+    <style>freeForm</style>
+    <subject>{!Case.CaseNumber} : Defect/Enhancement Case Closed</subject>
+    <textOnly>Hello {!Contact.Name},
+
+The Claim submitted by you is closed.
+
+Case Details :
+
+Case Number              : {!Case.CaseNumber}
+Claim Result                 : {!Case.Case_Result__c}
+Claim Link                     : {!Case.Link}.
+
+
+
+Best Regards,
+Comcast Turnpike Support.</textOnly>
+    <type>html</type>
+</EmailTemplate>

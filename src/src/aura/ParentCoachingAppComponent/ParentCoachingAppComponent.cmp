@@ -1,0 +1,12 @@
+<aura:component implements="flexipage:availableForRecordHome" access="global" >
+	<div class="outer">
+      	<div class="slds-grid">
+        	<div class="slds-p-horizontal--small slds-size--8-of-12 slds-medium-size--9-of-12 slds-large-size--10-of-12">
+            	<c:dashboardSwitcher />
+        	</div>      
+  			<div class="slds-p-horizontal--small slds-size--4-of-12 slds-medium-size--3-of-12 slds-large-size--2-of-12">   
+           		<c:CoachingTimeline />
+        	</div>
+      	</div>   
+	</div>
+</aura:component>

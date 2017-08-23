@@ -1,0 +1,90 @@
+<aura:component controller="IndirectStoreController">	
+    <ltng:require styles="/resource/SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />
+    <aura:attribute name="storevisits" type="Event[]"/>
+    <aura:attribute name="upcomingEvents" type="Event[]"/>
+    <aura:attribute name="loggedInUser" type="User"/>
+    <aura:attribute name="role" type="UserRole"/>
+	<aura:dependency resource="force:navigateToSObject" type="EVENT"/> 
+	<div aura:id="optionalModalDialog"/>   
+    
+    <aura:handler event="c:IndirectDashboardAlertEvent" action="{!c.deleteScheduleEvent}"/>
+    
+    <div id="events">
+        <div class="slds-grid slds-grid--align-space slds-page-header slds-box slds-theme--shade 
+                    slds-theme--alert-texture slds-media__body" role="navigation"> 
+            <h4 class="slds-text-heading--small slds-truncate"><b>UPCOMING EVENTS</b></h4>
+        </div>
+        <aura:if isTrue="{!v.upcomingEvents.length == 0}">
+       		 <div class="slds" style="text-align:center;font-size:20px">
+             	<br/><b>No records found. </b>
+        	</div>
+        	<br/>	
+    	</aura:if>
+        
+        
+        <aura:iteration items="{!v.upcomingEvents}" var="storevisit" indexVar="idx">
+            <aura:if isTrue="{!storevisit.What.Name == null}">
+                <table>
+                  <tr><td width="80%">
+                  <div class="slds-card" data-record="{!idx}"  onclick="{!c.goToEventDetail}">
+                    <header class="slds-card__header slds-grid grid--flex-spread">            
+                        <p class="slds-text-heading--small slds-text-heading--medium slds-truncate">
+                            {!storevisit.Subject}
+                        </p>           	 
+                    </header>
+                    <section class="slds-card__body">
+                        <div class="slds-tile slds-hint-parent">
+                            <p class="slds-tile__title slds-truncate">
+                                {!storevisit.Visit_Start_Date_And_Duration__c}
+                            </p>
+                            <p class="slds-tile__title slds-truncate">
+                                {!storevisit.What.Name}
+                            </p>
+                        </div>
+                    </section>
+                </div></td>
+                <td width="20%">
+                <div class="slds-card" align="center">
+                     <button class="slds-button slds-button--neutral slds-button--brand"
+                      onclick="{!c.deleteEvent}" data-record="{!idx}">Delete</button>
+                </div></td>
+                </tr>
+               </table><hr/>
+            </aura:if>
+        </aura:iteration>
+    </div>
+    <div id="visits">
+        <div class="slds-grid slds-grid--align-space slds-page-header slds-box slds-theme--shade 
+                    slds-theme--alert-texture slds-media__body" role="navigation"> 
+            <h4 class="slds-text-heading--small slds-truncate"><b>SCHEDULED STORE VISITS</b></h4>
+        </div>
+        
+        <aura:if isTrue="{!v.storevisits.length == 0}">
+        	<div class="slds" style="text-align:center;font-size:20px">
+           		 <br/><b>No records found. </b>
+       		 </div>
+        	<br/>	
+    	</aura:if>
+        <aura:iteration items="{!v.storevisits}" var="storevisit" indexVar="idx">
+            <aura:if isTrue="{!storevisit.What.Name != null}">
+                <div class="slds-card" data-record="{!idx}"  onclick="{!c.goToStoreDetail}">        
+                    <header class="slds-card__header slds-grid grid--flex-spread">            
+                        <p class="slds-text-heading--small slds-text-heading--medium slds-truncate">
+                            {!storevisit.Subject}
+                        </p>           	 
+                    </header>
+                    <section class="slds-card__body">
+                        <div class="slds-tile slds-hint-parent">
+                            <p class="slds-tile__title slds-truncate">
+                                {!storevisit.Visit_Start_Date_And_Duration__c}
+                            </p>
+                            <p class="slds-tile__title slds-truncate">
+                                {!storevisit.What.Name}
+                            </p>
+                        </div>
+                    </section>
+                </div>
+            </aura:if>           
+        </aura:iteration>
+    </div>
+</aura:component>

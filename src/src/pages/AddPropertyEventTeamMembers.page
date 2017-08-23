@@ -1,0 +1,456 @@
+<!-- 
+/**********************************************************
+* Page Name: AddPropertyEventTeamMembers
+* Author: Amit Kumar Pradhan, Accenture
+* Date: 24th May 2017
+* User Story: US1071692(XC Property Events: Improve Team Member Workflow)
+* Description: 1.Override New button of "Property Event Team Member" with this VF Page.
+               2.Searching and Adding any salesforce user or non salesforce user(Contact associated with Comcast Account)
+                 to a Property Event.
+               3.If Search result is not present then user can create a new contact and that contact should be autometically
+                 with Comcast Account as well as one Property Event Team Member record should be created and should associate with Property Event.
+***********************************************************/
+-->
+<apex:page docType="html-5.0" standardController="Property_Events__c" extensions="AddTeamMemberController">
+    <style type="text/css">  
+        .waitPanelClass {
+              width: 100%;
+              height: 100%;
+              position: fixed;
+              top: 0;
+              left: 0;
+              z-index: 10000;
+              -moz-opacity: 0.7; /* makes the div transparent, so you have a cool overlay effect */
+              opacity: .70;
+              display:block-inline;
+              background:#000000 url({!$Resource.WaitImage}) no-repeat center center;
+        }
+        
+        .textBoxStyle{
+                border: 1px solid #ccc;
+                padding: 5px 10px;
+                font-size: 15px;
+                min-width: 232px;
+                box-shadow: inset 0px 0px 5px 0px #ccc;
+                border-left: 3px solid rgba(195, 24, 24, 0.84);
+                border-radius: 5px;
+                overflow: hidden;
+        }
+            
+        .textBoxStyleSmall{
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            font-size: 13px;
+            min-width: 200px;
+            box-shadow: inset 0px 0px 5px 0px #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        
+    </style>
+        
+    <apex:pagemessages escape="false" id="errId"/>  
+    <apex:form id="formId">
+    
+        <!-- For SFDC code -->
+        <apex:outputPanel id="classicPanel" rendered="{!AND($User.UIThemeDisplayed <> 'Theme4d', $User.UIThemeDisplayed <> 'Theme4t')}">
+        
+            <apex:pageBlock title="{!$Label.PEFindANDAddTeamMember}" id="searchPageBlock">        
+                <apex:pageBlockButtons location="top">
+                    <apex:commandButton onclick="findUserORContact();return false;" value="{!$Label.PESearch}"/>
+                </apex:pageBlockButtons>
+                
+                <apex:pageBlockSection id="searchFields">                
+                    <apex:inputText label="First Name:" value="{!fName}" html-placeholder="Enter First Name"/>
+                    <apex:inputText label="Last Name:" value="{!lName}" html-placeholder="Enter Last Name"/>
+               </apex:pageBlockSection>
+            </apex:pageBlock>
+            
+            <apex:actionFunction status="actStatusId" name="findUserORContact" action="{!userORContactSearch}" reRender="errId,resOutputPannel,cntblock1">
+            </apex:actionFunction>	
+            
+            <apex:actionstatus id="actStatusId">
+                <apex:facet name="start">                   
+                    <apex:outputPanel styleclass="waitPanelClass"/>
+                </apex:facet>
+            </apex:actionstatus>
+            
+            <apex:outputPanel id="resOutputPannel">           
+                <apex:pageblock title="{!$Label.PESearchResults}" rendered="{!isSearchComplete && NOT(showAddTeamMemberSec)}">
+                    <apex:pageblockSection >
+                        <apex:outputText >{!$Label.PENoReSultFoundMsg}</apex:outputText>
+                    </apex:pageblockSection>
+                </apex:pageblock>
+                
+                <apex:pageblock title="Search Results" id="searchResult" rendered="{!showAddTeamMemberSec}" >
+                    <apex:pageblockButtons location="top">
+                        <apex:commandButton onclick="getSelectedId({!recordSize});return false;" value="{!$Label.PEAddTeamMember}"/>
+                    </apex:pageblockButtons>            
+                    <table style="width:100%;">
+                        <tbody style="display:table-row-group;vertical-align:middle;">
+                            <tr style="display:table-row;">
+                                <th style="width:10%;font-size:1em;text-align:left">{!$Label.PESelect}</th>
+                                <th style="width:20%;font-size:1em;text-align:left">First Name</th>
+                                <th style="width:30%;font-size:1em;text-align:left">Last Name</th>
+                                <th style="width:30%;font-size:1em;text-align:left">Email</th>
+                                <th style="width:10%;font-size:1em;text-align:left">{!$Label.PESalesforceUser}</th>
+                            </tr>
+                            <apex:repeat value="{!userORContactDetails}" var="userORContact">
+                                <tr>
+                                    <td style="width:10%;font-size:1em;">
+                                        <input value="{!userORContact.id}" type="radio" name="selectRadio"/>
+                                    </td>
+                                
+                                    <td style="width:20%;font-size:1em;">
+                                        <apex:outputText >{!userORContact.firstName}</apex:outputText>
+                                    </td>
+                                
+                                    <td style="width:30%;font-size:1em;">
+                                        <apex:outputText >{!userORContact.lastName}</apex:outputText>
+                                    </td>
+                                
+                                    <td style="width:30%;font-size:1em;">
+                                        <apex:outputText >{!userORContact.Email}</apex:outputText>
+                                    </td>
+                                
+                                    <td style="width:10%;font-size:1em;">
+                                        <apex:inputCheckbox value="{!userORContact.isSalesforceUser}" disabled="true"/>
+                                    </td>
+                                </tr>
+                            </apex:repeat>
+                        </tbody>
+                    </table>
+
+					 <apex:panelGrid id="PaginationButtons" columns="4" style="position: relative; padding-left:35%" rendered="{!showAddTeamMemberSec}">
+						<apex:commandButton value="Previous" action="{!previous}" rerender="errId,resOutputPannel,cntblock1" disabled="{!prev}" />
+						<apex:commandButton value="Next" action="{!next}" rerender="errId,resOutputPannel,cntblock1" disabled="{!nxt}" />
+					</apex:panelGrid>  
+				</apex:pageblock>
+                
+            </apex:outputPanel>
+            
+            <apex:actionFunction status="actStatusId" name="PassVariableToController" action="{!addTeamMember}" reRender="errId,cntblock">
+                <apex:param name="setParam" value="" assignTo="{!selectedRecordId}"/>
+            </apex:actionFunction>
+            <apex:pageblock title="Add New Contact" id="cntblock" rendered="false">
+            </apex:pageblock>
+            
+            <apex:outputPanel id="cntblock1">
+                <apex:pageblock title="{!$Label.PEAddNewContact}" rendered="{!showAddContactSec}">
+                    <!--apex:pagemessages id="errContMsg" escape="false"/-->
+                    <apex:pageblockButtons location="top">
+                        <apex:commandButton status="actStatusId" value="Add Contact" action="{!createNewContact}" reRender="errId"/>
+                    </apex:pageblockButtons>
+                   
+                    <apex:pageblockSection >
+                    
+                        <apex:outputLabel value="First Name:" for="m1"/>                
+                        <apex:outputPanel styleClass="requiredInput" layout="block">
+                            <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                            <apex:inputText value="{!contactFirstName}" id="m1" html-placeholder="Enter First Name"/>               
+                        </apex:outputPanel>
+                        
+                        <apex:outputLabel value="Last Name:" for="m2"/>
+                        <apex:outputPanel styleClass="requiredInput" layout="block">
+                            <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                            <apex:inputText value="{!contactLastName}" id="m2" html-placeholder="Enter Last Name"/>
+                        </apex:outputPanel>
+                        
+                        <apex:outputLabel value="Email:" for="m3"/>
+                        <apex:outputPanel styleClass="requiredInput" layout="block">
+                            <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                            <apex:input type="email" value="{!contactEmail}" id="m3" html-placeholder="Enter Email"/>
+                        </apex:outputPanel>
+                        
+                        <apex:outputLabel value="Phone:" for="m4"/>
+                        <apex:outputPanel styleClass="requiredInput" layout="block">
+                            <apex:outputPanel styleClass="requiredBlock" layout="block"/>
+                            <apex:inputText value="{!contactPhone}" id="m4" html-placeholder="Enter Phone"/>
+                        </apex:outputPanel>
+                        
+                    </apex:pageblockSection>
+                </apex:pageblock>
+            </apex:outputPanel>
+            <apex:pageblock title="Add New Contact" id="abccc" rendered="false">
+            </apex:pageblock>
+        </apex:outputPanel>
+        
+        <!-- For SF1 code -->
+        <apex:outputPanel id="sf1Panel" rendered="{!OR($User.UIThemeDisplayed == 'Theme4d', $User.UIThemeDisplayed == 'Theme4t')}">
+            <apex:slds />
+            <style>
+                .messageText{
+                    padding: 10px 20px;
+                    margin: 10px 10px 0px 10px;
+                    box-shadow: 0px 0px 1px 1px #ccc;
+                    border-radius: 5px;
+                    background-color: #ee8377 !important;
+                }
+            </style>
+            <apex:outputPanel id="searchOutputPannelSF1">
+            <div>
+            <br/>
+                <div class="demo-only demo-only--sizing slds-grid slds-wrap">   
+                    <div class="slds-size_5-of-12">
+                        <div class="slds-col slds-p-horizontal_medium slds-text-heading_medium"><strong>{!$Label.PEFindANDAddTeamMember}</strong></div>
+                    </div>
+                    <div class="slds-size_7-of-12">
+                        <div class="slds-col slds-p-horizontal_medium">
+                            <button class="slds-button slds-button_stateful slds-not-selected slds-button_brand" onclick="getUserORContactSF1();return false;">{!$Label.PESearch}</button>                  
+                        </div>
+                    </div>
+                </div >
+                <br/>
+                <div class="slds-grid">           
+                    <div class="slds-col slds-p-horizontal_medium">
+                        First Name: &nbsp;
+                        <apex:inputText id="fNameId" value="{!fName}" styleClass="textBoxStyleSmall" html-placeholder="Enter First Name"/>
+                    </div>
+                    <div class="slds-col slds-p-horizontal_medium">             
+                        Last Name: &nbsp;
+                        <apex:inputText value="{!lName}"  styleClass="textBoxStyleSmall" html-placeholder="Enter Last Name"/>
+                    </div>
+                </div>          
+            </div>
+            </apex:outputPanel>
+            <apex:actionFunction status="actStatusIdSF1" name="getUserORContactSF1" action="{!userORContactSearch}" reRender="errId,resOutputPannelSF1,addNewContactPannelSF1">
+            </apex:actionFunction>
+            
+            <apex:actionstatus id="actStatusIdSF1">
+                <apex:facet name="start">                   
+                    <apex:outputPanel styleclass="waitPanelClass"/>
+                </apex:facet>
+            </apex:actionstatus>
+            
+            <apex:outputPanel id="resOutputPannelSF1">              
+                
+                <apex:outputPanel rendered="{!isSearchComplete && NOT(showAddTeamMemberSec)}">
+                    <hr style="height:3px;border:none;color:#333;background-color:#333;"/>
+                    <div class="demo-only demo-only--sizing slds-grid slds-wrap">   
+                        <div class="slds-size_1-of-1">
+                            <div class="slds-col slds-p-horizontal_medium slds-text-heading_medium"><strong>{!$Label.PESearchResults}</strong></div>
+                        </div>                      
+                    </div>                  
+                    <br/>
+                    <div class="slds-grid">           
+                        <div class="slds-col slds-p-horizontal_medium">
+                            <apex:outputText >{!$Label.PENoReSultFoundMsg}</apex:outputText>
+                        </div>
+                    </div>                  
+                </apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!showAddTeamMemberSec}">           
+                    <hr style="height:3px;border:none;color:#333;background-color:#333;"/>
+                    <div class="demo-only demo-only--sizing slds-grid slds-wrap">   
+                        <div class="slds-size_5-of-12">
+                            <div class="slds-col slds-p-horizontal_medium slds-text-heading_medium"><strong>{!$Label.PESearchResults}</strong></div>
+                        </div>
+                        <div class="slds-size_7-of-12">
+                            <div class="slds-col slds-p-horizontal_medium">
+                                <button class="slds-button slds-button_stateful slds-not-selected slds-button_brand" onclick="getSelectedIdSF1({!recordSize});return false;">{!$Label.PEAddTeamMember}</button>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    
+                    
+                    <div class="slds-col slds-p-horizontal_medium">                             
+                        <table style="width:100%;">
+                            <tbody style="display:table-row-group;vertical-align:middle;">
+                                <tr style="display:table-row;">
+                                    <th style="width:10%;font-size:1em;text-align:left">{!$Label.PESelect}</th>
+                                    <th style="width:20%;font-size:1em;text-align:left">First Name</th>
+                                    <th style="width:20%;font-size:1em;text-align:left">Last Name</th>
+                                    <th style="width:40%;font-size:1em;text-align:left">Email</th>
+                                    <th style="width:10%;font-size:1em;text-align:left">{!$Label.PESalesforceUser}</th>
+                                </tr>
+                                <apex:repeat value="{!userORContactDetails}" var="userORContact">                       
+                                    <tr>                                
+                                        <td style="width:10%;font-size:1em;">                                                                           
+                                            <fieldset class="slds-form-element">
+                                            <legend class="slds-form-element__legend slds-form-element__label"></legend>
+                                            <div class="slds-form-element__control">
+                                            <span class="slds-radio">
+                                                  <input type="radio" id="{!userORContact.id}" name="selectRadio" value="{!userORContact.id}"/>
+                                                  <label class="slds-radio__label" for="{!userORContact.id}">
+                                                    <span class="slds-radio_faux"></span>
+                                                    <span class="slds-form-element__label"></span>
+                                                  </label>
+                                            </span>
+                                            </div>                                  
+                                            </fieldset>
+                                        </td>
+                                    
+                                        <td style="width:20%;font-size:1em;">
+                                            <apex:outputText >{!userORContact.firstName}</apex:outputText>
+                                        </td>
+                                    
+                                        <td style="width:20%;font-size:1em;">
+                                            <apex:outputText >{!userORContact.lastName}</apex:outputText>
+                                        </td>
+                                    
+                                        <td style="width:40%;font-size:1em;">
+                                            <apex:outputText >{!userORContact.Email}</apex:outputText>
+                                        </td>
+                                    
+                                        <td style="width:10%;font-size:1em;">                                       
+                                            <div class="slds-form-element">
+                                              <div class="slds-form-element__control">
+                                                <span class="slds-checkbox">
+                                                  <apex:inputCheckbox value="{!userORContact.isSalesforceUser}" disabled="true"/>                                                 
+                                                  <label class="slds-checkbox__label">
+                                                    <span class="slds-checkbox_faux"></span>
+                                                    <span class="slds-form-element__label"></span>
+                                                  </label>
+                                                </span>
+                                              </div>
+                                            </div>
+                                        </td>
+                                    </tr>                           
+                                </apex:repeat>                                                                                          
+                            </tbody>
+                        </table>
+                    </div>
+                </apex:outputPanel>
+                 <br/>
+
+				 <apex:outputPanel rendered="{!showAddTeamMemberSec}">
+					<div class="demo-only demo-only--sizing slds-grid slds-wrap" style="padding-left: 35%">
+						<apex:commandButton value="Previous" styleClass="slds-button slds-button_brand" action="{!previous}" rerender="errId,resOutputPannelSF1,addNewContactPannelSF1"
+							disabled="{!prev}" />
+						<apex:commandButton value="Next" styleClass="slds-button slds-button_brand" action="{!next}" rerender="errId,resOutputPannelSF1,addNewContactPannelSF1"
+							disabled="{!nxt}" />
+					</div>
+				</apex:outputPanel> 
+			</apex:outputPanel>
+                  
+            <apex:actionFunction status="actStatusIdSF1" name="PassVariableToController" action="{!addTeamMember}" reRender="errId" oncomplete="closeThisPageSF1({!isValidation});">
+                <apex:param name="setParam" value="" assignTo="{!selectedRecordId}"/>
+            </apex:actionFunction>
+            
+            <apex:pageblock title="Add New Contact" id="cntblockSF1" rendered="false">           
+            </apex:pageblock>
+            
+            <apex:outputPanel id="addNewContactPannelSF1">
+            <apex:outputPanel rendered="{!showAddContactSec}">
+            <div class="slds-scope">            
+                <hr style="height:3px;background-color:#333;"/>
+                <div class="demo-only demo-only--sizing slds-grid slds-wrap">   
+                    <div class="slds-size_5-of-12">
+                        <div class="slds-col slds-p-horizontal_medium slds-text-heading_medium"><strong>{!$Label.PEAddNewContact}</strong></div>
+                    </div>
+                    <div class="slds-size_7-of-12">
+                        <div class="slds-col slds-p-horizontal_medium">
+                            <button class="slds-button slds-button_stateful slds-not-selected slds-button_brand" onclick="createNewContactSF1();return false;">{!$Label.PEAddContact}</button>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                
+                <div class="demo-only demo-only--sizing slds-grid slds-wrap">             
+                    <div class="slds-size_1-of-3">
+                        <label class="slds-col slds-p-horizontal_medium slds-text-heading_medium">
+                            First Name:
+                        </label>
+                    </div>  
+                    <div class="slds-size_2-of-3">  
+                        <div class="slds-col slds-p-horizontal_medium slds-text-heading_medium">
+                            <apex:inputText value="{!contactFirstName}" styleClass="textBoxStyle" html-placeholder="Enter First Name"/>
+                        </div>
+                    </div>  
+                </div>
+                <br/>
+                <div class="demo-only demo-only--sizing slds-grid slds-wrap">             
+                    <div class="slds-size_1-of-3">
+                        <label class="slds-col slds-p-horizontal_medium slds-text-heading_medium">
+                            Last Name:
+                        </label>
+                    </div>  
+                    <div class="slds-size_2-of-3">  
+                        <div class="slds-col slds-p-horizontal_medium slds-text-heading_medium">
+                            <apex:inputText value="{!contactLastName}" styleClass="textBoxStyle" html-placeholder="Enter Last Name"/>
+                        </div>
+                    </div>  
+                </div>
+                <br/>
+                <div class="demo-only demo-only--sizing slds-grid slds-wrap">             
+                    <div class="slds-size_1-of-3">
+                        <label class="slds-col slds-p-horizontal_medium slds-text-heading_medium">
+                            Email:
+                        </label>
+                    </div>  
+                    <div class="slds-size_2-of-3">  
+                        <!--input type="text" class="slds-col slds-p-horizontal_medium slds-text-heading_medium" value="{!contactEmail}"/-->
+                        <div class="slds-col slds-p-horizontal_medium slds-text-heading_medium">
+                            <apex:inputText value="{!contactEmail}" styleClass="textBoxStyle" html-placeholder="Enter Email"/>              
+                        </div>
+                    </div>  
+                </div>
+                <br/>
+                <div class="demo-only demo-only--sizing slds-grid slds-wrap">             
+                    <div class="slds-size_1-of-3">
+                        <label class="slds-col slds-p-horizontal_medium slds-text-heading_medium">
+                            Phone:
+                        </label>
+                    </div>  
+                    <div class="slds-size_2-of-3">  
+                        <div class="slds-col slds-p-horizontal_medium slds-text-heading_medium">
+                            <apex:inputText value="{!contactPhone}" styleClass="textBoxStyle" html-placeholder="Enter Phone"/>
+                        </div>
+                    </div>  
+                </div>
+                
+            </div>
+            </apex:outputPanel>
+            </apex:outputPanel>
+            <apex:pagemessages escape="false" id="errIdSF1"/>  
+            <apex:actionFunction status="actStatusIdSF1" name="createContact" action="{!createNewContact}" reRender="errId" oncomplete="closeThisPageSF1({!isValidation});">
+            </apex:actionFunction>          
+        </apex:outputPanel>
+        
+        <script type="text/javascript">
+            function getSelectedId(recordSize){
+                var i = recordSize;
+                var selectedRec;
+                for(j=0;j<i;j++){
+                    if(document.getElementsByName("selectRadio")[j].checked){
+                        selectedRec=document.getElementsByName("selectRadio")[j].value;
+                    }
+                }   
+                PassVariableToController(selectedRec);
+                //closeThisPage();
+                return false;
+            }
+                
+            function getSelectedIdSF1(recordSize){
+                var i = recordSize;
+                var selectedRec;
+                for(j=0;j<i;j++){
+                    if(document.getElementsByName("selectRadio")[j].checked){
+                        selectedRec=document.getElementsByName("selectRadio")[j].value;
+                    }
+                }                               
+                PassVariableToController(selectedRec);
+                //closeThisPage();
+                return false;
+            }
+            
+            function createNewContactSF1(){
+                createContact();
+                //closeThisPage();
+                return false;
+            }
+                                    
+            function closeThisPageSF1(isError){             
+                if(!isError){
+                    var propEventId="{!Property_Events__c.Id}";
+                    sforce.one.navigateToSObject(propEventId);
+                }else{
+                }   
+            }
+            
+        </script>
+    
+    </apex:form>
+</apex:page>

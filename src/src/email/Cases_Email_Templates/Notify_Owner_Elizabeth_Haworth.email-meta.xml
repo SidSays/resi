@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used to email notification whenever a Notify Owner Checkbox is checked on Blacklisted Word Object</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Comcast_LetterHead</letterhead>
+    <name>Notify Owner Elizabeth Haworth</name>
+    <style>freeForm</style>
+    <subject>Potential account number posted</subject>
+    <textOnly>Hello
+
+{!Blacklist_Audit__c.OwnerFullName} just entered a potential account number
+
+Follow this link to view the post {!Blacklist_Audit__c.ChatterURL__c}
+
+
+Thank you</textOnly>
+    <type>html</type>
+</EmailTemplate>

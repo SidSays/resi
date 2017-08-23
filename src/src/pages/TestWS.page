@@ -1,0 +1,16 @@
+<apex:page controller="TestWSController">
+	<apex:form >
+		<br />
+		<br />
+		<apex:pageBlock title="Please enter endpoint URL below :">
+			<br />
+			<apex:InputText title="Enter URL below : " style="width:500px;"
+				value="{!URL}" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<apex:commandButton value="Ping" action="{!callPing}" rerender="msg" />
+			<br />
+			<br />
+			<br />
+		</apex:pageBlock>
+		<apex:pagemessages id="msg" />
+	</apex:form>
+</apex:page>

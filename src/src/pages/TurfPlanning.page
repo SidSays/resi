@@ -1,0 +1,330 @@
+<apex:page controller="TurfPlanningController" showHeader="true" sidebar="true">
+
+    <head>
+        <apex:includescript value="https://code.jquery.com/jquery-2.1.4.min.js"/>
+        <script src="{!URLFOR($Resource.queryParser2, 'edge.Core.js')}"></script>
+        <script src="{!URLFOR($Resource.queryParser2, 'utils.js')}"></script>
+        <script src="{!URLFOR($Resource.log4js, 'log4javascript.js')}"></script>
+
+        <style media="screen" type="text/css">
+            .pagespinner {
+                display: none;
+            }
+            #loading {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 1000;
+                background-color: grey;
+                opacity: 0.8;
+                vertical-align: middle;
+            }
+            .ajax-loader {
+                position: fixed;
+                left: 50%;
+                top: 50%;
+                margin-left: -32px;
+                /* -1 * image width / 2 */
+                margin-top: -32px;
+                /* -1 * image height / 2 */
+                display: block;
+
+            }
+            #process_message {
+                z-index: 2000;
+                margin-top: 10px;
+                color: white;
+            }
+            #info_msgs {
+                margin: 5px;
+            }
+
+        </style>
+    </head>
+    <apex:form >
+        <div id="loading" align="center" style="display:none;">
+            <div class="ajax-loader">
+                <img src="{!$Resource.AjaxLoader}"/><br/>
+                <div id="process_message"></div>
+            </div>
+        </div>
+        <div id="success_msg_container_top" style="display:none;">
+            <apex:pageMessage severity="confirm" strength="3">
+                <div id="success_message"></div>
+            </apex:pageMessage>
+        </div>
+        <div id="error_msg_container" style="display:none;">
+            <apex:pageMessage severity="error" strength="3">
+            </apex:pageMessage>
+        </div>
+        <apex:pageMessages id="controller_message"/>
+        <apex:pageBlock title="Turf Planning" mode="edit">
+            <apex:actionRegion >
+                <apex:pageBlockSection title="Territory Selection" columns="1" collapsible="false">
+                    <apex:selectList value="{!selectedTerritoryId}" size="1" label="Territory">
+                        <apex:selectOptions value="{!territoryOptions}"/>
+                    </apex:selectList>
+                    <apex:selectRadio value="{!selectedGrouping}" label="Group By" layout="pageDirection">
+                        <apex:selectOptions value="{!groupingOptions}"/>
+                    </apex:selectRadio>
+                    <apex:inputCheckBox value="{!includeHSIOnly}" label="Include HSI Only Addresses?"/>
+                    <apex:inputCheckBox value="{!ExcludeNonmarketableOnly}" label="Exclude Non Marketable Addresses?"/>
+                    <apex:commandbutton value="Search" action="{!queryAddressesInTerritory}" rerender="census_table,turf_section" oncomplete="manageCheckboxes();showProcessingOverlay(false);validateTurfButton();" onclick="showProcessingOverlay(true)"/>
+                </apex:pageBlockSection>
+            </apex:actionRegion>
+            <apex:outputPanel id="turf_section">
+                <apex:pageBlockSection title="Turf Details" columns="1" collapsible="false" rendered="{!turfHasTerritory}">
+                    <apex:inputField value="{!turf.Name}" styleClass="turf_name" required="TRUE"/>
+                    <apex:outputField value="{!turf.Plan_Level__c}"/>
+                    <apex:outputField value="{!turf.Plan_Status__c}"/>
+                    <apex:inputField value="{!turf.Expiration_Date__c}" required="TRUE"/>
+                    <apex:inputField value="{!territory.OwnerId}" label="Assigned To (User)" required="FALSE"/>
+                     <!-- Modified by Joognu Rao to implement US1072293 *START* -->
+                    <apex:inputField value="{!turf.Assigned_Team__c}" label="Assigned To (Team)" />
+                     <!-- Modified by Joognu Rao to implement US1072293 *END* -->
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+            <apex:outputPanel id="census_table">
+                <apex:pageBlockSection title="Address Counts by Census" columns="1" collapsible="false" rendered="{!searchComplete}">
+                    <apex:pagemessage severity="info" strength="3" id="success_msg_container">
+                        <div id="table_message"></div>
+                    </apex:pagemessage>
+                    <apex:outputPanel id="tableOutputMsg" rendered="{!tableHasData}">
+                        <apex:pageBlockTable value="{!addressCountsByGrouping}" var="grouping">
+                            <apex:column headerValue="Select">
+                                <apex:inputCheckbox value="{!groupingSelections[grouping]}" styleClass="selectBox" onClick="manageCheckboxes();"/>
+                            </apex:column>
+                            <apex:column value="{!grouping}" headerValue="{!groupingHeader}"/>
+                            <apex:column value="{!addressCountsByGrouping[grouping]}" headerValue="Targeted Homes"/>
+                        </apex:pageBlockTable>
+                        <apex:commandButton value="Assign to Turf" action="{!save}" reRender="controller_message,hidden_panel" onComplete="processTurfInParallel();" onClick="showProcessingOverlay(true)" id="assignToTurf"/>
+                    </apex:outputPanel>
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+        </apex:pageBlock>
+        <apex:outputPanel id="hidden_panel" style="display:none;">
+            <apex:outputText styleClass="turf_size" value="{!TURF_SIZE}"/>
+            <apex:outputText styleClass="turf_id" value="{!turf.Id}"/>
+            <!-- Modified by Joognu Rao to implement US1072293 *START* -->
+            <apex:outputText styleClass="turf_team" value="{!turf.Assigned_Team__c}"/>
+            <!-- Modified by Joognu Rao t0 implement US1072293 *END* -->
+            <apex:outputText styleClass="territory_owner" value="{!territory.OwnerId}"/>
+            <apex:outputText styleClass="address_ids" value="{!addressIdsJson}"/>
+            <apex:outputText styleClass="chunk_size" value="{!CHUNK_SIZE}"/>
+            <apex:outputText styleClass="thread_count" value="{!THREAD_COUNT}"/>
+            <!-- Srini B: Added below tag as part of US1129121 -->
+            <apex:outputText styleClass="address_maxlimit_per_turf" value="{!ADDRESS_MAXLIMIT_PER_TURF}"/>
+            <apex:outputText styleClass="save_success" value="{!saveSuccess}"/>
+        </apex:outputPanel>
+        <apex:actionfunction name="reset" action="{!reset}" rerender="turf_section,census_table,hidden_panel" oncomplete="manageCheckboxes();showProcessingOverlay(false);validateTurfButton();"/>
+    </apex:form>
+    <script type="text/javascript">
+
+        /* VARIABLES */
+
+        var debugEnabled = ('true' == '{!$CurrentPage.parameters.debug}');
+        var logger = log4javascript.getLogger("main");
+        var appender = new log4javascript.InPageAppender();
+        logger.addAppender(appender);
+
+        var turfSize;
+
+        var turfId;
+        <!-- Modified by Joognu Rao to implement US1072293 *START* -->       
+        var team;   
+        <!-- Modified by Joognu Rao to implement US1072293 *END* -->
+        var territoryOwner;
+        var chunkSize;
+        var threadCount;
+        var addressMaxLimitPerTurf //Srini Bhattiprolu: Added this variable as part of US1129121
+        var addressIds;
+        var addresses = [];
+        var addressLists = [];
+        var processCalls = [];
+        var pollingFunc;
+
+        var nextCallId;
+
+        $j = jQuery.noConflict();
+
+        /* EVENTS */
+
+        $j('body').on('change', '.selectBox', function () {
+            validateTurfButton();
+        });
+
+        /* FUNCTONS */
+
+        function validateTurfButton() {
+            $j('.selectBox').is(':checked')
+                ? $j('[id$="assignToTurf"]').prop('disabled', false).removeClass('btnDisabled').addClass('btn')
+                : $j('[id$="assignToTurf"]').prop('disabled', true).removeClass('btn').addClass('btnDisabled');
+        }
+
+        function manageCheckboxes() {
+            if(!$j('.selectBox').length) {
+                $j('[id$="success_msg_container"]').find('.messageCell').html('No addresses available').css('font-weight', 'bold');
+                return;
+            }
+
+            if(!turfSize) {
+                turfSize = $j('.turf_size').text();
+            }
+
+            var totalSelected = 0;
+            $j('.selectBox:checked').each(function() {
+                totalSelected += parseInt($j(this).parent().parent().find('td:last').text(),10);
+            });
+            $j('[id$="success_msg_container"]').find('.messageCell').html(totalSelected + ' addresses selected (~' + turfSize + ' max)').css('font-weight', 'bold');
+
+            totalSelected > turfSize
+                ? $j('.selectBox:not(:checked)').prop('disabled', true)
+                : $j('.selectBox').prop('disabled', false);
+        }
+
+        function showProcessingOverlay(show) {
+            show
+                ? $j('#loading').css('display', 'inline')
+                : $j('#loading').css('display', 'none');
+        }
+
+        function updateMessage(msg) {
+            $j('#process_message').html(msg).css('font-weight', 'bold');
+        }
+
+        function showErrorMessage(msg) {
+            showProcessingOverlay(false);
+            $j('#error_msg_container').css('display', 'block').find('.messageCell').html(msg).css('font-weight', 'bold');
+        }
+
+        function hideErrorMessage() {
+            $j('#error_msg_container').css('display', 'none').find('.messageCell').html('');
+            showProcessingOverlay(true);
+        }
+
+        function sliceAddresses(addresses, chunkSize) {
+            var iChunkSize = parseInt(chunkSize);
+            validateArray(addresses);
+            var j;
+            var addressLists = [];
+            if(iChunkSize > 0) {
+                for(var i = 0, j = 0; i < addresses.length; i += iChunkSize, j++) {
+                    addressLists[j] = addresses.slice(i, i + iChunkSize);
+                }
+            }
+            return addressLists;
+        }
+
+        function logMessage(msg) {
+            if(debugEnabled) {
+                logger.debug(msg);
+            }
+        }
+
+        function processTurfInParallel() {
+        
+          
+            if($j('.save_success').text() == 'false') {
+                $j('#success_msg_container_top').css('display', 'block').find('.messageCell h4').html('');
+                showProcessingOverlay(false);
+                return;
+            }
+            updateMessage('Processing addresses.');
+            turfId = $j('.turf_id').text();
+            <!-- Modified by Joognu Rao to implement US1072293 *START* -->
+            team = $j('.turf_team').text();
+            <!-- Modified by Joognu Rao to implement US1072293 *END* -->
+            territoryOwner = $j('.territory_owner').text();
+            if (!$j('.address_ids').text()) {
+                showErrorMessage('Error selecting addresses or no addresses currently selected.');
+                return;
+            }
+
+            hideErrorMessage();
+            console.log('nextCallId Before: '+ nextCallId);
+            addressIds = JSON.parse($j('.address_ids').text());
+            chunkSize = $j('.chunk_size').text();
+            threadCount = $j('.thread_count').text();
+            nextCallId = threadCount;
+            //Srini Bhattiprolu: Added the following jQuery for Address Mmax Limit Per Turf (US1129121)
+            addressMaxLimitPerTurf = $j('.address_maxlimit_per_turf').text();
+            var i;
+
+            //var addresses = []; Srini Bhattiprolu: Commented and instantiated this as Global variable as part of US1129121
+            // Srini Bhattiprolu: Modified for loop logic for US1129121
+            for(i = 0; (addressIds.length > addressMaxLimitPerTurf) ? i < addressMaxLimitPerTurf : i < addressIds.length; i++) { 
+                addresses[i] = {
+                    Id: addressIds[i],
+                    OwnerId: territoryOwner,
+                    <!-- Modified by Joognu Rao to implement US1072293 *START* -->
+                    Team__c: team,  
+                    <!-- Modified by Joognu Rao to implement US1072293 *END* -->
+                    Plan__c: turfId
+                };
+            }
+
+            addressLists = sliceAddresses(addresses, chunkSize);
+            if(addressLists) {
+                processCalls = [];
+
+                for(i = 0; i < threadCount; i++) {
+                    if(addressLists[i]){
+                        assignAddressesToTurf(addressLists[i], i);
+                    }
+                }
+            } else {
+                showProcessingOverlay(false);
+            }
+            pollingFunc = setInterval(isProcessingComplete, 5000);
+        }
+
+        function assignAddressesToTurf(addresses, callId) {
+            Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.TurfPlanningController.updateAddresses}', addresses, function (result, event) {
+                processCalls[callId] = {};
+                processCalls[callId].event = event;
+                validateArray(addressLists[callId]);
+                processCalls[callId].processedAddresses = addressLists[callId].length;
+                if(event && event.status && addressLists[nextCallId]) {
+                    assignAddressesToTurf(addressLists[nextCallId], nextCallId);
+                    nextCallId++;
+                }
+            }, {timeout: 120000,buffer:false});
+        }
+
+        function isProcessingComplete() {
+            var completedAddresses = 0;
+            for(var i = 0; i < processCalls.length; i++) {
+                if(!processCalls[i].event) {
+                    continue;
+                } else if (processCalls[i].event.status) {
+                    completedAddresses += processCalls[i].processedAddresses;
+                } else {
+                    showErrorMessage(processCalls[i].event.message);
+                    clearInterval(pollingFunc);
+                    return;
+                }
+            }
+
+            //if(completedAddresses === addressIds.length) 
+            if(completedAddresses === addresses.length) {
+                showProcessingOverlay(false);
+                clearInterval(pollingFunc);
+                reset();
+                var turfName = $j('.turf_name').val();
+                var successMsg = '<a target="_blank" href= /' + turfId + '>' + turfName + ' has been assigned</a>';
+                $j('#success_msg_container_top').css('display', 'block').find('.messageCell h4').html(successMsg).css('font-weight', 'bold');
+            } else {
+                updateMessage('Completed ' + completedAddresses + ' of ' + addressIds.length + ' addresses');
+            }
+        }
+
+        // Prevents breakage of the code.
+        function validateArray(testArray) {
+            if (!$.isArray(testArray)) {
+                testArray = [];
+            }
+        }
+    </script>
+</apex:page>

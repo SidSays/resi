@@ -1,0 +1,997 @@
+<!--/**********************************************************
+* Page Name: 
+* Author: 
+* Description: Used to create Property Visit.
+* Last Modified by/Date: Deepika Jain,27-July-2017 - US1144825-(XC DT - Lunch and learn Visit)- Adding a new checkbox for Lunch and Learn.
+* Last Modified by/Date: Shalaka Kadwade - US1144860: XC DT - Qty Dropped off Added new field "Qty Dropped Off" and validations for the same.
+***********************************************************/--> 
+<apex:page standardController="MDU_Property__c" extensions="CARActivityTrackerController" showQuickActionVfHeader="false" showHeader="false" standardStylesheets="false" sidebar="false" applyBodyTag="false" applyHtmlTag="false" docType="html-5.0" >
+    <apex:form >
+    <html lang="en">
+        <head>
+            <!-- Meta, title, CSS, favicons, etc. -->
+            <meta charset="utf-8"/>
+            <title>
+                What did you do at the {!MDU_Property__c.Name} ?
+            </title>
+            
+            <style>
+            @media only screen and (max-width: @largestMobileScreen) {
+                .div_with_scroll {
+                    height:50px; 
+                    overflow: auto; 
+                    padding: 2px;    
+                }
+            }
+            @media only screen and (min-width: @tabletBreakpoint) and (max-width: @largestTabletScreen) {
+                .div_with_scroll {
+                    height:500px; 
+                    overflow: auto; 
+                    padding: 2px;
+                }
+            }
+            </style>
+
+            <link rel="stylesheet" href="{!URLFOR($Resource.bootstrap_sf1,'css/bootstrap.css')}"></link>
+        </head>
+        <body data-spy="scroll" data-target=".fn-sidebar">
+            <div class="container">
+                <div class="container">
+                    <div class="modal fade" id="testImg" role="dialog">
+                        <div class="modal-dialog" align="center">
+                            <img src="{!$Resource.WaitImage}"  alt="Processing"/>
+                        </div>
+                    </div>
+                </div>
+       
+                <div class="modal fade" id="alreadyCheckInToOtherProp" role="dialog">
+                    <div class="modal-dialog" align="center">
+                        <div class="modal-content">
+                            <div class="modal-body" id='prop'>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success" onClick="goTo();" id='propButton'>Go To</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal" onClick="closeThisPage();">Close</button>
+                            </div>
+                        </div>
+                    </div>
+               </div>
+           </div>
+           <div class="container">
+                <div class="modal fade" id="checkIn" role="dialog">
+                    <div class="modal-dialog" align="center">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                You have not checked into <b>{!MDU_Property__c.name}</b> yet. Please check in to proceed further. <br/>
+                            </div> 
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-success"  OnClick='checkin();'>Check In</button>
+                                <button type="button" class="btn btn-danger" OnClick='closeThisPage();'>Cancel</button>
+                            </div>                   
+                        </div>
+                    </div>
+               </div>
+           </div>
+           <div class="container">
+                <div class="modal fade" id="checkValidation" role="dialog">
+                    <div class="modal-dialog" align="center">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                Please fill details of at least one activity.       
+                            </div> 
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>                   
+                        </div>
+                    </div>
+               </div>
+           </div>
+        
+            
+            <div class="container">
+                <div class="modal fade" id="QtyValidation" role="dialog">
+                    <div class="modal-dialog" align="center">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                Qty Dropped Off should be greater than zero when visit activity is Drop Off Materials.       
+                            </div> 
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>                   
+                        </div>
+                   </div>
+               </div>
+           </div>
+               
+           <div class="container">
+                <div class="modal fade" id="QtyCharacterValidation" role="dialog">
+                    <div class="modal-dialog" align="center">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                Qty Dropped Off value can not be more than 5 digits.       
+                            </div> 
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>                   
+                        </div>
+                    </div>
+               </div>
+           </div>
+        
+        
+            <div class="container">
+                <div class="modal fade" id="noScheduledVisit" role="dialog">
+                    <div class="modal-dialog" align="center">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                No Scheduled Visit for the Day. Please Select Unscheduled in Activity Type.       
+                            </div> 
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>                   
+                        </div>
+                    </div>
+                </div>
+            </div>  
+            
+            <div class="container">
+                <div class="modal fade" id="scheduledVisitsExist" role="dialog">
+                    <div class="modal-dialog" align="center">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                There are scheduled Visits for the Day. Please Select One of them.       
+                            </div> 
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>                   
+                        </div>
+                    </div>
+                </div>
+            </div>      
+                   
+            <div class="container">
+                <div class="modal fade" id="checkChatterTerm" role="dialog">
+                    <div class="modal-dialog" align="center">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                Please accept the terms and conditions on Chatter tab.
+                            </div> 
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" OnClick='closeThisPage();'>Cancel</button>
+                            </div>                   
+                        </div>
+                   </div>
+               </div>
+           </div>
+                   
+            <div class="container">
+                <div class="modal fade" id="checkLocationServices" role="dialog">
+                    <div class="modal-dialog" align="center">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                ERROR: Location Services Must Be Activated
+                            </div> 
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" OnClick='closeThisPage();'>Cancel</button>
+                            </div>                   
+                        </div>
+                   </div>
+               </div>
+           </div>
+                   
+        <div class="container">
+            <div class="modal fade" id="testImg" role="dialog">
+                <div class="modal-dialog" align="center">
+                    <img src="{!$Resource.WaitImage}"  alt="Processing"/>
+                </div>
+            </div>
+        </div>
+        <div style="overflow:auto; height:auto; width:100%;">
+        <a class="sr-only" href="#content">Skip to main content</a>
+
+    <!-- Docs master nav -->
+    <header class="navbar navbar-default navbar-static-top navbar-branded" role="banner">
+      <div class="container">
+        
+        <div class="navbar-header">
+          <ul class="navbar-brand navbar-foundation-logo">What did you do at {!MDU_Property__c.Name} ?</ul>
+        </div>
+      </div>
+    </header>
+
+
+        <!-- Docs page layout -->
+        <div class="container bs-docs-container div_with_scroll">
+          <div class="row">
+            <div class="col-md-9">
+                <section class="section" id="cards">
+                    <div class="card-list">
+                    
+                     <div class="card">
+                        <div class="card-heading">Select CAR Activity Type</div>
+                        <div class="card-detail">
+                        <apex:actionRegion immediate="true">
+                            <apex:selectList styleClass="form-control" id="carActivityTypes"
+                                     size="1" required="true" value="{!selectedCarActivityType}">
+                              <apex:selectOptions value="{!CARActivityTypeOptions}"/>
+                              <apex:actionSupport event="onchange"  action="{!checkScheduledVisit}" rerender="selectedTypeOption, scheduledVisits"/>
+                            </apex:selectList>
+                        </apex:actionRegion>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-heading">Select Type</div>
+                        <div class="card-detail">
+                        <apex:actionRegion immediate="true">
+                            <apex:selectList styleClass="form-control" id="selectedTypeOption" size="1" required="true" value="{!selectedTypeOption}">
+                              <apex:selectOptions value="{!TypeOptions}"/>
+                              <apex:actionSupport event="onchange" action="{!checkScheduledVisit}" rerender="scheduledVisits,visitDetail,visitPlanSection"/>
+                            </apex:selectList>
+                        </apex:actionRegion>
+                        </div>
+                    </div>
+                    
+                    <apex:outputPanel id="scheduledVisits">
+                        <apex:outputPanel rendered="{!ScheduledVisit}">
+                            <div class="card">
+                                <div class="card-heading">Scheduled Visits</div>
+                                <div class="card-detail">
+                                    <apex:pageBlock rendered="{!existingVisits}">
+                                        <apex:pageBlockTable styleClass="table table-condensed" value="{!existingVisitForProperty}" var="event">
+                                            <apex:column width="5%">
+                                                <input type="radio" name="selectedVisit" value="{!event.propertyVisitAttached}"/> 
+                                            </apex:column>
+                                            <apex:column width="55%">
+                                                <apex:facet name="header">{!$ObjectType.Event.fields.Subject.label}</apex:facet>
+                                                <apex:outputText value="{!event.Subject}" rendered="{!NOT(ISNULL(event.Subject))}"/>
+                                            </apex:column>
+                                            <apex:column width="19%">
+                                                <apex:facet name="header">{!$ObjectType.Event.fields.StartDateTime.label}</apex:facet>
+                                                <apex:outputText value="{!event.startDate}" rendered="{!NOT(ISNULL(event.startDate))}"/>
+                                            </apex:column>
+                                            <apex:column width="2%"/>
+                                            <apex:column width="19%">
+                                                <apex:facet name="header">{!$ObjectType.Event.fields.EndDateTime.label}</apex:facet>
+                                                <apex:outputText value="{!event.endDate}" rendered="{!NOT(ISNULL(event.endDate))}"/>
+                                            </apex:column>
+                                        </apex:pageBlockTable>
+                                    </apex:pageBlock>
+                                    <apex:outputPanel layout="none" rendered="{!NOT(existingVisits)}">
+                                            No Scheduled Visits. Please select 'Unscheduled' for a Unscheduled Visit
+                                    </apex:outputPanel>
+                                </div>
+                            </div>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                    
+                    <apex:outputPanel id="visitDetail">
+                        <div class="card">
+                            <div class="card-heading">Visit Plan</div>
+                            <div class="card-detail">
+                                <apex:selectList styleClass="form-control" id="visitPlan" size="1" required="true" value="{!propVisitDetail.visitPlan}">
+                                  <apex:selectOptions value="{!VisitPlanOptions}"/>
+                                     <apex:actionSupport event="onchange" 
+                                    action="{!visitDetailOptionValue}" 
+                                    rerender="visitPlanSection" />                    
+                                </apex:selectList>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                    
+                     
+                      <apex:pageBlock id="visitPlanSection">                
+                       
+                        <apex:pageBlockSection columns="1" id="Marketing" rendered="{!If(visitPlanOption =='Marketing' || visitPlanOption == ''  ,true,false)}" >
+                        <div class="card-list-heading">
+                        <h3>Visit Activities</h3>                     
+                        </div>
+                        <apex:pageBlockSectionItem >
+                        <apex:outputpanel >  
+                            <div class="card">
+                                <div class="card-heading">Drop Off Materials</div>
+                                <ul class="card-detail">
+                                    <li>Drop Down for Collaterals/Flyers or Move Kits/Premiums</li>
+                                </ul>
+                                    <div class="card-detail">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input aria-label="..." type="checkbox" id="Drop_Off_Materials_done" onclick="showQtyDroppedOff()"/>
+                                            </span>
+                                            <textarea class="form-control"  id="Drop_Off_Materials_notes" rows="2" cols="120" aria-label="..." placeholder="Notes"></textarea> 
+                                        </div>
+                                    </div>
+                                    <div class="card-detail" style="padding-left: 2%;display:none;" id="QtyDroppedOff"> 
+                                        <apex:outputLabel value="Qty Dropped Off" style="padding-right: 1%;font-weight: normal;"/> 
+                                        <input aria-label="..." type="number" onkeyup="this.value = this.value.replace(/[^\d]/g, '');" step="1" value="0" min="1" id="QtyDroppedOffCount"/> 
+                                    </div>
+                                </div>
+                            
+                        </apex:outputpanel>
+                        </apex:pageBlockSectionItem>
+                        
+                        <apex:pageBlockSectionItem >
+                            <div class="card">
+                                <div class="card-heading">Updating displays and Inspecting</div>
+                                <ul class="card-detail">
+                                    <li>Notes on findings and changes</li>
+                                </ul>
+                                <div class="card-detail">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <input aria-label="..." type="checkbox" id="Updating_displays_and_Inspecting_done"/>
+                                        </span>
+                                        <textarea class="form-control"  id="Updating_displays_and_Inspecting_notes" rows="2" cols="120" aria-label="..." placeholder="Notes"></textarea> 
+                                    </div>
+                                </div>
+                            </div>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem >
+                            <div class="card">
+                                <div class="card-heading">Property Profile Updates</div>
+                                <ul class="card-detail">
+                                    <li>Notes on findings and changes</li>
+                                </ul>
+                                <div class="card-detail">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <input aria-label="..." type="checkbox" id="Property_Profile_Updates_done"/>
+                                        </span>
+                                        <textarea class="form-control"  id="Property_Profile_Updates_notes" rows="2" cols="120" aria-label="..." placeholder="Notes"></textarea> 
+                                    </div>
+                                </div>
+                            </div>
+                        </apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem >
+                            <div class="card">
+                                <div class="card-heading">Event Planning</div>
+                                <ul class="card-detail">
+                                    <li>Notes on what was completed (fliers, posters, scheduling)</li>
+                                </ul>
+                                <div class="card-detail">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <input aria-label="..." type="checkbox" id="Event_Planning_done"/>
+                                        </span>
+                                        <textarea class="form-control"  id="Event_Planning_notes" rows="2" cols="120" aria-label="..." placeholder="Notes"></textarea> 
+                                    </div>
+                                </div>
+                            </div>
+                        </apex:pageBlockSectionItem>
+                    </apex:pageBlockSection>    
+                        
+                        
+                    <apex:pageBlockSection columns="1" id="Service" rendered="{!If(visitPlanOption =='Service' ,true,false)}" >
+                    <div class="card-list-heading">
+                        <h3>Visit Activities</h3>                     
+                        </div>
+                    <apex:pageBlockSectionItem >
+                        
+                        <div class="card">
+                            <div class="card-heading">Property Level</div>
+                            <ul class="card-detail">
+                                <li>Notes to describe service/escalation and resolution</li>
+                            </ul>
+                            <div class="card-detail">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <input aria-label="..." type="checkbox" id="Property_Level_done"/>
+                                    </span>
+                                    <textarea class="form-control"  id="Property_Level_notes" rows="2" cols="120" aria-label="..." placeholder="Notes"></textarea> 
+                                </div>
+                            </div>
+                        </div>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                        <div class="card">
+                            <div class="card-heading">Resident level</div>
+                            <ul class="card-detail">
+                                <li>Notes to describe service/escalation and resolution</li>
+                            </ul>
+                            <div class="card-detail">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <input aria-label="..." type="checkbox" id="Resident_level_done"/>
+                                    </span>
+                                    <textarea class="form-control"  id="Resident_level_notes" rows="2" cols="120" aria-label="..." placeholder="Notes"></textarea> 
+                                </div>
+                            </div>
+                        </div>
+                    </apex:pageBlockSectionItem>                   
+                </apex:pageBlockSection>  
+                    
+                
+                <apex:pageBlockSection columns="1" id="PropertyStaffRelationship" rendered="{!If(visitPlanOption =='Property Staff Relationship' ,true,false)}" >
+                <div class="card-list-heading">
+                        <h3>Visit Activities</h3>                     
+                        </div>
+                    <apex:pageBlockSectionItem >
+                        
+                        <div class="card">
+                            <div class="card-heading">Recognition</div>
+                            <ul class="card-detail">
+                                <li>Notes to describe what was covered and next steps</li>
+                            </ul>
+                            <div class="card-detail">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <input aria-label="..." type="checkbox" id="Recognition_done"/>
+                                    </span>
+                                    <textarea class="form-control"  id="Recognition_notes" rows="2" cols="120" aria-label="..." placeholder="Notes"></textarea> 
+                                </div>
+                            </div>
+                        </div>
+                    </apex:pageBlockSectionItem>
+                    
+                    <apex:pageBlockSectionItem >
+                        <div class="card">
+                            <div class="card-heading">Xfinity Rewards</div>
+                            <ul class="card-detail">
+                                <li>Notes to describe what was covered and next steps</li>
+                            </ul>
+                            <div class="card-detail">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <input aria-label="..." type="checkbox" id="Xfinity_Rewards_done"/>
+                                    </span>
+                                    <textarea class="form-control"  id="Xfinity_Rewards_notes" rows="2" cols="120" aria-label="..." placeholder="Notes"></textarea> 
+                                </div>
+                            </div>
+                        </div>
+                    </apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
+                    <apex:outputpanel >
+                        <div class="card">
+                            <div class="card-heading">Education</div>
+                            <ul class="card-detail">
+                                <li>Notes to describe what was covered and next steps</li>
+                            </ul>
+                            <div class="card-detail">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><!-- Added onclick method to show or hide the LunchAndLearnDiv US1144825 -->
+                                        <input aria-label="..." type="checkbox" id="Education_done" onclick="showLunchAndLearn()"/>
+                                    </span>
+                                    <textarea class="form-control"  id="Education_notes" rows="2" cols="120" aria-label="..." placeholder="Notes"></textarea> 
+                                </div>
+                            </div>
+                            <!-- Added Div for adding checkbox Lunch and Learn US1144825 Start -->
+                                  <div class="card-detail" style="padding-left: 2%;display:none;" id="LunchAndLearnDiv"> 
+                                        <apex:outputLabel value="Lunch and Learn" style="padding-right: 1%;font-weight: normal;"/> 
+                                        <input aria-label="..." type="checkbox" id="LunchAndLearn_Done"/> 
+                                  </div>
+                            <!-- Added Div for adding checkbox Lunch and Learn US1144825 End -->
+                        </div>
+                        </apex:outputpanel>
+                    </apex:pageBlockSectionItem>                   
+                </apex:pageBlockSection>     
+                </apex:pageBlock>
+                      
+                 <!--     
+                               
+                    <div class="card">
+                        <div class="card-heading">Feedback, Planning, Review with Property contact</div>
+                        <ul class="card-detail">
+                            <li>Some addl. text that explains this activity....</li>
+                        </ul>
+                        <div class="card-detail">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input aria-label="..." type="checkbox" id="feedback_done"/>
+                                </span>
+                                <textarea class="form-control"  id="feedback_notes" rows="2" cols="80" aria-label="..." placeholder="Notes"></textarea> 
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-heading">Profile and Contact Update</div>
+                        <ul class="card-detail">
+                            <li>Some addl. text that explains this activity....</li>
+                        </ul>
+                        <div class="card-detail">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input aria-label="..." type="checkbox"  id="profile_done"/>
+                                </span>
+                                <textarea class="form-control" rows="2" cols="80" aria-label="..." placeholder="Notes" id="profile_notes"></textarea> 
+                            </div>
+                        </div>
+                    </div>
+                    <!--
+                    <div class="card">
+                        <div class="card-heading">Lunch &amp; Learn</div>
+                        <ul class="card-detail">
+                            <li>Some addl. text that explains this activity....</li>
+                        </ul>
+                        <div class="card-detail">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input aria-label="..." type="checkbox" id="lunch_done"/>
+                                </span>
+                                <textarea class="form-control" rows="2" cols="80" aria-label="..." placeholder="Notes" id="lunch_notes"></textarea> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-heading">Staff Appreciation Lunch </div>
+                        <ul class="card-detail">
+                            <li>e.g. goodwill lunch</li>
+                        </ul>
+                        <div class="card-detail">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input aria-label="..." type="checkbox" id="stafflunch_done"/>
+                                </span>
+                                <textarea class="form-control" rows="2" cols="80" aria-label="..." placeholder="Notes" id="stafflunch_notes"></textarea> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-heading">Collateral, Move Kits, Displays</div>
+                        <ul class="card-detail">
+                            <li>e.g., drop off collateral, update displays, inspect, refresh</li>
+                        </ul>
+                        <div class="card-detail">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input aria-label="..." type="checkbox" id="collateral_done"/>
+                                </span>
+                                <textarea class="form-control" rows="2" cols="80" aria-label="..." placeholder="Notes" id="collateral_notes"></textarea> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-heading">Sales Event</div>
+                        <ul class="card-detail">
+                            <li>Note: minimum of 2 sales events per month</li>
+                        </ul>
+                        <div class="card-detail">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input aria-label="..." type="checkbox" id="event_done"/>
+                                </span>
+                                <textarea class="form-control" rows="2" cols="80" aria-label="..." placeholder="Notes" id="event_notes"></textarea> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-heading">Service Resolution</div>
+                        <ul class="card-detail">
+                            <li>Some addl. text that explains this activity....</li>
+                        </ul>
+                        <div class="card-detail">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input aria-label="..." type="checkbox" id="service_done"/>
+                                </span>
+                                <textarea class="form-control" rows="2" cols="80" aria-label="..." placeholder="Notes" id="service_notes"></textarea> 
+                            </div>
+                        </div>
+                    </div> 
+                    -->
+                    </div>
+                </section>
+            </div>
+          </div>
+        </div>
+        <div class="container-fluid bs-docs-grid">
+            <button type="button" class="btn btn-primary navbar-btn" onclick="javascript:validateBeforeSave();" id="saveButton"><span class="glyphicon-class"></span>Save &amp; Check Out</button>
+            <a class="btn btn-danger navbar-btn" href="javascript:closeThisPage();"><span class="glyphicon-class"></span>Cancel</a>
+           <input type="hidden" name="latitude" id="latitude" value="0" />
+           <input type="hidden" name="longitude" id="longitude" value="0"  />
+        </div>
+
+            <script> 
+                (function(){try{var a=navigator.userAgent; 
+                if((a.indexOf('Salesforce')!=-1)&&(a.indexOf('iPhone')!=-1||a.indexOf('iPad')!=-1)&&(a.indexOf('OS/9')!=-1||a.indexOf('OS 9')!=-1)&&(a.indexOf('Safari')==-1)){ 
+                var s=document.createElement('style'); 
+                s.innerHTML="html,html body{overflow: auto;-webkit-overflow-scrolling:touch;}body{position:absolute;left:0;right:0;top:0;bottom:0;}"; 
+                document.getElementsByTagName('head')[0].appendChild(s);}}catch(e){}})(); 
+            </script> 
+
+            <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+            <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+            <script type='text/javascript' src='/canvas/sdk/js/publisher.js'/> 
+            <script type="text/javascript">
+            //date Normalization
+            $("#testImg").modal({backdrop: "static"});
+            function normalizeDate(mydate){
+            mydate = new Date(mydate);
+                // mydate = new Date(mydate - mydate.getTimezoneOffset() * 60000);
+            // mydate.setMonth(mydate.getMonth()+1);
+            return mydate;}
+        
+            if (navigator.geolocation)
+           {
+              navigator.geolocation.getCurrentPosition(display_geolocation_properties, handle_error,{
+             enableHighAccuracy: true
+                  ,timeout : 5000
+        });
+      
+           }
+        function display_geolocation_properties(position)
+        {
+                document.getElementById('latitude').value=position.coords.latitude;
+               document.getElementById('longitude').value=position.coords.longitude;
+            $("#testImg").modal("hide");
+            proceedAfterLocation();
+        }
+        
+        function handle_error(error)
+        {
+           $("#testImg").modal("hide");
+           //alert( "ERROR: Location Services Must Be Activated" );
+           $("#checkLocationServices").modal("show");
+           closeThisPage();
+        }
+             var propId="{!MDU_Property__c.Id}";
+              var prop='';
+              var visitsExist="{!existingVisits}";
+              function proceedAfterLocation(){
+                if (typeof Visualforce === 'object') {
+                      Visualforce.remoting.Manager.invokeAction(
+                      '{!$RemoteAction.CARActivityTrackerController.getPropertyVisit}',propId,
+                        function(result, event){
+                            if (event.status) {
+                            
+                                if(result.length<1){
+                                    $("#checkIn").modal({backdrop: "static"});
+                                }
+                                else
+                                {
+                                    if(result.length>0){
+                                        var alreadyCheckedIn = false;
+                                        var indexOfPropertyCheckedIn = 0;
+                                         for(var i=0; i < result.length; i++)
+                                         {
+                                            if(result[i].Property__c!= propId){
+                                              indexOfPropertyCheckedIn = i;
+                                              alreadyCheckedIn = true;
+                                              break;
+                                            }
+                                         }
+                                         
+                                         if(alreadyCheckedIn)
+                                         {
+                                            document.getElementById("prop").innerHTML=" You have already checked into <b>"+result[indexOfPropertyCheckedIn].Property__r.Name+"</b>.<br/>   Please Complete this visit first.";   
+                                            document.getElementById("propButton").innerHTML= "Go to "+result[indexOfPropertyCheckedIn].Property__r.Name;
+                                            prop=result[indexOfPropertyCheckedIn].Property__c;
+                                            $("#alreadyCheckInToOtherProp").modal({backdrop: "static"});
+                                         }
+                                    }
+                                }
+                         }}, 
+                        {escape: true}
+                    );
+                }
+              
+              }
+              function goTo(){
+              sforce.one.navigateToSObject(prop);
+              }
+             function checkin(){
+                  $("#checkIn").modal("hide");
+              var  lat=document.getElementById('latitude').value;
+                var long=document.getElementById('longitude').value;
+                 if (typeof Visualforce === 'object') {
+           
+                      Visualforce.remoting.Manager.invokeAction(
+                      '{!$RemoteAction.CARActivityTrackerController.checkIn}',propId,lat,long,
+                        function(result, event){
+                            if (event.status) {                             
+                         }}, 
+                        {escape: true}
+                    );
+                }
+            }
+              
+                
+            function CARActivityData(activityType,done,notes,lunchAndLearnDone,qtyCount) {
+                this.done=done;
+                this.activityType=activityType;
+                this.notes=notes;
+                this.lunchAndLearnDone=lunchAndLearnDone; // Added as part of US1144825 - XC DT - Lunch and learn Visit- Deepika Jain - 07/27/17
+                this.qtyCount=qtyCount; // Added as part of US1144860
+            }
+            
+            function validateBeforeSave(){
+            
+                var skipScheduledVisitValidation = false;
+                var skipUnscheduledVisitValidation = true;
+                var noVisitSelected = true;
+                var visits = document.getElementsByName('selectedVisit');
+                if(document.getElementById('{!$Component.carActivityTypes}').value == 'Visit')
+                {
+                    if(document.getElementById('{!$Component.selectedTypeOption}').value == 'Scheduled')
+                    {
+                        if(visits != null && visits.length > 0)
+                        {           
+                            skipScheduledVisitValidation = true;
+                            for(var i = 0; i < visits.length; i++){
+                            if(visits[i].checked){
+                                skipUnscheduledVisitValidation = true;
+                                noVisitSelected = false;
+                                break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            noVisitSelected =false;
+                            skipScheduledVisitValidation = false;
+                        }
+                    }
+                    else
+                    {
+                       noVisitSelected = false;
+                        skipScheduledVisitValidation = true;
+                        if(visits != null && visits.length > 0)
+                        {
+                            skipUnscheduledVisitValidation = false;
+                        }
+                    }
+                }
+                else
+                {
+                    skipScheduledVisitValidation = true;
+                    skipUnscheduledVisitValidation = true;
+                    noVisitSelected = false;
+                }
+                
+                  if(!skipScheduledVisitValidation)  
+                  {
+                     $("#noScheduledVisit").modal("show");
+                    document.getElementById("saveButton").disabled = false;
+                  }
+                  else if(!skipUnscheduledVisitValidation || noVisitSelected)
+                  {
+                    $("#scheduledVisitsExist").modal("show");
+                    document.getElementById("saveButton").disabled = false;
+                  }
+                  else
+                  {
+                    saveActivities()
+                  }          
+             }
+            
+            
+            function saveActivities(){
+                $("#testImg").modal({backdrop: "static"});
+                 document.getElementById("saveButton").disabled = true;
+
+                
+                /*var activities = [
+                     new CARActivityData('Feedback',
+                                        document.getElementById('feedback_done').checked,
+                                        document.getElementById('feedback_notes').value
+                                    ),
+                    new CARActivityData('Profile',
+                                        document.getElementById('profile_done').checked,
+                                        document.getElementById('profile_notes').value
+                                    ),
+                    new CARActivityData('Lunch & Learn',
+                                        document.getElementById('lunch_done').checked,
+                                        document.getElementById('lunch_notes').value
+                                    ),
+                    new CARActivityData('Staff Lunch&Learn',
+                                        document.getElementById('stafflunch_done').checked,
+                                        document.getElementById('stafflunch_notes').value
+                                    ),
+                    new CARActivityData('Collateral',
+                                        document.getElementById('collateral_done').checked,
+                                        document.getElementById('collateral_notes').value
+                                    ),
+                    new CARActivityData('Sales Event',
+                                        document.getElementById('event_done').checked,
+                                        document.getElementById('event_notes').value
+                                    ),
+                    new CARActivityData('Service Resolution',
+                                        document.getElementById('service_done').checked,
+                                        document.getElementById('service_notes').value
+                                    )
+
+
+                ];
+                */
+                 var activities = [];
+                 var visitPlanSelection = document.getElementById('{!$Component.visitPlan}').value;
+                 
+                    if(visitPlanSelection != null && visitPlanSelection =='Marketing'){
+                        var QtyDroppedCount = 0;
+                        
+                        if(document.getElementById('QtyDroppedOffCount').value == ''){
+                            QtyDroppedCount = 0;
+                        }else{
+                            QtyDroppedCount = document.getElementById('QtyDroppedOffCount').value;
+                        }
+                        
+                        activities.push(new CARActivityData('Drop Off Materials',
+                                                            document.getElementById('Drop_Off_Materials_done').checked,
+                                                            document.getElementById('Drop_Off_Materials_notes').value,
+                                                            '',               // Added as part of US1144825 - XC DT - Lunch and learn Visit- Deepika Jain - 07/27/17
+                                                            QtyDroppedCount // Added as part of US1144860
+                                                        ),
+                                        new CARActivityData('Updating displays and Inspecting',
+                                                            document.getElementById('Updating_displays_and_Inspecting_done').checked,
+                                                            document.getElementById('Updating_displays_and_Inspecting_notes').value,
+                                                            ''             // Added as part of US1144825 - XC DT - Lunch and learn Visit- Deepika Jain - 07/27/17
+                                                        ),
+                                        new CARActivityData('Property Profile Updates',
+                                                            document.getElementById('Property_Profile_Updates_done').checked,
+                                                            document.getElementById('Property_Profile_Updates_notes').value,
+                                                            ''            // Added as part of US1144825 - XC DT - Lunch and learn Visit- Deepika Jain - 07/27/17
+                                                        ),
+                                        new CARActivityData('Event Planning',
+                                                            document.getElementById('Event_Planning_done').checked,
+                                                            document.getElementById('Event_Planning_notes').value,
+                                                            ''           // Added as part of US1144825 - XC DT - Lunch and learn Visit- Deepika Jain - 07/27/17
+                                        ));
+                    }
+                    else if(visitPlanSelection != null && visitPlanSelection =='Property Staff Relationship'){
+                         activities.push( new CARActivityData('Recognition',
+                                        document.getElementById('Recognition_done').checked,
+                                        document.getElementById('Recognition_notes').value,
+                                        ''                              // Added as part of US1144825 - XC DT - Lunch and learn Visit- Deepika Jain - 07/27/17
+                                    ),
+                                    new CARActivityData('Xfinity Rewards',
+                                        document.getElementById('Xfinity_Rewards_done').checked,
+                                        document.getElementById('Xfinity_Rewards_notes').value,
+                                        ''                             // Added as part of US1144825 - XC DT - Lunch and learn Visit- Deepika Jain - 07/27/17
+                                    ),
+                                    new CARActivityData('Education',
+                                        document.getElementById('Education_done').checked,
+                                        document.getElementById('Education_notes').value,
+                                        document.getElementById('LunchAndLearn_Done').checked // Added as part of US1144825 - XC DT - Lunch and learn Visit- Deepika Jain - 07/27/17
+                                        
+                                    ));
+                    }
+                    else if(visitPlanSelection != null && visitPlanSelection =='Service'){
+                        activities.push(new CARActivityData('Property Level',
+                                        document.getElementById('Property_Level_done').checked,
+                                        document.getElementById('Property_Level_notes').value,
+                                        ''                            // Added as part of US1144825 - XC DT - Lunch and learn Visit- Deepika Jain - 07/27/17
+                                    ),
+                                    new CARActivityData('Resident level',
+                                        document.getElementById('Resident_level_done').checked,
+                                        document.getElementById('Resident_level_notes').value,
+                                        ''                           // Added as part of US1144825 - XC DT - Lunch and learn Visit- Deepika Jain - 07/27/17
+                                    ));
+                    }
+                
+                var visits = document.getElementsByName('selectedVisit');
+                var selectedRadioVisit = null;
+                if(visits!= null  && visits.length > 0)
+                {           
+                    for(var i = 0; i < visits.length; i++){
+                    if(visits[i].checked){
+                        selectedRadioVisit = visits[i].value;
+                        }
+                    }
+                }
+                
+                var params = {
+                    propertyId:'{!MDU_Property__c.Id}',
+                    activities:activities,
+                    latitude:document.getElementById('latitude').value,
+                    longitude:document.getElementById('longitude').value,
+                    propertyVisitId:selectedRadioVisit,
+                    visitPlan: document.getElementById('{!$Component.visitPlan}').value
+                };
+                
+                Visualforce.remoting.Manager.invokeAction(
+                    '{!$RemoteAction.CARActivityTrackerController.saveActivities}',
+                    params, 
+                    function(result, event){
+                        
+                        if (event.status) {
+                            
+                            if( (typeof sforce != 'undefined') && (sforce != null) ) {
+                                if ({!!terms}){
+                                  $("#testImg").modal("hide");
+                                  $("#checkChatterTerm").modal("show");                              
+                                  document.getElementById("saveButton").disabled = false;
+                                }else if(result){
+                                            // Added as part of US1144860 - Start
+                                            if(visitPlanSelection != null && visitPlanSelection =='Marketing' && document.getElementById('Drop_Off_Materials_done').checked && document.getElementById('Drop_Off_Materials_notes').value != ''){
+                                                
+                                                if(document.getElementById('QtyDroppedOffCount').value == 0){
+                                                
+                                                    $("#testImg").modal("hide");
+                                                    $("#QtyValidation").modal("show");                              
+                                                    document.getElementById("saveButton").disabled = false;
+                                                }else if(document.getElementById('QtyDroppedOffCount').value > 99999){
+                                                    $("#testImg").modal("hide");
+                                                    $("#QtyCharacterValidation").modal("show");                              
+                                                    document.getElementById("saveButton").disabled = false;
+                                                }
+                                                
+                                            }else{
+                                                  $("#testImg").modal("hide");
+                                                  $("#checkValidation").modal("show");                              
+                                                  document.getElementById("saveButton").disabled = false;
+                                            }
+                                }
+                                else if(visitPlanSelection != null && visitPlanSelection =='Marketing' && document.getElementById('Drop_Off_Materials_done').checked && document.getElementById('Drop_Off_Materials_notes').value != '' && document.getElementById('QtyDroppedOffCount').value > 99999){
+                                                    $("#testImg").modal("hide");
+                                                    $("#QtyCharacterValidation").modal("show");                              
+                                                    document.getElementById("saveButton").disabled = false;
+                                } // Added as part of US1144860 - End
+                                else{                      
+                                Sfdc.canvas.publisher.publish({ name: "publisher.close",
+                                                                 payload:{ refresh:"false" }
+                                                             }
+                                );}
+                            } else {
+                             // Desktop
+                            }
+                        } else{
+                             /* if({!terms}){
+                              
+                                  $("#testImg").modal("hide");
+                                  $("#checkValidation").modal("show");
+                                  //alert("Please fill details of at least one activity");
+                                document.getElementById("saveButton").disabled = false;
+                              } else{
+                                  $("#testImg").modal("hide");
+                                  $("#checkChatterTerm").modal("show");
+                                  //alert("Please accept the terms and conditions on Chatter tab.");
+                                  document.getElementById("saveButton").disabled = false;
+                              }                   
+                            */
+                            
+                        } 
+                    }, 
+                    {escape: true}
+                );
+
+            }
+            
+            function closeThisPage(){
+                Sfdc.canvas.publisher.publish({ name: "publisher.close",
+                                                 payload:{ refresh:"true" }
+                                             }
+                );
+
+            }
+            // Function to show or hide the Lunch and Learn Div US1144825 - Deepika Jain - Start -->
+            function showLunchAndLearn(){
+                if(document.getElementById('Education_done').checked){
+                    $("#LunchAndLearnDiv").show();
+                }
+                else
+                {
+                    $("#LunchAndLearnDiv").hide();
+                }
+             }
+            // Function to show or hide the Lunch and Learn Div US1144825 - Deepika Jain - End -->
+            
+            // Added as part of US1144860 - Start
+            function showQtyDroppedOff(){
+                if(document.getElementById('Drop_Off_Materials_done').checked){
+                    $("#QtyDroppedOff").show();
+                }
+                else
+                {
+                    $("#QtyDroppedOff").hide();
+                }
+             }
+            // Added as part of US1144860 - End
+
+        </script>
+        <script> 
+            window.onkeydown=function(){window.focus();} 
+        </script> 
+          </div>
+      </body>  
+    </html>
+
+    <!-- Added based on MCS suggestion to handle issue on iPhopne 5; Case# 00032207-->
+    <script>
+        var a = navigator.userAgent;
+        if ((a.indexOf('Salesforce') != -1) && (a.indexOf('iPhone') != -1 || a.indexOf('iPad') != -1) && (a.indexOf('Safari') == -1)) { var s = document.createElement('style'); s.innerHTML = "html,html body{overflow:scroll;-webkit-overflow-scrolling:touch;zindex:0;}body{position:absolute;left:0;right:0;top:0;bottom:0;}";
+            document.getElementsByTagName('head')[0].appendChild(s);
+        }
+    </script>
+</apex:form>
+</apex:page>

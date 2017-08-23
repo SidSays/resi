@@ -1,0 +1,92 @@
+<!-- 
+/**********************************************************
+* Page Name: ViewAllTurfAddresses
+* Author: Amitkumar Bangad, Accenture
+* Date: 07-May-2013 
+* Requirement # Request Id : 210
+* Description: To View all the Addresses associated with a Turf.
+* Last Modified by:
+***********************************************************/
+-->
+<apex:page standardController="Plan__c" showHeader="true" sidebar="true"
+    id="addPage" extensions="ViewAllTurfAddressesController"
+    readonly="true">
+    <apex:form id="myForm">
+        <apex:pagemessages ></apex:pagemessages>
+        <img src="/s.gif" class="pageTitleIcon" title="Plan" alt="Plan" />
+        <style type="text/css">
+.waitPanelClass {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    -moz-opacity: 0.7;
+    /* makes the div transparent, so you have a cool overlay effect */
+    opacity: .70;
+    display: block-inline;
+    background: #000000 url({!$Resource.WaitImage}) no-repeat center center;
+}
+</style>
+        <apex:OutputLabel style="font-weight:bold;font-size:11px;">Plan</apex:OutputLabel>
+        <br />
+        <a href="/{!planId}" target="_self"
+            style="font-weight: bold; font-size: 16px;">{!Plan__c.Name}</a>
+        <br />
+        <br />
+        <apex:pageBlock rendered="{!showFlag}" id="pb">
+            <apex:outputPanel id="AddressPanel">
+                <apex:actionStatus id="AddressFound">
+                    <apex:facet name="start">
+                        <apex:outputPanel styleclass="waitPanelClass" />
+                    </apex:facet>
+                </apex:actionStatus>
+            </apex:outputPanel>
+            <!-- 
+            <apex:outputLabel rendered="{!showFlag}"> 
+                <a href="/apex/ViewTurfAddresses?id={!planId}" target="_blank" style="font-weight:bold;font-size:11px;margin-left:450px;">View on Map </a><br/>      
+            </apex:outputLabel>
+            -->
+            <apex:pageBlockSection title="Addresses : Page #{!pageNumber}"
+                columns="1" collapsible="false">
+                <apex:pageBlockTable value="{!Addresses}" var="units"
+                    rendered="{!showFlag}" rows="10">
+                    <apex:column headerValue="Street" id="add"
+                        style="{!IF(units.Excluded__c && NOT(ISNULL(Plan__c.Exclusion__c)),'background-color:salmon','background-color:none')}">
+                        <apex:outputPanel rendered="{!NOT(units.Excluded__c)}">
+                            <a href="/{!units.Id}" target="_blank"> {!units.Name}</a>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!units.Excluded__c}">
+                            <apex:outputField value="{!units.Name}" />
+                        </apex:outputPanel>
+                    </apex:column>
+                    <apex:column value="{!units.City__c}"
+                        style="{!IF(units.Excluded__c && NOT(ISNULL(Plan__c.Exclusion__c)),'background-color:salmon','background-color:none')}" />
+                    <apex:column value="{!units.State__c}"
+                        style="{!IF(units.Excluded__c && NOT(ISNULL(Plan__c.Exclusion__c)),'background-color:salmon','background-color:none')}" />
+                    <apex:column value="{!units.PostalCode__c}"
+                        style="{!IF(units.Excluded__c && NOT(ISNULL(Plan__c.Exclusion__c)),'background-color:salmon','background-color:none')}" />
+                    <apex:column value="{!units.Last_Knock_Date__c}"
+                        style="{!IF(units.Excluded__c && NOT(ISNULL(Plan__c.Exclusion__c)),'background-color:salmon','background-color:none')}" />
+                    <apex:column value="{!units.Status__c}"
+                        style="{!IF(units.Excluded__c && NOT(ISNULL(Plan__c.Exclusion__c)),'background-color:salmon','background-color:none')}" />
+                    <apex:column value="{!units.Dwelling_Type__c}"
+                        style="{!IF(units.Excluded__c && NOT(ISNULL(Plan__c.Exclusion__c)),'background-color:salmon','background-color:none')}" />
+                </apex:pageBlockTable>
+                <br />
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:panelGrid columns="8" style="text-align:center;">
+            <apex:commandLink action="{!first}" rendered="{!showFlag}"
+                status="AddressFound" style="font-weight:bold" rerender="pb">| First</apex:commandlink> &nbsp;
+            <apex:commandLink action="{!previous}"
+                    rendered="{!showFlag}" status="AddressFound"
+                    style="font-weight:bold" rerender="pb">Prev</apex:commandlink> &nbsp;
+            <apex:commandLink action="{!next}" rendered="{!showFlag}"
+                        status="AddressFound" style="font-weight:bold" rerender="pb">Next</apex:commandlink>&nbsp;
+            <apex:commandLink action="{!last}" rendered="{!showFlag}"
+                            style="font-weight:bold" status="AddressFound" rerender="pb">Last |</apex:commandlink>
+        </apex:panelGrid>
+    </apex:form>
+</apex:page>

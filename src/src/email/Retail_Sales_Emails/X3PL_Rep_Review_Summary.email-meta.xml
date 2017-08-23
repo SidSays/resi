@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This template will be used in the store visit summary email</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>3PL Rep Review Summary</name>
+    <style>none</style>
+    <subject>3PL Manager Review Summary</subject>
+    <textOnly>While reviewing: {!Store_Activity__c.What_did_you_review_with_the_employees3P__c} 
+with the 3PL Rep, {!Store_Activity__c.Who_did_you_meet_with_for_email__c}, the following things were observed: 
+
+&lt;checkbox:{!Store_Activity__c.Rep_not_present_at_designated_time__c}&gt;Rep not present at designated time? 
+&lt;checkbox:{!Store_Activity__c.Rep_not_wearing_appropriate_attire__c}&gt;Rep not wearing appropriate attire? 
+&lt;checkbox:{!Store_Activity__c.Rep_lacks_tablet_to_sell_service__c}&gt;Rep lacks tablet to sell service? 
+&lt;checkbox:{!Store_Activity__c.Rep_tablet_lacks_3G_coverage__c}&gt;Rep&apos;s tablet lacks 3G coverage?</textOnly>
+    <type>custom</type>
+</EmailTemplate>

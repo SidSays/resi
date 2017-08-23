@@ -1,0 +1,15 @@
+<apex:page controller="UniversalSubmitCaserecordtypeController" showHeader="false">
+    <apex:form >
+        <apex:pageBlock title="Select Case Type" >
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Continue" action="{!editWithRecordType}"/>
+            </apex:pageBlockButtons>
+            
+            <apex:pageBlockSection collapsible="false" columns="1" >
+                <apex:selectList value="{!selectedRecordTypeId}" size="1" label="Case Type">
+                    <apex:selectOptions value="{!recordTypes}"/>
+                </apex:selectList>
+            </apex:pageBlockSection>
+        </apex:pageBlock> 
+    </apex:form>
+</apex:page>

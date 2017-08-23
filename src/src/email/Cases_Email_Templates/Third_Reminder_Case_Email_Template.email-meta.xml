@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Three Reminder Cases</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Comcast_LetterHead</letterhead>
+    <name>Third Reminder Case Email Template</name>
+    <style>freeForm</style>
+    <subject>Action Required : {!Case.Status}</subject>
+    <textOnly>&lt;p style=&quot;font-family:calibri;&quot;&gt;Hello {!Case.Requested_For_FirstName__c}, 
+&lt;br&gt;&lt;br&gt; 
+Please see case number and description below. Our support team needs some clarification 
+on this case. Please respond to the case notes or our support teams multiple emails or we will have to close this case.
+&lt;br&gt;&lt;br&gt; 
+Thanks ! 
+&lt;br&gt;&lt;br&gt; 
+Case: {!Case.CaseNumber} &lt;br&gt; 
+Link : {!Case.Case_URL_Type__c} 
+&lt;br&gt;&lt;br&gt;&lt;/p&gt; 
+&lt;p style=&quot;font-family:Arial;&quot;&gt; 
+&lt;p&gt;&lt;strong&gt;Jai Nalwa&lt;/strong&gt;&lt;br /&gt; 
+&lt;span style=&quot;font-size:12px;&quot;&gt;&lt;span style=&quot;color:#696969;&quot;&gt;One Comcast Center&lt;br /&gt; 
+1701 J.F.K Blvd. 13th Floor&lt;br /&gt; 
+Philadelphia, PA 19103&lt;br /&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;</textOnly>
+    <type>html</type>
+</EmailTemplate>

@@ -1,0 +1,14 @@
+<aura:component access="global" >
+	<aura:attribute name="map" type="Object"/>
+    <aura:attribute name="selectedAddressId" type="String"/>    
+    <aura:attribute type="Customer_Address__c[]" name="filteredAddresses" />
+    <aura:attribute name="markerLayerGroup" type="Object"/>
+    <aura:attribute name="markerArray" type="Object[]"/>
+   	<aura:handler event="c:SendFilteredAndOriginalAddressList" action="{!c.addressesLoaded}"/> 
+    <aura:handler event="c:selectedAddressLatLongEvent" action="{!c.callPointMarker}"/> 
+    <ltng:require styles="/resource/leaflet/leaflet.css" scripts="/resource/leaflet/leaflet.js"                  
+        afterScriptsLoaded="{!c.jsLoaded}" />
+    
+    <div id="map"></div>
+
+</aura:component>

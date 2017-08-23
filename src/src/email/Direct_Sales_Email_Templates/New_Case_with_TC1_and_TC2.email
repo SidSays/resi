@@ -1,0 +1,18 @@
+A {!Case.Status} Case has been submitted for your region:
+
+Case Creator: {!Case.Requested_For__c}
+Creator Phone: {!Case.Preferred_Phone__c}
+Creator Email: {!Case.Preferred_Email__c}
+Region:  {!Case.Region__c}
+Case Subject: {!Case.Request_Type__c}
+Case Details: {!Case.Description}
+Case Status: {!Case.Status}
+Ticket Category I: {!Case.Ticket_Category__c}
+Ticket Category II: {!Case.Ticket_Category_II__c}
+{!User.Business_Partner_email__c} 
+------
+Case Link: {!Case.Link}
+------
+
+Regards,
+Your SFA2 Support Team

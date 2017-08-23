@@ -1,0 +1,16 @@
+Hi {!Case.Requested_for_First_Name__c},
+
+I am following up on your case: {!Case.CaseNumber} regarding: 
+
+{!Case.Description}
+
+[Left blank for sending user input or question or detail.]
+
+-------
+
+-------
+
+NOTE: Please do reply all instead of reply to get the faster response.
+
+Sincerely,
+Your SFA2 / DSM App Support Team

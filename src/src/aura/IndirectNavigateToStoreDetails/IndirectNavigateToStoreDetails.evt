@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event to Navigate to Store Detail Page">
+    <aura:attribute name="storeId" type="String"/>
+    <aura:attribute name="bodyToRender" type="String"/>
+</aura:event>

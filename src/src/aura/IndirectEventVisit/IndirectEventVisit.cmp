@@ -1,0 +1,41 @@
+<aura:component controller="IndirectOtherVisitsController">
+	<ltng:require styles="/resource/SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="StoreVisitObj" type="Store_Visit__c"/>
+    <aura:attribute name="StartDateTime" type="DateTime" />
+    <aura:attribute name="startVisit" type="Boolean" default="false"/>
+    <aura:attribute name="endVisit" type="Boolean" default="true"/>
+    <aura:attribute name="notesVisibility" type="Boolean" default="true"/>
+    <aura:attribute name="lat" type="String"/>
+    <aura:attribute name="longi" type="String"/>
+    <aura:attribute name="loggedInUser" type="User"/>
+    <aura:attribute name="visitId" type="String"/>     
+    <aura:handler event="c:checkErrorsOnEventEndVisitEvent" action="{!c.checkErrorsOnEventEndVisit}"/>
+    
+	<div aura:id="optionalModalDialog"/>
+    <div class="slds">
+        <ui:message aura:id="messagebox" title="Error" class="slds-hide" severity="error" 
+                    closable="false">    
+            <ui:outputText value=""/>
+        </ui:message>
+        <br/><ui:button label="Start Visit" disabled="{!v.startVisit}" press="{!c.startVisit}"/>
+          <br/> <br/>
+        <h3>Start Date/Time :</h3>
+        	<ui:outputDateTime aura:id="sDate" value="{!v.StartDateTime}" format="YYYY-MM-DD, h:mm a"/>
+        	 <br/> <br/>
+        	 <ui:inputText aura:id="Title"
+                           label="Title"
+                           class="slds-input" 
+                           labelClass="slds-form-element__label"                           
+                           disabled="{!v.notesVisibility}"
+                           required="true"/>
+             <ui:inputTextArea label="Notes" 
+                           aura:id="notesId" 
+                           class="slds-input" 
+                           rows="5"
+                           disabled="{!v.notesVisibility}"
+                           />
+        	<br/>
+        <ui:button label="End Visit" disabled="{!v.endVisit}" press="{!c.endVisit}"/>
+    </div>
+</aura:component>

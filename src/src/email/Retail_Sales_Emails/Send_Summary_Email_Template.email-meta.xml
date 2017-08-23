@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>US700728 - Indirect - Look &amp; Feel enhancement to Summary Email</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Send Summary Email Template</name>
+    <style>none</style>
+    <subject>Visit Completion - {!Store_Visit__c.OwnerFullName}</subject>
+    <textOnly>Store Visit Summary for {!Store_Visit__c.End_Date_Time__c}
+
+{!Store_Visit__c.OwnerFullName}
+
+
+
+
+
+{!Store_Visit__c.Store_Name__c}
+
+billingStreet billingCity
+
+billingState billingPostalCode billingCountry
+
+Activities Completed : {!myCustomString}
+
+
+Notes:  {!Store_Visit__c.Notes__c}
+
+-</textOnly>
+    <type>custom</type>
+</EmailTemplate>

@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event template">
+    <aura:attribute name="selectedAddressLat" type="String"/>
+    <aura:attribute name="selectedAddressLong" type="String"/>
+</aura:event>

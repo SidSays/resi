@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>email affiliate on closed claim</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Comcast_xfinity_letterhead</letterhead>
+    <name>Claim closed</name>
+    <style>freeForm</style>
+    <subject>Claim # {!Case.CaseNumber} Has Been Closed</subject>
+    <textOnly>Hello,
+
+Claim Number {!Case.CaseNumber} has been closed. Please see the below Case details
+
+Claim Number: {!Case.CaseNumber}
+Date Opened: {!Case.CreatedDate}
+Status: {!Case.Status}
+Case Result: {!Case.Claim_Result__c}
+Case Reason Description: {!Case.Claim_Reason_Description__c}
+Claimed Amount: {!Case.Claimed_Amount__c}
+Approved Amount: {!Case.Approved_Amount__c}
+
+Thank You,
+SFA Project Team</textOnly>
+    <type>html</type>
+</EmailTemplate>

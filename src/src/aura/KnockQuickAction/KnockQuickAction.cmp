@@ -1,0 +1,190 @@
+<aura:component controller="KnockQuickActionController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:attribute name="lat" type="String" />
+    <aura:attribute name="longi" type="String" />
+    <aura:attribute name="disp" type="String" />
+    <aura:attribute name="myBool" type="Boolean" default="false"/>
+    <aura:attribute name="title" type="Boolean" default="false"/>
+    <aura:attribute name="showSection0" type="Boolean" default="true"/>
+    <aura:attribute name="showSection1" type="Boolean" default="false"/>
+    <aura:attribute name="showSection2" type="Boolean" default="false"/>
+    <aura:attribute name="showSection3" type="Boolean" default="false"/>
+    <aura:attribute name="showSection4" type="Boolean" default="false"/>
+    <aura:attribute name="showSection5" type="Boolean" default="false"/>
+    <aura:attribute name="showSection6" type="Boolean" default="false"/>
+    <aura:attribute name="showSection7" type="Boolean" default="false"/>
+    <aura:attribute name="showSection8" type="Boolean" default="false"/>
+    <aura:attribute name="spinner" type="boolean" default="false"/>
+    <aura:attribute name="knock" type="Task" default="{ 'sobjectType': 'Task' }" access="public"/>
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/> 
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+    
+    <aura:if isTrue="{!v.spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large" role="status">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+    
+    <ui:message aura:id="messagebox" title="Error" class="slds-hide" severity="error" 
+                closable="false">    
+        <ui:outputText value=""/>
+    </ui:message>
+    
+    <aura:renderif isTrue="{!v.title}">
+        <div class="slds-text-align_center">{!v.disp}</div>
+    </aura:renderif>
+    
+    <!-- Section 0 starts -->
+    <aura:renderif isTrue="{!v.showSection0}">
+        <ui:inputSelect aura:id="disposition" label="Select Disposition" class="dynamic" 
+                        change="{!c.onChangeFunction}"/>
+    </aura:renderif>
+    <!-- Section 0 ends -->
+    <!-- Section 1 starts -->
+    <aura:renderif isTrue="{!v.showSection1}">
+        <div class="slds-grid">
+            <div class="slds-col slds-p-horizontal_medium">
+                <div class="slds-p-around_xx-small">
+                    <ui:inputSelect aura:id="videocomp" label="Video Competitor" class="dynamic"/> 
+                </div>
+                <div class="slds-p-around_xx-small">
+                    <ui:inputSelect aura:id="internetcomp" label="HSI Competitor" class="dynamic"/>
+                </div>
+                
+                <div class="slds-p-around_xx-small">
+                    <ui:inputSelect aura:id="phonecomp" label="Voice Competitor" class="dynamic"/>
+                </div>
+                
+                <div class="slds-p-around_xx-small">
+                    <ui:inputSelect aura:id="xhcomp" label="XH Competitor" class="dynamic"/>
+                </div>
+            </div>
+            
+            <div class="slds-col slds-p-horizontal_medium">
+                <div class="slds-p-around_xx-small">
+                    <ui:inputDate aura:id="vcdate" label="Video Contract End" value=""/>
+                </div>
+                <div class="slds-p-around_xx-small">
+                    <ui:inputDate aura:id="icdate" label="HSI Contract End" value=""/>
+                </div>
+                <div class="slds-p-around_xx-small">
+                    <ui:inputDate aura:id="pcdate" label="Voice Contract End" value=""/>
+                </div>
+                <div class="slds-p-around_xx-small">
+                    <ui:inputDate aura:id="xhdate" label="XH Contract End" value=""/>
+                </div>
+            </div>
+        </div>
+    </aura:renderif>
+    <!-- Section 1 Ends -->
+    
+    <!-- Section 2 starts -->
+    <aura:renderif isTrue="{!v.showSection2}">
+        <div class="slds-grid">
+            <div class="slds-col slds-p-horizontal_medium">
+                <div class="slds-p-around_xx-small">
+                    <ui:inputCheckbox aura:id="vcsold" label="Video Sold"/> 
+                </div>
+                
+                <div class="slds-p-around_xx-small">
+                    <ui:inputCheckbox aura:id="icsold" label="HSI Sold"/>  
+                </div>
+            </div>
+            <div class="slds-col slds-p-horizontal_medium">
+                <div class="slds-p-around_xx-small">
+                    <ui:inputCheckbox aura:id="pcsold" label="Voice Sold"/> 
+                </div>
+                
+                <div class="slds-p-around_xx-small">
+                    <ui:inputCheckbox aura:id="xhsold" label="XH Sold"/>  
+                </div>
+            </div>
+        </div> 
+    </aura:renderif>
+    <!-- Section 2 Ends -->
+    
+    <!-- Section 3 starts -->
+    <aura:renderif isTrue="{!v.showSection3}">
+        <div class="slds-grid">
+            <div class="slds-col slds-p-horizontal_medium">
+                <div class="slds-p-around_xx-small">
+                    <ui:inputSelect aura:id="salestype" label="Sale Type:" class="dynamic" required="true"/>
+                </div>    
+            </div>
+        </div>
+    </aura:renderif>
+    <!-- Section 3 Ends -->
+    
+    <!-- Section 4 Starts -->
+    <aura:renderif isTrue="{!v.showSection4}">
+        <div class="slds-grid">
+            <div class="slds-col slds-p-horizontal_medium">
+                <div class="slds-p-around_xx-small">
+                    <ui:inputSelect aura:id="rejectreason" label="Rejected:" class="dynamic"/> 
+                </div>
+            </div>
+        </div>
+    </aura:renderif>
+    <!-- Section 4 Ends -->
+    
+    <!-- This hidden component is a workaround for Property Event lookup field not rendering in Section 5 below. 
+  Do not delete. -->
+    <force:outputField aura:id="propertyeventdummy" value="{!v.knock.Property_Event__c}" 
+                       class="slds-hidden" />
+    <!-- end workaround -->
+    
+    <!-- Section 5 Starts -->
+    <aura:renderif isTrue="{!v.showSection5}">
+        <div class="slds-grid">
+            <div class="slds-col slds-p-horizontal_medium">
+                <div class="slds-p-around_xx-small">
+                    Event 
+                    <force:inputField aura:id="propertyevent" value="{!v.knock.Property_Event__c}" />
+                    <ui:inputText aura:id="eventname" label="Event Name or Number" class="slds-input" />
+                </div>
+            </div>
+            
+        </div> 
+    </aura:renderif>
+    <!-- Section 5 Ends -->
+    
+    <!-- Section 6 Starts -->
+    <aura:renderif isTrue="{!v.showSection6}">
+        <div class="slds-grid">
+            <div class="slds-col slds-p-horizontal_medium">
+                <div class="slds-p-around_xx-small">
+                    <ui:inputSelect aura:id="nonMarktRsn" label="Non-Marketable Reason" class="dynamic"/>                    
+                </div>    
+            </div>
+        </div>
+    </aura:renderif>
+    <!-- Section 6 Ends -->
+    
+    <!-- Section 7 Starts -->
+    <aura:renderif isTrue="{!v.showSection7}">
+        <div class="slds-grid">
+            <div class="slds-col slds-p-horizontal_medium">
+                <div class="slds-p-around_xx-small">
+                    <ui:inputTextArea label="Comments" class="slds-input" aura:id="notesId" />
+                </div>    
+            </div>
+        </div>
+    </aura:renderif>
+    <!-- Section 7 Ends -->
+    
+    <!-- Section 8 Starts -->
+    <br/>  
+    <aura:renderif isTrue="{!v.showSection8}">
+        <lightning:button variant="brand" label="Save" onclick="{!c.saveAction}" />
+    </aura:renderif>
+    <!-- Section 8 Ends -->
+    
+    <lightning:button variant="neutral" label="Cancel" onclick="{!c.cancelAction}" />
+    
+    
+</aura:component>

@@ -1,0 +1,18 @@
+Hello {!Case.Requested_By__c}
+
+Your Case {!Case.CaseNumber} has been closed. If your issue persists please let us know and submit a new case.
+
+Case Details
+
+Case #: {!Case.CaseNumber}
+Product: {!Case.Request_Type__c}
+Case Category I: {!Case.Ticket_Category__c}
+Case Category II: {!Case.Ticket_Category_II__c}
+Channel: {!Case.Channel__c} 
+Description: {!Case.Description}
+
+Resolution Comments: {!Case.Resolution_Notes__c}
+
+Thank You
+
+SFA Project Team

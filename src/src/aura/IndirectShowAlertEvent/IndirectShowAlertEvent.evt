@@ -1,0 +1,6 @@
+<aura:event type="APPLICATION" description="Event template">
+ <aura:attribute name="endVisit" type="boolean" default="false"/>    
+ <aura:attribute name="endPreviousStore" type="boolean" default="false"/>   
+   
+    
+</aura:event>

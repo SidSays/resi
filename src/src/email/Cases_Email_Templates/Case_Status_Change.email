@@ -1,0 +1,14 @@
+Hello {!Case.Requested_By__c} 
+
+Your Case {!Case.CaseNumber} submitted has been updated. 
+
+Case Details 
+
+Case #: {!Case.CaseNumber} 
+Status : {!Case.Status} 
+Description: {!Case.Description} 
+Case Link: {!Case.Link} 
+
+Thank You 
+
+SFA Project Team

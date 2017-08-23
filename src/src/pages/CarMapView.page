@@ -1,0 +1,598 @@
+<apex:page showQuickActionVfHeader="false" controller="CarMapViewController" sidebar="false" docType="html-5.0" >
+ <script src="{!URLFOR($Resource.communitiesBootstrapJquery,'communities/jquery1.11.3.js')}"></script>
+         <script src="{!URLFOR($Resource.communitiesBootstrapJquery,'communities/bootstrap.3.1.1.js')}"></script>
+       <link rel="stylesheet" href="{!URLFOR($Resource.communitiesBootstrapJquery,'communities/bootstrap.3.3.5.css')}"></link>
+   <link rel="stylesheet" href="{!URLFOR($Resource.communitiesBootstrapJquery,'communities/1.11.4_themes_smoothness_jquery-ui.css')}"></link>
+ <script src="{!URLFOR($Resource.communitiesBootstrapJquery,'communities/1.11.4_jquery-ui.js')}"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<apex:includeScript value="{!$Resource.mapiconmaker1}" />
+  <style>
+    .modal-dialog{
+     margin-top: 30%;
+    }
+</style>
+<script type="text/javascript">
+      $(function() {           
+        $( "#toDate" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      numberOfMonths: 1
+         });
+          $( "#tooDate" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      numberOfMonths: 1,
+            minDate: -90,
+            maxDate: 0,
+              onClose: function( selectedDate ) {
+                  var n=new Date(selectedDate);
+                  n.setDate(n.getDate() + {!$Label.Number_of_days_for_CAR_activity_identification} -1);
+        $( "#endDate" ).datepicker( "option", "minDate", selectedDate );
+                  // document.getElementById('endDate').value='';
+                   var input = $('#endDate');
+                      input.trigger('input');
+                  if(new Date()<n)
+                  $( "#endDate" ).datepicker( "option", "maxDate", new Date() );
+                  else
+                      $( "#endDate" ).datepicker( "option", "maxDate", n );
+                   input.trigger('input');
+                          
+      }
+         });
+          $( "#endDate" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      numberOfMonths: 1
+         });
+       });
+
+var app = angular.module('PropertyVisitMapviewApp', []);
+          app.controller('PropertyVisitMapviewController', 
+           function($scope) {
+            $scope.initializeData = function(){
+             $("#processing").modal({backdrop: "static"});
+             $scope.processing=true;
+             $scope.dist={!$Label.Property_Visit_Distance};
+             $scope.reps=[];
+             $scope.rep1=[];
+             $scope.rep2=[];
+             $scope.parent = {checkOut:''};
+             $scope.visit=[];
+             $scope.location=[];
+             $scope.markers=[];
+             $scope.infowindows=[];
+             $scope.showData=false;
+             $scope.error='';
+             $scope.types=[{name: 'Last reported location today'},{name: 'CAR Activity locations'},{name: 'Daily location history'}];
+             $scope.type = $scope.types[0];
+             $scope.type1=$scope.types[0];
+             $scope.changeButton=true;
+             $scope.showDetails = false;
+             $scope.iconOptions = {};
+             $scope.iconOptions.primaryColor = "#FF6666";
+             $scope.iconOptions.labelColor = "#FDFAFA";
+             $scope.iconOptions.labelSize = -2;
+             $scope.iconOptionsStar = {};
+             $scope.iconOptionsStar.primaryColor = "#FF6666";
+             $scope.iconOptionsStar.labelColor = "#FDFAFA";
+             $scope.iconOptionsStar.labelSize = -2;
+             $scope.iconOptionsStar.addStar= true;
+             $scope.iconOptionspropVisit = {};
+             $scope.iconOptionspropVisit.primaryColor = "#f2e911";
+             $scope.iconOptionspropVisit.strokeColor = "#000000";
+             $scope.iconOptionspropVisit.labelColor = "#151514";
+             $scope.iconOptionspropVisit.labelSize = -6;
+             $scope.ShowCAR2=true;
+             $scope.checkProfileflag=false;
+             
+             Visualforce.remoting.Manager.invokeAction(
+               'CarMapViewController.checkProfile',
+               function(result, event){
+                 if (event.status) {
+                    $scope.$apply(function (){
+                    if(result.length>0){
+                
+                        if(result[0]==true){
+                            $scope.checkProfileflag=true;
+                        }
+                        
+                     }
+                    //close of apply    
+                    });
+                  }
+                 }, 
+                 {escape: true}
+            );
+             
+             
+             Visualforce.remoting.Manager.invokeAction(
+               'CarMapViewController.userData',
+               function(result, event){
+                 if (event.status) {
+                    $scope.$apply(function (){
+                    if(!$scope.checkProfileflag){
+                        if(result.length>0){
+                          for(var i=0;i<result.length;i++){
+                             $scope.reps.push({id: result[i].Id, name: result[i].Name});
+                             }
+                             $scope.CAR = $scope.reps[0];
+                             $scope.processing=false;
+                             $("#processing").modal("hide");
+                             $("#inputForm").modal({backdrop: "static"});
+                         } else{
+                          $scope.error=" You don't have CARs under you...!!!"; 
+                          $scope.changeButton=false;
+                          $scope.processing=false;
+                          $("#processing").modal("hide");
+                         }
+                        //close of apply
+                      }         
+                    });
+                  }
+                 }, 
+                 {escape: true}
+                 );
+                 
+            
+               
+               
+                Visualforce.remoting.Manager.invokeAction(
+                'CarMapViewController.userDet',
+                function(result, event){
+                 if (event.status) {
+                    $scope.$apply(function (){
+                    if($scope.checkProfileflag){
+                        if(result.length>0){
+                          for(var i=0;i<result.length;i++){
+                             $scope.rep1.push({id: result[i].Id, name: result[i].Name});
+                             }
+                             $scope.CAR1 = $scope.rep1[0];
+                             $scope.carData($scope.CAR1);
+                             $scope.processing=false;
+                             $("#processing").modal("hide");
+                             $("#inputForm").modal({backdrop: "static"});
+                         } else{
+                          $scope.error=" You don't have CARs under you...!!!";
+                          $scope.changeButton=false;
+                          $scope.processing=false;
+                          $("#processing").modal("hide");
+                          $("#inputForm").modal("hide");
+                          $("#error").modal({backdrop: "static"});
+                         }
+                    }    
+                    //close of apply    
+                    });
+                  }
+                 }, 
+                 {escape: true}
+                 );
+               };   
+               $scope.updateEndDate= function(){
+               $scope.endDate='';
+               };
+              //end of initialize function
+              $scope.fetch = function(){
+                  var re = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
+                  $scope.type1=$scope.type;
+                 if($scope.type.name=='CAR Activity locations' && $scope.endDate!= undefined && $scope.date!= undefined && $scope.endDate.match(re) && $scope.date.match(re)){
+                     $scope.dateDiff=((new Date((new Date()).setFullYear(($scope.endDate).substring(6,10),(($scope.endDate).substring(0,2)-1),($scope.endDate).substring(3,5)))-(new Date((new Date()).setFullYear(($scope.date).substring(6,10),(($scope.date).substring(0,2)-1),($scope.date).substring(3,5)))))/86400000);
+                 }
+                  document.getElementById("googleMap1").innerHTML=" ";
+                  
+                  if($scope.type.name!='Last reported location today' && ($scope.date== undefined || !$scope.date.match(re))){
+                   $scope.error="Please select the complete Date in Date Fields.";
+                   $("#inputForm").modal("hide");
+                   $("#error").modal({backdrop: "static"});
+                  }else if($scope.type.name=='CAR Activity locations' && ($scope.endDate== undefined || $scope.date== undefined || !$scope.endDate.match(re) || !$scope.date.match(re))){
+                   $scope.error="Please select the complete Date in Date Fields.";
+                     $("#inputForm").modal("hide");
+                     $("#error").modal({backdrop: "static"});
+                      
+                  }else if($scope.type.name=='CAR Activity locations' && ($scope.dateDiff>{!$Label.Number_of_days_for_CAR_activity_identification} ||$scope.dateDiff<0)){
+                   $scope.error="Please select the date within last "+{!$Label.Number_of_days_for_CAR_activity_identification}+" days of the activity.";
+                   $("#inputForm").modal("hide");
+                   $("#error").modal({backdrop: "static"});
+                  }else{
+                       $("#inputForm").modal("hide");
+                       $("#processing").modal({backdrop: "static"});
+                       //Last reported location today
+                       if($scope.type.name=='Last reported location today'){
+                          if($scope.checkProfileflag){
+                            $scope.CAR = angular.copy($scope.CAR2);
+                          } 
+                          Visualforce.remoting.Manager.invokeAction(
+                          'CarMapViewController.locationData',$scope.CAR.id,
+                          function(result, event){
+                          if (event.status) {
+                             $scope.$apply(function (){
+                             if(result.length>0){
+                               $scope.location.splice(0,$scope.location.length);
+                               for(var i=0;i<result.length;i++){
+                                  $scope.location.push({id: result[i].Id, time: result[i].Timestamp__c,dateTime:result[i].Geocode_TimeStamp__c, latitude: result[i].Latitude__c, longitude: result[i].Longitude__c});
+                                  $scope.center=new google.maps.LatLng(result[i].Latitude__c,result[i].Longitude__c);
+                                  $scope.mapProp = {center:$scope.center, zoom:18, mapTypeId:google.maps.MapTypeId.ROADMAP};
+                                  $scope.map=new google.maps.Map(document.getElementById("googleMap1"),$scope.mapProp);
+                                  $scope.marker=new google.maps.Marker({position:$scope.center,});
+                                  $scope.marker.setMap($scope.map);
+                                  $scope.infowindow = new google.maps.InfoWindow({content:$scope.CAR.name+"<br/><a href='#' onclick=\"javascript:window.open(\'http:\/\/maps.google.com\/?q="+result[i].Latitude__c+","+result[i].Longitude__c+"\')\">"+result[i].Latitude__c+","+result[i].Longitude__c+"</a><br/>"+ (result[i].Geocode_TimeStamp__c).substring(5,7)+"/"+(result[i].Geocode_TimeStamp__c).substring(8,10)+"/"+(result[i].Geocode_TimeStamp__c).substring(0,4)+" "+result[i].Timestamp__c});
+                                  google.maps.event.addListener($scope.marker,'click',function(i) {
+                                   $scope.infowindow.open($scope.map,$scope.marker);  
+                                  });
+                                } 
+                                $scope.showData=true;
+                                $("#processing").modal("hide");
+                             } else{
+                                   $scope.showData=false;
+                                   $scope.error="  There is no location data for this CAR...!!!";
+                                   $("#processing").modal("hide");
+                                   $("#error").modal({backdrop: "static"});
+                             }
+                          });
+                        }
+                     }, 
+                    {escape: true}
+                );
+              }
+                          
+              if($scope.type.name=='Daily location history'){
+                 if($scope.checkProfileflag){
+                    $scope.CAR = angular.copy($scope.CAR2);
+                 }
+                Visualforce.remoting.Manager.invokeAction(
+                'CarMapViewController.locationData1',$scope.CAR.id,$scope.date,
+                function(result, event){
+                if (event.status) {
+                   $scope.$apply(function (){
+                   if(result.length>0){
+                     $scope.location.splice(0,$scope.location.length);
+                     $scope.markers.splice(0,$scope.markers.length);
+                     $scope.infowindows.splice(0,$scope.infowindows.length);
+                     $scope.center=new google.maps.LatLng(result[0].Latitude__c,result[0].Longitude__c);
+                     $scope.mapProp = {center:$scope.center, zoom:5, mapTypeId:google.maps.MapTypeId.ROADMAP};
+                     $scope.map=new google.maps.Map(document.getElementById("googleMap1"),$scope.mapProp);
+                     $scope.bounds = new google.maps.LatLngBounds();
+                     for(var i=0;i<result.length;i++){
+                        $scope.firstDatapoint=(result[0].Geocode_TimeStamp__c).substring(5,7)+"/"+(result[0].Geocode_TimeStamp__c).substring(8,10)+"/"+(result[0].Geocode_TimeStamp__c).substring(0,4)+"  "+result[0].Timestamp__c+"  "+result[0].Latitude__c+","+result[0].Longitude__c;
+                        $scope.LastDatapoint=(result[result.length-1].Geocode_TimeStamp__c).substring(5,7)+"/"+(result[result.length-1].Geocode_TimeStamp__c).substring(8,10)+"/"+(result[result.length-1].Geocode_TimeStamp__c).substring(0,4)+"  "+result[result.length-1].Timestamp__c+"  "+result[result.length-1].Latitude__c+","+result[result.length-1].Longitude__c;
+                        $scope.iconOptions.label = i+1;
+                        $scope.newIcon = MapIconMaker.createLabeledMarkerIcon($scope.iconOptions);
+                        $scope.center=new google.maps.LatLng(result[i].Latitude__c,result[i].Longitude__c);
+                        $scope.bounds.extend(new google.maps.LatLng(result[i].Latitude__c,result[i].Longitude__c));
+                        $scope.location.push({id: result[i].Id, time: result[i].Timestamp__c ,dateTime:result[i].Geocode_TimeStamp__c, latitude: result[i].Latitude__c, longitude: result[i].Longitude__c});
+                        $scope.marker=new google.maps.Marker({position:$scope.center,icon: $scope.newIcon.icon});
+                        $scope.infowindow = new google.maps.InfoWindow({content:$scope.CAR.name+"<br/><a href='#' onclick=\"javascript:window.open(\'http:\/\/maps.google.com\/?q="+result[i].Latitude__c+","+result[i].Longitude__c+"\')\">"+result[i].Latitude__c+","+result[i].Longitude__c+"</a><br/>"+(result[i].Geocode_TimeStamp__c).substring(5,7)+"/"+(result[i].Geocode_TimeStamp__c).substring(8,10)+"/"+(result[i].Geocode_TimeStamp__c).substring(0,4)+" "+result[i].Timestamp__c});
+                        $scope.markers.push($scope.marker);
+                        $scope.infowindows.push($scope.infowindow);
+                        $scope.marker.setMap($scope.map);
+                        google.maps.event.addListener($scope.marker,'click',(function(i) {
+                          return function() {
+                          $scope.infowindows[i].open($scope.map,$scope.markers[i]);  
+                          }
+                         })(i));
+                     }
+                     $scope.map.fitBounds($scope.bounds);
+                     $scope.map.setCenter($scope.bounds.getCenter());$scope.showData=true;
+                     $("#processing").modal("hide");
+                   } else{
+                     $scope.showData=false;
+                     $scope.error="  There is no location data for this CAR...!!!";
+                     $("#processing").modal("hide");
+                     $("#error").modal({backdrop: "static"});
+               }
+              });
+             }else if (event.type === 'exception') {
+                      $("#processing").modal("hide");
+                      alert(event.message + "....." + event.where);
+                } else {
+                  $("#processing").modal("hide");
+                  alert(event.message);
+                  }
+                     }, 
+                    {escape: true}
+                );
+             }
+             if($scope.type.name=='CAR Activity locations'){
+                 if($scope.checkProfileflag){
+                    $scope.CAR = angular.copy($scope.CAR2);
+                 }
+                Visualforce.remoting.Manager.invokeAction(
+                  'CarMapViewController.propVisitData',$scope.CAR.id,$scope.date,$scope.endDate,
+                    function(result, event){
+                        if (event.status) {
+                            $scope.$apply(function (){
+                                     if(result.propVisit.length>0){
+                                     $scope.markers.splice(0,$scope.markers.length);
+                                     $scope.infowindows.splice(0,$scope.infowindows.length);
+                                     $scope.center=new google.maps.LatLng(result.propVisit[0].Visit_Location__Latitude__s,result.propVisit[0].Visit_Location__Longitude__s);
+                                     $scope.mapProp = {center:$scope.center, zoom:5, mapTypeId:google.maps.MapTypeId.ROADMAP};
+                                     $scope.map=new google.maps.Map(document.getElementById("googleMap1"),$scope.mapProp);
+                                     $scope.bounds = new google.maps.LatLngBounds();
+                                     $scope.propIcon = MapIconMaker.createLabeledMarkerIcon($scope.iconOptions);
+                                     $scope.propVisitIcon = MapIconMaker.createLabeledMarkerIcon($scope.iconOptionspropVisit);
+                                     $scope.visit.splice(0,$scope.visit.length);
+                                     $scope.visit.push("<tr><th>S No.</th><th>Start Date</th><th>Start Time</th><th>End Time</th><th>Latitude/Longitude</th><th>Time Spent(mm:ss)</th></tr>");
+                                     if((new Date(result.propVisit[0].Start_Date_Time__c)).getHours()>12){
+                                           $scope.firstDatapoint=((new Date(result.propVisit[0].Start_Date_Time__c)).getMonth())+1+"/"+(new Date(result.propVisit[0].Start_Date_Time__c)).getDate()+"/"+(new Date(result.propVisit[0].Start_Date_Time__c)).getFullYear()+"  "+("0"+(((new Date(result.propVisit[0].Start_Date_Time__c)).getHours())-12)).slice(-2)+":"+("0"+(new Date(result.propVisit[0].Start_Date_Time__c)).getMinutes()).slice(-2)+" PM "+result.propVisit[0].Visit_Location__Latitude__s+","+result.propVisit[0].Visit_Location__Longitude__s;
+                                     }else{
+                                          $scope.firstDatapoint=((new Date(result.propVisit[0].Start_Date_Time__c)).getMonth())+1+"/"+(new Date(result.propVisit[0].Start_Date_Time__c)).getDate()+"/"+(new Date(result.propVisit[0].Start_Date_Time__c)).getFullYear()+"  "+("0"+(new Date(result.propVisit[0].Start_Date_Time__c)).getHours()).slice(-2)+":"+("0"+(new Date(result.propVisit[0].Start_Date_Time__c)).getMinutes()).slice(-2)+" AM "+result.propVisit[0].Visit_Location__Latitude__s+","+result.propVisit[0].Visit_Location__Longitude__s;
+                                     }
+                                     if((new Date(result.propVisit[result.propVisit.length-1].Start_Date_Time__c)).getHours()>12){
+                                         $scope.LastDatapoint=((new Date(result.propVisit[result.propVisit.length-1].Start_Date_Time__c)).getMonth())+1+"/"+(new Date(result.propVisit[result.propVisit.length-1].Start_Date_Time__c)).getDate()+"/"+(new Date(result.propVisit[result.propVisit.length-1].Start_Date_Time__c)).getFullYear()+"  "+("0"+(((new Date(result.propVisit[result.propVisit.length-1].Start_Date_Time__c)).getHours())-12)).slice(-2)+":"+("0"+(new Date(result.propVisit[result.propVisit.length-1].Start_Date_Time__c)).getMinutes()).slice(-2)+" PM "+result.propVisit[result.propVisit.length-1].Visit_Location__Latitude__s+","+result.propVisit[result.propVisit.length-1].Visit_Location__Longitude__s;
+                                     }else{
+                                          $scope.LastDatapoint=((new Date(result.propVisit[result.propVisit.length-1].Start_Date_Time__c)).getMonth())+1+"/"+(new Date(result.propVisit[result.propVisit.length-1].Start_Date_Time__c)).getDate()+"/"+(new Date(result.propVisit[result.propVisit.length-1].Start_Date_Time__c)).getFullYear()+"  "+("0"+(new Date(result.propVisit[result.propVisit.length-1].Start_Date_Time__c)).getHours()).slice(-2)+":"+("0"+(new Date(result.propVisit[result.propVisit.length-1].Start_Date_Time__c)).getMinutes()).slice(-2)+" AM "+result.propVisit[result.propVisit.length-1].Visit_Location__Latitude__s+","+result.propVisit[result.propVisit.length-1].Visit_Location__Longitude__s;
+                                     }
+                                     $scope.mrk=0;
+                                     for(var i=0;i<result.property.length;i++){
+                                     $scope.propVisitTable="";
+                                     $scope.count=1;
+                                     $scope.star=false;
+                                     for(var j=0;j<result.propVisit.length;j++){
+                                         if(result.propVisit[j].Property__c==result.property[i].Id){
+                                             if((new Date(result.propVisit[j].Start_Date_Time__c)).getHours()>12){
+                                                  $scope.startTime=("0"+(((new Date(result.propVisit[j].Start_Date_Time__c)).getHours())-12)).slice(-2)+":"+("0"+(new Date(result.propVisit[j].Start_Date_Time__c)).getMinutes()).slice(-2)+" PM ";
+                                             }else{
+                                                  $scope.startTime=("0"+(new Date(result.propVisit[j].Start_Date_Time__c)).getHours()).slice(-2)+":"+("0"+(new Date(result.propVisit[j].Start_Date_Time__c)).getMinutes()).slice(-2)+" AM ";
+                                             }
+                                             if((new Date(result.propVisit[j].End_Date_Time__c)).getHours()>12){
+                                               $scope.endTime=("0"+(((new Date(result.propVisit[j].End_Date_Time__c)).getHours())-12)).slice(-2)+":"+("0"+(new Date(result.propVisit[j].End_Date_Time__c)).getMinutes()).slice(-2)+" PM ";
+                                             }else{
+                                                  $scope.endTime=("0"+((new Date(result.propVisit[j].End_Date_Time__c)).getHours())).slice(-2)+":"+("0"+(new Date(result.propVisit[j].End_Date_Time__c)).getMinutes()).slice(-2)+" AM ";
+                                             }
+                                             if(result.propVisit[j].Visit_Location__Latitude__s==undefined)
+                                                  lat=0;
+                                             else
+                                                 lat=result.propVisit[j].Visit_Location__Latitude__s;
+                                             if(result.propVisit[j].Visit_Location__Longitude__s==undefined)
+                                                  long=0;
+                                             else
+                                                 long=result.propVisit[j].Visit_Location__Longitude__s;
+                                             $scope.propVisitTable=$scope.propVisitTable+"<tr><td>"+(i+1)+"."+$scope.count+"</td><td>"+((new Date(result.propVisit[j].Start_Date_Time__c)).getMonth()+1)+"/"+(new Date(result.propVisit[j].Start_Date_Time__c)).getDate()+"/"+(new Date(result.propVisit[j].Start_Date_Time__c)).getFullYear()+"</td><td>"+$scope.startTime+"</td><td>"+$scope.endTime+"</td><td>"+lat+"/"+long+"</td><td>"+result.propVisit[j].Time_Spent__c+"</td></tr>";
+                                             if(result.propVisit[j].Distance_from_poperty__c>$scope.dist)
+                                             {
+                                                 $scope.iconOptionspropVisit.label = (i+1)+"."+$scope.count;
+                                                 $scope.newIcon = MapIconMaker.createLabeledMarkerIcon($scope.iconOptionspropVisit);
+                                                 $scope.center=new google.maps.LatLng(result.propVisit[j].Visit_Location__Latitude__s,result.propVisit[j].Visit_Location__Longitude__s);
+                                                 $scope.bounds.extend($scope.center);
+                                                 $scope.marker=new google.maps.Marker({position:$scope.center,icon: $scope.newIcon.icon});
+                                                 $scope.infowindow = new google.maps.InfoWindow({content:"<b>Property Name: </b><a href='#' onclick=\"javascript:window.open(\'\/"+result.property[i].Id+"\')\">"+result.property[i].Name+"<\/a><br/><b>Start Time: </b>"+$scope.startTime+"<br/><b>End Time: &nbsp;&nbsp;</b>"+$scope.endTime+"<br/><b>Time Spent: </b>"+result.propVisit[j].Time_Spent__c+"(mm:ss)"});
+                                                 $scope.marker.setMap($scope.map);
+                                                 google.maps.event.addListener($scope.marker,'click',(function(j) {
+                                                    return function() {
+                                                    $scope.infowindows[j].open($scope.map,$scope.markers[j]);  
+                                                    }
+                                                 })($scope.mrk));
+                                                 $scope.markers.push($scope.marker);
+                                                 $scope.infowindows.push($scope.infowindow);
+                                                 $scope.mrk++;
+                                             }else{
+                                              $scope.star=true;
+                                             }
+                                             $scope.count++;
+                                         }
+                                     }
+                                     if($scope.star){
+                                        $scope.iconOptionsStar.label = (i+1);    
+                                        $scope.newIcon = MapIconMaker.createLabeledMarkerIcon($scope.iconOptionsStar);
+                                     }else{
+                                         $scope.iconOptions.label = (i+1);
+                                         $scope.newIcon = MapIconMaker.createLabeledMarkerIcon($scope.iconOptions);
+                                     }
+                                     $scope.center=new google.maps.LatLng(result.property[i].Property_Location__Latitude__s,result.property[i].Property_Location__Longitude__s);
+                                     $scope.bounds.extend($scope.center);
+                                     $scope.marker=new google.maps.Marker({position:$scope.center,icon: $scope.newIcon.icon});
+                                     $scope.infowindow = new google.maps.InfoWindow({content:"<b>Property Name: </b><a href='#' onclick=\"javascript:window.open(\'\/"+result.property[i].Id+"\')\">"+result.property[i].Name+"<\/a>"});
+                                     $scope.markers.push($scope.marker);
+                                     $scope.infowindows.push($scope.infowindow);
+                                     $scope.marker.setMap($scope.map);
+                                     google.maps.event.addListener($scope.marker,'click',(function(j) {
+                                       return function() {
+                                       $scope.infowindows[j].open($scope.map,$scope.markers[j]);  
+                                       }
+                                     })($scope.mrk));
+                                     $scope.mrk++;
+                                     $scope.visit.push("<tr style='background-color:#306fa9;'><th style='color:white;'>"+(i+1)+"</th><th style='color:white;' colspan='3'>Property Name: <a href='#' style='color:white;' onclick=\"javascript:window.open(\'\/"+result.property[i].Id+"\')\">"+result.property[i].Name+"</a></th><th style='color:white;' colspan='2'></th></tr>");            
+                                     $scope.visit.push($scope.propVisitTable);
+                                 }
+                                 document.getElementById("carActivity").innerHTML=" ";
+                                 document.getElementById("carActivity").innerHTML=$scope.visit.join("");
+                                 $scope.map.fitBounds($scope.bounds);
+                                 $scope.map.setCenter($scope.bounds.getCenter());
+                                 $scope.showData=true;
+                                 $("#processing").modal("hide");  
+                                } else{
+                                     $scope.showData=false;
+                                     $scope.error="  There is no location data for this CAR...!!!";
+                                     $("#processing").modal("hide");
+                                     $("#error").modal({backdrop: "static"});
+                                  }
+                            });
+                        }else if (event.type === 'exception') {
+                            $("#processing").modal("hide");
+                    alert(event.message + "....." + event.where);
+                } else {
+                            $("#processing").modal("hide");
+                  alert(event.message);
+                  }
+                     }, 
+                    {escape: true}
+                );
+                        
+                        }
+                      }
+                  };
+              
+               $scope.backToFetch = function(){
+                  $("#error").modal("hide");
+                   if($scope.changeButton){
+                  $("#inputForm").modal({backdrop: "static"});}
+                 };
+                 
+        $scope.carData = function(mgrId){
+        $scope.rep2 = [];
+        $scope.repflag = false;
+        
+        Visualforce.remoting.Manager.invokeAction(
+            'CarMapViewController.mgrData',
+            mgrId.id,
+            function(result, event){
+                if (event.status) {
+                    $scope.$apply(function(){
+                        if(result.length>0){
+                         for(var i=0;i<result.length;i++){
+                            $scope.rep2.push({id: result[i].Id, name: result[i].Name});
+                         }
+                         $scope.CAR2 = $scope.rep2[0];
+                         $scope.showData = true;
+                         $scope.ShowCAR2=true;
+                         $scope.showDetails = false;
+                        }
+                        else {
+                            $scope.error=" You don't have CARs under you...!!!";
+                            console.log('Inside');
+                            $scope.changeButton=true;
+                            $scope.showData=false;
+                           <!-- $scope.ShowCAR2=false;-->
+                            $scope.processing=false;
+                            $scope.showDetails = true;
+                            document.getElementById("googleMap1").innerHTML=" ";
+                            $("#processing").modal("hide");
+                            $("#inputForm").modal("show");
+                          <!--  $("#error").modal({backdrop: "static"});-->
+                        }
+                        if($scope.rep2.length==0){
+                                    $scope.repflag = true;
+                        }
+                    }); 
+                    }else{
+                    $scope.$apply(function () {
+                        $scope.errorMsg=event.message;
+                    });
+                }
+                
+            }, 
+            {escape: true}
+        );
+};
+              
+              //end of controller    
+          });
+              
+               
+    </script>
+
+<div ng-app="PropertyVisitMapviewApp" ng-controller="PropertyVisitMapviewController" ng-init="initializeData()" height="100%" width="100%">
+    <!-- processing modal -->
+    <div class="container">
+      <div class="modal fade" id="processing" role="dialog">
+           <div class="modal-dialog" align="center">
+         <img src="{!URLFOR($Resource.walkalong,'img/ajax-loader.gif')}" height="50px" width="50px" alt="Processing"/><b style="color:white; font-size:150%;">Processing...</b>
+            </div></div>
+    </div>  
+    <!-- error modal -->
+    <div class="container">
+        <div class="modal fade" id="error" role="dialog">
+           <div class="modal-dialog" align="center">
+               <div class="modal-content">
+                    <div class="modal-body">
+                {{error}}
+                        <br/>
+             <button align="center" type="button" class="btn" ng-click="backToFetch()">OK</button>
+            
+                   </div> 
+             
+               </div>
+           </div>
+        </div>
+</div>
+     <!-- input form -->
+    <div class="container">
+        <div class="modal fade" id="inputForm" role="dialog">
+           <div class="modal-dialog" align="center">
+               <div class="modal-content">
+                   <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Start Over</h4>
+            </div>
+                    <div class="modal-body">
+          <table align="center" width="100%">
+      
+   
+   <tr ng-hide="checkProfileflag"><th align="right" class="labelCol vfLabelColTextWrap " width="30%"><label for="CARSelect">Select CAR </label></th><td class="dataCol"  width="70%"><div class="col-sm-6">               
+   <select name="CARSelect" id="CARSelect" ng-model="CAR" ng-options="option.name for option in reps track by option.name">     
+   </select></div></td></tr>
+   
+   <tr ng-show="checkProfileflag"><th align="right" class="labelCol vfLabelColTextWrap " width="30%"><label for="CARSelect">Select CAR Manager </label></th><td class="dataCol"  width="70%"><div class="col-sm-6"> 
+   <select name="CARSelect" id="CARSelect" ng-change="carData(CAR1)" ng-model="CAR1" ng-options="option.name for option in rep1 track by option.name">
+   </select></div></td></tr>
+  
+   
+   <tr ng-hide="ShowCAR2"><th align="right" class="labelCol vfLabelColTextWrap " width="30%"><label for="CARSelect">Select CAR </label></th><td class="dataCol"  width="70%"><div class="col-sm-6"> 
+   <select name="CARSelect" id="CARSelect" ng-model="CAR" ng-options="option.name for option in reps track by option.name">
+   </select></div></td></tr>
+   
+   <tr ng-if ="repflag == true"><th align="right" class="labelCol vfLabelColTextWrap " width="30%"><label for="CARSelect">Select CAR </label></th><td class="dataCol"  width="70%"><div class="col-sm-6"> 
+    <select name="CARSelect" id="CARSelect" ng-model="CAR2" ng-options="option.name for option in rep2 track by option.name">
+   </select>No CAR available</div></td></tr>
+   
+   <tr ng-if ="repflag == false"><th align="right" class="labelCol vfLabelColTextWrap " width="30%"><label for="CARSelect">Select CAR </label></th><td class="dataCol"  width="70%"><div class="col-sm-6"> 
+    <select name="CARSelect" id="CARSelect" ng-model="CAR2" ng-options="option.name for option in rep2 track by option.name">
+   </select></div></td></tr>
+      
+              <tr ><th align="right" class="labelCol vfLabelColTextWrap " width="30%"><label for="type">View Type</label></th><td class="dataCol"  width="70%"><div class="col-sm-6"> 
+   <select name="typeSelect" id="typeSelect" ng-model="type" ng-options="option.name for option in types track by option.name">
+   </select></div></td></tr>
+            <tr ng-show="type.name!='Last reported location today'"><th align="right" class="labelCol vfLabelColTextWrap " width="30%"><label for="toDate">From Date </label></th><td class="dataCol"  width="70%"><div class="col-sm-6"> <input ng-show="type.name!='CAR Activity locations'"  type="text" id="toDate" ng-model="date" class="form-control input-sm"/><input ng-show="type.name=='CAR Activity locations'" type="text" id="tooDate" ng-model="date" ng-change="updateEndDate()" class="form-control input-sm"/>
+</div>(mm/dd/yyyy)</td></tr>
+              <tr ng-show="type.name=='CAR Activity locations'"><th align="right" class="labelCol vfLabelColTextWrap " width="30%"><label for="toDate">To Date </label></th><td class="dataCol"  width="70%"><div class="col-sm-6"><input ng-show="type.name!='CAR Activity locations'"  type="text" id="toDate" ng-model="date" class="form-control input-sm"/><input ng-show="type.name=='CAR Activity locations'" type="text" id="endDate" ng-model="endDate" class="form-control input-sm"/> 
+</div>(mm/dd/yyyy)</td></tr>
+              <tr ><td colspan="2" align="center"><br/><input type="button" ng-disabled="showDetails" class="btn" ng-click="fetch()" value="Show Details" align="center" id="search"/></td></tr>
+             </table>
+                   </div> 
+               </div>
+           </div>
+        </div>
+</div>
+    <div class="container ng-cloak" ng-hide="processing" >
+  <div class="col-sm-12">
+      <div class="col-sm-12" align="center" ng-hide="changeButton">
+         <b> ERROR:  {{error}}</b>
+      </div>
+      <div class="col-sm-3" ng-show="changeButton"><b>
+   Selected CAR: {{CAR.name}}  </b>    
+      </div>
+      <div ng-class="{'col-sm-3':type1.name!='Last reported location today', 'col-sm-4':type1.name=='Last reported location today'}" ng-show="changeButton"><b>
+   View Type: {{type1.name}}      </b>
+      </div>
+      <div class="col-sm-3" ng-show="type1.name!='Last reported location today' && changeButton">
+ <b>  Date: {{date}}<span ng-show="type1.name=='CAR Activity locations' && dateDiff!=0">To {{endDate}}</span></b>      
+      </div>
+     
+      <div class="col-sm-3">
+          <button class="btn" ng-click="backToFetch()" ng-show="changeButton">
+              Change Filter
+          </button>
+      </div>
+        </div>
+    </div><br/>
+    
+    <div class="container" >
+      <div id="googleMap1" class="col-sm-12"  style="height:450px;" ></div>
+        <div class="col-sm-12 well well-sm" ng-show="type1.name!='Last reported location today' && showData"><div class="col-sm-6" > <b>First Datapoint:</b>{{firstDatapoint}}<br/><b>Last Datapoint:</b>{{LastDatapoint}}</div><div class="col-sm-6" align="right"><b ng-show="type1.name!='CAR Activity locations'"><apex:image url="http://chart.apis.google.com/chart?cht=mm&chs=23x23&chco=FFFFFF,FF6666,000000&ext=.png"></apex:image>Location History</b><b ng-show="type1.name=='CAR Activity locations'"><apex:image url="http://chart.apis.google.com/chart?cht=d&chdp=mapsapi&chl=pin_star%27i\%27[%27-2%27f\hv%27a\]h\]o\FF6666%27fC\000000%27tC\000000%27eC\ffff00%271C\0000ff%270C\Lauto%27f\&ext=.png" height="25px" width="18px"></apex:image>Property with visit &nbsp; <apex:image url="http://chart.apis.google.com/chart?cht=mm&chs=23x23&chco=FFFFFF,f2e911,000000&ext=.png"></apex:image>Property Visit &nbsp;<apex:image url="http://chart.apis.google.com/chart?cht=mm&chs=23x23&chco=FFFFFF,FF6666,000000&ext=.png"></apex:image>Property</b></div></div>
+      <table class="table table-striped" ng-show="(type1.name=='Last reported location today' || type1.name=='Daily location history') && showData">
+          <tr><th ng-if="type1.name!='Last reported location today'">S No.</th>
+              <th ng-if="type1.name=='Last reported location today'">Location</th>
+              <th>Time</th><th>Latitude/Longitude</th></tr>
+<tr ng-repeat="x in location">
+    <td ng-if="type1.name=='Last reported location today'"><apex:image url="http://chart.apis.google.com/chart?cht=mm&chs=23x23&chco=FFFFFF,FF6666,000000&ext=.png"></apex:image></td>
+<td ng-if="type1.name!='Last reported location today'">{{ $index + 1 }}</td>
+<td ng-if="type1.name!='Last reported location today'">{{ x.time }}</td>
+<td ng-if="type1.name=='Last reported location today'">{{ x.time | date:'medium' }}</td>
+<td>{{ x.latitude }}/{{ x.longitude }}</td>
+</tr>
+</table> 
+    </div>
+    <table id="carActivity" class="table" ng-show="type1.name=='CAR Activity locations' && showData"></table>
+    </div>
+</apex:page>

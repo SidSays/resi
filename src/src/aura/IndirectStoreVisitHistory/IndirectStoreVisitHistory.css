@@ -1,0 +1,19 @@
+.THIS.div.panel.show {
+    max-width : 500px;
+    max-height : 500px;
+}
+
+.THIS {
+    background-color: white;
+}
+.THIS.h3 {
+    color : #ffffff;
+}
+
+.THIS .grey {
+    background-color: #A7B8D1;
+}
+
+.THIS .alignment {
+    text-align : center;
+}

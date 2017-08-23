@@ -1,0 +1,14 @@
+<aura:component implements="force:hasRecordId,force:lightningQuickAction" controller="PropertyEventCreateUpdateController">
+ 
+    <aura:attribute name="create" type="boolean" default="false"/>
+    <aura:attribute name="edit" type="boolean" default="false"/>  
+    <aura:attribute name="propertyEventId" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="onSaveSuccess" event="force:recordSaveSuccess" action="{!c.handleSaveSuccess}"/>   
+    <aura:if isTrue="{!v.edit}">
+		<div class = "slds">
+            <force:recordEdit aura:id="edit" recordId="{!v.propertyEventId}" />
+            <button class="slds-button slds-button--neutral slds-button--brand" onclick="{!c.save}">Save</button>
+		</div>
+  	</aura:if> 
+</aura:component>

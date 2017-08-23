@@ -1,0 +1,60 @@
+<aura:component implements="force:hasRecordId" controller="CoachingPayrollController">    
+    <aura:attribute name="newOneOneCoaching" type="Object" access="private"/>
+    <aura:attribute name="simpleNewOneOneCoaching" type="Object" access="private"/>
+    <aura:attribute name="newOneOneCoachingError" type="String" access="private"/>
+    <aura:attribute name="workCoachingId" type="String"/>
+    <aura:attribute name="oneOneCoachingRecords" type="one_one_Coaching__c[]"/>
+    <aura:attribute name="userDetails" type="User"/>
+   	<aura:attribute name="isRep" type="Boolean"/>
+    
+    <force:recordData aura:id="OneOneCoachingRecordCreator"
+        layoutType="FULL"
+        fields="Name"              
+        targetRecord="{!v.newOneOneCoaching}"
+        targetFields="{!v.simpleNewOneOneCoaching}"
+        targetError="{!v.newOneOneCoachingError}"
+    />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="c:OneOneCoachingDetailsEvent" action="{!c.gettingAllCoachingRecords}"/>
+    
+	<div class="slds-page-header" role="banner">
+        <h1 class="slds-page-header__title slds-m-right--small
+            slds-truncate slds-align-left">COACH  Create 1:1 Record</h1>
+    </div>
+    <div class="slds-tile__detail slds-text-body_small slds-p-around_x-small">
+        <dl class="slds-list_horizontal slds-wrap">
+            <dt class="slds-item_label slds-text-color_weak" style="font-weight:bold">Manager:</dt>
+            <dd class="slds-item_detail slds-truncate" title="Description for first label">{!v.userDetails.Manager.Name}</dd>
+            <dt class="slds-item_label slds-text-color_weak" style="font-weight:bold">Sales Employee:</dt>
+            <dd class="slds-item_detail slds-truncate" title="Description for second label">{!v.userDetails.Name}</dd>
+        </dl>
+    </div>
+	<div class="slds-form-element slds-p-around_x-small">
+    	<ui:inputTextArea label="Strengths" class="slds-input" aura:id="strengthId" rows="1"
+                          labelClass="slds-form-element__label" value="{!v.simpleNewOneOneCoaching.Strengths__c}"/>
+    </div>
+   
+    <div class="slds-form-element slds-p-around_x-small">
+    	<ui:inputTextArea label="Development Opportunities" class="slds-input" aura:id="oppId" rows="1"
+                          labelClass="slds-form-element__label" value="{!v.simpleNewOneOneCoaching.Opportunities__c}"/>
+    </div>
+    
+    <div class="slds-form-element slds-p-around_x-small">
+    	<ui:inputTextArea label="Action Plans" class="slds-input" aura:id="actionPlanId" rows="1"
+                          labelClass="slds-form-element__label" value="{!v.simpleNewOneOneCoaching.Action_Plan__c}"/>
+    </div>
+    
+    <aura:if isTrue="{!!v.isRep}">
+        <div class="slds-form-element slds-p-around_x-small">
+            <ui:inputTextArea label="Manager Comments" class="slds-input" aura:id="commentId" rows="1"
+                              labelClass="slds-form-element__label" value="{!v.simpleNewOneOneCoaching.Manager_Comments__c}"/>
+        </div>    
+       
+    </aura:if>
+    <div>
+        <center>
+            <button class="slds-button slds-button--brand" onclick="{!c.saveOneOneCoaching}">Save</button>
+            <button class="slds-button slds-button--neutral " onclick="{!c.cancel}">Cancel</button>
+        </center>
+    </div>  
+</aura:component>

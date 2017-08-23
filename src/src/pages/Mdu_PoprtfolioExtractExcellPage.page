@@ -1,0 +1,69 @@
+<apex:page sidebar="false" contentType="application/x-excel#salesforceExcell.XLS;charset=UTF-8"  cache="true"   standardController="Account" 
+extensions="MDU_PortfolioAccountHierarchyController" showheader="false" readOnly="true">
+     <head>
+       <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+     </head>  
+  <style type="text/css">
+                    
+  </style>
+ <apex:includeScript value="{!$Resource.Jquery}"/>
+ <script type="text/javascript">                        
+ </script>
+  <apex:form >
+   <apex:pageBlock >         
+            <apex:repeat value="{!AccountData}" var="child">                                                                                                
+             <table border="0">
+                    <tr>
+                      <td colspan="9" style="background-color:#CCCCFF;">{!child.account.Name}</td>
+                    </tr>
+                    <tr style="font-weight:bold;">
+                        <td>Property Name</td>
+                        <td>Address</td>
+                        <td>City</td>
+                        <td>State</td>
+                        <td># Units</td>
+                        <td>Association</td>
+                        <td>Assigned AE</td>
+                        <td>Opportunity Stage</td>
+                        <td>Contracts</td>
+                    </tr>
+                               
+                    <apex:repeat rendered="{!IF(child.totalProperty != null, true, false)}"   value="{!child.childPropertyList}" var="gchildren">
+                       <tr> 
+                            <td>{!gchildren.property.Name}</td>
+                            <td>{!gchildren.property.Address__c}</td>
+                            <td>{!gchildren.property.City__c}</td>
+                            <td>{!gchildren.property.City__c}</td>
+                            <td>{!gchildren.property.MDU_State__c}</td>
+                            <td>{!gchildren.property.Number_of_Units__c}</td>
+                            <td>{!gchildren.association}</td>
+                            <td>{!gchildren.opptyOwner}</td>
+                            <td>{!gchildren.opptyStage}</td>
+                            <td>
+                                <apex:pageBlockTable rendered="{!IF(gchildren.contractList != null , true, false)}"   value="{!gchildren.contractList}" var="contract">                                                                                
+                                        <apex:column value="{!contract.Contract_Type__c}" /> 
+                                        <apex:column headerValue="Term" >
+                                           {!contract.Contract_Term__c} {!contract.Contract_Term_Unit__c}
+                                        </apex:column> 
+                                        <apex:column value="{!contract.Expiration_Date__c}"/>
+                                </apex:pageBlockTable>
+                            </td>            
+                       </tr>                               
+                    </apex:repeat>  
+                    <tr>
+                       <td style="font-weight:bold;" colspan="4">
+                           Properties : {!child.totalProperty}
+                       </td>
+                       <td style="font-weight:bold;" colspan="5">
+                          Total Units : {!child.totalUnits} 
+                       </td>
+                    </tr>                                       
+                    <apex:outputPanel rendered="{!IF(child.totalProperty == null, true, false)}" >                    
+                            <p style="margin:-1%;font-weight:bold;;font-size:88%;">{!$Label.NoRecordsFound} </P>                                                                   
+                    </apex:outputpanel>
+             </table>                   
+        </apex:repeat> 
+    
+   </apex:pageBlock>
+  </apex:form>     
+ </apex:page>

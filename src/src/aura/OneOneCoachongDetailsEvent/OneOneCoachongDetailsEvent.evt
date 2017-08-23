@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="Event template">    
+    <aura:attribute name="oneOneCoachingRecords" type="one_one_Coaching__c[]" />
+</aura:event>

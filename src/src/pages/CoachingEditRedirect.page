@@ -1,0 +1,5 @@
+<!--Author     : Malay Desai
+    Date       : 4/4/2017
+    Description: Redirection Page. Called from "New" button on Coaching object -->
+<apex:page standardController="WorkCoaching" Extensions="CoachingEditRedirectController" action="{!redirectBasedOnProfile}">
+</apex:page>

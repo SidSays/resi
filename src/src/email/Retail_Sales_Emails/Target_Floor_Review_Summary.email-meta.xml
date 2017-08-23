@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This template will be used in the store visit summary email</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Target Floor Review Summary</name>
+    <style>none</style>
+    <subject>Target Floor Review Summary</subject>
+    <textOnly>While reviewing floor materials, the following things were observed:
+
+Location Feedback : {!Store_Activity__c.Location_Feedback__c}
+Is display in proper working order?  : {!Store_Activity__c.Is_display_neat_clean_and_in_proper_wor__c}</textOnly>
+    <type>custom</type>
+</EmailTemplate>

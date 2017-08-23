@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This template will be used in the store visit summary email</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>3PL Marketing Summary</name>
+    <style>none</style>
+    <subject>3PL Manager Review Summary</subject>
+    <textOnly>While reviewing marketing materials, the following things were observed: 
+
+ Display not setup according to POG?&lt;input type=&quot;checkbox&quot;  checked =&apos;{!IF(Store_Activity__c.Display_not_setup_according_to_POG__c,&apos;True&apos;,&apos;False&apos;)}&apos; value=&apos;Display not setup according to POG?&apos;&gt;
+&lt;checkbox:{!Store_Activity__c.Able_to_improve_location_of_table__c}&gt; Able to improve location of table? 
+&lt;checkbox:{!Store_Activity__c.Tablet_not_loaded_with_attractor_loop__c}&gt; Tablet not loaded with attractor loop? 
+&lt;checkbox:{!Store_Activity__c.Tablet_not_loaded_with_XF_video__c}&gt; Tablet not loaded with XF video? 
+&lt;checkbox:{!Store_Activity__c.Materials_not_current__c}&gt; Materials not current? 
+Out of date materials: {!Store_Activity__c.Please_select_out_of_date_materials__c}</textOnly>
+    <type>custom</type>
+</EmailTemplate>

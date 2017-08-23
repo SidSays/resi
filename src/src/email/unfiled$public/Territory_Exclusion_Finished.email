@@ -1,0 +1,6 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; color:#000000; bEditID:r3st1; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[Your territory exclusions / inclusions process is complete. The summary of processing is below:<div><br></div><div>Job Name:{!Job_Status__c.Name}</div><div>Status:&nbsp;{!Job_Status__c.Status__c}</div><div><span style="font-size: 12pt;">Total records processed :&nbsp;{!Job_Status__c.Total_Records_Processed__c}</span></div><div><span style="font-size: 12pt;"><br></span></div><div><span style="font-size: 12pt;">If the status above is "Completed with Errors", please raise a support case to further look into the errors in the processing.</span></div>]]></td>
+</tr>
+</table>

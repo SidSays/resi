@@ -1,0 +1,15 @@
+<!-- 
+/**********************************************************
+* Page Name: CoachingAppIND
+* Author: Amit Kumar Pradhan, Accenture
+* Date: 24th July 2017
+* User Story: US1137915(Coach/Wave Integration - VF Page to wrap Lightning Page)
+* Description: This VF Page is for including "CoachingAppVF" vf page for channel indirect
+***********************************************************/
+-->
+<apex:page sidebar="false" showHeader="true">
+    <script>
+        var channel = "IndirectSales";
+    </script>
+    <apex:include pageName="CoachingAppVF" />
+</apex:page>

@@ -1,0 +1,103 @@
+<apex:page standardController="User" id="pg" extensions="ChatterAdminPageController" sidebar="false" tabstyle="Chatter_Admin_Page__tab">
+    
+    <apex:pagemessages id="errorPanel" />
+
+    <apex:form id="frm">
+    <apex:outputPanel id="opanel">
+        <apex:pageBlock id="pb1">
+            <apex:pageBlockSection id="pbs1" columns="3" title="Search Groups">
+                <apex:pageBlockSectionItem id="pbsi11">
+                    <apex:outputLabel value="Group Name " style="font-weight: bold;padding-left:20px" />
+                    <apex:inputText id="opl1" value="{!searchGrpString}" label="Input" style="width: 245px" />
+                </apex:pageBlockSectionItem>
+               
+                <apex:pageBlockSectionItem id="pbsi12">
+                    <apex:commandButton value="Search" action="{!searchGroup}" status="actStatusId22" reRender="errorPanel,opanel" style="font-size:1.05em;border-radius:40px/38px;height: 25px;width: 120px;" /> 
+                    <apex:actionstatus id="actStatusId22">
+                                <apex:facet name="start">
+                                    <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb; height:100%;opacity:0.65;width:100%;">
+                                        <div class="waitingHolder" style="top: 100px; width: 91px;">
+                                            <img class="waitingImage" src="/img/loading.gif" title="Please Wait..." />
+                                            <span class="waitingDescription">Please wait...</span>
+                                        </div>
+                                    </div>
+                                </apex:facet>
+                            </apex:actionstatus>
+                </apex:pageBlockSectionItem>
+                
+            </apex:pageBlockSection>  
+            <apex:pageBlockSection id="pbs2" columns="1" title="Add/Remove User(s)" rendered="{!(groupList.size > 1)}">
+                <apex:pageBlockSectionItem id="pbsi21" >
+                        <apex:outputLabel for="selectedGroup" value="Matching Groups " style="font-weight: bold;padding-left:20px"/>
+                        <apex:selectList id="selectedGroup" value="{!selectedGroup}" size="1">
+                            <apex:selectOptions id="sops" value="{!groupList}"/>
+                            <apex:actionsupport event="onchange" status="actStatusId22" action="{!getUsers}" rerender="opanel,errorPanel"/>
+                        </apex:selectList>
+                </apex:pageBlockSectionItem>
+               
+                <apex:pageBlockSectionItem id="pbsi22">
+                        <apex:outputLabel for="theLookUp" value="Select User" style="font-weight: bold;padding-left:20px" />
+                        <apex:inputField id="theLookUp" value="{!user.User_Lookup__c}" />
+                </apex:pageBlockSectionItem>
+                
+                <apex:pageBlockSectionItem id="pbsi23">
+                    <apex:actionStatus layout="inline" />
+                    <apex:commandButton value="Add User to Group" action="{!addToGroup}" status="actStatusId22" reRender="opanel,errorPanel" style="border-radius:40px/38px;height: 25px;width: 120px;"> 
+                        <apex:actionsupport event="oncomplete" status="actStatusId22" action="{!getUsers}" rerender="pbsi2,display"/>
+                    </apex:commandButton>
+                </apex:pageBlockSectionItem>               
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+            
+    <apex:pageBlock id="display" rendered="{!AND(NOT(userLst==null),(userLst.size > 0))}" >
+        <apex:pageBlockSection title="User List" columns="1">
+            <apex:pageblockSectionItem id="pbsi23" >
+                <apex:outputPanel >
+                    <apex:commandLink action="{!doFirst}" rendered="{!hasPrevious}" value="First |" />&nbsp;
+                    <apex:outputLabel rendered="{!NOT(hasPrevious)}" value="First |" />&nbsp;
+                    <apex:commandLink action="{!doPrevious}" rendered="{!hasPrevious}" value="Previous" />
+                    <apex:outputLabel rendered="{!NOT(hasPrevious)}" value="Previous" />          
+                    <apex:outputLabel value=" (page {!page} of {!totalPages}) | showing {!startIdx} to {!endIdx} of {!totalRecords} " />
+                    <apex:commandLink action="{!doNext}" rendered="{!hasNext}" value="Next |" />&nbsp;
+                    <apex:outputLabel rendered="{!NOT(hasNext)}" value="Next |" />&nbsp;
+                    <apex:commandLink action="{!doLast}" rendered="{!hasNext}" value="Last" />
+                    <apex:outputLabel rendered="{!NOT(hasNext)}" value="Last" />
+                </apex:outputPanel> 
+            </apex:pageblockSectionItem>
+        
+                <apex:pageBlockTable value="{!userLst}" var="use" id="pbtbl">
+                    <apex:column >
+                        <apex:inputCheckbox value="{!use.selected}"/>
+                    </apex:column>
+                    <apex:column headerValue="{!$ObjectType.User.Fields.FirstName.Label}" value="{!use.Usr.FirstName}"/>
+                    <apex:column headerValue="{!$ObjectType.User.Fields.LastName.Label}" value="{!use.Usr.LastName}"/>
+                    <apex:column headerValue="{!$ObjectType.User.Fields.Email.Label}" value="{!use.Usr.Email}"/>
+                    <apex:column headerValue="Manager's Name" value="{!use.Usr.Manager.Name}"/>
+                    <apex:column headerValue="Profile" value="{!use.Usr.Profile.Name}"/>
+                </apex:pageBlockTable>
+            
+            <apex:pageblockSectionItem id="pbsi24" >
+                <apex:outputPanel >
+                    <apex:commandLink action="{!doFirst}" rendered="{!hasPrevious}" value="First |" />&nbsp;
+                    <apex:outputLabel rendered="{!NOT(hasPrevious)}" value="First |" />&nbsp;
+                    <apex:commandLink action="{!doPrevious}" rendered="{!hasPrevious}" value="Previous" />
+                    <apex:outputLabel rendered="{!NOT(hasPrevious)}" value="Previous" />          
+                    <apex:outputLabel value=" (page {!page} of {!totalPages}) | showing {!startIdx} to {!endIdx} of {!totalRecords} " />
+                    <apex:commandLink action="{!doNext}" rendered="{!hasNext}" value="Next |" />&nbsp;
+                    <apex:outputLabel rendered="{!NOT(hasNext)}" value="Next |" />&nbsp;
+                    <apex:commandLink action="{!doLast}" rendered="{!hasNext}" value="Last" />
+                    <apex:outputLabel rendered="{!NOT(hasNext)}" value="Last" />
+                </apex:outputPanel> 
+            </apex:pageblockSectionItem>
+
+        </apex:pageBlockSection>
+        <apex:pageBlockButtons id="pgb">
+            <apex:commandButton value="Remove Selected User(s) From Group" status="actStatusId22" reRender="errorPanel" action="{!removeUsersFromGroup}" styleClass="buttonStyle" style="border-radius:40px/38px;height: 25px;width:210px;">
+                <apex:actionsupport event="oncomplete" status="actStatusId22" action="{!getUsers}" rerender="pbsi2,display"/>
+            </apex:commandButton>
+        </apex:pageBlockButtons>
+    
+    </apex:pageBlock>
+    </apex:outputPanel>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,26 @@
+<aura:component access="global" >	
+    <aura:registerevent type="c:ToggleEventKP" name="toggleClick"/>
+	<aura:handler event="wave:selectionChanged" action="{!c.handleSelectionChanged}"/>
+    
+    <aura:attribute name="repList" type="Object[]" />
+    
+    <div aura:id="mainDiv" class="slds-split-view_container slds-is-closed button-height">
+        <lightning:buttonIcon aura:id="arrowButton" class="slds-split-view__toggle-button slds-is-closed button-height" 
+                              iconName="utility:chevronright" size="x-small" alternativeText="Expand" 
+                              onclick="{!c.toggleParent }"/>
+        <div id="split-view-id" class="slds-split-view slds-grid slds-grid_vertical slds-grow" >
+            <!--<div class="slds-grid slds-grid_align-space slds-p-bottom_x-small">
+            	<div><lightning:buttonIcon iconName="utility:moneybag" variant="bare" size="large"
+                                           onclick="{! c.redirectToMyInfoQuest }" 
+                                           alternativeText="MyInfoQuest" /></div>
+                <div><lightning:buttonIcon iconName="utility:shopping_bag" variant="bare" size="large"
+                                           onclick="{! c.redirectToOrderLab }" 
+                                           alternativeText="OrderLab" /></div>
+                <div><lightning:buttonIcon iconName="utility:info" variant="bare" size="large"
+                                           onclick="{! c.redirectToComcastNow }" 
+                                           alternativeText="ComcastNow" /></div>
+            </div>-->
+            <c:CoachingComponentKP />
+        </div>
+    </div>     
+</aura:component>

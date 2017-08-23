@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Action Item Notice</name>
+    <style>none</style>
+    <subject>ATTENTION {!Action_Item__c.Name} Has No Activity in Last 5 Days</subject>
+    <type>text</type>
+</EmailTemplate>

@@ -1,0 +1,20 @@
+.THIS {
+    position:absolute;
+    top:45px;
+    height: 100%;
+    width: 66%;
+}
+
+
+.THIS>div {
+    z-index:0;
+}
+
+.THIS .leaflet-popup-content {
+  width:220px !important;
+  margin:13px;
+}
+
+.THIS .leaflet-control{
+     top: 100em;
+}

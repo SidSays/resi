@@ -1,0 +1,37 @@
+<!-- IndirectRecommendedActivities -->
+<aura:component controller="IndirectStore">
+    <aura:attribute name="storeId" type="String" />
+    
+    <aura:attribute name="activities" type="String[]"/> 
+    <aura:attribute name="show" type="boolean" default="false"/>    	
+    <aura:attribute name="loggedInUserId" type="String"/>
+    <aura:attribute name="storeVisitCategory" type="Store_Visit_Activity_Category__c[]"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    
+    <aura:if isTrue="{!v.activities != null}"> 
+        <div onclick ="{!c.getShowHide}">
+            <b><ui:outputText value="Recommended Activities" /> </b>
+            <aura:if isTrue="{!v.show == false}">
+                <c:svg class="slds-icon slds-icon--small slds-icon-text-default slds-float--right" 
+                       xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"/>
+            </aura:if>
+            <aura:if isTrue="{!v.show == true}">
+                <c:svg class="slds-icon slds-icon--small slds-icon-text-default slds-float--right" 
+                       xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevronup"/>
+            </aura:if>
+        </div>
+        
+        <table class="slds-table slds-table--bordered ">      
+            <aura:if isTrue="{!v.show}">
+                <aura:iteration items="{!v.activities}" var="act">
+                    <tr>
+                            <td onclick ="{!c.navigateToActivityScreen}" >
+                                <ui:outputText value="{!act}"/>
+                            </td>
+                    </tr>
+                </aura:iteration>
+            </aura:if>
+        </table>
+    </aura:if> 
+</aura:component>

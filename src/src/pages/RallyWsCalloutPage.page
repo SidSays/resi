@@ -1,0 +1,74 @@
+<apex:page name="RallyWScalloutPage" standardController="Case" extensions="RallyWsCallout" action="{!getFromRally}" standardStylesheets="false">
+    <apex:form >
+    <!-- Start - Adding check for Business Administrator - SP54 - Animesh US1099361-->
+        <apex:outputPanel id="thePanel" rendered="{!OR($Profile.Name == 'System Administrator',$Profile.Name == $Label.BusinessAdminProfileName)}">
+    <!-- End - Adding check for Business Administrator - SP54 - Animesh US1099361-->
+            <apex:pageBlock >
+                <apex:pageMessages id="pMsg"/>
+                <apex:pageblockButtons location="top" >
+                    <apex:commandButton value="Create Rally US" action="{!postToRally}" oncomplete="caseLoad();" rerender="jspanel" />
+                </apex:pageblockButtons>
+                <apex:outputPanel id="RallyToggle" rendered="{!refreshPage}">
+                    <apex:dataTable value="{!cas}" var="case" width="800px" cellpadding="5px">
+                        <apex:column >
+                            <apex:facet name="header">Association</apex:facet>
+                            <apex:commandLink value="Disassociate" action="{!removeRally}" oncomplete="window.top.location='/{!Case.id}'; return false" rendered="{!refreshPage}" />
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Rally ID</apex:facet>    
+                            <apex:outputLink id="RallyLink" value="{!url}" target="_blank" >{!formattedId}</apex:outputLink>
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Name</apex:facet>    
+                            <apex:outputText value="{!usName}" />
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">State</apex:facet>    
+                            <apex:outputText value="{!scheduleState}" />
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Release</apex:facet>    
+                            <apex:outputText value="{!release}" />
+                        </apex:column>
+                        <apex:column >
+                            <apex:facet name="header">Iteration</apex:facet>    
+                            <apex:outputText value="{!iteration}" />
+                        </apex:column>
+                    </apex:dataTable>
+                </apex:outputPanel>
+            </apex:pageBlock>
+        </apex:outputPanel>
+        <apex:pageBlock >
+            <apex:pageBlockSection >
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.Iteration__c.label}" />
+                    <apex:outputField value="{!cas.Iteration__c}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.Release__c.label}" />
+                    <apex:outputField value="{!cas.Release__c}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.Schedule_State__c.label}" />
+                    <apex:outputField value="{!cas.Schedule_State__c}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="{!$ObjectType.Case.fields.Rally_ID__c.label}" />
+                    <apex:outputField value="{!cas.Rally_ID__c}"/>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+    <apex:outputPanel id="jspanel">
+        <script>
+            function caseLoad(){
+                if('{!reload}' != ''){ 
+                    alert('{!reload}');
+                }
+                else{
+                    window.top.location='/{!Case.id}';
+                }
+            }
+        </script>
+    </apex:outputPanel>
+</apex:page>

@@ -1,0 +1,10 @@
+Hi,
+
+Parent account has been created. Please find details below.
+Name: {!Account.Name}
+Record Link: {!Account.Link}
+
+Please add the name of Parent account to 'Parent Account Selection' pick-List.
+
+Regards,
+SFDC Workflow

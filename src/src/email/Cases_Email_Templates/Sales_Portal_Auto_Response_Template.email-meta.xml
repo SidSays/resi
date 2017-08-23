@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Generate an auto response when users submit Sales Portal/Order Lab cases</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Comcast_LetterHead</letterhead>
+    <name>Sales Portal - Auto Response Template</name>
+    <style>freeForm</style>
+    <subject>Case {!Case.CaseNumber} Has Been Submitted</subject>
+    <textOnly>Hello,
+
+Thank you for your escalation.  The Order Lab/Sales Portal platform support team’s hours are Monday through Friday, 8:00am to 5:00pm EST.   We will review and respond to your escalations within 1 business day.  The average time to resolve an escalation is 2-3 business days.   If you are receiving a hard-stop error, outside of support hours, please contact 1-855-327-7773 or email ANOC_CC_SPSD@cable.comcast.com.
+
+Thank you!
+National Sales Operations Support Team</textOnly>
+    <type>html</type>
+</EmailTemplate>

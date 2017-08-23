@@ -1,0 +1,38 @@
+<apex:page standardController="Case">
+<apex:form >
+    
+     <apex:inputField value="{!Case.Channel__c}" label="Channel:" required="true"/>
+                <apex:outputField value="{!Case.Channel__c}"  label="Channel:" />
+       <apex:inputField value="{!Case.Request_Type__c}" label="Product:" required="true" />
+                <apex:outputField value="{!Case.Request_Type__c}" label="Product:" />
+               
+                 <apex:inputField value="{!Case.Ticket_Category__c}" label="Ticket Category:" id="T1" onchange="yesnoCheck()" required="true"/>
+                <apex:outputField value="{!Case.Ticket_Category__c}" label="Ticket Category:"  />
+                
+                <apex:inputField value="{!Case.Ticket_Category_II__c}"  label="Ticket Category II:" id="T2" required="true" />
+                <apex:outputField value="{!Case.Ticket_Category_II__c}" label="Ticket Category II:" />
+                 <div id="ifYes" style="visibility:hidden">
+                <apex:inputField value="{!Case.Report_Name__c}" label="Report Name:" id="R" />
+                <apex:outputField value="{!Case.Report_Name__c}" label="Report Name:"  />
+                </div>
+                <p id="demo"></p>
+                 </apex:form>
+                 <script type="text/javascript">
+ console.log('in script');
+                function yesnoCheck() {
+                console.log('in func');
+                  var obj = document.getElementById("T1");
+                 document.getElementById("demo").innerHTML = 
+    obj.options[obj.selectedIndex].text;
+                    if (document.getElementById('T1').value == "Reporting") {
+                    console.log('in if');
+                        document.getElementById('ifYes').style.visibility = 'visible';
+                    } else {
+                    console.log('in else');
+                        document.getElementById('ifYes').style.visibility = 'hidden';
+                    }
+}
+                </script>
+               
+               
+</apex:page>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Prospect Activity Summary</name>
+    <style>none</style>
+    <subject>Prospect Visit Activity Summary</subject>
+    <textOnly>Name of Company Prospected: {!Store_Activity__c.Name_of_the_company_you_prospected__c}
+Visit Type: {!Store_Activity__c.What_type_of_visit_was_this__c}
+Name of person met with: {!Store_Activity__c.Who_did_you_meet_with_text__c}
+Activities completed: {!Store_Activity__c.What_did_you_complete__c}
+Interest Level of Dealer: {!Store_Activity__c.Interest_Level_of_Dealer__c}
+Follow up Items for Next Meeting: {!Store_Activity__c.Follow_up_items_to_prep_for_next_meeting__c}
+Notes: {!Store_Activity__c.Notes__c}</textOnly>
+    <type>custom</type>
+</EmailTemplate>

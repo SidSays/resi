@@ -1,0 +1,85 @@
+<apex:page controller="AccountManagementServiceCallout" sidebar="false" showHeader="false" >
+<script src="//mozilla.github.io/pdf.js/build/pdf.js"></script>
+<link rel="stylesheet" href="{!URLFOR($Resource.bootstrap_sf1,'css/bootstrap.css')}"/>
+<div>
+    <table width="100%">
+        <tr>
+            <td align="center">
+                 <span onclick = "prev()" class="glyphicon glyphicon-chevron-left" style="font-size: 2em;" />
+            </td>
+            <td align="center">
+                <span onclick = "next()" class="glyphicon glyphicon-chevron-right" style="font-size: 2em;" />
+            </td>
+        </tr>
+    </table>
+   
+    
+</div>
+<canvas id="the-canvas"></canvas>
+    <apex:pageBlock >     
+      <apex:pageMessages ></apex:pageMessages></apex:pageBlock>
+   
+   <script>
+var pdfData = atob("{!pdfBlobData}");
+var globalPdf;
+var pageNumber = 1;
+PDFJS.workerSrc = '//mozilla.github.io/pdf.js/build/pdf.worker.js';
+
+var loadingTask = PDFJS.getDocument({data: pdfData});
+loadingTask.promise.then(function(pdf) {
+  console.log('PDF loaded');
+  globalPdf = pdf;
+  // Fetch the first page
+    loadPages(pdf, pageNumber)
+    }, function (reason) {
+      // PDF loading error
+      console.error(reason);
+});
+
+function loadPages(pdf, pageNumber)
+{
+    pdf.getPage(pageNumber).then(function(page) {
+    console.log('Page loaded');
+    
+    var scale = 1.2;
+    var viewport = page.getViewport(scale);
+
+    // Prepare canvas using PDF page dimensions
+    var canvas = document.getElementById('the-canvas');
+    var context = canvas.getContext('2d');
+    canvas.height = viewport.height;
+    canvas.width = viewport.width;
+
+    // Render PDF page into canvas context
+    var renderContext = {
+      canvasContext: context,
+      viewport: viewport
+    };
+    var renderTask = page.render(renderContext);
+    renderTask.then(function () {
+      console.log('Page rendered');
+    });
+      });
+    
+}
+
+function prev()
+{
+    if(pageNumber > 1)
+    {
+        pageNumber--;
+        loadPages(globalPdf, pageNumber);
+    }
+    
+}
+
+function next()
+{   
+    if(pageNumber < globalPdf.numPages)
+    {
+        pageNumber++;
+        loadPages(globalPdf, pageNumber);
+    }    
+}
+   </script>
+</apex:page>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This template will be used in the store visit summary email</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Target Marketing Summary</name>
+    <style>none</style>
+    <subject>Target Manager Review Summary</subject>
+    <textOnly>While reviewing marketing materials, the following things were observed:
+
+Is signage visible in store : {!Store_Activity__c.Is_signage_visible_in_store__c}
+Which type of  signage? : {!Store_Activity__c.Which_types_of_signage_were_visible__c}
+Store &amp; merchandise displayed properly? : {!Store_Activity__c.Is_the_store_and_display_properly_mercha__c}</textOnly>
+    <type>custom</type>
+</EmailTemplate>

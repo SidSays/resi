@@ -1,0 +1,103 @@
+Hi Team, 
+<br>
+
+<p>The following batch has been completed. Please find the status below: </p>
+
+<p>
+<table style="border: thin solid #FFFFFF; font-size: 16px;">
+
+<tr>
+          <td style=color: #669;"><b>
+              Batch Name:
+          </td>
+          <td style=color: #669;">
+              {!Job_Status__c.Name} 
+          </td>
+ </tr>
+
+<tr>
+          <td style=color: #669;"><b>
+              Batch Start Time:
+          </td>
+          <td style=color: #669;">
+              {!Job_Status__c.Batch_Start_Time__c} 
+          </td>
+ </tr>
+
+<tr>
+          <td style=color: #669;"><b>
+              Batch End Time:
+          </td>
+          <td style=color: #669;">
+              {!Job_Status__c.Batch_End_Time__c} 
+          </td>
+ </tr>
+
+<tr>
+          <td style=color: #669;"><b>
+              Status :
+          </td>
+          <td style=color: #669;">
+             {!Job_Status__c.Status__c} 
+          </td>
+ </tr>
+
+<tr>
+          <td style=color: #669;"><b>
+              Comments :
+          </td>
+          <td style=color: #669;">
+              {!Job_Status__c.Comments__c} 
+          </td>
+ </tr>
+
+<tr>
+          <td style=color: #669;"><b>
+              Total Records Processed :
+          </td>
+          <td style=color: #669;">
+              {!Job_Status__c.Total_Records_Processed__c} 
+          </td>
+ </tr>
+
+<tr>
+          <td style=color: #669;"><b>
+              Number of Fallouts :
+          </td>
+          <td style=color: #669;">
+              {!Job_Status__c.Number_Of_Fallouts__c} 
+          </td>
+ </tr>
+
+<tr>
+          <td style=color: #669;"><b>
+              Total RGU Activations Processed :
+          </td>
+          <td style=color: #669;">
+              {!Job_Status__c.Total_RGU_Activations_Processed__c} 
+          </td>
+ </tr>
+
+<tr>
+          <td style=color: #669;"><b>
+              Total RGU Orders Processed :
+          </td>
+          <td style=color: #669;">
+              {!Job_Status__c.Total_RGU_Orders_Processed__c} 
+          </td>
+ </tr>
+
+<tr>
+          <td style=color: #669;"><b>
+              Total RGU Orders Upserted Today :
+          </td>
+          <td style=color: #669;">
+              {!Job_Status__c.Total_RGU_Orders_Upserted_Today__c} 
+          </td>
+ </tr>
+
+</table>
+</p>
+
+Regards, <br>
+Comcast Team

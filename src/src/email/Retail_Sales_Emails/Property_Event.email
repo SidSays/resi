@@ -1,0 +1,11 @@
+Dear {!Property_Events__c.OwnerFullName},
+
+Property Event {!Property_Events__c.Name} has been created.
+
+Property Event Details:
+Property Events Name –  {!Property_Events__c.Name}
+Property – {!Property_Events__c.Property__c}
+Start Time – {!Property_Events__c.Start_Time__c}
+End Time – {!Property_Events__c.End_Time__c}
+
+Thanks.

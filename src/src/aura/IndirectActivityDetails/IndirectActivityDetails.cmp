@@ -1,0 +1,23 @@
+<aura:component controller="IndirectStoreVisitHistory">
+	<aura:attribute name="storeVisitCategory" type="Store_Visit_Activity_Category__c"/>
+    <aura:attribute name="storeVisit" type="Store_Visit__c"/> 
+    <aura:attribute name="iconDown" type="String" default="slds-show"/>   
+    <aura:attribute name="iconUp" type="String" default="slds-hide"/> 
+    <aura:registerEvent name="appEvent" type="c:IndirectAddButtonEvent"/>
+    <aura:registerEvent name="closeEvent" type="c:IndirectAccordionCloseEvent"/>
+    
+   
+    <div onclick ="{!c.showActivityDetails}" colspan="2" data-record="{!v.storeVisitCategory.Record_Type_Id__c}" class="{!v.iconDown}">
+	  <c:svg class="slds-icon slds-icon--small slds-icon-text-default slds-float--right" 
+             xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"/>	  
+    </div>
+    
+    <aura:if isTrue="{!v.storeVisitCategory != null}">
+   <div onclick ="{!c.toggle}" colspan="2" data-record="{!v.storeVisitCategory.Record_Type_Id__c}" class="{!v.iconUp}">
+    <c:svg class="slds-icon slds-icon--small slds-icon-text-default slds-float--right" 
+           xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevronup"/>
+    </div>
+    
+ 	</aura:if>
+   
+</aura:component>

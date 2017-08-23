@@ -1,0 +1,110 @@
+<aura:component controller="IndirectAddContactWrapper">
+	<aura:attribute name="contactsList" type="IndirectAddContactWrapper[]"/>
+    <aura:attribute name="StorecontactsList" type="Contact[]"/>
+    <aura:attribute name="acnt" type="Account"/>
+    <aura:attribute name="storeVisit" type="Store_Visit__c"/>
+    <aura:attribute name="hiddenValue" type="String" default="false"/>
+    <aura:attribute name="contact" type="Contact" default="{'sobjectType': 'Contact'}"/>
+    <aura:attribute name="Salutation" type="String[]" default="Mr., Ms., Mrs., Dr., Prof."/>
+    <aura:attribute name="dynamic" type="String" default="slds-show"/>
+    
+    <aura:attribute name="Name" type="String" />
+    
+    <aura:attribute name="Email" type="String" />
+    <aura:attribute name="RecordTypeId" type="String" />
+    
+     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:attribute name="modalValue" type="String" default="slds-modal slds-fade-in-open"/>
+ <!--  <aura:registerEvent name="navigate" type="c:IndirectAddContactEvent"/>  -->
+    <aura:attribute name="title" type="String" />
+    <aura:attribute name="closable" type="Boolean" default="true"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <aura:attribute name="closeLabel" type="String" default="Close"/> 
+    <aura:attribute name="confirmLabel" type="String" default="Done"/>
+     <aura:attribute name="Div1visiblity" type="String" /> 
+    
+    
+    <aura:attribute name="onclose" type="Aura.Action" default="{!c.defaultCloseAction}"/> 
+    <aura:attribute name="onconfirm" type="Aura.Action" default="{!c.createContact}"/>
+ 	 <aura:attribute name="onconfirmAdd" type="Aura.Action" default="{!c.AddContact}"/>
+    
+    <aura:if isTrue="{!v.dynamic != 'slds-hide'}">
+    <div class="slds">
+    <div class="slds-m-top--x-small">
+     <div aria-hidden="{!v.hiddenValue}" role="dialog" class="{!v.modalValue}">
+      <div class="slds-modal__container">
+		<div class="slds-modal__header">
+		<h2 class="slds-text-heading--medium">{!v.title}</h2>
+            <aura:if isTrue="{!v.closable}">
+					<button class="slds-button slds-modal__close" onclick="{!v.onclose}">
+						<c:svgIcon svgPath="/resource/SLDS100/assets/icons/action-sprite/svg/symbols.svg#close" 
+                                               category="standard" 
+                                               size="small" 
+                                               name="close" />
+                                    
+                                    <span class="slds-assistive-text">{!v.closeLabel}</span>
+                                </button>
+                            </aura:if>
+          </div>
+          
+          <div class="slds-modal__content">	
+              <div class="{!v.Div1visiblity}">
+              
+            <table class="slds-table slds-table--bordered">
+               
+                <thead class="slds-text-heading--label">
+                    <th class="dynamic">Select</th>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                   <!--   <th>Email</th>
+                    <th>Phone</th> -->
+                </thead>
+                <aura:iteration items="{!v.contactsList}" var="cnt">           
+                <tbody>
+                <tr >     
+                 <td class="cell">
+                     <ui:inputCheckbox value="{!cnt.checked}" /> 
+                    
+                 </td>
+                    <td class="cell">
+                        <ui:outputText value="{!cnt.contactObj.FirstName}"/>
+                    </td>
+                    <td class="cell">
+                        <ui:outputText value="{!cnt.contactObj.LastName}"/>
+                    </td>
+                 
+                </tr>
+                </tbody>
+                </aura:iteration>               
+                   
+        	</table>
+                  <br/> 
+                  <div class="slds-text-align--center hyperLinkClass" onclick="{!c.AddNewScreen}">Add a New Contact</div>
+            </div >
+              
+          </div>         
+          <div class="{!v.Div1visiblity}">
+          <div class="slds-modal__footer"> 
+               <div >
+               
+                  <div>
+                       <button class="slds-button slds-button--neutral slds-button--brand" onclick="{!c.onconfirmDone}">Done</button>
+                   </div>
+               </div>    
+           </div>
+           </div> 
+          
+
+         </div>
+         
+          </div>
+        
+         <div class="slds-modal-backdrop slds-modal-backdrop--open"></div>   
+    </div>
+     <!-- <div aura:id="ModalDialogNewContact" /> -->
+	</div>
+    </aura:if>    
+</aura:component>

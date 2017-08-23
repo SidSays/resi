@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event template">
+    <aura:attribute type="Customer_Address__c[]" name="filteredAddresses" />
+    <aura:attribute type="Customer_Address__c[]" name="originalAddresses" />
+</aura:event>

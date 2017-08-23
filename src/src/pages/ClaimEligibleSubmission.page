@@ -1,0 +1,105 @@
+<apex:page standardController="Order__c" extensions="ClaimEligibleSubmissionController" recordSetVar="orders" tabStyle="Order__c" action="{!redirect}" readOnly="true">
+    <apex:includeScript value="{!URLFOR($Resource.jQueryDataTables, '/DataTables-1.10.2/media/js/jquery.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.jQueryDataTables, '/DataTables-1.10.2/media/js/jquery.dataTables.min.js')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.jQueryDataTables, '/DataTables-1.10.2/media/css/jquery.dataTables.min.css')}"/>
+    <apex:includeScript value="/support/console/27.0/integration.js"/>
+    <script>        
+        j$ = jQuery.noConflict();
+        j$(document).ready(function() {
+            j$('#orderTable').dataTable({
+                "lengthMenu": [ [20, 50, 100, -1], [20, 50, 100, "All"] ],
+                "fnInitComplete": function(){
+                    j$('#tableDiv').show();
+                }
+            });
+
+        } );        
+    </script>
+    <script type="text/javascript">
+        function openPrimaryTab(orderId, orderName) {
+            sforce.console.openPrimaryTab(null, orderId, true, 'Order: '+orderName, openSuccess);
+        }
+        var openSuccess = function openSuccess(result){
+            if(result.success == true){
+                //alert('subtab successfully opened');
+            } else {
+                alert('subtab cannot be opened');
+            }
+        };
+
+        function openNewTab(orderId){
+            window.open(orderId);
+        }
+    </script>
+
+    <apex:sectionHeader subtitle="Home" title="Orders" />
+    <apex:pageBlock >
+        <apex:form >
+            <apex:pageMessage severity="error" strength="3" summary="{!errorMessages}" rendered="{!isError}" />
+            <apex:pageBlockSection id="Affiliate" columns="2">
+                <apex:inputField label="Affiliate Account" value="{!displayObject.Affiliate_Account__c}" rendered="{!showAffiliate}"/>
+                <apex:inputField label="Select View" value="{!displayObject.ViewOptions__c}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection id="Date" title="Select a Date Range" columns="2">
+                <apex:inputField label="Start" value="{!displayObject.Filter_Start__c}" />
+                <apex:inputField label="End" value="{!displayObject.Filter_End__c}" />
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                <apex:commandButton value="Show Orders" action="{!displayOrders}" />
+            </apex:pageBlockSection>    
+        </apex:form>
+
+        <apex:pageBlockSection id="orderSection" title="Orders" columns="1">
+            <apex:outputPanel rendered="{!displayOrderResults}">
+                <div id="tableDiv" style="display:none;">
+                    <table id="orderTable" class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Order Name</th>
+                                <th>Order Status</th>
+                                <th>Created Date</th>
+                                <th>Order Completed Date</th>
+                            </tr>
+                        </thead>
+                 
+                        <tfoot>
+                            <tr>
+                                <th>Order Name</th>
+                                <th>Order Status</th>
+                                <th>Created Date</th>
+                                <th>Order Completed Date</th>
+                            </tr>
+                        </tfoot>
+                 
+                        <tbody>
+                        <apex:form >
+                            <apex:repeat value="{!ordersToDisplay}" var="orders">
+                                <apex:repeat value="{!orders}" var="o">
+                                    <tr>
+                                        <td>
+                                            <apex:commandLink value="{!o.Name}" rendered="{!inConsole}" onclick="openPrimaryTab('/{!o.Id}','{!o.Name}'); return false"/>
+                                            <apex:commandLink value="{!o.Name}" rendered="{!inBrowser}" onclick="openNewTab('/{!o.Id}'); return false"/>
+                                        </td>
+                                        <td>{!o.OrderStatus__c}</td>
+                                        <td>
+                                            <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                <apex:param value="{!o.Order_Created_Date__c}" /> 
+                                            </apex:outputText>
+                                        </td>
+                                        <td>
+                                            <apex:outputText value="{0,date,MM'/'dd'/'yyyy}">
+                                                <apex:param value="{!o.OrderCompletedDate__c}" /> 
+                                            </apex:outputText>
+                                        </td>
+                                    </tr>
+                                </apex:repeat>
+                            </apex:repeat>
+                        </apex:form>
+                        </tbody>
+                    </table>
+                </div>
+            </apex:outputPanel>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+
+</apex:page>

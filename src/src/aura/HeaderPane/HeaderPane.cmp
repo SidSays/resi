@@ -1,0 +1,653 @@
+<aura:component controller="PlanAddressController">
+    <aura:attribute type="String" name="planId" />
+    <aura:attribute type="String" name="playlistName" />
+    <aura:attribute type="String" name="workType" />
+    <aura:attribute type="String" name="MRC" />
+    <aura:attribute type="String" name="activeProductsCount" />
+    <aura:attribute type="String" name="activeProducts" />
+    <aura:attribute type="String" name="customerStatus" />
+    <aura:attribute type="String" name="tapStatus" />
+    <aura:attribute type="String" name="dwellingType" />
+    <aura:attribute type="Boolean" name="IsFilterByCurrentLocation" default="true"/>
+    <aura:attribute type="Boolean" name="IsNotRejected" default="true"/>
+    <aura:attribute type="Decimal" name="distance" />
+    <aura:attribute type="String" name="disconnectedDate" />    
+    <aura:attribute type="String" name="dispositions" />
+    <aura:attribute type="String" name="rejected" />
+    <aura:attribute type="String" name="Yes" />
+    <aura:attribute type="String" name="CurrentPlanName" />
+    <aura:attribute type="Boolean" name="SearchResults" />
+    <aura:attribute type="Object" name="Predicate" />
+    <aura:attribute name="selectedAddressLat" type="String"/>
+    <aura:attribute name="selectedAddressLong" type="String"/>
+    <aura:attribute name="startDateTime" type="String"/>
+    <aura:attribute name="maxStartDate" type="String"/>
+    <aura:attribute name="endDateTime" type="String"/>
+    <aura:attribute name="lat" type="String"/>
+    <aura:attribute name="longi" type="String"/>
+    <aura:attribute type="Object[]" name="PredicateArray" />
+    <aura:attribute name="filteredAddresses" type="Customer_Address__c[]"/>
+    <aura:attribute name="originalAddresses" type="Customer_Address__c[]"/>
+    <aura:handler event="c:SendFilteredAndOriginalAddressList" action="{!c.addressesLoaded}"/>
+    <aura:handler event="c:SendPlanList" action="{!c.getCurrentPlanName}"/>
+    <aura:registerEvent name="passHeaderLabel" type="c:UpdatePlanInfo"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute type="Customer_Address__c[]" name="Addresses" />
+    <aura:attribute type="Customer_Address__c[]" name="CurrentLocation" />
+    <aura:handler event="c:selectedAddressLatLongEvent" action="{!c.callselectedAddressLatLongEvent}"/> 
+    
+    <header class="slds-global-header_container"><a href="javascript:void(0);" class="slds-assistive-text slds-assistive-text--focus">Skip to Navigation</a><a href="javascript:void(0);" class="slds-assistive-text slds-assistive-text--focus">Skip to Main Content</a>
+        <div class="slds-global-header slds-grid slds-grid--align-spread">
+            <div class="slds-global-header__item">
+                <div class="slds-global-header__logo">
+                    <img src="/resource/SLDS100/assets/images/logo-noname.svg" alt="" />
+                </div>
+            </div>
+            <div class="slds-global-header__item slds-global-header__item--search">
+                <div class="slds-form-element">                    
+                    <div class="slds-form-element__control">
+                        <div class="slds-combobox_container slds-has-inline-listbox">
+                            <div aura:id="searchbox" id="searchbox" class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-combobox-lookup" 
+                                 aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                                <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right morewidth">
+                                    <input type="text" class="slds-input slds-combobox__input" id="combobox-unique-id" 
+                                           aria-autocomplete="list" aria-controls="listbox-unique-id" autocomplete="off" 
+                                           role="textbox" placeholder="Search Addresses" onclick="{!c.openSearchBox}" onkeyup="{!c.searchKeyChange}" />
+                                    <span class="slds-icon_container slds-icon-utility-search slds-input__icon slds-input__icon_right" title="Description of icon when needed">
+                                        <c:svg class="slds-button__icon" 
+                                               xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#search"/>
+                                    </span>
+                                </div>
+                                <div id="listbox-unique-id" role="listbox">
+                                    <div class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid search-results" role="presentation">
+                                        <div class="slds-scrollable_y search-results-cards">
+                                            <aura:renderIf isTrue="{!v.SearchResults}">
+                                                <c:AddressList />  
+                                            </aura:renderIf>
+                                        </div>
+                                        <hr style="margin:0.5rem;"/>
+                                        <fieldset class="slds-form-element">
+                                            <div class="slds-form-element__control">
+                                                <span class="slds-checkbox left-margin2">
+                                                    <input type="checkbox" name="options" id="onturf" checked="true" 
+                                                           onclick="{!c.searchKeyChange}"/>
+                                                    <label class="slds-checkbox__label" for="onturf">
+                                                        <span class="slds-checkbox_faux"></span>
+                                                        <span class="slds-form-element__label">{!v.CurrentPlanName} Only</span>
+                                                    </label>
+                                                </span>
+                                                <span class="slds-checkbox left-margin2">
+                                                    <input type="checkbox" name="options" id="offturf" onclick="{!c.searchKeyChange}"/>
+                                                    <label class="slds-checkbox__label" for="offturf">
+                                                        <span class="slds-checkbox_faux"></span>
+                                                        <span class="slds-form-element__label">Off Turf</span>
+                                                    </label>
+                                                </span>                                                
+                                            </div>
+                                        </fieldset>                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ul class="slds-global-header__item slds-grid slds-grid--vertical-align-center">
+                <li class="slds-grid">                   
+                    <span aura:id="dropdown" class="slds-dropdown-trigger slds slds-dropdown-trigger--click slds-dropdown--small slds-dropdown__header">
+                        <button class="slds-button slds-button--neutral " aria-haspopup="true" title="Show More" onclick="{!c.toggleMenu}">
+                            <c:svg class="slds-button__icon" 
+                                   xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#filterList"/>                             
+                            <span>Filters</span> 
+                        </button>
+                        <div class="slds-dropdown slds-dropdown--left slds-nubbin--top-left zclass">
+                            <ul class="slds-dropdown__list" role="menu">
+                                <li class="slds-dropdown__item" role="presentation">
+                                    <a href="javascript:void(0);" role="menuitem" tabindex="0">
+                                        <span class="slds-dro	pdown-trigger slds slds-dropdown-trigger--click">
+                                            <div class="filter-item-header">
+                                                <div aura:id="clearall" class="slds-truncate">
+                                                    <a href="#" class="slds-align--absolute-center" onclick="{!c.clearAll}">Clear All</a>
+                                                </div>
+                                            </div>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="slds-has-divider_top-space" role="separator"></li>
+                                <li class="slds-dropdown__item" role="presentation">
+                                    <a href="javascript:void(0);" role="menuitem" tabindex="0">
+                                        <span class="slds-dropdown-trigger slds slds-dropdown-trigger--click" onclick="{!c.showWorkTypes}">
+                                            <div class="filter-item">
+                                                Work Type                                           
+                                                <c:svg class="slds-button__icon slds-float--right" 
+                                                       xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevronright"/>
+                                                <div aura:id="worktype" class="slds-grid slds-wrap slds-grid_pull-padded hide-initially">    
+                                                    <div class="slds-size_4-of-6">
+                                                        <p style="margin-right:10%" class="slds-truncate slds-text-color_weak font-reduced" >{!v.workType}</p>                        
+                                                    </div> 
+                                                    <div class="slds-size_2-of-6">
+                                                        <a href="#" class="slds-float--right slds-text-color_error font-reduced" style="margin-right:10%" onclick="{!c.clearWorkType}">Clear All</a>                        
+                                                    </div>
+                                                </div>                                                
+                                            </div>
+                                            <div aura:id="wtdropdown"  class="open-on-right hide-initially">
+                                                <ul class="slds-dropdown__list" role="menu">
+                                                    <li class="slds-dropdown__item" role="presentation">
+                                                        <a href="#" onclick="{!c.filterByWorkType}" data-wt="Worked">{!$Label.c.Worked}</a> 
+                                                        <a href="#" onclick="{!c.filterByWorkType}" data-wt="Not Worked">{!$Label.c.Not_Worked}</a>
+                                                    </li>
+                                                </ul>                                                   
+                                            </div>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="slds-dropdown__item" role="presentation">
+                                    <a href="javascript:void(0);" role="menuitem" tabindex="0">
+                                        <span class="slds-dropdown-trigger slds slds-dropdown-trigger--click" onclick="{!c.showActiveProductsCount}">
+                                            <div class="filter-item">
+                                                Active Products Count                                            
+                                                <c:svg class="slds-button__icon slds-float--right" 
+                                                       xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevronright"/>
+                                                <div aura:id="apc" class="slds-grid slds-wrap slds-grid_pull-padded hide-initially">    
+                                                    <div class="slds-size_4-of-6">
+                                                        <p style="margin-right:10%" class="slds-truncate slds-text-color_weak font-reduced" >{!v.activeProductsCount}</p>                        
+                                                    </div> 
+                                                    <div class="slds-size_2-of-6">
+                                                        <a href="#" class="slds-float--right slds-text-color_error font-reduced" style="margin-right:10%" onclick="{!c.clearActiveProductsCount}">Clear All</a>                        
+                                                    </div>
+                                                </div>                                                
+                                            </div>
+                                            <div aura:id="apcdropdown"  class="open-on-right hide-initially">
+                                                <ul class="slds-dropdown__list" role="menu">
+                                                    <li class="slds-dropdown__item" role="presentation">
+                                                        <a href="#" onclick="{!c.filterByActiveProductsCount}" data-apc="1 Product">{!$Label.c.One_Product}</a> 
+                                                        <a href="#" onclick="{!c.filterByActiveProductsCount}" data-apc="2 Products">{!$Label.c.Two_Products}</a>
+                                                        <a href="#" onclick="{!c.filterByActiveProductsCount}" data-apc="3 Products">{!$Label.c.Three_Products}</a>
+                                                    </li>
+                                                </ul>                                                   
+                                            </div>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="slds-dropdown__item" role="presentation">
+                                    <a href="javascript:void(0);" role="menuitem" tabindex="0">
+                                        <span class="slds-dropdown-trigger slds slds-dropdown-trigger--click" onclick="{!c.showMRC}">
+                                            <div class="filter-item">
+                                                {!$Label.c.Total_Montly_Rate}                                           
+                                                <c:svg class="slds-button__icon slds-float--right" 
+                                                       xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevronright"/>
+                                                <div aura:id="mrc" class="slds-grid slds-wrap slds-grid_pull-padded hide-initially">    
+                                                    <div class="slds-size_4-of-6">
+                                                        <p style="margin-right:10%" class="slds-truncate slds-text-color_weak font-reduced" >{!v.MRC}</p>                        
+                                                    </div> 
+                                                    <div class="slds-size_2-of-6">
+                                                        <a href="#" class="slds-float--right slds-text-color_error font-reduced" style="margin-right:10%" onclick="{!c.clearMRC}">Clear All</a>                        
+                                                    </div>
+                                                </div>                                                  
+                                            </div>
+                                            <div aura:id="mrcdropdown"  class="open-on-right hide-initially">
+                                                <ul class="slds-dropdown__list" role="menu">
+                                                    <li class="slds-dropdown__item" role="presentation">
+                                                        <a href="#" onclick="{!c.filterByMRC}" data-mrc="&lt; 125">{!$Label.c.Less_Than_125}</a> 
+                                                        <a href="#" onclick="{!c.filterByMRC}" data-mrc="&gt; 150">{!$Label.c.Greater_Than_150}</a>
+                                                    </li>
+                                                </ul>                                                   
+                                            </div>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="slds-dropdown__item" role="presentation">                                   
+                                    <span class="slds-dropdown-trigger slds slds-dropdown-trigger--click" onclick="{!c.showActiveProducts}">
+                                        <div class="filter-item left-margin">
+                                            Active Products                                            
+                                            <c:svg class="slds-button__icon slds-float--right" 
+                                                   xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevronright"/>
+                                            <div aura:id="ap" class="slds-grid slds-wrap slds-grid_pull-padded hide-initially">    
+                                                <div class="slds-size_4-of-6">
+                                                    <p style="margin-right:10%" class="slds-truncate slds-text-color_weak font-reduced" >{!v.activeProducts}</p>                        
+                                                </div> 
+                                                <div class="slds-size_2-of-6">
+                                                    <a href="#" class="slds-float--right slds-text-color_error font-reduced" style="margin-right:10%" onclick="{!c.clearActiveProducts}">Clear All</a>                        
+                                                </div>
+                                            </div>                                            
+                                        </div>
+                                        <div style="width:70%" aura:id="apdropdown"  class="open-on-right2 hide-initially">
+                                            <fieldset class="slds-form-element">
+                                                <div class="slds-form-element__control">
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="video" name="default" type="checkbox" id="video" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Video</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="internet" name="default" type="checkbox" id="internet" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Internet</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="voice" name="default" type="checkbox" id="voice" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Voice</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="xh" name="default" type="checkbox" id="xh"  />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">XH</span>
+                                                    </label>
+                                                    <hr style="margin:0.5rem;" />
+                                                    <a href="#" onclick="{!c.filterByActiveProduct}" class="slds-align_absolute-center">Apply</a>
+                                                </div> 
+                                                
+                                            </fieldset>                  
+                                        </div>
+                                    </span>
+                                </li>
+                                <li class="slds-dropdown__item" role="presentation">                                   
+                                    <span class="slds-dropdown-trigger slds slds-dropdown-trigger--click" onclick="{!c.showCustomerStatuses}">
+                                        <div class="filter-item left-margin">
+                                            Customer Status                                            
+                                            <c:svg class="slds-button__icon slds-float--right" 
+                                                   xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevronright"/>
+                                            <div aura:id="cs" class="slds-grid slds-wrap slds-grid_pull-padded hide-initially">    
+                                                <div class="slds-size_4-of-6">
+                                                    <p style="margin-right:10%" class="slds-truncate slds-text-color_weak font-reduced" >{!v.customerStatus}</p>                        
+                                                </div> 
+                                                <div class="slds-size_2-of-6">
+                                                    <a href="#" class="slds-float--right slds-text-color_error font-reduced" style="margin-right:10%" onclick="{!c.clearCustomerStatuses}">Clear All</a>                        
+                                                </div>
+                                            </div>                                            
+                                        </div>
+                                        <div style="width:70%" aura:id="csdropdown"  class="open-on-right2 hide-initially">
+                                            <fieldset class="slds-form-element">
+                                                <div class="slds-form-element__control">
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="active" name="default" type="checkbox" id="active" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Active</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="inactive" name="default" type="checkbox" id="inactive" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Inactive</span>
+                                                    </label>
+                                                    <hr style="margin:0.5rem;" />
+                                                    <a href="#" onclick="{!c.filterByCustomerStatus}" class="slds-align_absolute-center">Apply</a>
+                                                </div> 
+                                            </fieldset>                  
+                                        </div>
+                                    </span>
+                                </li>
+                                <li class="slds-dropdown__item" role="presentation">                                   
+                                    <span class="slds-dropdown-trigger slds slds-dropdown-trigger--click" onclick="{!c.showDwellingTypes}">
+                                        <div class="filter-item left-margin">
+                                            Dwelling Type                                         
+                                            <c:svg class="slds-button__icon slds-float--right" 
+                                                   xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevronright"/>
+                                            <div aura:id="dt" class="slds-grid slds-wrap slds-grid_pull-padded hide-initially">    
+                                                <div class="slds-size_4-of-6">
+                                                    <p style="margin-right:10%" class="slds-truncate slds-text-color_weak font-reduced" >{!v.dwellingType}</p>                        
+                                                </div> 
+                                                <div class="slds-size_2-of-6">
+                                                    <a href="#" class="slds-float--right slds-text-color_error font-reduced" style="margin-right:10%" onclick="{!c.clearDwellingType}">Clear All</a>                        
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="width:140%" aura:id="dtdropdown"  class="open-on-right2 hide-initially">
+                                            <fieldset class="slds-form-element">
+                                                <div class="slds-form-element__control">
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="bulkbilledmaster" name="default" type="checkbox" id="bulkbilledmaster" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Bulk Billed Master</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="bulkbilledmdu" name="default" type="checkbox" id="bulkbilledmdu" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Bulk Billed MDU</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="commercial" name="default" type="checkbox" id="commercial" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Commercial</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="multipledwellingunit" name="default" type="checkbox" id="multipledwellingunit" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Multiple Dwelling Unit</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="nonbulkbilled" name="default" type="checkbox" id="nonbulkbilled" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Non Bulk Billed</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="nonbulkbilledmdu" name="default" type="checkbox" id="nonbulkbilledmdu" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Non Bulk Billed MDU</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="singlefamily" name="default" type="checkbox" id="singlefamily" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Single Family</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="singlefamilyunit" name="default" type="checkbox" id="singlefamilyunit" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Single Family Unit</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="unknown" name="default" type="checkbox" id="unknown" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Unknown</span>
+                                                    </label>                                                    
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="vacant" name="default" type="checkbox" id="vacant" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Vacant</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="sfu" name="default" type="checkbox" id="sfu" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">SFU</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="mdu" name="default" type="checkbox" id="mdu" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">MDU</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="other" name="default" type="checkbox" id="other" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">OTHER</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="excludemapping" name="default" type="checkbox" id="excludemapping" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">EXCLUDE MAPPING</span>
+                                                    </label>
+                                                    <hr style="margin:0.5rem;" />
+                                                    <a href="#" onclick="{!c.filterByDwellingType}" class="slds-align_absolute-center">Apply</a>
+                                                </div> 
+                                            </fieldset>                  
+                                        </div>
+                                    </span>
+                                </li>
+                                <li class="slds-dropdown__item" role="presentation">                                   
+                                    <span class="slds-dropdown-trigger slds slds-dropdown-trigger--click" onclick="{!c.showDispositions}">
+                                        <div class="filter-item left-margin">
+                                            Knocks                                         
+                                            <c:svg class="slds-button__icon slds-float--right" 
+                                                   xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevronright"/>
+                                            <div aura:id="disp" class="slds-grid slds-wrap slds-grid_pull-padded hide-initially">    
+                                                <div class="slds-size_4-of-6">
+                                                    <p style="margin-right:10%" class="slds-truncate slds-text-color_weak font-reduced" >{!v.dispositions}</p>                        
+                                                </div> 
+                                                <div class="slds-size_2-of-6">
+                                                    <a href="#" class="slds-float--right slds-text-color_error font-reduced" style="margin-right:10%" onclick="{!c.clearDisposition}">Clear All</a>                        
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="width:150%" aura:id="dispdropdown"  class="open-on-right2 hide-initially">
+                                            <fieldset class="slds-form-element">
+                                                <div class="slds-form-element__control">
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="noknock" name="default" type="checkbox" id="noknock" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">No Knock</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="noanswer" name="default" type="checkbox" id="noanswer" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">No Answer</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="doorhanger" name="default" type="checkbox" id="doorhanger" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Door Hanger</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="contact" name="default" type="checkbox" id="contact" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Contact</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="engage" name="default" type="checkbox" id="engage" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Engage</span>
+                                                    </label>                                                    
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="discover" name="default" type="checkbox" id="discover" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Discover</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="position" name="default" type="checkbox" id="position" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Position</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="close" name="default" type="checkbox" id="close" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Close</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="start" name="default" type="checkbox" id="start" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Start</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="nma" name="default" type="checkbox" id="nma" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">Non-Marketable Address</span>
+                                                    </label>
+                                                    <hr style="margin:0.5rem;" />
+                                                    <a href="#" onclick="{!c.filterByDisposition}" class="slds-align_absolute-center">Apply</a>
+                                                </div> 
+                                            </fieldset>                  
+                                        </div>
+                                    </span>
+                                </li>
+                                <li class="slds-dropdown__item" role="presentation">                                   
+                                    <span class="slds-dropdown-trigger slds slds-dropdown-trigger--click" onclick="{!c.showTapStatuses}">
+                                        <div class="filter-item left-margin">
+                                            Tap Status                                            
+                                            <c:svg class="slds-button__icon slds-float--right" 
+                                                   xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevronright"/>
+                                            <div aura:id="ts" class="slds-grid slds-wrap slds-grid_pull-padded hide-initially">    
+                                                <div class="slds-size_4-of-6">
+                                                    <p style="margin-right:10%" class="slds-truncate slds-text-color_weak font-reduced" >{!v.tapStatus}</p>                        
+                                                </div> 
+                                                <div class="slds-size_2-of-6">
+                                                    <a href="#" class="slds-float--right slds-text-color_error font-reduced" style="margin-right:10%" onclick="{!c.clearTapStatus}">Clear All</a>                        
+                                                </div>
+                                            </div>                                            
+                                        </div>
+                                        <div style="width:70%" aura:id="tsdropdown"  class="open-on-right2 hide-initially">
+                                            <fieldset class="slds-form-element">
+                                                <div class="slds-form-element__control">
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="hot" name="default" type="checkbox" id="hot" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">HOT</span>
+                                                    </label>
+                                                    <label class="slds-checkbox left-margin2" >
+                                                        <input aura:id="v" name="default" type="checkbox" id="cold" />
+                                                        <span class="slds-checkbox--faux"></span>
+                                                        <span class="slds-form-element__label">COLD</span>
+                                                    </label>
+                                                    <hr style="margin:0.5rem;" />
+                                                    <a href="#" onclick="{!c.filterByTapStatus}" class="slds-align_absolute-center">Apply</a>
+                                                </div> 
+                                            </fieldset>                  
+                                        </div>
+                                    </span>
+                                </li>
+                                <li class="slds-dropdown__item" role="presentation">                                
+                                   <a href="javascript:void(0);" role="menuitem" tabindex="0">
+                                        <span class="slds-dropdown-trigger slds slds-dropdown-trigger--click" onclick="{!c.showDisconnectedDate}">
+                                            <div class="filter-item">
+                                                {!$Label.c.Disconnected_Date}                                            
+                                                <c:svg class="slds-button__icon slds-float--right" 
+                                                       xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevronright"/>
+                                                <div aura:id="discdate" class="slds-grid slds-wrap slds-grid_pull-padded hide-initially">    
+                                                    <div class="slds-size_4-of-6">
+                                                        <p style="margin-right:10%" class="slds-truncate slds-text-color_weak font-reduced" >{!v.disconnectedDate}</p>                        
+                                                    </div> 
+                                                    <div class="slds-size_2-of-6">
+                                                        <a href="#" class="slds-float--right slds-text-color_error font-reduced" style="margin-right:10%" onclick="{!c.clearDisconnectedDate}">Clear All</a>                        
+                                                    </div>
+                                                </div>                                                
+                                            </div>
+                                            <div aura:id="dddropdown"  class="open-on-right hide-initially">
+                                                <ul class="slds-dropdown__list" role="menu">
+                                                    <li class="slds-dropdown__item" role="presentation">
+                                                        <a href="#" onclick="{!c.filterByDisconnectedDate}" data-dd="6 Months">{!$Label.c.X6_Months}</a> 
+                                                        <a href="#" onclick="{!c.filterByDisconnectedDate}" data-dd="Between 6 Months and 1 Year">{!$Label.c.Between_6_Months_and_1_Year}</a>
+                                                        <a href="#" onclick="{!c.filterByDisconnectedDate}" data-dd="1 Year">{!$Label.c.X1_Year}</a>
+                                                        <a href="#" onclick="{!c.filterByDisconnectedDate}" data-dd="Between 1 and 2 Years">{!$Label.c.Between_1_and_2_Years}</a>
+                                                        <a href="#" onclick="{!c.filterByDisconnectedDate}" data-dd="2 Years">{!$Label.c.X2_Years}</a>
+                                                        <a href="#" onclick="{!c.filterByDisconnectedDate}" data-dd="Between 2 and 3 Years">{!$Label.c.Between_2_and_3_Years}</a>
+                                                        <a href="#" onclick="{!c.filterByDisconnectedDate}" data-dd="3 Years">{!$Label.c.X3_Years}</a>
+                                                    </li>
+                                                </ul>                                                   
+                                            </div>
+                                        </span>
+                                    </a>
+                                </li>                                                                
+                                <li class="slds-dropdown__item" role="presentation">
+                                    <a href="javascript:void(0);" role="menuitem" tabindex="0">
+                                        <span class="slds-dropdown-trigger slds slds-dropdown-trigger--click" onclick="{!c.showDistance}">
+                                            <div class="filter-item">
+                                                Distance                                            
+                                                <c:svg class="slds-button__icon slds-float--right" 
+                                                       xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevronright"/>
+                                                <div aura:id="dist" class="slds-grid slds-wrap slds-grid_pull-padded hide-initially">    
+                                                    <div class="slds-size_4-of-6">
+                                                        <p style="margin-right:10%" class="slds-truncate slds-text-color_weak font-reduced" >{!v.distance}</p>
+                                                    </div>
+                                                    <div class="slds-size_2-of-6">
+                                                        <a href="#" class="slds-float--right slds-text-color_error font-reduced" style="margin-right:10%" onclick="{!c.clearDistance}">Clear All</a>                        
+                                                    </div>													
+                                                </div>                                                
+                                            </div>
+                                            <div aura:id="distdropdown"  class="open-on-right hide-initially">
+                                                <ul class="slds-dropdown__list" role="menu">
+                                                    <li class="slds-dropdown__item" role="presentation">
+                                                        <a href="#" onclick="{!c.filterByDistance}" data-dist="1">{!$Label.c.X1_Mile}</a> 
+                                                        <a href="#" onclick="{!c.filterByDistance}" data-dist="3">{!$Label.c.X3_Miles}</a>
+                                                        <a href="#" onclick="{!c.filterByDistance}" data-dist="5">{!$Label.c.X5_Miles}</a>
+                                                        <a href="#" onclick="{!c.filterByDistance}" data-dist="10">{!$Label.c.X10_Miles}</a>
+                                                        <a href="#" onclick="{!c.filterByDistance}" data-dist="15">{!$Label.c.X15_Miles}</a>
+                                                        <a href="#" onclick="{!c.filterByDistance}" data-dist="20">{!$Label.c.X20_Miles}</a>
+                                                        <a href="#" onclick="{!c.filterByDistance}" data-dist="25">{!$Label.c.X25_Miles}</a>
+                                                    </li>
+                                                </ul>											
+                                                <li class="slds-has-divider_top-space" role="separator"></li>
+                                                <span class="slds-dropdown-trigger slds slds-dropdown-trigger--click">
+                                                    <center>Point of Interest:</center><br/>
+                                                    <div class="slds-button-group" role="group">
+                                                        <button aura:id="CurrentLocation" style="width:150px" class="slds-button slds-button_brand" data-loctype="current" onclick="{!c.getCurrentLoc}">Current Location</button>
+                                                        <button aura:id="Addresses" style="width:150px" class="slds-button slds-button_neutral" data-loctype="selectedAddress" onclick="{!c.getSelectedAddress}">Selected Address</button>
+                                                    </div>
+                                                </span>	
+                                            </div>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="slds-dropdown__item" role="presentation">
+                                    <a href="javascript:void(0);" role="menuitem" tabindex="0">
+                                        <span class="slds-dropdown-trigger slds slds-dropdown-trigger--click" onclick="{!c.showRejectedAddress}">
+                                            <div class="filter-item">
+                                                Rejected Addresses                                            
+                                                <c:svg class="slds-button__icon slds-float--right" 
+                                                       xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevronright"/>
+                                                <div aura:id="rejId" class="slds-grid slds-wrap slds-grid_pull-padded hide-initially">    
+                                                    <div class="slds-size_4-of-6">
+                                                        <p style="margin-right:10%" class="slds-truncate slds-text-color_weak font-reduced" >{!v.rejected}</p>
+                                                    </div>
+                                                    <div class="slds-size_2-of-6">
+                                                        <a href="#" class="slds-float--right slds-text-color_error font-reduced" style="margin-right:10%" onclick="{!c.clearRejAddrss}">Clear All</a>                        
+                                                    </div>													
+                                                </div>                                                
+                                            </div>
+                                            
+                                            <div aura:id="rejdropdown"  class="open-on-right hide-initially">
+                                                <ul class="slds-dropdown__list" role="menu">
+                                                    <li class="slds-dropdown__item" role="presentation">
+														<a href="#" onclick="{!c.showYesOrNo}" data-rej="Yes">{!$Label.c.Yes}&nbsp;<c:svg class="slds-button__icon slds-float--right"  xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevronright"/></a>
+                                                        <a href="#" onclick="{!c.filterByRejectedAddress}" data-rej="No">{!$Label.c.No}</a>
+                                                    </li>
+                                                </ul>
+											</div>												
+                                            <div aura:id="yesdropdown"  class="open-on-right hide-initially">
+                                                <ul class="slds-dropdown__list" role="menu">
+                                                    <li class="slds-dropdown__item" role="presentation">
+                                                        <span class="slds-dropdown-trigger slds slds-dropdown-trigger--click">
+                                                            <div class="slds-form-element">
+                                                                <fieldset class="slds-form-element">
+                                                                    <div class="slds-form-element__control">
+                                                                        
+                                                                        <div >
+                                                                            <label style="margin: 10px; font-weight: bold;" class="slds-align_absolute-center">Set Duration</label>
+                                                                            <p class="slds-truncate slds-text-color_weak font-reduced" >(Start date cannot be earlier than 180 days from today)</p>
+																			<div>
+                                                                                <div style="margin-left: 10px;width:70%;">
+																				<ui:inputDate label="From:"
+																							  aura:id="startDateTime"
+                                                                                              class="slds-form-element__control slds-input"
+																							  labelClass="slds-form-element__label"
+																							  displayDatePicker="true"
+																							  required="true"
+																							  value="{!v.startDateTime}"/></div> 
+																				<li class="slds-has-divider_top-space" role="separator"></li>
+																				<span style="margin-left: 10px;">To: </span><ui:outputDate value="{!v.endDateTime}" format="MM/dd/yyyy" />
+                                                                                <hr style="margin:0.5rem;" />
+                                                                                <div class="slds-align_absolute-center">
+																					<a href="#" onclick="{!c.filterYes}" data-rej = "Yes" >Apply</a>
+                                                                                </div>    
+																			</div>
+																		</div>
+                                                                    </div>
+                                                                </fieldset>
+                                                            </div>
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </span>	
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </span>
+                </li>               
+                <li class="slds-grid">
+                    <span aura:id="playlist" class="slds-dropdown-trigger slds slds-dropdown-trigger--click slds-dropdown--small slds-dropdown__header">
+                        <button class="slds-button slds-button--neutral " aria-haspopup="true" title="Show More" onclick="{!c.togglePlaylistPopup}">
+                            <c:svg class="slds-button__icon" 
+                                   xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#add"/>                             
+                            <span>Playlist</span>                            
+                        </button>
+                        <div class="slds-dropdown slds-dropdown--right slds-nubbin--top slds-popover zclass ">
+                            <ul class="slds-dropdown__list" role="menu">
+                                <li class="slds-dropdown__item" role="presentation">
+                                    <div class="slds-form-element" role="menuitem" tabindex="0">
+                                        <label class="slds-form-element__label slds-truncate labelStyle"  for="pname">Name Playlist</label>
+                                        <div class="slds-form-element__control slds-align--absolute-center " style="width:80%">
+                                            <ui:inputText class="slds-input" placeholder="Enter a name" value="{!v.playlistName}" required="true"/>
+                                        </div>
+                                        <div class="slds-align--absolute-center" style="margin-top:3%; margin-bottom:3%">
+                                            <button class="slds-button slds-button--neutral" onclick="{!c.togglePlaylistPopup}">Cancel</button>
+                                            <button class="slds-button slds-button--brand" onclick="{!c.createPlaylist}">Save</button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </span>
+                </li> 
+            </ul>
+            
+        </div>
+    </header>
+</aura:component>

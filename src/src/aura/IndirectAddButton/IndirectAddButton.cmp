@@ -1,0 +1,26 @@
+<aura:component controller="IndirectStore">
+    <aura:attribute name="storeVisitCategory" type="Store_Visit_Activity_Category__c"/>
+    <aura:attribute name="StoreVisitObj" type="Store_Visit__c"/> 
+    <aura:attribute name="buttonClassdown" type="String" default="slds-show"/>   
+    <aura:attribute name="buttonClassup" type="String" default="slds-hide"/> 
+    <aura:registerEvent name="appEvent" type="c:IndirectAddButtonEvent"/>
+    <aura:attribute name="iterationList" type="IndirectStore[]" />
+    <aura:attribute name="storeVisitCategories" type="Store_Visit_Activity_Category__c[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    
+    <!--aura:iteration items="{!v.iterationList}" var="stv" indexVar="index">
+        <aura:if isTrue="{!stv.check ==  false}" -->  
+            <div onclick ="{!c.getInput}" colspan="2"  data-record="{!v.storeVisitCategory.Record_Type_Id__c}" class="{!v.buttonClassdown}">
+                <c:svg class="slds-icon slds-icon--small slds-icon-text-default slds-float--right" 
+                       xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevrondown"/>	  
+            </div>
+        <!--/aura:if --> 
+        <!--aura:if isTrue="{!stv.check ==  true}"-->
+            <div onclick ="{!c.ToggleUp}" colspan="2"  data-record="{!v.storeVisitCategory.Record_Type_Id__c}" class="{!v.buttonClassup}">
+                <c:svg class="slds-icon slds-icon--small slds-icon-text-default slds-float--right" 
+                       xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevronup"/>
+            </div>
+        <!--/aura:if>     
+    </aura:iteration-->
+    
+</aura:component>

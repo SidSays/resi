@@ -1,0 +1,46 @@
+<aura:component >
+	<aura:attribute name="store" type="Account"/>
+	<aura:attribute name="loggedInUser" type="User"/>
+    <aura:attribute name="stores" type="Account[]"/>
+    <aura:attribute name="storevisits" type="Event[]"/>
+    <aura:registerEvent name="NavigateToMyStore" type="c:IndirectNavigateToMyStores"/>
+    <aura:registerEvent name="NavigateToDashboard" type="c:IndirectNavigateToDashboard"/>
+    
+    <div class="footer slds-grid slds-grid--align-space slds-box slds-theme--alt-inverse" role="navigation">
+		<div onclick="{!c.goToMyDashboard}">
+			<c:svg class="slds-icon" 
+					xlinkHref="/resource/SLDS100/assets/icons/standard-sprite/svg/symbols.svg#task" /> 
+			<dd>
+				<p class="slds-text-body--regular slds-text-body--small slds-truncate">DASHBOARD</p>
+			</dd>
+		</div>
+		<div onclick="{!c.goToMyStores}">
+			<c:svg class="slds-icon" 
+				xlinkHref="/resource/SLDS100/assets/icons/standard-sprite/svg/symbols.svg#note" /> 
+			<dd>
+				<p class="slds-text-body--regular slds-text-body--small slds-truncate">MY STORES</p>
+			</dd> 
+		</div>
+        <div>
+			<c:svg class="slds-icon play" 
+				xlinkHref="/resource/SLDS100/assets/icons/standard-sprite/svg/symbols.svg#announcement" /> 
+			<dd>
+				<p class="slds-text-body--regular slds-text-body--small slds-truncate">Start Visit</p>
+			</dd> 
+		</div>
+		<div >
+			<c:svg class="slds-icon" 
+					xlinkHref="/resource/SLDS100/assets/icons/standard-sprite/svg/symbols.svg#quotes" /> 
+			<dd>
+			<p class="slds-text-body--regular slds-text-body--small slds-truncate">OVERVIEW</p>
+			</dd>
+		</div>
+		<div >
+			<c:svg class="slds-icon" 
+					xlinkHref="/resource/SLDS100/assets/icons/standard-sprite/svg/symbols.svg#recent" /> 
+			<dd>
+			<p class="slds-text-body--regular slds-text-body--small slds-truncate">VISIT HISTORY</p>
+			</dd>
+		</div>
+	</div>
+</aura:component>

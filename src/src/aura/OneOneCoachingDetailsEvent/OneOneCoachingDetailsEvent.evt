@@ -1,0 +1,6 @@
+<aura:event type="APPLICATION" description="Event template">    
+    <aura:attribute name="oneOneCoachingRecords" type="one_one_Coaching__c[]" />
+    <aura:attribute name="userDetails" type="User"/>
+    <aura:attribute name="coachingId" type="String"/>
+    <aura:attribute name="isRep" type="Boolean"/>
+</aura:event>

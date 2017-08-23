@@ -1,0 +1,53 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:handler event="c:huddleEvent" action="{!c.handleApplicationEvent}"/>
+	<div class="slds-form-element">
+        <label class="slds-form-element__label" for="select-01">Select Group</label>
+        <div class="slds-form-element__control">
+            <div class="slds-select_container">
+                <select class="slds-select" id="select-01">
+                    <option>Huddle Group One</option>
+                    <option>Huddle Group Two</option>
+                    <option>Huddle Group Three</option>
+                </select>
+            </div>
+        </div>
+	</div>
+    <br/>
+    <div class="slds-form-element">
+        <label class="slds-form-element__label" for="select-01">Select Sales Process</label>
+        <div class="slds-form-element__control">
+            <div class="slds-select_container">
+                <select class="slds-select" id="select-01">
+                    <option>Sales Process 1</option>
+                    <option>Sales Process 1</option>
+                    <option>Sales Process 1</option>
+                </select>
+            </div>
+        </div>
+	</div>
+    <br/>
+    <div class="slds-form-element">
+        <label class="slds-form-element__label" for="select-01">Select Huddle Name</label>
+        <div class="slds-form-element__control">
+            <div class="slds-select_container">
+                <select class="slds-select" id="select-01">
+                    <option>Huddle 1</option>
+                    <option>Huddle 2</option>
+                    <option>Huddle 3</option>
+                </select>
+            </div>
+        </div>
+	</div>
+    <br/>
+    <div class="slds-form-element">
+    	<ui:inputTextArea label="Comments" class="slds-input" aura:id="notesId" 
+                                  labelClass="slds-form-element__label"/>
+    </div>
+        
+    <br/>    
+    <div>
+        <center>
+            <button class="slds-button slds-button--neutral slds-button--brand">Save</button>                                        
+        </center>
+    </div>  
+</aura:component>

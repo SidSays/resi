@@ -1,0 +1,6 @@
+To Whom it may concern,
+
+{!Store_Activity__c.CreatedBy} recently visited {!Store_Activity__c.Store__c}, located at {!Account.BillingAddress} and logged an Issue Resolution activity with the following notes:
+{!Store_Activity__c.Notes__c}
+
+Thank you!

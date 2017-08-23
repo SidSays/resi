@@ -1,0 +1,21 @@
+<aura:component >
+    <ltng:require styles="/resource/SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />
+    <aura:attribute name="storevisit" type="Event"/>
+    <div class="slds-card">        
+            <header class="slds-card__header slds-grid grid--flex-spread">            
+                     <p class="slds-text-heading--small slds-text-heading--medium slds-truncate">
+                         {!v.storevisit.Subject}
+                    </p>           	 
+            </header>
+            <section class="slds-card__body">
+                <div class="slds-tile slds-hint-parent">
+                    <p class="slds-tile__title slds-truncate">
+                        {!v.storevisit.Visit_Start_Date_And_Duration__c}
+                    </p>
+                    <p class="slds-tile__title slds-truncate">
+                        {!v.storevisit.What.Name}
+                    </p>
+                </div>
+            </section>
+    </div>
+</aura:component>

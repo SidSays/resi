@@ -1,0 +1,106 @@
+<aura:component controller="IndirectStore">
+    <aura:attribute name="title" type="String"/>
+    <aura:attribute name="loggedInUser" type="User"/>
+    <aura:attribute name="store" type="Account"/>
+    <aura:attribute name="storeMap" type="Map"/>
+    <aura:attribute name="bodyToRender" type="String"/>
+    <aura:attribute name="storevisits" type="Event[]"/>
+    <aura:attribute name="storeVisitCategory" type="Store_Visit_Activity_Category__c[]"/>
+    <aura:attribute name="module" type="String"/>
+    <aura:attribute name="role" type="UserRole"/>
+    <aura:attribute name="recommendedCategory" type="String[]"/>
+    <aura:attribute name="visible" type="String" default="slds-visible"/>
+    
+    <aura:handler event="c:IndirectShowAlertEvent" action="{!c.IndirectShowAlert}"/>
+    
+    <div aura:id="optionalModalDialog"/>
+    <div class="slds-grid slds-grid--align-space slds-box slds-theme--alt-inverse" 
+         role="navigation" id="footer" >
+        <aura:renderIf isTrue="{!v.module=='preparation' || v.module=='detail' || v.module=='other'}">
+            <div onclick="{!c.goToDashboard}" tabindex="1" align="center" onload="{!c.markSelected}" id="dashboard">
+                <c:svg class="slds-icon" 
+                       xlinkHref="/resource/SLDS100/assets/icons/standard-sprite/svg/symbols.svg#home" />                 
+                <p class="slds-text-body--medium slds-text-body--small slds-truncate">DASHBOARD</p>                
+            </div>
+        </aura:renderIf> 
+        <aura:renderIf isTrue="{!v.module=='preparation' || v.module=='detail'}">
+            <div onclick="{!c.goToMyStores}" tabindex="2" align="center" onload="style.background-color= #B0C4DE">
+                <c:svg class="slds-icon" 
+                       xlinkHref="/resource/SLDS100/assets/icons/standard-sprite/svg/symbols.svg#record" /> 
+                <p class="slds-text-body--medium slds-text-body--small slds-truncate">MY STORES</p>
+            </div>
+        </aura:renderIf>
+        <aura:renderIf isTrue="{!v.module=='preparation' || v.module=='other'}">
+            <div onclick="{!c.goToOtherVisits}" tabindex="3" align="center" onload="style.background-color= #B0C4DE">
+                <c:svg class="slds-icon" 
+                       xlinkHref="/resource/SLDS100/assets/icons/standard-sprite/svg/symbols.svg#quotes" /> 
+                <p class="slds-text-body--medium slds-text-body--small slds-truncate">OTHER VISITS</p>
+            </div>
+        </aura:renderIf>
+        <aura:renderIf isTrue="{!v.module=='other'}">
+            <div onclick="{!c.goToOtherVisitHistory}" tabindex="5" align="center" onload="style.background-color= #B0C4DE">
+                <c:svg class="slds-icon" 
+                       xlinkHref="/resource/SLDS100/assets/icons/standard-sprite/svg/symbols.svg#recent" /> 
+                <p class="slds-text-body--medium slds-text-body--small slds-truncate">OTHER VISIT HISTORY</p>
+            </div>
+        </aura:renderIf>
+        <aura:renderIf isTrue="{!v.module=='visit'}" >
+            <div onclick="{!c.goToStoreVisit}" tabindex="6" align="center">
+                <c:svg class="slds-icon" 
+                       xlinkHref="/resource/SLDS100/assets/icons/standard-sprite/svg/symbols.svg#task" /> 
+                <p class="slds-text-body--medium slds-text-body--small slds-truncate">ACTIVITIES</p>
+            </div>
+        </aura:renderIf>
+        <aura:renderIf isTrue="{!(v.module=='visit') &amp;&amp; 
+                               (v.loggedInUser.Profile_Name_Text__c=='Retail Sales Rep' || v.loggedInUser.Profile_Name_Text__c=='PT1')}">
+            <div onclick="{!c.goToVisitHistory2}" tabindex="10" align="center" class="{!v.visible}">
+                <c:svg class="slds-icon" 
+                       xlinkHref="/resource/SLDS100/assets/icons/standard-sprite/svg/symbols.svg#recent" /> 
+                <p class="slds-text-body--medium slds-text-body--small slds-truncate">VISIT HISTORY</p>
+            </div>
+        </aura:renderIf>        
+        <aura:renderIf isTrue="{!v.module=='detail' &amp;&amp; (v.loggedInUser.Profile_Name_Text__c=='Retail Sales Rep' || v.loggedInUser.Profile_Name_Text__c=='PT1')}">
+            <div onclick="{!c.goToStoreVisit}" tabindex="7" align="center">
+                <aura:if isTrue="{!v.store.Store_Visit_Status__c}">
+                    <c:svg class="slds-icon" 
+                           xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#refresh" /> 
+                    <p class="slds-text-body--medium slds-text-body--small slds-truncate">RESUME VISIT</p>
+                    <aura:set attribute="else">
+                        <c:svg class="slds-icon" 
+                               xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#right" /> 
+                        <p class="slds-text-body--medium slds-text-body--small slds-truncate">START VISIT</p>
+                    </aura:set>
+                </aura:if>
+            </div>
+        </aura:renderIf>
+        <aura:renderIf isTrue="{!v.module=='detail' || v.module=='visit'}" >
+            <div onclick="{!c.goToOverview}" tabindex="8" align="center">
+                <c:svg class="slds-icon" 
+                       xlinkHref="/resource/SLDS100/assets/icons/standard-sprite/svg/symbols.svg#dashboard" /> 
+                <p class="slds-text-body--medium slds-text-body--small slds-truncate">OVERVIEW</p>
+            </div>
+        </aura:renderIf>
+        <aura:renderIf isTrue="{!(v.module=='detail') &amp;&amp; 
+                               (v.loggedInUser.Profile_Name_Text__c=='Retail Sales Rep' || v.loggedInUser.Profile_Name_Text__c=='PT1')}">
+            <div onclick="{!c.goToVisitHistory}" tabindex="9" align="center">
+                <c:svg class="slds-icon" 
+                       xlinkHref="/resource/SLDS100/assets/icons/standard-sprite/svg/symbols.svg#recent" /> 
+                <p class="slds-text-body--medium slds-text-body--small slds-truncate">VISIT HISTORY</p>
+            </div>
+        </aura:renderIf>
+        <aura:renderIf isTrue="{!v.module=='visit'}">
+            <div onclick="{!c.goToNotes}" tabindex="11" align="center" class="{!v.visible}" >
+                <c:svg class="slds-icon" 
+                       xlinkHref="/resource/SLDS100/assets/icons/custom-sprite/svg/symbols.svg#custom83" /> 
+                <p class="slds-text-body--medium slds-text-body--small slds-truncate">NOTES</p>
+            </div>
+        </aura:renderIf>
+        <aura:renderIf isTrue="{!v.module=='visit'}">
+            <div onclick="{!c.goToNextStep}" tabindex="12" align="center" class="{!v.visible}">
+                <c:svg class="slds-icon" 
+                       xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#forward" /> 
+                <p class="slds-text-body--medium slds-text-body--small slds-truncate">NEXT STEPS</p>
+            </div>
+        </aura:renderIf>
+    </div>
+</aura:component>

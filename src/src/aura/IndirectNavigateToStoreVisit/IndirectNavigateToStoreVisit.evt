@@ -1,0 +1,9 @@
+<aura:event type="APPLICATION" description="Event template">
+    <aura:attribute name="storeId" type="String"/>
+    <aura:attribute name="bodyToRender" type="String"/>
+    <aura:attribute name="storeVisitCategory" type="Store_Visit_Activity_Category__c[]"/>
+    <aura:attribute name="StoreActivityCatagory" type="String"/>
+    <aura:attribute name="storeActivityId" type="String"/>
+    <aura:attribute name="LookupFieldValue" type="String"/>
+    <aura:attribute name="fromMultiContComp" type="boolean"/>
+</aura:event>

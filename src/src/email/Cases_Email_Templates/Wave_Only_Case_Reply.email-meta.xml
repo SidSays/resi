@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Reply to submitter of Wave Only case</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Wave Only Case Reply</name>
+    <style>none</style>
+    <subject>Your Wave case has been submitted - please review</subject>
+    <type>text</type>
+</EmailTemplate>

@@ -1,0 +1,19 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global" >
+
+	<aura:handler name="toggleClick" event="c:ToggleEventKP" action="{!c.dashboardToggle}" />
+    
+    <div class="slds-grid slds-grid_vertical-stretch">
+  		<div aura:id="dashboardDiv" class="slds-col slds-size--12-of-12 slds-small-size--12-of-12 slds-medium-size--12-of-12 slds-large-size--12-of-12 ">
+        	<forceCommunity:waveDashboard dashboardId="0FK16000000L0FIGA0" showSharing="true" 
+                                          height="620" openLinksInNewWindow="false" />
+            <!-- 0FK16000000L09FGAS(launch) 0FK16000000L0FIGA0(dashborad) -->
+        </div>
+  		<div aura:id="coachDiv" class="slds-col" >
+        	<c:Collapsible_KP />
+        </div>
+	</div>  
+    
+    <div class="rotate">
+    	<!--<p>View in portrait</p>-->
+    </div>
+</aura:component>

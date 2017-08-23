@@ -1,0 +1,5 @@
+You have been assigned as the Sales Engineer for {!Opportunity.Name}. 
+
+Visit the opportunity for more information: 
+{!Opportunity.Link}
+For any questions, contact {!Opportunity.OwnerFullName}.

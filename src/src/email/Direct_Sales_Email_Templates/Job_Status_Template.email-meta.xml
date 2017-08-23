@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Job Status Template</name>
+    <style>none</style>
+    <subject>Batch status for {!Job_Status__c.Name}</subject>
+    <textOnly>Hi Team,
+
+The following batch has been completed. Please find the status below:
+
+Batch Name:    {!Job_Status__c.Name}
+Batch Start Time:    {!Job_Status__c.Batch_Start_Time__c}
+Batch End Time:    {!Job_Status__c.Batch_End_Time__c}
+Status :    {!Job_Status__c.Status__c}
+Comments :    {!Job_Status__c.Comments__c}
+Total Records Processed :    {!Job_Status__c.Total_Records_Processed__c}
+Number of Fallouts :    {!Job_Status__c.Number_Of_Fallouts__c}
+Total RGU Activations Processed :    {!Job_Status__c.Total_RGU_Activations_Processed__c}
+Total RGU Orders Processed :    {!Job_Status__c.Total_RGU_Orders_Processed__c}
+Total RGU Orders Upserted Today :    {!Job_Status__c.Total_RGU_Orders_Upserted_Today__c}
+
+
+Regards,
+Comcast Team</textOnly>
+    <type>custom</type>
+</EmailTemplate>

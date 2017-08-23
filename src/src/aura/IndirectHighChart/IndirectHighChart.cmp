@@ -1,0 +1,11 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" controller="IndirectStoreGaugeController">
+    <aura:attribute name="store" type="Account" />
+          
+    <aura:attribute name="PastSevenDaysChart" type="IndirectOrdersChart"/>
+    
+    
+   <ltng:require scripts="/resource/Highstock_4_2_3/js/highstock-all.js"
+            afterScriptsLoaded="{!c.afterScriptsLoaded}"/>
+    <center style="background-color:white">Orders/Activations for past 7 days</center>
+    <div aura:id="chart" style="width:100%; height:400px;"/>
+</aura:component>

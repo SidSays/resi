@@ -1,0 +1,123 @@
+<aura:component controller="IndirectStore">
+    <aura:attribute name="store" type="Account" />
+    <aura:attribute name="role" type="UserRole"/>
+    <aura:attribute name="loggedInUser" type="User"/>
+    <aura:attribute name="storeVisitCategory" type="Store_Visit_Activity_Category__c[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <div class="slds">
+        <c:IndirectHighChart store="{!v.store}"/>    
+        <table class="slds-table slds-table--bordered ">
+            <tr>
+                <td>Account Number</td>
+                <td>{!v.store.AccountNumber}</td>
+            </tr>
+            <tr>
+                <td>Account Name</td>
+                <td>{!v.store.Name}</td>
+            </tr> 
+            <tr>
+                <td>Store Long Name</td>
+                <td>{!v.store.Store_Nickname__c}</td>
+            </tr> 
+           <!-- <tr>
+                <td>Billing Address</td>       
+                <td>{!v.store.BillingStreet}</td>
+            </tr>
+            <aura:if isTrue="{!(v.store.BillingCity != null) || (v.store.BillingState != null) || (v.store.BillingPostalCode != null)}">   
+                <tr>
+                    <td></td>
+                    
+                    <td>{!v.store.BillingCity}
+                        <aura:if isTrue="{!(v.store.BillingState != null) || (v.store.BillingPostalCode != null)}">
+                            ,
+                        </aura:if>
+                        {!v.store.BillingState}&nbsp;{!v.store.BillingPostalCode}</td>
+                    
+                </tr>
+            </aura:if>
+            <aura:if isTrue="{!(v.store.BillingCountry != null)}">
+                <tr>
+                    <td></td>
+                    <td>{!v.store.BillingCountry}</td>         
+                </tr>
+            </aura:if> -->
+            <tr>
+                <td>Phone</td>
+                <td>{!v.store.Phone}</td>
+            </tr>
+            <tr>
+                <td>Last Visit Date</td>
+                <td><ui:outputText value="{!v.store.Last_Visit_Date_Text__c}" /></td>
+            </tr>
+            <tr>
+                <td>Required Visit Frequency (Days)</td>
+                <td>{!v.store.Required_Visit_Frequency_Days__c}</td>
+            </tr>
+            <tr>
+                <td>Visit By Date</td>
+                <td><ui:outputDateTime value="{!v.store.Visit_By_Date__c}" format="M/d/y"/></td>        
+            </tr>
+            <tr>
+                <td>In-Store Competitors</td>
+                <td>{!v.store.In_Store_Competitors__c}</td>
+            </tr>
+            <tr>
+                <td>Store Designation</td>
+                <td>{!v.store.Store_Designation__c}</td>
+            </tr>
+            <tr>
+                <td>Store Type</td>
+                <td>{!v.store.Store_Type__c}</td>
+            </tr>
+            <tr>
+                <td>Parent Account Dropdown</td>
+                <td>{!v.store.Parent_Account_Dropdown__c}</td>
+            </tr>
+            <tr>
+                <td>Parent Account</td>
+                <td>{!v.store.Parent.Name}</td>
+            </tr>
+            <tr>
+                <td>Account Owner</td>
+                <td>{!v.store.Owner.Name}</td>
+            </tr>
+            
+            <aura:if isTrue="{!(v.loggedInUser.Profile_Name_Text__c=='Retail Sales Manager' || v.loggedInUser.Profile_Name_Text__c=='PT1')}">
+                <tr>
+                    <td>Monthly RGU Order Goal</td>
+                    <td>{!v.store.Monthly_RGU_Order_Goal__c}</td>
+                </tr>
+                <tr>
+                    <td>Monthly RGU Activations Goal</td>
+                    <td>{!v.store.Monthly_RGU_Activations_Goal__c}</td>
+                </tr>
+            </aura:if>
+            
+        </table>
+        <div class="slds-grid slds-grid--align-space slds-page-header slds-box slds-theme--shade 
+                    slds-theme--alert-texture slds-media__body" role="navigation"> 
+            <h4 class="slds-text-heading--small slds-truncate"><b>ADDITIONAL INFORMATION</b></h4>
+        </div> 
+        <table class="slds-table slds-table--bordered slds-scrollable--y">
+            
+            <tr>  
+                <td> <c:IndirectNotes store="{!v.store}"/></td>          
+            </tr>
+            
+            
+            <tr>
+                <td><c:IndirectOpenActivities store="{!v.store}"/> </td>
+            </tr>
+            
+            
+            <tr>            
+                <aura:if isTrue ="{!v.storeVisitCategory.length > 0}">
+                    <td><c:IndirectRecommendedActivities storeId="{!v.store.Id}"                                                          
+                                                         storeVisitCategory="{!v.storeVisitCategory}"
+                                                         loggedInUserId="{!v.loggedInUser.Id}"/></td>  
+                </aura:if>
+            </tr>
+            
+        </table>
+    </div>
+</aura:component>

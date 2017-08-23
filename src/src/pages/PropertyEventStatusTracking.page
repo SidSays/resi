@@ -1,0 +1,113 @@
+<!-- 
+/**********************************************************
+* Page Name: PropertyEventStatusTracking
+* Author: Shalaka Kadwade and Amit Kumar Pradhan, Accenture
+* Date: 3rd July 2017
+* User Story: US1117685(XC Property Event - Status Tracking)
+* Description: 1.This VF page is used for public site(Property Event Status Tracking)
+               2.User can accept or decline an event from this public site link.       
+***********************************************************/
+-->
+<apex:page controller="PropertyEventStatusTrackingController" id="page" showHeader="false" sidebar="false" cache="false" action="{!initializeData}">
+    <style type="text/css">  
+        .commentPannelClass{
+             border: 1px solid #ccc;
+             border-radius: 10px;
+             overflow: hidden;
+             background-color: #cfeef8;
+             padding: 5px 10px;
+        }
+        .commentStyle{
+            padding: 10px 0px;
+        }
+        
+        .mytable{
+            width: 100%;
+            float: left;
+            margin-top: 20px;
+        }
+        
+        .mytable tr td{
+            padding: 8px 20px;
+            vertical-align: middle;
+        }
+        
+        .labelCol{
+            max-width: 60px;
+        }
+    </style>    
+    <apex:pagemessages id="errMsg" escape="false"/>
+    <apex:form style="margin-left:10px;margin-right:10px;">
+    <apex:slds />
+    <br/>
+    <div style="padding-left:200px;padding-right:200px;">
+    <span style="font-weight:bold;font-family:arial;font-size:10.5pt;font-color:blue;padding:10px;">{!$Label.EmailInviteHeaderMsg}</span>
+        <apex:outputPanel id="StatusCheck">
+            <apex:pageblock rendered="{!NOT(isNewStatus)}">
+                <div style="background-color: #cfeef8; padding: 8px 300px;">
+                    <apex:outputLabel value="You have already {!response} the Event."/>
+                </div>          
+            </apex:pageblock>
+        </apex:outputPanel>
+        <apex:outputPanel id="acceptANDDecline">
+            <apex:pageBlock rendered="{!NOT(isAccepted) && NOT(isDeclined) && isNewStatus}">
+                <table class="mytable">
+                    <tr>
+                        <td class="labelCol">
+                            <apex:outputLabel value="Organizer :"/> 
+                        </td>
+                        <td>
+                            <apex:outputText value="{!organizerName}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="labelCol">
+                            <apex:outputLabel value="Subject :"/>                           
+                        </td>
+                        <td> 
+                            <apex:outputText value="{!eventName}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="commentStyle labelCol" style="background-color: #cfeef8; padding: 10px 10px; border-top-left-radius: 10px; border-bottom-left-radius: 10px;
+                            overflow: hidden;">
+                            <apex:outputLabel value="Your Comment"/>                                
+                        </td>
+                        <td class="commentStyle" style="    background-color: #cfeef8; padding: 10px 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;
+                        overflow: hidden;"> 
+                            <apex:inputTextarea value="{!comments}" style="resize: none;width: 325px;height: 70px;border-radius: 5px;"/>
+                        </td>
+                    </tr>
+                </table>
+                
+                <apex:pageBlockButtons location="Bottom">
+                    <apex:commandButton action="{!submitAcceptORDecline}" value="Accept" reRender="errMsg,acceptedMsg,acceptANDDecline" style="background:LightBlue;width:100px;">
+                        <apex:param name="acceptName" value="Accepted" assignTo="{!acceptORDecline}"/>
+                    </apex:commandButton>
+                    <apex:commandButton action="{!submitAcceptORDecline}" value="Decline" reRender="errMsg,declinedMsg,acceptANDDecline" style="background:LightBlue;width:100px;">
+                        <apex:param name="declineName" value="Declined" assignTo="{!acceptORDecline}"/>
+                    </apex:commandButton>
+                </apex:pageBlockButtons>
+                               
+            </apex:pageBlock>
+        </apex:outputPanel>
+        
+        <apex:outputPanel id="acceptedMsg">
+            <apex:pageblock rendered="{!isAccepted}">
+                <div style="background-color: #cfeef8; padding: 8px 300px;">
+                    <apex:outputLabel value="{!$Label.AcceptSuccessMsg}"/>
+                </div>          
+            </apex:pageblock>
+        </apex:outputPanel>
+        
+        <apex:outputPanel id="declinedMsg">
+            <apex:pageblock rendered="{!isDeclined}">
+                <div style="background-color: #cfeef8; padding: 8px 300px;">
+                    <apex:outputLabel value="{!$Label.DeclineMessage}"/>
+                </div>          
+            </apex:pageblock>
+        </apex:outputPanel>
+                
+    </div> 
+    </apex:form>
+</apex:page>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Chatter launch announcement email</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Comcast_LetterHead</letterhead>
+    <name>Chatter Launch Announcement</name>
+    <style>promotionLeft</style>
+    <subject>Announcing the Direct Sales Chatter Launch</subject>
+    <textOnly>Hello {!User.FirstName},
+
+I am pleased to announce that we have officially launched Salesforce Chatter to Sales Development Manager,Area Sales Manager, Directors, and Leadership.
+
+Chatter is a collaboration tool in our SFA platform that will help us communicate and share information with each other more efficiently. Chatter provides real-time, contextualized collaboration among team members so that everyone has the most up-to-date information all in one place.
+
+Specifically, our organizational goals for using Chatter include:
+
+- Using badges to publicly recognize our colleagues for outstanding work.
+- Using private groups that will allow divisions and regions more streamlined communication with their teams.
+- Using public groups that allow anyone to share ideas, request feedback, or get answers to questions.
+
+I encourage you all to log in to SFAII, set up your profile, become acquainted with your respective Division and Region groups, and find your manager and team members&apos; profiles in Chatter. Feel free to access my profile and get started.
+
+If you have questions, please post them to the Chatter: Support &amp; Training group. As a function of this launch, we ask that if you have any questions or concerns to refrain from emailing, and instead post comments on my Chatter post here, or in the Chatter: Support &amp; Training group.
+
+I look forward to hearing from you all!
+
+Kevin Sweeney
+Vice President, Direct Sales
+
+--
+
+Chatter FAQ:
+
+Can my XFINITY Sales Professional participate?
+At this time, we are opening Chatter only to Sales Development Manager,Area Sales Manager, Directors, and Leadership.
+
+What do I need to set up in Chatter?
+Take a look at the Getting Started with Chatter guide.
+
+Where can I go for Chatter questions?
+Check out the Chatter: Support &amp; Training group in SFAII.
+
+Who can I contact with other questions?
+Contact our Chatter Community Managers, Becky Webster and Jennifer Sun.</textOnly>
+    <type>html</type>
+</EmailTemplate>

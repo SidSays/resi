@@ -1,0 +1,6 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[Hello,<div><br></div><div>Claim Number&nbsp;{!Case.CaseNumber} has been closed. Please see the below Case details</div><div><br></div><div>Claim Number:&nbsp;{!Case.CaseNumber}</div><div>Date Opened:&nbsp;{!Case.CreatedDate}</div><div>Status:&nbsp;{!Case.Status}</div><div>Case Result:&nbsp;{!Case.Claim_Result__c}</div><div>Case Reason Description:&nbsp;{!Case.Claim_Reason_Description__c}</div><div>Claimed Amount:&nbsp;{!Case.Claimed_Amount__c}</div><div>Approved Amount:&nbsp;{!Case.Approved_Amount__c}</div><div><br></div><div>Thank You,</div><div>SFA Project Team</div>]]></td>
+</tr>
+</table>

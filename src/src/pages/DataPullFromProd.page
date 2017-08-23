@@ -1,0 +1,115 @@
+<apex:page controller="DataPullFromProdController" tabStyle="Post_Refresh_Data_Migration__tab">
+    <!-- Javascript -->
+    <script type = "text/javascript">
+        window.onload=function()      
+        {         
+            document.getElementById("objs").style.display = 'none';
+            document.getElementById("fields").style.display = 'none';
+            document.getElementById("records").style.display = 'none';
+        };     
+        function callObjects()
+        {
+            document.getElementById("objs").style.display = '';
+            CallLogin();
+        }
+        function callFields()
+        {
+            document.getElementById("fields").style.display = '';
+            CallShowFields();
+        }      
+        function callRecords()
+        {
+            document.getElementById("records").style.display = '';
+            CallShowRecords();
+        }      
+    </script>
+    <!-- End of Javascript -->
+    <apex:form >
+        <!-- Action Status -->
+        <apex:actionstatus id="actionStatus">
+            <apex:facet name="start">
+            <!--<c:enhancedactionstatus BackColor="#efefef" borderColor="black" borderSize="3" height="50px" width="120px" Message="Loading..." messageStyle="color:darkred;font-size:11pt;font-weight:bold;"/>-->
+            </apex:facet>
+        </apex:actionStatus>
+        <!-- Calling login() from Controller -->
+        <apex:actionFunction name="CallLogin" action="{!login}" reRender="objs" status="actionStatus"/>   
+        <!-- Calling showFields() from Controller -->
+        <!--<apex:actionFunction name="CallShowFields" action="{!showFields}" reRender="fields" status="actionStatus"/>-->   
+        <!-- Calling fetch() from Controller -->
+        <apex:actionFunction name="CallShowRecords" action="{!fetch}" reRender="records" status="actionStatus"/>    
+        <!-- Login Details -->
+        <apex:pageblock title="Login" >
+            <apex:pageblocksection columns="2">
+                <apex:outputLabel >Username:</apex:outputLabel>
+                <apex:inputtext value="{!userName}" />
+                <apex:outputLabel >Password:</apex:outputLabel>
+                <apex:inputsecret value="{!passWord}"  />          
+                <apex:outputLabel >Security Token:</apex:outputLabel>                       
+                <apex:inputsecret value="{!securityToken}"  />             
+            </apex:pageblocksection>                      
+            <apex:pageblockbuttons >
+                <apex:commandButton value="Login" reRender="objs" onclick="callObjects()"/>
+            </apex:pageblockbuttons>           
+        </apex:pageblock>      
+        <!-- Object Details -->
+        <table id = "objs" width = "100%">
+            <tr>
+                <td>
+                    <apex:pageblock id="objs" title="Object Selection">
+                        <apex:pageblocksection >
+                            <apex:outputlabel >Select Object:</apex:outputlabel>
+                            <apex:selectList value="{!objectName}" multiselect="false" size="1" >
+                                <apex:selectoptions value="{!ObjectNames}"/>
+                            </apex:selectList>
+                        </apex:pageblocksection>
+                    </apex:pageblock>
+                </td>
+            </tr>
+            <tr>
+                <td colspan = "3" align = "center"><apex:commandButton value="Fetch" rerender="records" onclick="callRecords()"/></td>
+            </tr>
+        </table>
+        <!-- Fields Details -->
+        <!--<table id = "fields" width = "100%">
+            <tr>
+                <td>
+                    <apex:pageblock id="fields" title="Fields Selection">
+                        <table cellspacing = "15">
+                            <tr>
+                                <td>
+                                    <apex:selectList multiselect="true" value="{!selectedFields}" size="7" >
+                                        <apex:selectoptions value="{!fields}"/>
+                                    </apex:selectList>
+                                </td>
+                                <td>
+                                    <apex:commandButton value=" >> " action = "{!addFields}" reRender = "fields" status="actionStatus"/><br/><br/><br/><br/>
+                                    <apex:commandButton value=" << " action="{!removeFields}" reRender="fields" status="actionStatus"/>  
+                                </td>
+                                <td>
+                                    <apex:selectList multiselect="true" value="{!checkedFields}" size="7">
+                                        <apex:selectoptions value="{!fieldsAvailable}"/>
+                                    </apex:selectList>
+                                </td>               
+                            </tr>
+                            <tr>
+                                <td colspan = "3" align = "center"><apex:commandButton value="Fetch" rerender="records" onclick="callRecords()"/></td>
+                            </tr>
+                        </table>
+                    </apex:pageblock>
+                </td>
+            </tr>
+        </table>-->
+        <!-- Retrieved Records -->   
+        <table id = "records" width = "100%">
+            <tr>
+                <td>
+                    <apex:pageBlock id="records" title="Record Summary">
+                        <apex:pageBlockTable value="{!output}" var="res">
+                            <apex:column value="{!res}"/>
+                        </apex:pageBlockTable>
+                    </apex:pageBlock>
+                </td>
+            </tr>
+        </table>  
+    </apex:form>
+</apex:page>

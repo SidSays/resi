@@ -1,0 +1,77 @@
+<aura:component controller="IndirectStoreController">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="storeActivityId" type="String"/>
+    <aura:attribute name="storeId" type="String"/>
+    <aura:attribute name="StoreActivityCatagory" type="String"/>
+    <aura:attribute name="LookupFieldValue" type="String"/>
+    <aura:attribute name="contactsList" type="IndirectStoreController.ContactActivityWrapper[]"/>
+    <aura:attribute name="storeVisitCategory" type="Store_Visit_Activity_Category__c[]"/>    
+    <aura:attribute name="fromMultiContComp" type="boolean"/>   
+    
+     <div aura:id="optionalModalDialog"/>
+    
+    <aura:if isTrue="{!v.contactsList.length>0}">
+        <div class="slds">  
+            <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout">
+                <thead>
+                    <tr class="slds-text-heading--label">
+                        <th width="12%" scope="col" title="Select">
+                            <div class="slds-truncate">Select
+                                <div class="slds-checkbox"></div>
+                            </div>    
+                        </th>
+                        
+                        <th width="26%" scope="col" title="Name">
+                            <div class="slds-wrap">Name</div>
+                        </th> 
+                        <th width="38%" scope="col" title="Email">
+                            <div class="slds-truncate">Email</div>
+                        </th> 
+                        <th width="24%" scope="col" title="Type">
+                            <div class="slds-truncate">Type</div>
+                        </th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <aura:iteration items="{!v.contactsList}" var="cnt">
+                        <tr>
+                            <td scope="row" data-label="Select Contacts" title="{!cnt.checked}">                                                          
+                                <ui:inputCheckbox value="{!cnt.checked}"/>                                      
+                            </td>
+                            <td class="cell slds-cell-wrap" data-label="Name" title="{!cnt.contactObj.Name}">
+                                <div>{!cnt.contactObj.Name}</div>
+                            </td>  
+                            <td data-label="Email" title="{!cnt.contactObj.Email}">
+                                <div class="slds-truncate">{!cnt.contactObj.Email}</div>
+                            </td>  
+                            <td data-label="Type" title="{!cnt.contactObj.Type__c}">
+                                <div class="slds-truncate">{!cnt.contactObj.Type__c}</div>
+                            </td>      
+                        </tr>  
+                        
+                    </aura:iteration>
+                </tbody>
+            </table>
+            
+            <br></br>
+            
+            <div>
+                <center>
+                    <button class="slds-button slds-button--neutral slds-button--brand" onclick="{!c.addContactToActivity}">Add Contacts</button>
+                    <button class="slds-button slds-button--neutral slds-button--brand" onclick="{!c.cancel}">Cancel</button>              
+                </center>
+            </div> 
+        </div>
+        
+        <aura:set attribute="else">
+            <div class="slds" style="text-align:center;font-size:20px">
+                <br/><b>No records found. </b>
+            </div>
+            <br/>
+            <center>
+                <button class="slds-button slds-button--neutral slds-button--brand" onclick="{!c.cancel}">Cancel</button>
+            </center>
+        </aura:set>
+    </aura:if>
+</aura:component>

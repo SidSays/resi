@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Direct Sales Moble v1.0.5 Release Notes</name>
+    <style>none</style>
+    <subject>Important: Direct Sales Mobile Version 1.0.5 Now Available</subject>
+    <textOnly>Good Morning {!Receiving_User.FirstName},
+
+Version 1.0.5 of the Direct Sales Mobile App has been posted to the Comcast App Catalog and can be downloaded at your convenience. The current version installed on your device will continue to work until you are able to install the latest version.
+
+Version 1.0.5 includes fixes for:
+Turf and Playlists
+Active Service Icons on the Address Details Page
+Dwelling Type
+Knock &amp; Rejection Reason Misspellings
+Filtering by Customer Status
+Playlist Expiration
+Viewing Past Knocks
+SalesPortal 
+Attached are detailed release notes for the above fixes as well as step by step instructions to install version 1.0.5 of the Direct Sales Mobile app. 
+
+You can also find the release notes and job aid by clicking the below links and selecting &quot;view file&quot;:
+
+Release Notes: https://onecomcast.my.salesforce.com/015G000000CbpXH
+
+Downloading &amp; Installing the App: https://onecomcast.my.salesforce.com/015G000000CbpVu
+
+Thank You</textOnly>
+    <type>custom</type>
+</EmailTemplate>

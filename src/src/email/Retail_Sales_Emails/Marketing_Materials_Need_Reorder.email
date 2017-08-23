@@ -1,0 +1,5 @@
+To whom it may concern, 
+
+{!Store_Activity__c.CreatedBy} visited {!Store_Activity__c.Store__c}, located at {!Store_Activity__c.Store_Address__c} today. They noted that the following marketing materials needed to be reordered: {!Store_Activity__c.Please_select_materials_needing_reorder__c}
+
+Thank you.

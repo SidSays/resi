@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>36.0</apiVersion>
+    <availableInTouch>true</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>This is the lead form that was used outside of SFDC . This is the same form only allowing users access to it from within SFDC</description>
+    <label>OTM_Lead_Form</label>
+</ApexPage>

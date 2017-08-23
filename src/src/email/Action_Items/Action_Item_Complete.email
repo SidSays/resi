@@ -1,0 +1,20 @@
+<p><a href="{!Action_Item__c.Link}">Action Item {!Action_Item__c.Name}</a> is now Complete:</p>
+
+<p><strong>Assigned To:</strong><br>
+{!Action_Item__c.Assigned_To__c}</p>
+<p><strong>Channel:</strong><br>
+{!Action_Item__c.Channel__c}</p>
+<p><strong>Initiative</strong><br>
+{!Action_Item__c.Initiative__c}</p>
+<p><strong>Due Date:</strong><br>
+{!Action_Item__c.Due_Date__c}</p>
+<p><strong>Title:</strong><br>
+{!Action_Item__c.Title__c}</p>
+<p><strong>Details:</strong><br>
+{!Action_Item__c.Details__c}</p>
+<p><strong>Status:</strong><br>
+{!Action_Item__c.Status__c}</p>
+<p><strong>Last Updated:</strong><br>
+{!Action_Item__c.Last_Updated__c}</p>
+<p><strong>Identified By:</strong><br>
+{!Action_Item__c.Identified_By__c}</p>

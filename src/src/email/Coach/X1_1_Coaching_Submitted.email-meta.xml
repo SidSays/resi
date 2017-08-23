@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Email template for sending an e-mail to Retail Sales Rep when Retail Sales Manager submitted the 1:1 Coaching.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>1-1 Coaching Submitted</name>
+    <style>none</style>
+    <subject>A 1-1 Coaching has been submitted</subject>
+    <type>text</type>
+</EmailTemplate>

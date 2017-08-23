@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Case Email used to Respond via Email</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Respond To Creator</name>
+    <style>none</style>
+    <subject>Respond to Creator</subject>
+    <type>text</type>
+</EmailTemplate>

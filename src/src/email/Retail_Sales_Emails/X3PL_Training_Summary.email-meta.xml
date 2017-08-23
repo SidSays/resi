@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This template will be used in the store visit summary email</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>3PL Training Summary</name>
+    <style>none</style>
+    <subject>3PL Manager Review Summary</subject>
+    <textOnly>During a training session with {!Store_Activity__c.Who_did_you_meet_with__c}, it was determined that the 3PL rep lacked knowledge of the following topics: {!Store_Activity__c.What_topics_did_you_cover_in_training__c}</textOnly>
+    <type>custom</type>
+</EmailTemplate>

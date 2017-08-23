@@ -1,0 +1,15 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:attribute name="dashboardIds" type="String[]" access="global" default="0FK0j0000008OUpGAM,0FK0j0000004CP6GAM"/>
+	
+  <div class="outer">
+        <ul aura:id="list"/>
+    </div> 
+  <!--    <ui:inputSelect label="Status" class="dynamic" 
+                    aura:id="InputSelectDynamic" 
+                    required="true"/> 
+     <ui:inputSelect aura:id="levels" label="Select Dashboard" change="{!c.onSelectChange}">
+        <aura:iteration items="{!v.contactLevel}" var="level">
+             <ui:inputSelectOption text="{!level}" label="{!level}"/>
+        </aura:iteration>
+    </ui:inputSelect>-->
+</aura:component>

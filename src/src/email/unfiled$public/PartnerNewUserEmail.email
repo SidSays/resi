@@ -1,0 +1,9 @@
+Dear {!Contact.FirstName},
+
+Your {!Organization.Name} partner portal login and password information is below.
+
+Important Note: Your partner portal login access is only valid through the website address provided by your partner contact. Your login credentials will not work through the standard Salesforce.com website address.
+
+Thank you,
+
+{!Organization.Name} Customer Support

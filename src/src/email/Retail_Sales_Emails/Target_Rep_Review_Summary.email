@@ -1,0 +1,11 @@
+<br>
+<br>
+While reviewing  following things were observed: 
+<br>
+<br>
+{!Store_Activity__c.Target_Rep_Review_Summary_Email_Template__c}
+<br>
+Name of Reps : {!Store_Activity__c.Name_of_Reps__c} 
+<br>
+{!Store_Activity__c.Target_Rep_Review_Summary_Email_Temp_2__c}
+<br>

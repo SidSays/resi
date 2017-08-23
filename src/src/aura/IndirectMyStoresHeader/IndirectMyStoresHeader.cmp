@@ -1,0 +1,27 @@
+<aura:component controller="IndirectStoreController">
+	<ltng:require styles="/resource/SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />
+	<aura:attribute name="stores" type="Account[]"/>
+    <aura:attribute name="sortlevels" type="String[]" default="Alphabetical,Last Visit Date,Number of Visits"/>    
+    <aura:registerEvent name="NavigateToStoreDetails" type="c:IndirectNavigateToStoreDetails"/>
+    
+    <ui:inputSelect aura:id="levels" label="" change="{!c.sortStoreList}">
+        <aura:iteration items="{!v.sortlevels}" var="level">
+            <ui:inputSelectOption text="{!level}" label="{!level}"/>
+        </aura:iteration>
+    </ui:inputSelect>
+    
+        <aura:iteration items="{!v.stores}" var="store" indexVar="idx">
+            <div class="slds-card"  data-record="{!idx}"  onclick="{!c.goToStoreDetail}">
+                <header class="slds-card__header slds-grid grid--flex-spread">    
+                        <h2 class="slds-text-heading--medium slds-truncate">{!store.Name}</h2>
+                </header>
+                <section class="slds-card__body">
+                    <div class="slds-tile slds-hint-parent">
+                        <p class="slds-tile__title slds-truncate">
+                            {!store.BillingStreet},{!store.BillingCity},{!store.BillingState},{!store.BillingPostalCode}
+                        </p>
+                    </div>
+                </section>
+            </div>                                                
+        </aura:iteration>
+</aura:component>

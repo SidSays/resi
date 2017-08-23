@@ -1,0 +1,41 @@
+<p>
+	Good Morning {!Receiving_User.FirstName},
+</p>
+<p>
+	Version 1.0.5 of the Direct Sales Mobile App has been posted to the Comcast App Catalog and can be downloaded at your convenience. The current version
+	installed on your device will continue to work until you are able to install the latest version.
+</p>
+<p>
+	Version 1.0.5 includes:
+</p>
+<ul>
+	<li>
+		Turf &amp; Playlists will no longer show duplicated
+	</li>
+         <li>Active Services Flags will now display correctly on the Address Details Page to match what is displayed in the left navigation bar in Map View.</li>
+ <li>Dwelling Type will display based on what is in the biller</li>
+<li> The Customer Name has been replaced with the Account Name of 'Last Name Home' for the short term to ensure it is no longer blank</li>
+<li> Knock &amp; Rejection Reason misspellings have been corrected.</li>
+<li>The Customer Status Filter is now a multi-select Filter.</li>
+<li>The Disposition Filter is now a Multi-select.</li>
+<li> The Active Products filter is now a multi-select filter.</li>
+<li> Playlists created from the DSM App will now expire when the Parent Turf Plan expires.</li>
+<li>Past Knocks/Activities will now show in the Address Details Page from within a playlist.</li>
+<li> Sales Portal will now successfully launch from the app.</li>
+</ul>
+</p>
+<p>
+	Attached are detailed release notes for the above fixes as well as step by step instructions to install version 1.0.5 of the Direct Sales Mobile app.
+</p>
+<p>
+	You can also find the release notes and job aid by clicking the below links and selecting "view file":
+</p>
+<p>
+	Release Notes: <a href='https://onecomcast.my.salesforce.com/015G000000CbpXH'>https://onecomcast.my.salesforce.com/015G000000CbpXH</a>
+</p>
+<p>
+	Downloading &amp; Installing the App: <a href='https://onecomcast.my.salesforce.com/015G000000CbpVu'>https://onecomcast.my.salesforce.com/015G000000CbpVu</a> 
+</p>
+<p>
+	Thank You
+</p>

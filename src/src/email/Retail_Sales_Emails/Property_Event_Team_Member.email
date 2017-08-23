@@ -1,0 +1,14 @@
+Dear {!Property_Event_Team_Member__c.Name},
+
+{!Property_Event_Team_Member__c.Property_Event__c} has been scheduled for you.
+
+You have been added as a team member of the property event {!Property_Event_Team_Member__c.Property_Event__c}.
+
+Property Event Details:
+Property Events Name – {!Property_Event_Team_Member__c.Property_Event__c}
+Property – {!Property_Event_Team_Member__c.Property_Event_Property__c}
+Start Time – {!Property_Event_Team_Member__c.Property_Event_Start_Date__c}
+End Time – {!Property_Event_Team_Member__c.Property_Event_End_Date__c}
+
+
+Thanks.

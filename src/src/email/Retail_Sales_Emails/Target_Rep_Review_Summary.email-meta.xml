@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>This template will be used in the store visit summary email</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>Target Rep Review Summary</name>
+    <style>none</style>
+    <subject>Target Rep Review Summary</subject>
+    <textOnly>While reviewing  following things were observed:
+
+How many reps present? : {!Store_Activity__c.How_many_reps_present__c}
+Name of Reps : {!Store_Activity__c.Name_of_Reps__c}
+Did rep demonstrate Xfinity products? : {!Store_Activity__c.Did_the_MS_rep_demonstrate_Xfinity_produ__c}
+Which product(s) were demonstrated? : {!Store_Activity__c.Which_product_s_were_demonstrated__c}
+What was reviewed with MS reps? : {!Store_Activity__c.What_was_reviewed_with_MS_reps__c}
+MS Rep Feedback : {!Store_Activity__c.MS_Rep_Feedback__c}
+How many custs. were engaged by rep? : {!Store_Activity__c.How_many_customers_were_engaged_by_the_M__c}
+Was Comcast discussed/offered to cust.?: {!Store_Activity__c.Was_Comcast_discussed_or_offered_to_cust__c}
+Rep able to bridge to Xfinity services?  : {!Store_Activity__c.Was_the_MS_rep_able_to_adequately_bridge__c}
+Was rep educated about Xfinity products? : {!Store_Activity__c.Did_the_MS_rep_seem_knowledgeable_about__c}</textOnly>
+    <type>custom</type>
+</EmailTemplate>

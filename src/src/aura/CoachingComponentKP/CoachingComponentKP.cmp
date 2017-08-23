@@ -1,0 +1,15 @@
+<aura:component implements="flexipage:availableForAllPageTypes" access="global">
+    <aura:attribute name="showCreateOneOneCoaching" type="Boolean" default="false"/>
+    <aura:attribute name="showCoachingTimeline" type="Boolean" default="true"/>
+    <aura:attribute name="workCoachingId" type="String"/>
+    <aura:attribute name="oldOneOneList" type="one_one_Coaching__c[]"/>
+    <aura:handler event="c:CreateOneOneCoachingEvent" action="{!c.navigateToCreateOneOneCoaching}"/>    
+       
+    <aura:if isTrue="{!v.showCoachingTimeline}">
+        <c:CoachingTimelineKP />
+    </aura:if>
+    
+    <aura:if isTrue="{!v.showCreateOneOneCoaching}">        
+        <c:CreateOneOneCoachingKP />
+    </aura:if>
+</aura:component>

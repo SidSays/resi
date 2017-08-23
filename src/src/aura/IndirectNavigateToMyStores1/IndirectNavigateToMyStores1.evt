@@ -1,0 +1,4 @@
+<aura:event type="APPLICATION" description="Event template">
+    <aura:attribute name="currentuser" type="User"/>
+    <aura:attribute name="hisstores" type="Account[]"/>
+</aura:event>

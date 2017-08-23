@@ -1,0 +1,10 @@
+<aura:component >
+	<aura:attribute name="store" type="Account"/>
+    
+    <div onclick ="{!c.getOpenActivities}">
+        <b><ui:outputText value="Open Tasks and Events" /> </b>
+        <c:svg class="slds-icon slds-icon--small slds-icon-text-default slds-float--right" 
+                    xlinkHref="/resource/SLDS100/assets/icons/utility-sprite/svg/symbols.svg#chevronright"/>
+    </div>
+   
+</aura:component>

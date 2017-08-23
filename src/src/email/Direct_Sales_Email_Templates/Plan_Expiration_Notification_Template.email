@@ -1,0 +1,15 @@
+<table height="400" width="550" cellpadding="5" border="0" cellspacing="5" >
+<tr height="400" valign="top" >
+<td style=" color:#000000; font-size:12pt; background-color:#FFFFFF; font-family:arial; bLabel:main; bEditID:r3st1;" tEditID="c1r1" locked="0" aEditID="c1r1" >
+<![CDATA[<DIV><SPAN style="FONT-SIZE: 12pt">Hello&nbsp;{!Plan__c.User__c},
+<DIV style="TEXT-TRANSFORM: none; TEXT-INDENT: 0px; FONT: 12pt arial; WHITE-SPACE: normal; LETTER-SPACING: normal; COLOR: rgb(0,0,0); WORD-SPACING: 0px; -webkit-text-stroke-width: 0px"><BR></DIV>
+<DIV style="TEXT-TRANSFORM: none; TEXT-INDENT: 0px; FONT: 16px arial; WHITE-SPACE: normal; LETTER-SPACING: normal; COLOR: rgb(0,0,0); WORD-SPACING: 0px; -webkit-text-stroke-width: 0px">
+<P style="MARGIN-TOP: 0px; MARGIN-BOTTOM: 0px" class=MsoNormal><SPAN style="FONT-FAMILY: Arial, sans-serif; COLOR: rgb(0,0,0); FONT-SIZE: 12pt">This is an Auto-Generated email. A Turf record {!Plan__c.Link} that is assigned to you &nbsp;expires on&nbsp;</SPAN><FONT face="Arial, sans-serif">{!Plan__c.Expiration_Date__c}</FONT><SPAN style="FONT-FAMILY: Arial, sans-serif; COLOR: rgb(0,0,0); FONT-SIZE: 12pt">.&nbsp;</SPAN></P>
+<P style="MARGIN-TOP: 0px; MARGIN-BOTTOM: 0px" class=MsoNormal><SPAN style="FONT-FAMILY: Arial, sans-serif; COLOR: rgb(0,0,0); FONT-SIZE: 12pt">Please take any necessary actions.</SPAN></P></DIV>
+<DIV style="TEXT-TRANSFORM: none; TEXT-INDENT: 0px; FONT: 12pt arial; WHITE-SPACE: normal; LETTER-SPACING: normal; COLOR: rgb(0,0,0); WORD-SPACING: 0px; -webkit-text-stroke-width: 0px"><BR></DIV>
+<DIV style="TEXT-TRANSFORM: none; TEXT-INDENT: 0px; FONT: 12pt arial; WHITE-SPACE: normal; LETTER-SPACING: normal; COLOR: rgb(0,0,0); WORD-SPACING: 0px; -webkit-text-stroke-width: 0px"><BR></DIV>
+<DIV style="TEXT-TRANSFORM: none; TEXT-INDENT: 0px; FONT: 12pt arial; WHITE-SPACE: normal; LETTER-SPACING: normal; COLOR: rgb(0,0,0); WORD-SPACING: 0px; -webkit-text-stroke-width: 0px">
+<DIV style="BACKGROUND-COLOR: rgb(255,255,255); FONT-SIZE: 12pt"><SPAN style="FONT-SIZE: 12pt">Best Regards,</SPAN></DIV>
+<DIV style="BACKGROUND-COLOR: rgb(255,255,255); FONT-SIZE: 12pt"><SPAN style="FONT-SIZE: 12pt">Comcast&nbsp;</SPAN></DIV></DIV><BR></SPAN></DIV>]]></td>
+</tr>
+</table>

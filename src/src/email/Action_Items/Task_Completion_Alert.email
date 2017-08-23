@@ -1,0 +1,7 @@
+Hello {!Task.CreatedBy}
+
+Task Assigned to {!Task.User_Name__c} is completed.Please find the link for the task below:
+
+{!Task.Link}
+
+Thank you

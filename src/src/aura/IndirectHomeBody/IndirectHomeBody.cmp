@@ -1,0 +1,90 @@
+<aura:component >
+    <ltng:require styles="/resource/SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />
+    <aura:attribute name="storeMap" type="Map"/>
+    <aura:attribute name="store" type="Account"/>
+    <aura:attribute name="loggedInUser" type="User"/>
+    <aura:attribute name="renderbody" type="String" default="visits"/>
+    <aura:attribute name="storevisits" type="Event[]"/> 
+    <aura:attribute name="upcomingEvents" type="Event[]"/>
+    <aura:attribute name="role" type="UserRole"/>  
+    <aura:attribute name="storeVisitObj" type="Store_Visit__c"/>
+    <aura:attribute name="storeActivities" type="Store_Activity__c[]"/>
+    <aura:attribute name="storeVisitCategory" type="Store_Visit_Activity_Category__c[]"/>
+    <aura:attribute name="recommendedCategory" type="String[]"/>
+    <aura:attribute name="allCategories" type="Store_Visit_Activity_Category__c[]"/>
+    <aura:attribute name="emailSummaryForOtherVisits" type="String"/>
+    
+    <aura:attribute name="storeActivityId" type="String"/>
+    <aura:attribute name="storeId" type="String"/>
+    <aura:attribute name="contactsList" type="IndirectStoreController.IndirectContactWrapper[]"/>
+    <aura:attribute name="StoreActivityCatagory" type="String"/>
+    <aura:attribute name="LookupFieldValue" type="String"/>
+    <aura:attribute name="fromMultiContComp" type="boolean"/>    
+    <div  id="spaceholder_t" />
+    <aura:if isTrue="{!v.renderbody=='visits'}">            
+        <c:IndirectDashboard storevisits="{!v.storevisits}" upcomingEvents="{!v.upcomingEvents}" loggedInUser="{!v.loggedInUser}" role="{!v.role}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.renderbody=='stores'}">            
+        <c:IndirectMyStores storeMap="{!v.storeMap}" loggedInUser="{!v.loggedInUser}" role="{!v.role}" />
+    </aura:if>
+    
+    <aura:if isTrue="{!v.renderbody=='storedetail'}">            	
+        <c:IndirectStoreBody store="{!v.store}" role="{!v.role}" loggedInUser="{!v.loggedInUser}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.renderbody=='visithistory' || v.renderbody=='visithistory2'}">
+        <c:IndirectStoreVisitHistory role="{!v.role}" store="{!v.store}" 
+                                     storeVisitCategory="{!v.storeVisitCategory}"
+                                     allCategories="{!v.allCategories}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.renderbody=='storevisit'}">            
+        <c:IndirectStoreVisit store="{!v.store}" loggedInUser="{!v.loggedInUser}" role="{!v.role}"
+                              storeVisitCategory="{!v.storeVisitCategory}"
+                              StoreActivityCatagory="{!v.StoreActivityCatagory}"
+                              fromMultiContComp="{!v.fromMultiContComp}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.renderbody=='addnotes'}">
+        <c:IndirectAddNoteComp store="{!v.store}" role="{!v.role}"
+                               storeVisitCategory="{!v.storeVisitCategory}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.renderbody=='nextsteps'}">
+        <c:IndirectNextStep store="{!v.store}" loggedInUser="{!v.loggedInUser}" role="{!v.role}" 
+                            recommendedCategory="{!v.recommendedCategory}"  
+                            storeVisitCategory="{!v.storeVisitCategory}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.renderbody=='sendsummary'}">  
+        <c:IndirectSendSummary store="{!v.store}" StoreVisitObj="{!v.storeVisitObj}" 
+                               loggedInUser="{!v.loggedInUser}" storeActivities="{!v.storeActivities}"
+                               role="{!v.role}" storeVisitCategory="{!v.storeVisitCategory}"
+                               emailSummaryForOtherVisits="{!v.emailSummaryForOtherVisits}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.renderbody=='contactDetail'}"> 
+        <c:IndirectEmailToExternalRecipients loggedInUser="{!v.loggedInUser}" contactsList="{!v.contactsList}"
+                                            storeVisitCategory="{!v.storeVisitCategory}" store="{!v.store}"
+                                            StoreVisitObj="{!v.storeVisitObj}" storeActivities="{!v.storeActivities}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.renderbody=='other'}">             
+        <c:IndirectOtherVisits loggedInUser="{!v.loggedInUser}"/>
+    </aura:if>
+    
+    <aura:if isTrue="{!v.renderbody=='otherHistory'}">             
+        <c:IndirectOtherVisitHistory loggedInUser="{!v.loggedInUser}"/>
+    </aura:if> 
+  
+    <aura:if isTrue="{!v.renderbody=='addContactsToActivity'}">
+        
+        <c:IndirectAddMultipleContacts storeActivityId="{!v.storeActivityId}" storeId="{!v.store.Id}"
+                                       StoreActivityCatagory="{!v.StoreActivityCatagory}" 
+                                       storeVisitCategory="{!v.storeVisitCategory}"
+                                       LookupFieldValue="{!v.LookupFieldValue}"/>
+    </aura:if> 
+    
+	<div  id="spaceholder_b" />  
+</aura:component>

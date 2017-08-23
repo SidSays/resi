@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Comcast_xfinity_letterhead</letterhead>
+    <name>Territory Exclusion Finished</name>
+    <style>freeForm</style>
+    <subject>Territory Exclusion/Inclusions processing Complete</subject>
+    <textOnly>Your territory exclusions / inclusions process is complete. The summary of processing is below:
+
+Job Name:{!Job_Status__c.Name}
+Status: {!Job_Status__c.Status__c}
+Total records processed : {!Job_Status__c.Total_Records_Processed__c}
+
+If the status above is &quot;Completed with Errors&quot;, please raise a support case to further look into the errors in the processing.</textOnly>
+    <type>html</type>
+</EmailTemplate>

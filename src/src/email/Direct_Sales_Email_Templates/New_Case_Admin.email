@@ -1,0 +1,16 @@
+A New Case has been submitted:
+
+Case Creator: {!Case.Requested_For__c}
+Creator Phone: {!Case.Preferred_Phone__c}
+Creator Email: {!Case.Preferred_Email__c}
+Region:  {!Case.Region__c}
+Channel: {!Case.Channel__c} 
+Ticket Category:{!Case.Ticket_Category__c}
+Ticket Category II:{!Case.Ticket_Category_II__c}
+Case Subject: {!Case.Request_Type__c}
+Case Details: {!Case.Description}
+Case Status: {!Case.Status}
+ 
+------
+Case Link: {!Case.Link}
+------

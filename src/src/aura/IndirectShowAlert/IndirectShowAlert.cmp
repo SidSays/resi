@@ -1,0 +1,66 @@
+<aura:component >
+    <ltng:require styles="/resource/SLDS100/assets/styles/salesforce-lightning-design-system-ltng.css" />
+	<aura:attribute name="title" type="String" required="true" default="test"/>
+    <aura:attribute name="closable" type="Boolean" default="true"/>
+    <aura:attribute name="confirmBox" type="Boolean" default="false"/>
+    <aura:attribute name="OkBox" type="Boolean" default="false"/>
+    <aura:attribute name="checkErrorsOnEndVisit" type="Boolean" default="false"/>
+    <aura:attribute name="checkErrorsOnEventEndVisit" type="Boolean" default="false"/>
+     <aura:attribute name="selectedEvent" type="Object"/>
+    <!-- <aura:attribute name="alreadyEndedVisit" type="boolean"/> -->
+    <aura:attribute name="endPreviousStore" type="boolean" default="false"/> 
+ 	<aura:attribute name="showSummary" type="boolean" default="false"/> 
+    <aura:attribute name="showSummaryonEndVisit" type="boolean" default="false"/> 
+    
+    <aura:attribute name="closeLabel" type="String" default="Cancel"/> 
+    <aura:attribute name="confirmLabel" type="String" default="OK"/>
+    
+    <aura:attribute name="onclose" type="Aura.Action" default="{!c.defaultCloseAction}"/> 
+    <aura:attribute name="onconfirm" type="Aura.Action" default="{!c.onconfirm}"/>
+    <aura:attribute name="onconfirmOk" type="Aura.Action" default="{!c.onOk}"/>
+   	
+    <aura:registerEvent name="indirectShowAlertEvent" type="c:IndirectShowAlertEvent"/>  
+	<aura:registerEvent name="indirectShowAlertEventOK" type="c:IndirectShowAlertEventForOK"/>      
+    <div class="slds">
+        <div>
+            <!-- instead of using display property of css, use aria-hidden from HTML5 -->
+            <div aria-hidden="false" role="dialog" class="slds-modal slds-fade-in-open">
+                
+                <div class="slds-modal__container">
+                        <div class="slds-modal__header">
+                            <h2 class="slds-text-heading--medium">{!v.title}</h2>
+                            <aura:if isTrue="{!v.closable}">
+                                <button class="slds-button slds-modal__close" onclick="{!v.onclose}">
+                                    <c:svgIcon svgPath="/resource/SLDS100/assets/icons/action-sprite/svg/symbols.svg#close" 
+                                               category="standard" 
+                                               size="small" 
+                                               name="close" />
+                                    
+                                    <span class="slds-assistive-text">{!v.closeLabel}</span>
+                                </button>
+                            </aura:if>
+                        </div> 
+                        <div class="slds-modal__content">
+                            <div >
+                                {!v.body}
+                            </div>
+                        </div>
+                    <aura:if isTrue="{!v.confirmBox}">   
+                    <div class="slds-modal__footer" style="text-align: center"> 
+                            <button class="slds-button slds-button--neutral slds-button--brand" onclick="{!v.onconfirm}">{!v.confirmLabel}</button>
+                        
+                    	
+                            <button class="slds-button slds-button--neutral slds-button--brand" onclick="{!v.onclose}">{!v.closeLabel}</button>
+                        </div>
+                    </aura:if> 
+                    <aura:if isTrue="{!v.OkBox}">
+                    <div class="slds-modal__footer" style="text-align: center"> 
+                            <button class="slds-button slds-button--neutral slds-button--brand" onclick="{!v.onconfirmOk}">{!v.confirmLabel}</button>
+                        </div>
+                        </aura:if>
+                    </div> 
+            </div>
+            <div class="slds-modal-backdrop slds-modal-backdrop--open"></div>
+        </div>
+    </div>
+</aura:component>

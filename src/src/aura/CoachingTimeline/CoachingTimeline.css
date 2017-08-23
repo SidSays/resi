@@ -1,0 +1,23 @@
+.THIS.errorSec {
+    border: 2px solid rgb(255, 191, 0); 
+    padding: 10px;
+    background: #fff;
+    color: solid rgb(0, 0, 0);
+    width: 100%;
+}
+
+.THIS.infoSec {
+    border: 2px solid rgb(255, 191, 0); 
+    padding: 10px;
+    background: #fff;
+    color: solid rgb(0, 0, 0);
+    width: 100%;
+}
+
+.THIS .slds-item_label {
+    width: 35%
+}
+
+.THIS .slds-item_detail {
+    width: 65%
+}

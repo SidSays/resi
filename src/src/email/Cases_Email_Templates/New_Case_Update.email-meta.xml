@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Used  to notify Portal User that a case has been submitted</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <letterhead>Comcast_xfinity_letterhead</letterhead>
+    <name>New Case Update</name>
+    <style>freeForm</style>
+    <subject>Case {!Case.CaseNumber} Has Been Submitted</subject>
+    <textOnly>Hello
+
+You are receiving this email as notification that your case {!Case.CaseNumber} has been submitted.
+Below is the relevant information of this Case.
+
+Case Number : {!Case.CaseNumber}
+Case Date : {!Case.CreatedDate}
+User : {!User.FirstName} {!User.LastName}
+Tool : {!Case.Account}
+Region : {!Case.Region__c}
+Division: {!Case.Division}
+Description: {!Case.Description}
+Escalation Details :
+[
+Account : {!Case.AccountNumber__ c}
+Order # : {!Case.OrderID__c}
+Session Id : {!Case.Session_ID__c}
+Issue Type : {!Case.IssueType__c}
+]
+
+Closed Date : {!Case.ClosedDate}
+
+
+Thank you</textOnly>
+    <type>html</type>
+</EmailTemplate>

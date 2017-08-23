@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fieldOverrides>
+        <field>Name</field>
+        <formula>&quot;1-1_&quot;+Text(Today())+&quot;_&quot;+coaching__r.Coached.FirstName+&quot; &quot;+coaching__r.Coached.LastName</formula>
+    </fieldOverrides>
+    <label>1:1 Coaching</label>
+    <optionsCreateFeedItem>true</optionsCreateFeedItem>
+    <quickActionLayout>
+        <layoutSectionStyle>TwoColumnsLeftToRight</layoutSectionStyle>
+        <quickActionLayoutColumns>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Strengths__c</field>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Opportunities__c</field>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Action_Plan__c</field>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
+        </quickActionLayoutColumns>
+        <quickActionLayoutColumns/>
+    </quickActionLayout>
+    <targetObject>one_one_Coaching__c</targetObject>
+    <targetParentField>coaching__c</targetParentField>
+    <targetRecordType>one_one_Coaching__c.Status_Draft_SDM_CAR_coachee</targetRecordType>
+    <type>Create</type>
+</QuickAction>

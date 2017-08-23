@@ -1,0 +1,196 @@
+<!-- 
+/**********************************************************
+* Page Name: PropertyLookupPage
+* Date: 5-Feb-2015 
+* Requirement: Support Portal 
+* Description: VF page for Property Lookup
+**********************************************************/
+-->
+<apex:page standardController="Opportunity" extensions="PropertyLookupPageController" showHeader="false" sidebar="false" id="conLKpage">
+
+    <html>
+    <head>
+    <!-- Enable IE9 Standards mode -->
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <title></title>
+    </head>
+    <body>
+    <p></p>
+    </body>
+    </html>
+    <apex:pageMessages id="pMsg"/>
+    <script type="text/javascript">
+        function fillIn(id)
+        {
+          var winMain=window.opener;
+          if (null==winMain)
+          {
+             winMain=window.parent.opener;
+          }
+          ele=winMain.document.getElementById('{!$CurrentPage.parameters.idfield}');
+          ele.value+=id;                                    
+          closeWindow();
+        }
+        function closeWindow()
+        {
+          var winMain=window.opener;
+          if (null==winMain)
+          {
+             winMain=window.parent.opener;
+          }         
+          winMain.closeLookupPopup();
+        } 
+    </script>
+    <script type="text/javascript">
+        function selectAllCheckboxes(){
+            var select_all = document.getElementById('conLKpage:conLKform:searchResults:pageBlockTable:selAll');
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            select_all.addEventListener('change', function(e){
+            for (i = 0; i < checkboxes.length; i++) { 
+            checkboxes[i].checked = select_all.checked;
+           }
+         });
+         
+         for (var i = 1; i < checkboxes.length; i++) {
+         checkboxes[i].addEventListener('change', function(e){ 
+         <!--uncheck "select all", if one of the listed checkbox item is unchecked-->
+         if(this.checked == false){
+            select_all.checked = false;
+         }
+         <!--check "select all" if all checkbox items are checked-->
+         else if(document.querySelectorAll('input[type="checkbox"]:checked').length == (checkboxes.length-1)){
+            select_all.checked = true;
+         }
+        });
+      } 
+     }
+    </script>    
+    <style type="text/css">
+         h1{
+        font-size: 1.8em;
+        color: #333435;
+        margin: 8px 0 4px;
+        margin-top: 1px;
+        }
+        .searchTag{
+        padding: 4px 3px;
+        font-family: 'Arial','Helvetica',sans-serif;
+        font-weight: bold;
+        font-size: 118%;
+        margin-left: 10px;
+        }
+        #wrapper1 {
+            position: relative;
+            overflow: scroll;
+            overflow: auto;
+            height: 95vh;
+        }
+    </style>
+        <div id = "wrapper1">   
+            <apex:form id="conLKform">
+            
+            <div class="content">  
+                <table ><tr><td>
+                <apex:image url="{!$Resource.LookupIcon}" style="padding-left: 0;margin-left: 10px;margin-top: 5px; display: inline;width: 32px;height: 32px"/>
+                </td>
+                <td>
+                    <h1>Lookup</h1>
+                </td>
+                </tr>
+                </table>
+            </div>
+        
+            <apex:actionRegion >  
+                <div class = "lookup">
+                    <apex:outputPanel id="top" layout="block" styleClass="searchPanelCls">
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <apex:inputText id="PropSearch" value="{!searchText}" onkeypress="return searchPropertyOnEnter(event,this);"/>
+                        &nbsp;&nbsp;
+                        <apex:commandButton id="srch" value="Go" action="{!searchProperties}" rerender="searchResults,pMsg" status="successPanel"></apex:commandButton>
+                        
+                        <br/>&nbsp;&nbsp;&nbsp;&nbsp;You can use "*" as a wildcard next to other characters to improve your search results.
+                    </apex:outputPanel>
+                </div>
+                <br/>&nbsp;&nbsp;&nbsp;&nbsp;
+                <apex:actionStatus id="successPanel" startText="Loading..."/>
+                    <br/>&nbsp;&nbsp;&nbsp;&nbsp;<div class='searchTag'>Search Results</div>                  
+                    <apex:pageBlock id="searchResults" title="Total Properties {!Paging.RecordCount}">
+                     <apex:pageBlockButtons >
+                        <apex:commandButton value="Select Properties" action="{!processSelected}" oncomplete="fillIn('{!lookUpID}');"/>
+                     </apex:pageBlockButtons>
+                        <apex:outputpanel layout="block" styleClass="resultPanelCls"> 
+                            <apex:pageBlockTable var="prop" value="{!wrapperList}" id="pageBlockTable" first="{!Paging.offset}" rows="{!Paging.PageSize}" >                               
+                                <apex:column >
+                                    <apex:facet name="header">
+                                    <apex:inputCheckbox id="selAll" onclick="selectAllCheckboxes()"/>
+                                    </apex:facet>
+                                    <apex:inputCheckbox value="{!prop.selected}" id="inputId" onclick="selectAllCheckboxes()" />                            
+                                </apex:column>                                
+                                <apex:column >
+                                    <apex:facet name="header"> 
+                                        <apex:outputPanel >Region</apex:outputPanel>
+                                    </apex:facet>
+                                    <a>{!prop.propertyWrap.Property_Region__c}</a>
+                                </apex:column>                                                                                  
+                                <apex:column >
+                                    <apex:facet name="header"> 
+                                        <apex:outputPanel >Property Name</apex:outputPanel>
+                                    </apex:facet>
+                                    <a>{!prop.propertyWrap.Name}</a>
+                                </apex:column> 
+                                <apex:column >
+                                    <apex:facet name="header"> 
+                                        <apex:outputPanel >Address</apex:outputPanel>
+                                    </apex:facet>
+                                    <a>{!prop.propertyWrap.Address__c}</a>
+                                </apex:column> 
+                                <apex:column >
+                                    <apex:facet name="header"> 
+                                        <apex:outputPanel >City</apex:outputPanel>
+                                    </apex:facet>
+                                    <a>{!prop.propertyWrap.City__c}</a>
+                                </apex:column> 
+                                <apex:column >
+                                    <apex:facet name="header"> 
+                                        <apex:outputPanel >Property Type</apex:outputPanel>
+                                    </apex:facet>
+                                    <a>{!prop.propertyWrap.Property_Type__c}</a>
+                                </apex:column> 
+                                <apex:column >
+                                    <apex:facet name="header"> 
+                                        <apex:outputPanel >Industry Type</apex:outputPanel>
+                                    </apex:facet>
+                                    <a>{!prop.propertyWrap.Industry_Type__c}</a>
+                                </apex:column>
+                                <apex:column > 
+                                    <apex:facet name="header"> 
+                                        <apex:outputPanel ># Units</apex:outputPanel>
+                                    </apex:facet>
+                                    <a>{!prop.propertyWrap.Number_of_Units__c}</a>
+                                </apex:column>                                                   
+                                </apex:pageBlockTable>
+                                                       
+                                <c:pagingtoolbartest paging="{!Paging}" rerender="pageBlockTable" />
+                                <apex:outputPanel rendered="{!IF(property== null, true, false)}" >                    
+                                    <p>No records found due to one of the following:
+                                    <br/>•There are no records of this type
+                                    <br/>•You dont have permission to see any of the records </p>
+                                </apex:outputpanel>                    
+                        </apex:outputPanel>
+                    </apex:pageBlock>
+            </apex:actionRegion>           
+            <apex:actionFunction action="{!searchProperties}" name="searchPropertiesOnEnterKey" rerender="searchResults">
+               <apex:param name="firstParam" assignTo="{!searchText}" value="" />
+           </apex:actionFunction>
+        </apex:form> 
+        </div>
+        <script>
+        function searchPropertyOnEnter(ev,searchTextObj)  {
+            var searchTextValue = searchTextObj.value;
+            if (window.event && window.event.keyCode == 13 || ev.which == 13) {
+                searchPropertiesOnEnterKey(searchTextValue);  
+                return false;           
+            } 
+        }
+        </script>
+    </apex:page>

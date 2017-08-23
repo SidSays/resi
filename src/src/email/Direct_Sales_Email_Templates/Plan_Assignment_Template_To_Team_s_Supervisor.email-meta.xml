@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>Comcast_LetterHead</letterhead>
+    <name>Plan : Assignment Template To Team&apos;s Supervisor</name>
+    <style>freeForm</style>
+    <subject>Plan {!Plan__c.Name} : Assigned to your team/subordinate</subject>
+    <textOnly>Hello {!Plan__c.Supervisor_Email__c},
+
+A Turf has been assigned to your Team.
+
+Turf Details :
+
+Turf Name :{!Plan__c.Name}
+
+# of addresses on Turf  :{!Plan__c.Number_of_Addresses__c}
+
+Turf Expiration  :{!Plan__c.Expiration_Date__c}
+
+Turf Link  :{!Plan.Link}
+
+
+
+
+Best Regards,
+Comcast</textOnly>
+    <type>html</type>
+</EmailTemplate>

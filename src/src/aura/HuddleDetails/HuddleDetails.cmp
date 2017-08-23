@@ -1,0 +1,94 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:registerEvent name="huddleEvent" type="c:huddleEvent"/>
+        <div class="slds">  
+            <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-table--fixed-layout">
+                <thead>
+                    <tr class="slds-text-heading--label">
+                        <th width="12%" scope="col" title="Name">
+                            <div class="slds-truncate">Huddle Name
+                                <div class="slds-checkbox"></div>
+                            </div>    
+                        </th>
+                        
+                        <th width="26%" scope="col" title="Process">
+                            <div class="slds-wrap">CAR Process</div>
+                        </th> 
+                        <th width="38%" scope="col" title="Status">
+                            <div class="slds-truncate">Status</div>
+                        </th> 
+                        <th width="24%" scope="col" title="Date">
+                            <div class="slds-truncate">Date</div>
+                        </th>
+                        
+                    </tr>
+                </thead>
+                <tbody>                   
+                        <tr>
+                            <td scope="row" data-label="Select Contacts">                                                          
+                                 <!--div>Huddle 1</div-->
+                                 <div><ui:outputURL value="Huddle" label="Huddle 1"/></div>
+                            </td>
+                            <td class="cell slds-cell-wrap" data-label="Name">
+                                 <div>CAR Process 1</div>
+                            </td>  
+                            <td data-label="Email">
+                               <div>Completed</div>
+                            </td>  
+                            <td data-label="Type">
+                                <div>7/16/2015</div>
+                            </td>      
+                        </tr>  
+                        <tr>
+                            <td scope="row" data-label="Select Contacts">                                                          
+                                 <div><ui:outputURL value="Huddle" label="Huddle 2"/></div>                                      
+                            </td>
+                            <td class="cell slds-cell-wrap" data-label="Name">
+                                 <div>CAR Process 3</div>
+                            </td>  
+                            <td data-label="Email">
+                               <div>Completed</div>
+                            </td>  
+                            <td data-label="Type">
+                                <div>7/15/2015</div>
+                            </td>      
+                        </tr>
+                    	<tr>
+                            <td scope="row" data-label="Select Contacts">                                                          
+                                  <div><ui:outputURL value="Huddle" label="Huddle 3"/></div>                                     
+                            </td>
+                            <td class="cell slds-cell-wrap" data-label="Name">
+                                 <div>CAR Process 3</div>
+                            </td>  
+                            <td data-label="Email">
+                               <div>Completed</div>
+                            </td>  
+                            <td data-label="Type">
+                                <div>7/12/2015</div>
+                            </td>      
+                        </tr>
+                    
+                    	<tr>
+                            <td scope="row" data-label="Select Contacts">                                                          
+                                  <div><ui:outputURL value="Huddle" label="Huddle 4"/></div>                                      
+                            </td>
+                            <td class="cell slds-cell-wrap" data-label="Name">
+                                 <div>CAR Process 4</div>
+                            </td>  
+                            <td data-label="Email">
+                               <div>Completed</div>
+                            </td>  
+                            <td data-label="Type">
+                                <div>7/11/2015</div>
+                            </td>      
+                        </tr> 
+                </tbody>
+            </table>
+         </div>   
+    <br/>            
+            <div>
+                <center>
+                     <button class="slds-button slds-button--neutral slds-button--brand">Cancel</button>             
+                    <button class="slds-button slds-button--neutral slds-button--brand" onclick="{!c.createHuddle}">Create Huddle</button>                    
+                </center>
+            </div>          
+</aura:component>

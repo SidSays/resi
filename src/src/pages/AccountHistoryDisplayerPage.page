@@ -1,0 +1,84 @@
+<apex:page standardController="Customer_Address__c" extensions="displayAccountHistory" sidebar="false" StandardStyleSheets="True" showHeader="false" >
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>   <style>
+        tr.header
+    {
+        cursor:pointer;
+    }
+    tr.contact 
+    { 
+        display: none;
+    }
+        </style>   
+    <script>
+     $(document).ready(function(){
+    $(".header").click(function(){
+       $(this).nextUntil('tr.header').slideToggle(100);
+    });
+}); 
+    </script>
+    <apex:form >
+        <apex:pageBlock title="Account History Data with Contacts"  >
+           <apex:outputPanel rendered="{!IF(accountTempList.size <= 0, true, false)}" >                    
+                            <p style="margin:1%;font-weight:bold;;font-size:88%;">Account history not available for the selected customer.</P>                                                                   
+           </apex:outputpanel>
+            <apex:pageblockSection title="Account History" collapsible="false" rendered="{!IF(accountTempList.size > 0, true, false)}" >
+                    <table  style="text-align:center;width:90%" >
+                   
+                        <tr >
+                             <th width="11%" style="text-align:left;font-weight:bold;" >Account Name</th>
+                             <th width="11%" style="text-align:left;font-weight:bold;">Billing Account Number</th>
+                             <th width="11%" style="text-align:left;font-weight:bold;">Customer Status</th>
+                             <th width="11%" style="text-align:left;font-weight:bold;">Total Monthly Rate</th>
+                             <th width="11%" style="text-align:left;font-weight:bold;">Installation Status</th>
+                             <th width="11%" style="text-align:left;font-weight:bold;">Past Due Balance</th>
+                             <th width="11%" style="text-align:left;font-weight:bold;">Write Off Amount</th>
+                             <th width="11%" style="text-align:left;font-weight:bold;">Last Install Date</th>
+                             <th width="11%" style="text-align:left;font-weight:bold;">Last Disconnected Date</th>
+                        </tr>  <apex:Repeat value="{!accountTempList}" var="val" >
+                             <tr class="header" style="background-color:#87CEFA;" title="Please click here to open the contacts">
+                                 <td  width="11%" style="text-align:left; color:Black ;">{!val.accountName}</td>
+                                 <td  width="11%" style="text-align:left; color:Black;">{!val.BillingAccountNumber}</td>
+                                 <td  width="11%" style="text-align:left; color:Black;">{!val.CustomerStatus}</td>
+                                 <td  width="11%" style="text-align:left; color:Black;">{!val.TotalMonthlyRate}</td>
+                                 <td  width="11%" style="text-align:left; color:Black;">{!val.InstallationStatus}</td>
+                                 <td  width="11%" style="text-align:left; color:Black;">{!val.PastDueBalance}</td>
+                                 <td  width="11%" style="text-align:left; color:Black;">{!val.WriteOffAmount}</td>
+                                 <td  width="11%" style="text-align:left; color:Black;">{!val.LastInstallDate}</td>
+                                 <td  width="11%" style="text-align:left; color:Black;">{!val.LastDisconnectedDate}</td>
+                                 
+                             </tr>
+                            <tr class="contact">
+                                <td colspan="8">
+                                <table  style="text-align:center;width:100%; ">
+                                    <tr style="display:{!IF(val.contactlst.size < 1, 'true', 'none')}">
+                                         <th colspan="6" style="text-align:left;font-weight:bold;">No contacts under this Account..!!</th>
+                                    </tr>
+                                    <tr style="display:{!IF(val.contactlst.size > 0, 'true', 'none')}">
+                                         <th width="12%" style="text-align:left;font-weight:bold;">First Name</th>
+                                         <th width="12%" style="text-align:left;font-weight:bold;">Last Name</th>
+                                         <th width="12%" style="text-align:left;font-weight:bold;">Email</th>
+                                         <th width="12%" style="text-align:left;font-weight:bold;">Area Code</th>
+                                         <th width="12%" style="text-align:left;font-weight:bold;">Phone</th>
+                                         <th width="12%" style="text-align:left;font-weight:bold;">Extension</th>
+                                        
+                                    </tr>
+                                        <apex:repeat value="{!val.contactlst}" var="cont">
+                                            <tr style="background-color:#FDF5E6;">
+                                                <td title="First Name" width="12%" style="text-align:left;">{!cont.FirstName}</td>
+                                                <td title="Last Name" width="12%" style="text-align:left;">{!cont.LastName}</td>
+                                                <td title="Email" width="12%" style="text-align:left;">{!cont.Email}</td>
+                                                <td title="Type" width="12%" style="text-align:left;">{!cont.areaCode}</td>
+                                                 <td title="Type" width="12%" style="text-align:left;">{!cont.Phone}</td>
+                                                <td title="Type" width="12%" style="text-align:left;">{!cont.extension}</td>
+                                               
+                                            </tr>
+                                        </apex:repeat>
+                                </table>
+                                </td>
+                            </tr>
+                        </apex:repeat>
+                        </table>
+                </apex:pageblockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

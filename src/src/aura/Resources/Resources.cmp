@@ -1,0 +1,5 @@
+<aura:component implements="flexipage:availableForAllPageTypes,force:appHostable" >
+	 <ltng:require styles="/resource/core/css/salesforce-lightning-design-system.css,
+                              /resource/core/css/screen.css, /resource/core/css/fonts.css" />
+
+</aura:component>

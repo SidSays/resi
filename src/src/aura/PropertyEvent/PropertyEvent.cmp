@@ -1,0 +1,8 @@
+<aura:component implements="force:hasRecordId,force:lightningQuickActionWIthoutHeader" controller="PropertyEventCreateUpdateController">
+    <aura:attribute name="validationMessage" type="String"/>
+    <aura:attribute name="event" type="PropertyEventCreateUpdateController.EventWrapper"/>
+    <aura:attribute name="eventStartDate" type="DateTime" />
+    <aura:attribute name="eventEndDate" type="DateTime" />
+    <aura:attribute name="eventSubject" type="String" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+</aura:component>

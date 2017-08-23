@@ -1,0 +1,546 @@
+<!--
+/**********************************************************
+* Page Name: ObservationForm
+* Author: 
+* Description: Use to create observation for different channels
+* Last Modified by/Date: Amit Kumar Pradhan,17-January-2017 - (Included Super Coach Observation)
+* Last Modified by/Date/Description: Animesh Datta, 03-March-2017. Description: Incorporate changes for Private Notes (added new field)
+* Last Modified by/Date: 24-March-2017- Amit Kumar Pradhan(Combined Car Event and Property Visit Observation for Super Coach Observation)
+* Last Modified by/Date: 26-June-2017 (Malay Desai) ("activitySelection" hidden for CAR Directors)
+***********************************************************/
+--> 
+
+<apex:page showQuickActionVfHeader="false" controller="ObservationController" showHeader="false" standardStylesheets="false" sidebar="false" applyBodyTag="false" applyHtmlTag="false" docType="html-5.0" >
+<div>
+<html class="no-js" lang="" ng-app="WalkAlongApp" ng-controller="ObservationController" ng-init="initializeData()"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <title></title>
+        <meta name="description" content=""/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+        <link rel="stylesheet" href="{!URLFOR($Resource.bootstrap,'css/bootstrap.min.css')}"/>
+        <link rel="stylesheet" href="{!URLFOR($Resource.bootstrap,'css/bootstrap-theme.min.css')}"/>
+        <link rel="stylesheet" href="{!URLFOR($Resource.bootstrap,'css/main.css')}"/>
+      <!--  <link rel="stylesheet" href="{!URLFOR($Resource.bootstrap,'css/custom.css')}"/> -->
+        <link rel="stylesheet" href="{!URLFOR($Resource.bootstrap_sf1,'css/bootstrap.css')}"></link>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <style>
+            html, body {
+                height: 100%;
+                overflow: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+</style> 
+        <style>
+            body {
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+
+            .btn-default.active{
+                color: #ffffff;
+                background-color: crimson;
+                color:white;
+                border-color: #2585c1;
+            }
+
+            span.glyphicon-comment {
+                font-size: 1.2em;
+            }
+             #loading {  
+                position:absolute;
+                top:0;
+                left:0;
+                width:100%;
+                height:100%;
+                z-index:1000;
+                background-color:grey;
+                opacity: .8;
+             }
+
+            .ajax-loader {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                margin-left: -32px; /* -1 * image width / 2 */
+                margin-top: -32px;  /* -1 * image height / 2 */
+                display: block;     
+            }
+
+            .walkalong_modal{
+              z-index: 3000;
+           .mystyle {margin-top:-10px !important;}
+                     
+            #textarea {
+               
+                height:50px !important;
+            }
+            
+            .scroll {
+                width: 100px;
+                height: 100px;
+                overflow: scroll;
+            }
+            
+        </style> 
+        <!--<script type="text/javascript">
+            if(typeof sforce == 'undefined'){
+                  var st='{!$Label.walkalong_error_msg}';
+                  alert(st);
+                  window.top.location.href = '/';
+            }
+
+        </script> -->
+        <script>
+            function myfun () {
+                window.open('/home/home.jsp','_self'); 
+                return false;             
+            }
+        </script>
+   
+    </head>
+    <body>
+    
+    <div id="loading" ng-hide="!showProcessing">
+        <img src="{!URLFOR($Resource.ObservationForm,'walkalong/img/ajax-loader.gif')}" class="ajax-loader"/><br/>
+    </div>
+    
+    <!-- Start over modal dialog -->
+    <div class="container">
+        <div class="modal fade" id="startOverModal">
+            <div class="modal-dialog  modal-sm walkalong_modal">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Start Over</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>If you start over, you will lose all unsaved changes for this observation. Are you sure you want to start over?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-warning" ng-click="resetWalkAlongData(true)" data-dismiss="modal">Yes</button>
+                        <!--<button type="button" class="btn btn-sm btn-warning" onclick="myfun()" data-dismiss="modal">Yes</button>-->
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">No</button>
+                    </div>
+                </div>          
+            </div>
+        </div>
+    </div> 
+    
+    <!-- Back modal dialog -->
+    <div class="container">
+        <div class="modal fade" id="backOverModal">
+            <div class="modal-dialog  modal-sm walkalong_modal">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">WARNING</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>If you continue, you will lose your data if you did not click the Save button first. Continue?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-warning" onClick="myfun()" data-dismiss="modal">Ok</button>
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>          
+            </div>
+        </div>
+    </div> 
+    
+    <!-- Validation error dialog -->
+    <div class="container">
+        <div class="modal fade" id="validationErrorModal">
+            <div class="modal-dialog  modal-sm walkalong_modal">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Start Over</h4>
+                    </div>
+                    <div class="modal-body">                                 
+                        <ul>
+                            <li ng-repeat="validation in validationlist">
+                                <div ng-if="validation === 'Overall Notes' || validation === 'Area of Focus' || validation === 'Action Items'" >
+                                    {{validation}} should not be blank.
+                                </div>
+                
+                                <div ng-if="validation === 'Knocks observed'">
+                                    Knocks should be greater than 0
+                                </div>
+                                
+                                <div ng-if="validation === 'Contacts' || validation === 'Starts'">
+                                    {{validation}} should not be None
+                                </div>
+                                
+                                <div ng-if="validation === 'category check'">
+                                    Overall rating in atleast 1 category is required (should not be N/A)
+                                </div>
+                                
+                                 <div ng-if="validation === 'All the Above Check'">
+                                    You have chosen Area of Focus as "All the Above". You must fill out all sections and activities
+                                </div>
+                                
+                                 <div ng-if="validation === 'Other AreaofFocus Check'">
+                                    You have chosen Area of focus as "{{rating}}". You must fill out at least the Overall rating in that section
+                                </div>
+                                                                
+                                <div ng-if="validation === 'AreaofFocus Question Check'">
+                                    You have chosen Area of focus as "{{rating}}". You must fill out all questions in that category
+                                </div>
+                                <div ng-if="validation === 'overAllCategoryNote Question Check'">
+                                    You have chosen Area of focus as "{{rating}}". You must fill out Overall "{{rating}}" notes
+                                </div>
+                                
+                            </li>                  
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-warning" data-dismiss="modal">Ok</button>
+                    </div>
+                </div>         
+            </div>
+        </div>
+    </div>
+    
+    <!-- Walkalong results modal dialong -->
+    <div class="container" ng-show="walkAlongSubmitted">
+        <div class="modal fade" id="walkAlongResults">
+            <div class="modal-dialog  modal-sm walkalong_modal">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Observation Results:</h4>
+                    </div>
+                    <div class="modal-body">
+                        Overall rating: {{walkAlongData.overallRating}}
+                    </div>
+                    <!--<div class="progress">
+                      <div ng-class="{'progress-bar progress-bar-success':(walkAlongData.overallRating=='Highly Effective'), 'progress-bar progress-bar-warning':(walkAlongData.overallRating=='Achieved Expectations'),'progress-bar progress-bar-danger':(walkAlongData.overallRating=='Needs Improvement')}" role="progressbar" aria-valuenow="{{walkAlongData.scorePct}}"
+                      aria-valuemin="0" aria-valuemax="100" style="width: {{walkAlongData.scorePct)}%">
+                        {{walkAlongData.overallRating}}
+                      </div>            
+                    </div>
+                    -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-default" ng-click="resetWalkAlongData(true)"  data-dismiss="modal">Ok</button>
+                    </div>
+                </div>          
+            </div>
+        </div>
+    </div>
+    
+    <!-- Processing Error Dialog -->
+    <div class="container">
+        <div class="modal fade" id="errorDialog">
+            <div class="modal-dialog  modal-sm walkalong_modal">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Error</h4>
+                    </div>
+                    <div class="modal-body">
+                    <p>
+                        Unable to process the request. Please try again.<br/>
+                        Error Message: {{errorMsg}}
+                    </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Ok</button>
+                    </div>
+                </div>          
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="pull-right">    
+            <span ng-show="showProcessing"><!--{{showProcessingText}}-->Retrieving saved observation....</span>
+            <span ng-show="!showProcessing && walkAlongData.lastSavedDate !=null">Last saved:&nbsp;{{walkAlongData.lastSavedDate}}</span>&nbsp;&nbsp;&nbsp;
+            
+            <button ng-class="{'btn btn-primary btn-sm btn-success navbar-btn':!walkAlongStarted, 'btn btn-primary btn-sm btn-danger':walkAlongStarted}" 
+                    ng-click="startStopWalkAlong()" 
+                    ng-disabled="walkAlongSubmitted || (initComplete && (!walkAlongData.selectedXSP || !walkAlongData.selectedRecordType || (((walkAlongData.selectedRecordType == '{!$Label.CAR_Manager_1_1_Obs}'|| walkAlongData.selectedRecordType == '{!$Label.CAR_Manager_Huddle_Obs}') && !walkAlongData.selectedActivity) || (walkAlongData.selectedRecordType=='{!$Label.CAR_Manager_Field_Obs}' && !walkAlongData.selectedPersonObserved)) || (isCoachingObs && !walkAlongData.selectedPersonCoach) || (isFieldObs && !walkAlongData.selectedPersonObserved)))">
+                <span class="glyphicon glyphicon-time"></span>&nbsp;&nbsp;{{walkAlongStarted ? (walkAlongStopped?'Resume Observation':'Stop Observation'):'Start Observation'}}</button>
+            
+            <button class="btn btn-primary btn-sm navbar-btn" ng-show=" initComplete && walkAlongStarted &&!walkAlongStopped" href="javascript:closeThisPage();" ng-disabled="walkAlongSubmitted || (initComplete && (!walkAlongData.selectedXSP || !walkAlongData.selectedRecordType))" ng-click="submitWalkAlong()"><span class="glyphicon glyphicon-floppy-save"></span>&nbsp;&nbsp;Submit</button>&nbsp;&nbsp;
+            <button class="btn btn-primary btn-sm navbar-btn" ng-click="saveData()"  ng-hide="!walkAlongStarted" ng-disabled="walkAlongSubmitted || (initComplete && (!walkAlongData.selectedXSP || !walkAlongData.selectedRecordType))"><span class="glyphicon glyphicon-floppy-save"></span>Save</button>&nbsp;&nbsp;
+            <button class="btn btn-danger btn-sm navbar-btn" data-toggle="modal" data-target="#startOverModal" ng-disabled="(!walkAlongData.selectedXSP && (!walkAlongData.selectedRecordType || flag))"><span class="glyphicon glyphicon-remove-sign"></span>&nbsp;&nbsp;New / Start Over</button>
+            <apex:outputPanel rendered="{!!SF1}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button class="btn btn-danger btn-sm navbar-btn" data-toggle="modal" data-target="#backOverModal" ng-hide="!walkAlongStarted">
+                    <span class="glyphicon glyphicon-step-backward"></span>&nbsp;&nbsp;Back
+                </button>
+                <button class="btn btn-danger btn-sm navbar-btn" data-toggle="modal" onClick="myfun()" ng-hide="!!walkAlongStarted">
+                    <span class="glyphicon glyphicon-step-backward"></span>&nbsp;&nbsp;Back
+                </button>
+            </apex:outputPanel>
+        </div>
+        
+        <!-- Start : Header Section of Observation Form-->
+        <h3 ng-show="!isSuperCoachCarObs">
+            Select your Sales Professional: <font color="red">*</font>
+            <select class="form-control" ng-change="xspSelected()" ng-model="walkAlongData.selectedXSP" ng-disabled="walkAlongData.selectedXSP">
+                <option ng-repeat="xsp in xspList" value="{{xsp.id}}">{{xsp.name}}</option>
+            </select>       
+        </h3>
+               
+        <h3 ng-if="!flag">
+            Select Observation Form: <font color="red">*</font>
+            <select class="form-control"  ng-model="walkAlongData.selectedRecordType" ng-change="!isSuperCoachCarObs?xspSelected():carSelected()" ng-disabled="walkAlongData.selectedRecordType">
+                <optgroup ng-repeat="rtp in recordTypePerformCycleList" label="{{rtp.forWhom}}"  >
+                    <option ng-repeat="rt in rtp.recordTypes"  value="{{rt.name}}" ng-model="formType">
+                        {{rt.name}}
+                    </option>
+                </optgroup> 
+            </select>  
+        </h3>
+        <h3 ng-show="typeOfObs && isSuperCoachCarObs">
+            {{observationFor}} <font color="red">*</font>               
+            <select ng-show="walkAlongData.selectedRecordType == '{!$Label.CAR_Manager_1_1_Obs}'|| walkAlongData.selectedRecordType == '{!$Label.CAR_Manager_Huddle_Obs}' || walkAlongData.selectedRecordType == '{!$Label.CAR_Manager_Field_Obs}'" class="form-control" ng-model="walkAlongData.selectedXSP" ng-change="getPersonCoachAndActivities()" ng-disabled="walkAlongData.selectedXSP">              
+                <option ng-repeat="xsp in xspList|filter: { profileName: '!Xfinity CAR'}:true" value="{{xsp.id}}">{{xsp.name}}</option>             
+            </select>
+            
+            <select ng-show="walkAlongData.selectedRecordType == 'CAR Event'|| walkAlongData.selectedRecordType == 'Property Visit'" class="form-control" ng-model="walkAlongData.selectedXSP" ng-change="xspSelected()" ng-disabled="walkAlongData.selectedXSP">               
+                    <option ng-repeat="xsp in xspList|filter: { profileName: '!Xfinity CAR Manager'}:true" value="{{xsp.id}}">{{xsp.name}}</option>             
+            </select>  
+        </h3>
+        
+    
+        <h3 ng-show="typeOfObs && isCoachingObs && isSuperCoachCarObs">
+            Person being Coached: <font color="red">*</font>
+            <select class="form-control" ng-model="walkAlongData.selectedPersonCoach" ng-change="getOneOneCoaching()" ng-disabled="walkAlongData.selectedPersonCoach">
+                <option ng-repeat="coachee in activityData.personCoachList" value="{{coachee.id}}">{{coachee.name}}</option>
+            </select>       
+        </h3>
+        
+        <h3 ng-show="typeOfObs && isFieldObs && isSuperCoachCarObs">
+            Person Observed: <font color="red">*</font>
+            <select class="form-control" ng-model="walkAlongData.selectedPersonObserved" ng-change="walkAlongData.selectedRecordType == '{!$Label.CAR_Manager_Field_Obs}'?xspSelected():getOneOneCoaching()" ng-disabled="walkAlongData.selectedPersonObserved">
+                <option ng-repeat="coachee in activityData.fieldObservationCoacheeList" value="{{coachee.id}}">{{coachee.name}}</option>
+            </select>       
+        </h3>
+            
+        <h3 ng-show="typeOfObs && isSuperCoachCarObs && (walkAlongData.selectedRecordType == '{!$Label.CAR_Manager_1_1_Obs}'|| walkAlongData.selectedRecordType == '{!$Label.CAR_Manager_Huddle_Obs}')">
+            {{activitySelection}} <font color="red">*</font>
+            <select class="form-control" ng-model="walkAlongData.selectedActivity"  ng-change="xspSelected()" ng-disabled="walkAlongData.selectedActivity">
+                <option ng-repeat="activity in activityDataList" value="{{activity.id}}">{{activity.name}}</option>
+            </select>       
+        </h3>
+        <!-- End : Header Section of Observation Form-->
+        
+        <!-- Start : Body Section of Observation Form-->
+        <div ng-if="flag" ng-model="walkAlongData.selectedRecordType" ></div> 
+            <div ng-repeat="section in walkAlongData.sections" class="mystyle">
+                <div ng-if="section.questions !== null">                
+                    <div ng-if="section.name === 'Common'">
+                        <h3 ng-show="initComplete && walkAlongStarted && !walkAlongStopped && walkAlongData.recordTypeName == 'Property Visit'">                            
+                            <div ng-dropdown-multiselect="" model="selected_items" options="states">
+                                <div class='btn-group' data-ng-class='{open: open}' style="width:100%; position: relative;">                                   
+                                    <button class="btn form-control" style="display: block; width: 100%; height: 34px; padding: 6px 12px; font-size: 14px; line-height: 1.42857143; color: #555; background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 4px;" data-ng-click='open=!open;toggleSelect()'><span class="pull-left">Select Property</span>&nbsp;<span class="caret pull-right" style="position: absolute; top: 12px; right: 5px;font-weight: bold;"></span></button>                                                                                        
+                                    <ul ng-style="{display: isVisible ? 'block' : 'none'}" style="height:500px; width:100%; overflow: scroll;" class='dropdown-menu scroll' aria-labelledby='dropdownMenu' >                                                                 
+                                        <li data-ng-repeat='option in states'>&nbsp;&nbsp; <input type='checkbox' style="zoom:1.3" ng-click='setSelectedItem(option.name.trim())' ng-model='selectedItems[option.name.trim()]' ng-checked ='option.selected == true'/>{{option.name}}<br/><br/></li>                                            
+                                    </ul>                                  
+                                </div>
+                            </div>                                                                                 
+                            <br/>
+                            Selected properties:
+                            <div>
+                                <textarea readonly="readonly" rows="2" style="width: 100%;">{{propString}}</textarea>
+                            </div>
+                        </h3>
+                        <h3 ng-show="initComplete && walkAlongStarted && !walkAlongStopped && !isRetailObs">
+                            Area of focus:<font color="red"> *</font>                            
+                            <select class="form-control" ng-model="section.questions[1].rating" ng-change="changeRating(section.questions[1].rating)">
+                                <option ng-repeat="category in observation.categories" ng-value="category.text" >{{category.text}}</option>
+                                <option value="" ng-if="walkAlongData.recordTypeName=='Property Visit' || walkAlongData.recordTypeName=='CAR Event'">All the Above</option>
+                            </select> 
+                        </h3>
+                    
+                        <h3 ng-show="initComplete && walkAlongStarted && !walkAlongStopped && !isIndirectObs">
+                            Overall notes:<font color="red" ng-show="!isRetailObs"> *</font> <textarea class="form-control smart-detect-special-characters"   ng-model="section.questions[0].rating"  id="overall_notes" rows="2" cols="40" aria-label="..." placeholder="Overall Notes"></textarea>
+                        </h3>
+                        
+                        <h3 ng-show="initComplete && walkAlongStarted && !walkAlongStopped && isIndirectObs">
+                            Action items:<font color="red"> *</font> <textarea class="form-control smart-detect-special-characters"   ng-model="section.questions[0].rating"  id="overall_notes" rows="2" cols="40" aria-label="..." placeholder="Action items"></textarea>
+                        </h3>
+                        
+                        <h3 ng-show="initComplete && walkAlongStarted && !walkAlongStopped">
+                            Private notes:<font color="red"> </font> <textarea class="form-control smart-detect-special-characters" ng-model="walkAlongData.privateNotes" id="private_notes" rows="2" cols="40" aria-label="..." placeholder="Private Notes"></textarea>
+                        </h3>
+                        
+                        <!--<h3 ng-show="initComplete && walkAlongStarted && !walkAlongStopped">
+                            <label for="Area of Focus notes">Area of Focus notes</label> <font color="red"> *</font> <textarea class="form-control" ng-model="section.questions[2].rating" id="feedback_notes" rows="2" cols="40" aria-label="..." placeholder="Area of Focus notes"></textarea> 
+                        </h3>-->
+                    </div>
+                    
+                    <h3 ng-show="initComplete && walkAlongStarted && !walkAlongStopped" ng-if="section.name === 'Observation Counts' && flag">
+                        <form class="form-inline" ng-if="section.name === 'Observation Counts' && flag">                        
+                            <span ng-repeat="qustion in section.questions">
+                                <div class="form-group">        
+                                    <div ng-if="qustion.name === 'Knocks observed'"> 
+                                        <label for="exampleInputName2">{{qustion.name}}</label> <font color="red"> *</font>
+                                        <select class="form-control" ng-model="qustion.rating"  ng-options="nbr.value as nbr.name for nbr in knockCounter" >                                                                                                                             
+                                        </select>                                       
+                                    </div>
+                                    <div ng-if="qustion.name !== 'Knocks observed'">
+                                        <label for="exampleInputName2">{{qustion.name}}</label> <font color="red"> *</font>
+                                        <select class="form-control" ng-model="qustion.rating"  ng-options="nbr.value as nbr.name for nbr in counter">                                          
+                                        </select>                                       
+                                    </div>
+                               </div>         
+                            </span>
+                        </form>
+                    </h3>
+                </div>&nbsp;
+                         
+                <div ng-if="section.categories !== null">
+                    <ul class="nav nav-pills nav-stacked col-md-2" ng-show="initComplete && walkAlongStarted && !walkAlongStopped">
+                    <!-- **Developer : Shivani Gautam , Sprint 59,changes made - "$index==activePill" US1139308 Start-->
+                        <li ng-repeat="category in section.categories" ng-click="updateActivePill($index)" ng-class="::{'active':$index==activePill}">
+                            <a href="#{{category.category}}" data-toggle="pill">{{category.text}}</a>
+                        </li>
+                    </ul>
+                    
+                    <div class="tab-content" ng-show="initComplete && walkAlongStarted && !walkAlongStopped">
+                        <div ng-repeat="category in section.categories" id="{{category.category}}" ng-class="::{'tab-pane fade in active':$index==activePill,'tab-pane fade in':$index!=activePill}">
+                    <!-- **Developer : Shivani Gautam , Sprint 59,changes made - "$index==activePill" US1139308 End-->
+                        
+                        <!--<div ng-repeat="category in section.categories" id="{{category.category}}" ng-class="{'tab-pane fade in active':category=='Discover at Events','tab-pane fade in':!category=='Discover at Events'}">-->
+                            <div class="col-md-10">
+                                <table class="table table-striped">
+                                    <tr>
+                                        <td valign="middle" width="15%">
+                                            <h4>Overall {{category.text}} rating:</h4>
+                                        </td>
+                                        <td valign="middle">
+                                            <div ng-init="UnacceptableFlag=false;NeedsImpFlag=false;AchievedExpFlag=false;HighlyEffeFlag=false;ExceptionalFlag=false;"
+                                            class="btn-group btn-group-sm pull-right" data-toggle="buttons">
+                                            
+                                                <label class="btn btn-default {{category.rating=='N/A' ? 'active':''}}" ng-click="setRating(category,'N/A')" >
+                                                    <input type="radio" name="options_{{category.text}}" id="option1" autocomplete="off">N/A</input>
+                                                </label>
+  
+                                                <label ng-show="isIndirectObs" class="btn btn-default {{category.rating=='Unacceptable' ? 'active':''}}" ng-click="setRating(category,'Unacceptable')" >
+                                                    <input type="radio" name="options_{{category.text}}" id="option1" autocomplete="off">Unacceptable</input>
+                                                </label>                                                
+                                                <!--a class="btn btn"> 
+                                                    <span style="position: relative;margin: -8px;" ng-click="UnacceptableFlag = !UnacceptableFlag;NeedsImpFlag = false;AchievedExpFlag = false;HighlyEffeFlag = false;ExceptionalFlag = false" class="glyphicon glyphicon-info-sign" id="id1" aria-hidden="true"></span>
+                                                </a-->
+                                    
+                                                <label class="btn btn-default {{category.rating=='Needs Improvement' ? 'active':''}}" ng-click="setRating(category,'Needs Improvement')" >
+                                                    <input type="radio" name="options_{{category.text}}" id="option1" autocomplete="off">Needs Improvement</input>                                       
+                                                </label>
+                                                <!--a class="btn btn">
+                                                    <span style="position: relative;margin: -8px;" ng-click="NeedsImpFlag = !NeedsImpFlag;UnacceptableFlag = false;AchievedExpFlag = false;HighlyEffeFlag = false;ExceptionalFlag = false" class="glyphicon glyphicon-info-sign" id = "id2" aria-hidden="true"></span>
+                                                </a-->
+                                    
+                                                <label class="btn btn-default {{category.rating=='Achieved Expectations' ? 'active':''}}" ng-click="setRating(category,'Achieved Expectations')">
+                                                    <input type="radio" name="options_{{category.text}}" id="option1" autocomplete="off">Achieved Expectations</input>                                       
+                                                </label>
+                                                <!--a class="btn btn">
+                                                    <span style="position: relative;margin: -8px;" ng-click="AchievedExpFlag = !AchievedExpFlag;UnacceptableFlag = false;NeedsImpFlag = false;HighlyEffeFlag = false;ExceptionalFlag = false" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                                </a-->
+                                    
+                                                <label class="btn btn-default {{category.rating=='Highly Effective' ? 'active':''}}" ng-click="setRating(category,'Highly Effective')">
+                                                    <input type="radio" name="options_{{category.text}}" id="option2" autocomplete="off">Highly Effective</input>                                  
+                                                </label>
+                                                <!--a class="btn btn">
+                                                    <span style="position: relative;margin: -8px;" ng-click="HighlyEffeFlag = !HighlyEffeFlag;UnacceptableFlag = false;NeedsImpFlag = false;AchievedExpFlag = false;ExceptionalFlag = false" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                                </a-->
+                                    
+                                                <label ng-show="isIndirectObs" class="btn btn-default {{category.rating=='Exceptional' ? 'active':''}}" ng-click="setRating(category,'Exceptional')">
+                                                    <input type="radio" name="options_{{category.text}}" id="option2" autocomplete="off">Exceptional</input>                                 
+                                                </label>
+                                                <!--a class="btn btn">
+                                                    <span style="position: relative;margin: -8px;" ng-click="ExceptionalFlag = !ExceptionalFlag;UnacceptableFlag = false;NeedsImpFlag = false;AchievedExpFlag = false;HighlyEffeFlag = false" class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                                                </a>
+                                                
+                                                <label ng-show="UnacceptableFlag">Performance does not meet expectations.</label>
+                                                <label ng-show="NeedsImpFlag">Performance meets some, but not all expectations.</label> 
+                                                <label ng-show="AchievedExpFlag">Performance meets and sometimes exceeds expectations.</label> 
+                                                <label ng-show="HighlyEffeFlag">Performance frequently exceeds expectations.</label> 
+                                                <label ng-show="ExceptionalFlag">Performance significantly and consistently exceeds expectations.</label-->
+                                                
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                                <!--<h4>Overall {{category.text}} notes:<font color="red"> *</font><textarea ng-model="category.questions[0].showNotes" style="pointer-events: none;"  class="form-control"  rows="2" cols="40" aria-label="..." placeholder="Overall notes"></textarea></h4>-->
+                                <h4 ng-show="initComplete && walkAlongStarted && !walkAlongStopped && walkAlongData.selectedRecordType != '{!$Label.CAR_Manager_1_1_Obs}' && walkAlongData.selectedRecordType != '{!$Label.CAR_Manager_Huddle_Obs}' && walkAlongData.selectedRecordType != '{!$Label.CAR_Manager_Field_Obs}'">
+                                    &nbsp;&nbsp;Overall {{category.text}} notes:<!--<font color="red"> *</font>--> <textarea  class="form-control smart-detect-special-characters" ng-model="category.questions[0].notes" rows="2" cols="40" aria-label="..." placeholder="Overall {{category.text}} notes"></textarea> 
+                                </h4>
+                                
+                                <table class="table table-striped">
+                                    <tr ng-repeat="question in category.questions">
+                                        <td width="50%">{{question.name}}&nbsp;&nbsp;<a ng-click="question.showHelpText = !question.showHelpText"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a>
+                                        <br/>
+                                            <h5 ng-show="question.showHelpText">{{question.text}}</h5> 
+                                            <textarea ng-show="question.showNotes" class="form-control"  id="feedback_notes" rows="2" cols="40" aria-label="..." placeholder="{{question.name}} notes" ng-model="question.notes"></textarea> 
+                                        </td>
+                                        <td>
+                                            <!--<label class="btn btn-default pull-right">
+                                                <a ng-click="question.showNotes = !question.showNotes"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span></a>
+                                            </label>-->
+                                            <div class="btn-group btn-group-sm pull-right" data-toggle="buttons">
+                                                <label class="btn btn-default {{question.rating=='N/A' ? 'active':''}}" ng-click="setRating(question,'N/A')" >
+                                                    <input type="radio" name="options_{{$index}}" id="option1" autocomplete="off" ng-model="question.rating">N/A</input>
+                                                </label>
+                                                <label class="btn btn-default {{question.rating=='Strength' ? 'active':''}}" ng-click="setRating(question,'Strength')" >
+                                                    <input type="radio" name="options_{{$index}}" id="option1" autocomplete="off" ng-model="question.rating">Strength</input>
+                                                </label>
+                                                <label class="btn btn-default {{question.rating=='Opportunity' ? 'active':''}}" ng-click="setRating(question,'Opportunity')" >
+                                                    <input type="radio" name="options_{{$index}}" id="option1" autocomplete="off" ng-model="question.rating">Opportunity</input>
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>                                       
+                                </table>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End : Body Section of Observation Form-->
+    
+        <script src="{!URLFOR($Resource.bootstrap,'js/vendor/modernizr-2.8.3-respond-1.4.2.min.js')}"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.js"></script>
+        <script src="{!URLFOR($Resource.ObservationForm,'walkalong/js/vendor/bootstrap.min.js')}"></script>
+        <script src="{!URLFOR($Resource.ObservationForm,'walkalong/js/app.js')}"></script>
+        <script src="{!URLFOR($Resource.ObservationForm,'walkalong/js/controllers/WalkAlongController.js')}"></script>
+        <script type='text/javascript' src='/canvas/sdk/js/publisher.js'/> 
+        <script type="text/javascript">
+            function closeThisPage(){
+                Sfdc.canvas.publisher.publish({ name: "publisher.close",
+                                                 payload:{ refresh:"true" }
+                                             }
+                );
+
+            }
+        </script>
+        <script> 
+            window.onkeydown=function(){window.focus();} 
+        </script>
+
+    </body>
+    </html>
+    </div>
+ <!--    
+    * @Description:US1122008 - Indirect - Coach - Script to enable scrolling on VF Page (fix issues on creating Observation) on iPhone
+     As an Indirect Retail Manager using Coach for Indirect, I need the ability to complete an observation on a Comcast-issued iPhone.
+    * @Author: Kiran Kumar, Accenture    
+    * @Date: 01-June-2017 
+-->
+<script>    
+var a = navigator.userAgent; 
+if ((a.indexOf('Salesforce') != -1) && (a.indexOf('iPhone') != -1 || a.indexOf('iPad') != -1) && (a.indexOf('Safari') == -1)) { 
+var s = document.createElement('style'); 
+s.innerHTML = "html,html body{overflow:scroll;-webkit-overflow-scrolling:touch;zindex:0;}body{position:absolute;left:0;right:0;top:0;bottom:0;}"; 
+document.getElementsByTagName('head')[0].appendChild(s); 
+} 
+</script>
+</apex:page>

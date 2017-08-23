@@ -1,0 +1,10 @@
+Dear {!Contact.FirstName},
+
+Thank you for contacting customer support.  Your new partner portal password can be found below.
+
+Important Note: Your partner portal login access is only valid through the website address provided by your partner contact. Your login credentials will not work through the standard Salesforce.com website address. 
+
+Thank you,
+
+{!User_Name}
+{!Organization.Name} Customer Support

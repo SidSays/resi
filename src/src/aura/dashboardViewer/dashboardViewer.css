@@ -1,0 +1,20 @@
+.THIS {
+    margin: 5px;
+    position: relative;
+}
+
+.THIS .hide {
+	display: none;
+}
+
+.THIS .visible {
+    display: none;
+    opacity: 1;
+    transition: opacity 2s linear;
+}
+
+.THIS .hidden {
+    display: block;
+    opacity: 0;
+    transition: visibility 0s 2s, opacity 2s linear;
+}

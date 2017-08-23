@@ -1,0 +1,31 @@
+<aura:component controller="IndirectAddNoteController" implements="force:appHostable">
+   <aura:attribute name="newContentNote" type="ContentNote" default="{ 'sobjectType': 'ContentNote' , 'Title': '' ,'Content':''}"/>
+   <aura:attribute name="store" type="Account"/>	
+   <aura:attribute name="role" type="UserRole"/>
+   <aura:attribute name="storeVisitCategory" type="Store_Visit_Activity_Category__c[]"/>
+    
+   <div class="container">
+        <form>
+            <br/>
+            <ui:inputText aura:id="notesname" label="Name"
+                        class="slds-input"
+                        labelClass="slds-form-element__label"
+                        value="{!v.newContentNote.Title}"
+                          placeholder="Untitled Note"
+                        />
+            <br/>
+        <ui:inputTextArea aura:id="contentDes"  label="Notes" value="{!v.newContentNote.Content}"  class="slds-input" rows="6" labelClass="slds-form-element__label" placeholder="Enter a note.."/>
+             <div style="text-align: center">
+            	 <b>
+                 	<br/>	
+            			<ui:button label="Save" 
+                           class="slds-button slds-button--neutral slds-button--brand slds-align-middle slds-text-align--center"
+                           labelClass="label"
+                           press="{!c.SaveNotes}"/>
+                  	<br/>
+                 </b>
+             </div>  
+            <br/>
+        </form>    
+  </div>    
+</aura:component>

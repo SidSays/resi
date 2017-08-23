@@ -1,0 +1,12 @@
+.THIS.footer {
+    position:absolute;
+    bottom:7%;
+    width:100%;    
+}
+.THIS.play {
+    width: 12px;
+    height: 16px;
+    border-top: 8px solid transparent;
+    border-left: 12px solid #000;
+    border-bottom: 8px solid transparent;  
+}

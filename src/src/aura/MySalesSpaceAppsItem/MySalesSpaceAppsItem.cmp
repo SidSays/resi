@@ -1,0 +1,13 @@
+<aura:component controller="SalesSpaceCoreService">
+	<aura:registerEvent name="appLauncherUpdateRecentEvent" type="c:AppLauncherUpdateRecentEvent"/>
+    <!-- the app item to use when creating the list item and a boolean flag if there is an imageUrl or not. -->
+    <aura:attribute name="appItem" type="Object"/>
+    <aura:attribute name="sshref" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <li class="slds-list__item slds-text-align--center">
+        <a href="{!v.sshref}" target="_blank" onclick="{!c.clickHandler}" title="{!v.appItem.label}">
+            <img src="{!v.appItem.logoURL}" alt="{!v.appItem.altText}" />
+        </a>
+    </li>
+</aura:component>

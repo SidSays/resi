@@ -1,0 +1,25 @@
+.THIS .timeString {
+    margin-top:15px;
+    margin-right:25px;
+    float:right;
+    color:white;
+}
+
+.THIS #title{
+    margin-top:15px;
+    margin-left:25px;
+    float:left;
+    color:white;
+}
+
+.THIS#clock{
+    font-size:11pt;
+    clear:both;
+}
+
+.THIS .noSLA{
+    margin-top:15px;
+    margin-right:40%;
+    float:right;
+    color:#4F6A92;
+}

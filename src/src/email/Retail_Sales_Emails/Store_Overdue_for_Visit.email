@@ -1,0 +1,5 @@
+Dear {!User.FirstName} {!User.LastName},
+
+Your store, {!Account.Name}, is more than 5 days overdue for a visit. You last visited on {!Account.00NZ0000001QZOT}. Please visit this store ASAP.
+
+Thank you!

@@ -1,0 +1,6 @@
+<!--Author     : Tejaswini Kasar
+    Date       : 1/6/2017
+    Description: Redirection Page. Called from "View" button on Plan object which redirects based on browser (Salesforce classic or SF1) -->
+    <apex:page standardController="Plan__c" Extensions="PlanAddressController" action="{!redirectBasedOnBrowser}">
+     <apex:pageMessages />
+    </apex:page>

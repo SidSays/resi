@@ -1,0 +1,12 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes">
+    <aura:attribute name="donutId" required="true" default="" type="String" description="Unique Id" />
+    <aura:attribute name="percentage" required="true" default="" type="Integer" description="Percentage value to fill the donut" />
+    <aura:attribute name="width" default="200" type="String" description="width of bar" />
+    <aura:attribute name="height" default="25" type="String" description="height of bar" />
+    <aura:attribute name="color" default="#44c173" type="String" description="Hex code for fill color" />
+    <aura:attribute name="status" default="#green" type="String" description="The status of the indicator" />
+    <aura:attribute name="remaining" default="0" type="Integer" description="The time remaining" />
+    
+    <div id="progressBar" aura:id="{!v.donutId}">
+    </div>
+</aura:component>
